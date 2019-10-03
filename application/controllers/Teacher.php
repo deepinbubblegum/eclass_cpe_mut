@@ -5,9 +5,6 @@ class Teacher extends MY_Controller {
     public function __construct()
     {
         parent::__construct();
-        if (($this->session->ses_per_name == 'student') || $this->session->ses_per_name == ''){
-            show_404();
-        }
     }  
  
     public function index()
