@@ -21,8 +21,8 @@ $(document).ready(function() {
     $('#tableTitleTxt').text("จัดการข้อมูลนักศึกษา");
     $('#rowPerPageTxt').text("Rows per page:");
 
-    var btnAddText = 'เพิ่มข้อมูลสาขา';
-    var btnEditText = 'แก้ไขข้อมูลสาขา';
+    // var btnAddText = 'เพิ่มข้อมูลสาขา';
+    // var btnEditText = 'แก้ไขข้อมูลสาขา';
 
     var pagingSize = [10, 25, 50, 100];
 
@@ -108,10 +108,12 @@ $(document).ready(function() {
             '<label>Major</label>' +
             '<select id="majorSelectAdd" class="form-control"></select>' +
             '</div>';
-        html += '<div class="col-md-4 mb-3" >' +
-            '<label>Permission</label>' +
-            '<select id="permissionSelectAdd" class="form-control"></select>' +
-            '</div>';
+            
+        // html += '<div class="col-md-4 mb-3" >' +
+        //     '<label>Permission</label>' +
+        //     '<select id="permissionSelectAdd" class="form-control"></select>' +
+        //     '</div>';
+        
         html += '</div>';
         $('#inModelBody').html(html);
     }
@@ -257,7 +259,7 @@ $(document).ready(function() {
                             '<td>' + response[i].user_Ename + '</td>' +
                             '<td>' + response[i].user_email + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
-                            '<td>' + response[i].permission_name + '</td>' +
+                            // '<td>' + response[i].permission_name + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -282,20 +284,20 @@ $(document).ready(function() {
         //     });
         //     _listFileName = _fileName.join(",");
         // }
-        $.ajax({
-            url: "../Admin_permission/Show_Data_ctl",
-            dataType: "json",
-            success: function(response) {
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].permission_id + '">' + response[i].permission_name + '</option>';
-                    }
-                }
-                $('#permissionSelectAddcsv').html(html);
-            }
-        });
+        // $.ajax({
+        //     url: "../Admin_permission/Show_Data_ctl",
+        //     dataType: "json",
+        //     success: function(response) {
+        //         var html = '';
+        //         var i;
+        //         if (response != null) {
+        //             for (i = 0; i < response.length; i++) {
+        //                 html += '<option value="' + response[i].permission_id + '">' + response[i].permission_name + '</option>';
+        //             }
+        //         }
+        //         $('#permissionSelectAddcsv').html(html);
+        //     }
+        // });
 
         var size = fileSizeCal(_files[0].size);
         console.log(_files[0].name + ' ' + size);
@@ -321,11 +323,11 @@ $(document).ready(function() {
 
     $('#btnUpload').click(function(e) {
         e.preventDefault();
-        $permiss = $("#permissionSelectAddcsv :selected").val();
+        // $permiss = $("#permissionSelectAddcsv :selected").val();
         var snacktxt = '';
         var form_data = new FormData();
         form_data.append('file', _files[0]);
-        form_data.append('permission', $permiss);
+        // form_data.append('permission', $permiss);
         $.ajax({
             xhr: function() {
                 var xhr = new window.XMLHttpRequest();
@@ -408,20 +410,20 @@ $(document).ready(function() {
                 $('#majorSelectAdd').html(html);
             }
         });
-        $.ajax({
-            url: "../Admin_permission/Show_Data_ctl",
-            dataType: "json",
-            success: function(response) {
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].permission_id + '">' + response[i].permission_name + '</option>';
-                    }
-                }
-                $('#permissionSelectAdd').html(html);
-            }
-        });
+        // $.ajax({
+        //     url: "../Admin_permission/Show_Data_ctl",
+        //     dataType: "json",
+        //     success: function(response) {
+        //         var html = '';
+        //         var i;
+        //         if (response != null) {
+        //             for (i = 0; i < response.length; i++) {
+        //                 html += '<option value="' + response[i].permission_id + '">' + response[i].permission_name + '</option>';
+        //             }
+        //         }
+        //         $('#permissionSelectAdd').html(html);
+        //     }
+        // });
     });
 
     $('#btnAddcsv').click(function(e) {
@@ -515,28 +517,28 @@ $(document).ready(function() {
                 $('#majorSelectAdd').val(datatable[ivalue].major_id);
             }
         });
-        $.ajax({
-            url: "../Admin_permission/Show_Data_ctl",
-            dataType: "json",
-            success: function(response) {
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].permission_id + '">' + response[i].permission_name + '</option>';
-                    }
-                }
-                $('#permissionSelectAdd').html(html);
-                // alert(datatable[ivalue].faculty_id);
-                $('#permissionSelectAdd').val(datatable[ivalue].permission_id);
-            }
-        });
+        // $.ajax({
+        //     url: "../Admin_permission/Show_Data_ctl",
+        //     dataType: "json",
+        //     success: function(response) {
+        //         var html = '';
+        //         var i;
+        //         if (response != null) {
+        //             for (i = 0; i < response.length; i++) {
+        //                 html += '<option value="' + response[i].permission_id + '">' + response[i].permission_name + '</option>';
+        //             }
+        //         }
+        //         $('#permissionSelectAdd').html(html);
+        //         // alert(datatable[ivalue].faculty_id);
+        //         $('#permissionSelectAdd').val(datatable[ivalue].permission_id);
+        //     }
+        // });
     });
 
     $('#btnClose').click(function(e) {
         formDataValClr();
         document.getElementById('majorSelectAdd').value = datatable[0].major_id;
-        document.getElementById('permissionSelectAdd').value = datatable[0].permission_id;
+        // document.getElementById('permissionSelectAdd').value = datatable[0].permission_id;
         hideAllPop();
     });
 
@@ -566,7 +568,7 @@ $(document).ready(function() {
                             '<td>' + response[i].user_Ename + '</td>' +
                             '<td>' + response[i].user_email + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
-                            '<td>' + response[i].permission_name + '</td>' +
+                            // '<td>' + response[i].permission_name + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
