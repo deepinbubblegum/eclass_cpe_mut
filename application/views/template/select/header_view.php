@@ -210,10 +210,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="container">
                                         <?php
                                         if (isset($this->session->ses_tname)) {
-                                                if ($this->session->ses_per_name != 'student') {
                                                         echo '<a href="' . base_url('teacher') . '"><button type="button" id="" class="btn btn-info btn-lg btn-block">หน้าจัดการอาจารย์</button></a>';
                                                         echo '<div class="navdrawer-divider mt-3"></div></a>';
-                                                }
                                                 echo '<a href="' . base_url('user_uses/sign_out') . '"><button type="button" class="btn btn-danger btn-lg btn-block">ออกจากระบบ</button></a>';
                                         } else {
                                                 echo '<div class="form-group">

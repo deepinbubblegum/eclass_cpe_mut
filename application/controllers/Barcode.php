@@ -6,9 +6,6 @@ class Barcode extends MY_Controller {
     {
         parent::__construct();
         $this->load->library('Pdf');
-        if ($this->session->ses_per_name != 'student') {
-            show_404();
-        }
     }  
  
     public function index()
