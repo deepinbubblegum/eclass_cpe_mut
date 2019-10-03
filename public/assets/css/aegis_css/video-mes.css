@@ -1,0 +1,20 @@
+.card-video-view:hover {
+        background-color: rgba(0, 0, 0, 0.205);
+        transition: .9s ease;
+        opacity: 1;
+}
+
+.fa-play-hover:hover {
+        color: #eee;
+}
+
+.icon {
+        color: white;
+        font-size: 500%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+}

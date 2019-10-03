@@ -1,0 +1,83 @@
+@media screen and (max-width: 1280px) {
+    /* btn in file dowload */
+    span.btn_txt {
+        visibility: hidden;
+        display: block;
+    }
+    a#link_icon,
+    #btn_delete {
+        text-align: center;
+        max-width: 1px;
+        max-height: 30px;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    /* btn in file dowload */
+    span.btn_txt {
+        visibility: hidden;
+        display: block;
+    }
+    a#link_icon,
+    #btn_delete {
+        text-align: center;
+        max-width: 1px;
+        max-height: 30px;
+    }
+    span.btn_file {
+        display: inline-block;
+        margin-top: 5px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    span.txtsub {
+        visibility: hidden;
+        display: block;
+    }
+    #buttonsub {
+        text-align: center;
+        max-width: 1px;
+        max-height: 30px;
+    }
+    span.row_btn_sub {
+        display: inline-block;
+        float: right;
+    }
+}
+
+
+/* On screens that are 600px wide or less, the background color is olive */
+
+@media screen and (max-width: 650px) {
+    .txtsub {
+        visibility: hidden;
+        display: block;
+    }
+    #buttonsub {
+        text-align: center;
+        max-width: 1px;
+        max-height: 30px;
+    }
+    span.row_btn_sub {
+        display: inline-block;
+        float: none;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    span.btn_txt {
+        visibility: none;
+        display: none;
+    }
+    a#link_icon,
+    #btn_delete {
+        text-align: center;
+        max-width: 1px;
+        max-height: 30px;
+    }
+    span.btn_file {
+        display: inline;
+        margin-top: none;
+    }
+}

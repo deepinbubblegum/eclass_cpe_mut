@@ -1,0 +1,179 @@
+/* thai */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 200;
+	font-display: swap;
+	src: local('Mitr ExtraLight'), local('Mitr-ExtraLight'), url("../../font/Mitr/thai/mitr_thai_200.woff2") format('woff2');
+	unicode-range: U+0E01-0E5B, U+200C-200D, U+25CC;
+}
+
+/* latin-ext */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 200;
+	font-display: swap;
+	src: local('Mitr ExtraLight'), local('Mitr-ExtraLight'), url("../../font/Mitr/latin_ext/mitr_latin-ext_200.woff2") format('woff2');
+	unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 200;
+	font-display: swap;
+	src: local('Mitr ExtraLight'), local('Mitr-ExtraLight'), url("../../font/Mitr/latin/mitr_latin_200.woff2") format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* thai */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 300;
+	font-display: swap;
+	src: local('Mitr Light'), local('Mitr-Light'), url("../../font/Mitr/thai/mitr_thai_300.woff2") format('woff2');
+	unicode-range: U+0E01-0E5B, U+200C-200D, U+25CC;
+}
+
+/* latin-ext */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 300;
+	font-display: swap;
+	src: local('Mitr Light'), local('Mitr-Light'), url("../../font/Mitr/latin_ext/mitr_latin-ext_300.woff2") format('woff2');
+	unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 300;
+	font-display: swap;
+	src: local('Mitr Light'), local('Mitr-Light'), url("../../font/Mitr/latin/mitr_latin_300.woff2") format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* thai */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local('Mitr Regular'), local('Mitr-Regular'), url("../../font/Mitr/thai/mitr_thai_400.woff2") format('woff2');
+	unicode-range: U+0E01-0E5B, U+200C-200D, U+25CC;
+}
+
+/* latin-ext */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local('Mitr Regular'), local('Mitr-Regular'), url("../../font/Mitr/latin_ext/mitr_latin-ext_400.woff2") format('woff2');
+	unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local('Mitr Regular'), local('Mitr-Regular'), url("../../font/Mitr/latin/mitr_latin_400.woff2") format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* thai */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: local('Mitr Medium'), local('Mitr-Medium'), url("../../font/Mitr/thai/mitr_thai_500.woff2") format('woff2');
+	unicode-range: U+0E01-0E5B, U+200C-200D, U+25CC;
+}
+
+/* latin-ext */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: local('Mitr Medium'), local('Mitr-Medium'), url("../../font/Mitr/latin_ext/mitr_latin-ext_500.woff2") format('woff2');
+	unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: local('Mitr Medium'), local('Mitr-Medium'), url("../../font/Mitr/latin/mitr_latin_500.woff2") format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* thai */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: local('Mitr SemiBold'), local('Mitr-SemiBold'), url("../../font/Mitr/thai/mitr_thai_600.woff2") format('woff2');
+	unicode-range: U+0E01-0E5B, U+200C-200D, U+25CC;
+}
+
+/* latin-ext */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: local('Mitr SemiBold'), local('Mitr-SemiBold'), url("../../font/Mitr/latin_ext/mitr_latin-ext_600.woff2") format('woff2');
+	unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: local('Mitr SemiBold'), local('Mitr-SemiBold'), url("../../font/Mitr/latin/mitr_latin_600.woff2") format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* thai */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: local('Mitr Bold'), local('Mitr-Bold'), url("../../font/Mitr/thai/mitr_thai_700.woff2") format('woff2');
+	unicode-range: U+0E01-0E5B, U+200C-200D, U+25CC;
+}
+
+/* latin-ext */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: local('Mitr Bold'), local('Mitr-Bold'), url("../../font/Mitr/latin_ext/mitr_latin-ext_700.woff2") format('woff2');
+	unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+	font-family: 'Mitr';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: local('Mitr Bold'), local('Mitr-Bold'), url("../../font/Mitr/latin/mitr_latin_700.woff2") format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}

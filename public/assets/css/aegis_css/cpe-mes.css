@@ -1,0 +1,78 @@
+body,
+html {
+	min-height: 100%;
+	margin: 0;
+}
+
+.su-sidebar {
+	min-width: 279px;
+	-ms-flex: 0 0 279px;
+	flex: 0 0 279px;
+}
+
+a:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+@media (max-width: 1360px) {
+	.su-sidebar {
+		display: none;
+	}
+}
+
+@media (min-width: 1360px) {
+	.menu-left-admin {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 767.98px) and (min-width: 576px) {
+	.homecontent {
+		margin-top: 40%;
+	}
+
+}
+
+@media screen and (max-width: 991.98px) and (min-width: 768px) {
+	.homecontent {
+		margin-top: 30%;
+	}
+}
+
+@media screen and (max-width: 767.98px) {
+	.homecontent {
+		visibility: hidden;
+		display: none;
+	}
+
+	.bgd {
+		position: static;
+	}
+
+	.homecontentlist {
+		display: contents;
+		margin-top: 5%;
+		visibility: unset;
+	}
+}
+
+@media screen and (max-width: 575.98px) {
+	
+	.titlehearder{
+		max-width: 270px;
+	}
+
+	.title_message {
+		visibility: hidden;
+		clear: both;
+		float: left;
+		margin: 10px auto 5px 20px;
+		width: 28%;
+		display: none;
+	}
+
+	.logo_mut {
+		content: url("../../img/logo-white-mini.png");
+	}
+}
