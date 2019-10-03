@@ -57,21 +57,29 @@ class Admin extends MY_Controller
         $this->load->view('admin/template_su/footer_su_view');
     }
 
-    // public function teacher()
-    // {
-    //     $this->load->view('admin/template_su/header_view');
-    //     $this->load->view('admin/template_su/side_menu_su_view');
-    //     $this->load->view('admin/teacher_su_view');
-    //     $this->load->view('admin/template_su/footer_su_view');
-    // }
+    public function student_data()
+    {
+        $this->load->view('admin/template_su/header_view');
+        $this->load->view('admin/template_su/side_menu_su_view');
+        $this->load->view('admin/student_data_su_view');
+        $this->load->view('admin/template_su/footer_su_view');
+    }
 
-    // public function student()
-    // {
-    //     $this->load->view('admin/template_su/header_view');
-    //     $this->load->view('admin/template_su/side_menu_su_view');
-    //     $this->load->view('admin/student_su_view');
-    //     $this->load->view('admin/template_su/footer_su_view');
-    // }
+    public function teacher_data()
+    {
+        $this->load->view('admin/template_su/header_view');
+        $this->load->view('admin/template_su/side_menu_su_view');
+        $this->load->view('admin/teacher_data_su_view');
+        $this->load->view('admin/template_su/footer_su_view');
+    }
+
+    public function admin_data()
+    {
+        $this->load->view('admin/template_su/header_view');
+        $this->load->view('admin/template_su/side_menu_su_view');
+        $this->load->view('admin/admin_data_su_view');
+        $this->load->view('admin/template_su/footer_su_view');
+    }
 
     public function semester()
     {
@@ -86,14 +94,6 @@ class Admin extends MY_Controller
         $this->load->view('admin/template_su/header_view');
         $this->load->view('admin/template_su/side_menu_su_view');
         $this->load->view('admin/teacher_subject_su_view');
-        $this->load->view('admin/template_su/footer_su_view');
-    }
-
-    public function user_data()
-    {
-        $this->load->view('admin/template_su/header_view');
-        $this->load->view('admin/template_su/side_menu_su_view');
-        $this->load->view('admin/user_data_su_view');
         $this->load->view('admin/template_su/footer_su_view');
     }
 
