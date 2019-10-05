@@ -55,9 +55,10 @@ class Model_su_student_data extends CI_Model
 
     public function Search_data_model($keyword, $type)
     {
-        $this->db->select('std_code_id, std_Tname, std_Ename, std_email, major_id, std_major');
+        $this->db->select('std_code_id, std_Tname, std_Ename, std_email, faculty_name, major_name');
         $this->db->from('student');
         $this->db->join('major', 'std_major = major_id', 'left');
+        $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
         if ($type != null) {
             if ($type == 'std_major') {
                 $searchData = 'std_major';
@@ -68,6 +69,7 @@ class Model_su_student_data extends CI_Model
             $this->db->or_like('std_Tname', $keyword);
             $this->db->or_like('std_Ename', $keyword);
             $this->db->or_like('std_email', $keyword);
+            $this->db->or_like('faculty_name', $keyword);
             $this->db->or_like('std_major', $keyword);
         }
         $query = $this->db->get();
@@ -84,14 +86,10 @@ class Model_su_student_data extends CI_Model
         return true;
     }
 
-    public function Add_data_model_csv($arg, $arg2)
+    public function Add_data_model_csv($arg)
     {
         $sql_cmd = $this->db->insert_string('student', $arg);
         $query = str_replace("INSERT INTO", "INSERT IGNORE INTO", $sql_cmd);
-        $this->db->query($query);
-
-        $sql_cmd2 = $this->db->insert_string('sign_in', $arg2);
-        $query = str_replace("INSERT INTO", "INSERT IGNORE INTO", $sql_cmd2);
         $this->db->query($query);
     }
 

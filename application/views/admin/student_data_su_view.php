@@ -8,7 +8,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <?php
     echo assets_js('aegis_js/manage_su/su_student_data.js');
     ?>
@@ -62,7 +61,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </form>
                     <div class="modal-footer">
                         <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" id="btnSavedata" class="btn btn-primary">Save</button>
+                        <button type="button" id="btnSave" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
