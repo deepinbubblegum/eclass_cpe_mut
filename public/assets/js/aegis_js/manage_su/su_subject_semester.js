@@ -31,11 +31,14 @@ $(document).ready(function() {
     var dropSearchValue = [
         //[VALUE,TEXT]
         ['semester_name', 'เทอม'],
-        ['subject_name', 'วิชา']
+        ['subject_id', 'รหัสวิชา'],
+        ['subject_name', 'ชื่อวิชา'],
+        ['teacher_code_id', 'รหัสอาจารย์'],
+        ['teacher_Ename', 'ชื่ออาจารย์']
     ];
 
     //head of table
-    var theadGenValue = ['Semester', 'Subject_id', 'Subject', 'Teacher_id', 'Teacher', 'Option'];
+    var theadGenValue = ['Semester', 'Subject_id', 'Subject_name', 'Teacher_id', 'Teacher_name', 'Option'];
 
     function dropPag() {
         var html = '';
@@ -65,8 +68,13 @@ $(document).ready(function() {
             '</select>' +
             '</div>';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Part</label>' +
+            '<label>Subject</label>' +
             '<select id="selectAddSubject" class="form-control">' +
+            '</select>' +
+            '</div>';
+        html += '<div class="col-md-4 mb-3" >' +
+            '<label>Teacher</label>' +
+            '<select id="selectAddTeacher" class="form-control">' +
             '</select>' +
             '</div>';
         html += '</div>';
@@ -93,10 +101,65 @@ $(document).ready(function() {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].subject_id + '" data-2="' + response[i].subject_teacher + '">' + response[i].subject_name + '</option>';
+                        html += '<option value="' + response[i].subject_id + '" data-2="' + response[i].subject_teacher + '">' + response[i].subject_id + ' - ' + response[i].subject_name + '</option>';
                     }
                 }
                 $('#selectAddSubject').html(html);
+                $('#selectAddSubject').change(function(e) {
+                    thisSubject = $("#selectAddSubject :selected").val();
+                    console.log('selectAddSubject', thisSubject);
+                    takeTeacher(thisSubject);
+                });
+            }
+        });
+    }
+
+    function takeTeacher(sbjid) {
+        $.ajax({
+            type: "POST",
+            data: "&subject=" + sbjid,
+            url: "../Admin_subject_semester/takeTeacher",
+            dataType: "json",
+            success: function(response) {
+                console.log('-');
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Ename + '</option>';
+                    }
+                }
+                $('#selectAddTeacher').html(html);
+                $('#selectAddTeacher').change(function(e) {
+                    thisTeacher = $("#selectAddTeacher :selected").val();
+                    console.log('selectAddTeacher', thisTeacher);
+                });
+            }
+        });
+    }
+
+    function takeSubject(tchid) {
+        $.ajax({
+            type: "POST",
+            data: "&teacher=" + tchid,
+            url: "../Admin_subject_semester/takeSubject",
+            dataType: "json",
+            success: function(response) {
+                console.log('-');
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].subject_id + '" data-2="' + response[i].subject_teacher + '">' + response[i].subject_id + ' - ' + response[i].subject_name + '</option>';
+                    }
+                }
+                $('#selectAddTeacher').html(html);
+                $('#selectAddTeacher').change(function(e) {
+                    thisTeacher = $("#selectAddTeacher :selected").val();
+                    console.log('selectAddTeacher', thisTeacher);
+                });
             }
         });
     }
@@ -247,7 +310,9 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].semester_id + i + '"> ' + response[i].semester_name + ' </label>' +
                             '</div>' +
                             '</th>' +
+                            '<td>' + response[i].subject_id + '</td>' +
                             '<td>' + response[i].subject_name + '</td>' +
+                            '<td>' + response[i].teacher_code_id + '</td>' +
                             '<td>' + response[i].teacher_Ename + '</td>' +
                             '<td><a data="' + response[i].semester_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
@@ -275,6 +340,12 @@ $(document).ready(function() {
     $('#btnAdd').click(function(e) {
         e.preventDefault();
         iurl = "../Admin_subject_semester/Add_Data_ctl";
+
+        // $('#selectAddSemester').val(dataSubSemester[ivalue].semester_id);
+
+        // takeTeacher(dataSubSemester[ivalue].semester_id);
+        // $('#selectAddSubject').val(dataSubSemester[ivalue].subject_id);
+
         $('#Modal').find('.modal-title').text(btnAddText);
         $('#Modal').modal('show');
 
@@ -292,12 +363,14 @@ $(document).ready(function() {
         }
         data = $("#selectAddSemester :selected").val();
         data2 = $("#selectAddSubject :selected").val();
-        update_teasub = $("#selectAddSubject").find(':selected').data('2');
+        data3 = $("#selectAddTeacher :selected").val();
+        //update_teasub = $("#selectAddSubject").find(':selected').data('2');
         // alert(update_teasub);
+        console.log(data, data2, data3);
         $.ajax({
             type: "POST",
             url: iurl,
-            data: '&semester_id=' + data + '&subject_id=' + data2 + '&org_id=' + semesdata + '&org_sub=' + subdata,
+            data: '&semester_id=' + data + '&subject_id=' + data2 + '&teacher_id=' + data3 + '&org_id=' + semesdata + '&org_sub=' + subdata,
             success: function() {
                 if (iurl == '../Admin_subject_semester/Edit_Data_ctl') {
                     $('#Modal').modal('hide');
@@ -323,14 +396,6 @@ $(document).ready(function() {
                 });
             }
         });
-        $.ajax({
-            type: "POST",
-            url: "../Admin_teacher_subject/Add_Data_ctl",
-            data: '&semester=' + data + '&subject=' + data2 + '&teacher=' + update_teasub,
-            success: function() {
-
-            }
-        });
     });
 
 
@@ -339,9 +404,10 @@ $(document).ready(function() {
         ivalue = $(this).attr('value');
 
         subdata = dataSubSemester[ivalue].subject_id;
-        semesdata = dataSubSemester[ivalue].semester_id;
-
         $('#selectAddSemester').val(dataSubSemester[ivalue].semester_id);
+
+        takeTeacher(subdata);
+        semesdata = dataSubSemester[ivalue].semester_id;
         $('#selectAddSubject').val(dataSubSemester[ivalue].subject_id);
 
         $('#Modal').find('.modal-title').text(btnEditText);
@@ -379,15 +445,6 @@ $(document).ready(function() {
                     });
                     $('#SearchName').val('');
                 }
-            });
-            $.ajax({
-                type: "POST",
-                url: "../Admin_teacher_subject/Delete_Data_ctl",
-                data: {
-                    data_semester,
-                    data_subject
-                },
-                success: function() {}
             });
         } else {
             $('#modaldel').modal('hide');

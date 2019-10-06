@@ -181,7 +181,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                                 <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
                                         <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
-                                                <div class="list-group mt-3" id="accordionOne">
+                                                <div class="list-group mt-3 showUploaded" id="accordionTwo">
                                                         <div class="expansion-panel list-group-item show">
                                                                 <a aria-controls="collapseOne" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseOne" id="headingOne">
                                                                         Expansion panel item #1

@@ -67,7 +67,7 @@ $(document).ready(function() {
         return html_ico;
     }
     showMenuUpload();
-
+    showMenuUploaded();
     var editMenuId;
     var menuUpdate = 0;
     $('#btnModalSave').click(function(e) {
@@ -415,5 +415,108 @@ $(document).ready(function() {
         upload(0, pos);
         //$('#btnUpload').hide();
         //$('#btnClearAll').hide();
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // AREA 51 -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+
+    var getUploaded = [];
+
+    function showMenuUploaded() {
+        $.ajax({
+            url: '/' + url[3] + '/Te_upload/showMenuUpload/' + subject_id + '-' + semester,
+            dataType: "json",
+            success: function(response) {
+                getUploaded = response;
+                console.log(response);
+                var html = '';
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<div class="expansion-panel list-group-item" >' +
+                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
+                            response[i].menuDowName +
+                            '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
+                            '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
+                            '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
+                            '</div>' +
+                            '</a>' +
+                            '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionTwo" id="collapse' + i + '">' +
+                            '<div class="expansion-panel-body">' +
+                            /* --------BTN-------- */
+                            //'<span style="font-size: 1.7em;"><a href="/Te_select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].menuUpId + '" id="showInMenu-' + response[i].menuUpId + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a id="allDownload-' + response[i].menuDowId + '" href="/Te_download/dowZip/' + subject_id + '-' + semester + '-' + response[i].menuDowId + '" class="f34r-txt-black"><i class="fas fa-download"></a></i></span>&nbsp;' +
+                            //'<span style="font-size: 1.7em;"><a id="impInMenu-' + response[i].menuUpId + '" href="#" class="f34r-txt-black"><i class="fas fa-file-import"></a></i></span>&nbsp;' +
+                            //'<span style="font-size: 1.7em;"><a id="expInMenu-' + response[i].menuUpId + '" href="#" class="f34r-txt-black"><i class="fas fa-file-export"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a id="delMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a id="editMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
+                            /* --------BTN-------- */
+                            '<br>' +
+                            response[i].menuDowDescrpition +
+                            '<div id="menuDowId-' + response[i].menuDowId + '">' +
+                            '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2">' +
+                            '<span class="mr-2 mb-0" style="font-size: 28px;">' +
+                            '<i class="fas fa-file-download"></i>' +
+                            '<span class="mr-2 text-black" style="font-size: 18px;">ทดสอบ</span>' +
+                            '<div class="mt-0">' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;">size : 20GB</small>' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;">type : pdf</small>' +
+                            '</div>' +
+                            '</span>' +
+                            '<span>' +
+                            '<button class="btn btn-float btn-info my-1"><i class="fas fa-download"></i></button>' +
+                            '</span>' +
+                            '</li>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    }
+                }
+                $('.showUploaded').html(html);
+                for (i = 0; i < getUploaded.length; i++) {
+                    showUploaded(i);
+                }
+
+            }
+        });
+    }
+
+    function showUploaded(popUp) {
+        $.ajax({
+            url: '/' + url[3] + '/Te_download/showDownloadList/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuUpId,
+            dataType: "json",
+            success: function(response) {
+                getData = response;
+                var html = "";
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
+                            '<span class="mr-2 mb-0" style="font-size: 28px;">' + file_ico(response[i].fileType) +
+                            '<span class="mr-2 text-black" style="font-size: 18px;"> ' + response[i].fileName + '</span>' +
+                            '<div class="mt-0">' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;"> Size : ' + fileSizeCal(response[i].fileSize) + '</small>' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;"> Type : ' + response[i].fileType + '</small>' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;"> Uploaded on : ' + response[i].fileTimestamp + '</small>' +
+                            '</div>' +
+                            '</span>' +
+                            '<span>' +
+                            '<!-- <button class="btn btn-float btn-danger my-1"><i class="far fa-trash-alt"></i></button>' +
+                            '<button class="btn btn-float btn-success my-1"><i class="fas fa-check"></i></button>' +
+                            '<button class="btn btn-float btn-danger my-1"><i class="fas fa-undo-alt"></i></button> -->' +
+                            '</span>' +
+                            '<a class="btn btn-success" href="/Te_download/download/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuUpId + '-' + response[i].fileName + '">download</a>' +
+                            '<a class="btn btn-danger" href="/Te_download/delete/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuUpId + '-' + response[i].fileName + '">delete</a>' +
+                            '</li>';
+                    }
+                }
+                $('#menuDowId-' + getUploaded[popUp].menuUpId).html(html);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Status: " + textStatus + "Error: " + errorThrown);
+            }
+        });
     }
 });

@@ -40,6 +40,7 @@ class Admin_subject_semester extends MY_Controller
         $data = array(
             'subsem_semester' => $this->input->post('semester_id'),
             'subsem_subject' => $this->input->post('subject_id'),
+            'subsem_teacher' => $this->input->post('teacher_id'),
         );
         $this->Model_su_subject_semester->Add_data_model($data);
         
@@ -53,6 +54,7 @@ class Admin_subject_semester extends MY_Controller
         $data = array(
             'subsem_semester' => $this->input->post('semester_id'),
             'subsem_subject' => $this->input->post('subject_id'),
+            'subsem_teacher' => $this->input->post('teacher_id'),
         );
         $this->Model_su_subject_semester->Edit_data_model($org_id, $org_sub, $data);
         
@@ -79,7 +81,25 @@ class Admin_subject_semester extends MY_Controller
          
     }
 
-    
+    public function showTeacher()
+    { 
+        $result = $this->Model_su_subject_semester->getTeacher();
+        echo json_encode($result);
+    }
+
+    public function takeTeacher()
+    { 
+        $subjectId = $this->input->post('subject');
+        $result = $this->Model_su_subject_semester->selectTeacher($subjectId);
+        echo json_encode($result);
+    }
+
+    public function takeSubject()
+    { 
+        $subjectId = $this->input->post('teacher');
+        $result = $this->Model_su_subject_semester->selectSubject($subjectId);
+        echo json_encode($result);
+    }
 
     public function Search_Show_Data_ctl()
     {

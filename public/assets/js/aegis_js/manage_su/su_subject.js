@@ -318,7 +318,6 @@ $(document).ready(function() {
             data: '&datamajor=' + $data,
             dataType: "json",
             success: function(response) {
-                console.log(response.length);
                 var html = '';
                 var i;
                 if (response != null) {
