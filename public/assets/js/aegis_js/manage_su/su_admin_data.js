@@ -13,50 +13,50 @@ $(document).ready(function() {
     // 2.formAdd
     // 3.modaldel
 
-    $('#titleNameTxt').text("จัดการข้อมูลนักศึกษา");
+    $('#titleNameTxt').text("จัดการข้อมูลผู้ใช้งาน");
     $('#findByTxt').text("ค้นหาด้วย");
     $('#btnFindTxt').text("ค้นหา");
     $('#saveModalTxt').text("SAVE_MODAL");
     $('#delModalTxt').text("ยืนยันการลดข้อมูล");
-    $('#tableTitleTxt').text("จัดการข้อมูลนักศึกษา");
+    $('#tableTitleTxt').text("จัดการข้อมูลผู้ใช้งาน");
     $('#rowPerPageTxt').text("Rows per page:");
 
-    // var btnAddText = 'เพิ่มข้อมูลสาขา';
-    // var btnEditText = 'แก้ไขข้อมูลสาขา';
+    var btnAddText = 'เพิ่มข้อมูลสาขา';
+    var btnEditText = 'แก้ไขข้อมูลสาขา';
 
     var pagingSize = [10, 25, 50, 100];
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['std_code_id', 'รหัส'],
-        ['std_Tname', 'ชื่อ ภาษาไทย'],
-        ['std_Ename', 'ชื่อ ภาษาอังกฤษ'],
-        ['std_email', 'อีเมล'],
-        ['faculty_name', 'คณะ'],
-        ['std_major', 'สาขา']
+        ['admin_id', 'ID'],
+        ['admin_Tname', 'TNAME'],
+        ['admin_Ename', 'ENAME'],
+        ['admin_email', 'EMAIL'],
     ];
 
     //head of table
-    var theadGenValue = ['รหัส', 'ชื่อ (ไทย)', 'ชื่อ (อังกฤษ)', 'อีเมล', 'คณะ', 'สาขา', 'option'];
+    var theadGenValue = ['admin_id' /*, 'admin_Password'*/ , 'admin_Tname', 'admin_Ename', 'admin_email', 'option'];
 
-    var formData = ["#std_code_id", "#std_Tname", "#std_Ename", "#std_email"];
+    var formData = ["#admin_id", /*"#admin_password",*/ "#admin_Tname", "#admin_Ename", "#admin_email"];
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['รหัส', 'std_code_id', 'std_code_id', ''],
-        ['ชื่อ (ไทย)', 'std_Tname', 'std_Tname', ''],
-        ['ชื่อ (อังกฤษ)', 'std_Ename', 'std_Ename', ''],
-        ['อีเมล', 'std_email', 'std_email', '']
+        ['admin_id', 'admin_id', 'admin_id', 'admin_id'],
+        // ['admin_password', 'admin_password', 'admin_password', 'admin_password'],
+        ['admin_email', 'admin_email', 'admin_email', 'admin_email'],
+        ['admin_Tname', 'admin_Tname', 'admin_Tname', 'admin_Tname'],
+        ['admin_Ename', 'admin_Ename', 'admin_Ename', 'admin_Ename']
     ];
 
-    var popData = ["#popupID", "#popupTname", "#popupEname", "#popupEmail"];
+    var popData = ["#popupID", /*"#popupPwd",*/ "#popupTname", "#popupEname", "#popupEmail"];
 
     var popValue = [
         //[POP_ID,POP_TEXT]
         ['popupID', 'กรุณาระบุไอดี'],
-        ['popupTname', 'กรุณาระบุชื่อ'],
-        ['popupEname', 'กรุณาระบุไอดี'],
-        ['popupEmail', 'กรุณาระบุชื่อสาขา']
+        //['popupPwd', 'กรุณาระบุพาส'],
+        ['popupTname', 'กรุณาระบุชื่อภาษาไทย'],
+        ['popupEname', 'กรุณาระบุชื่อภาษาอังกฤษ'],
+        ['popupEmail', 'กรุณาระบุอีเมล']
     ];
 
     function formDataValClr() {
@@ -105,18 +105,10 @@ $(document).ready(function() {
                 '<input type="text" type="text" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
                 '</div>';
         }
-
-        html += '<div class="col-md-4 mb-3" >' +
-        '<label>คณะ</label>' +
-        '<select id="facultySelectAdd" class="form-control"></select>' +
-        '</div>';
-
-        html += '<div class="col-md-4 mb-3" >' +
-            '<label>สาขา</label>' +
-            '<select id="majorSelectAdd" class="form-control"></select>' +
-            '</div>';
         html += '</div>';
         $('#inModelBody').html(html);
+        //$('#admin_password').get(0).type = 'password';
+        //$('#admin_password').addClass('password');
     }
 
     function theadGen() {
@@ -218,7 +210,7 @@ $(document).ready(function() {
     //--------------------------------------------START_CANT_TOUCH_THIS--------------------------------------------//
     function show_data() {
         $.ajax({
-            url: "../Admin_student_data/Show_Max_Data_ctl",
+            url: "../Admin_admin_data/Show_Max_Data_ctl",
             dataType: "json",
             success: function(maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
@@ -240,36 +232,33 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             data: "&start=" + start + "&limit=" + limit,
-            url: "../Admin_student_data/Show_Data_ctl",
+            url: "../Admin_admin_data/Show_Data_ctl",
             dataType: "json",
             success: function(response) {
                 datatable = response;
                 var html = '';
                 var i;
                 if (response != null) {
-                    console.log(response);
                     for (i = 0; i < response.length; i++) {
                         html +=
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].std_code_id + '" id="' + response[i].std_code_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].std_code_id + i + '">' + response[i].std_code_id + '</label>' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].admin_id + '" id="' + response[i].admin_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].admin_id + i + '">' + response[i].admin_id + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].std_Tname + '</td>' +
-                            '<td>' + response[i].std_Ename + '</td>' +
-                            '<td>' + response[i].std_email + '</td>' +
-                            '<td>' + response[i].faculty_name + '</td>' +
-                            '<td>' + response[i].major_name + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
+                            //'<td>' + response[i].admin_password + '</td>' +
+                            '<td>' + response[i].admin_Tname + '</td>' +
+                            '<td>' + response[i].admin_Ename + '</td>' +
+                            '<td>' + response[i].admin_email + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].admin_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
                 $('#showAllData').html(html);
             }
         });
-        getFaculty();
     }
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
 
@@ -278,7 +267,15 @@ $(document).ready(function() {
     $("#inputFile").on("change", function() {
         html = '';
         _files = $(this)[0].files;
-
+        // var _listFileName = "";
+        // if (_files.length > 0) {
+        //     var _fileName = [];
+        //     $.each(_files, function(k, v) {
+        //         _fileName[k] = v.name;
+        //         console.log(_fileName[k])
+        //     });
+        //     _listFileName = _fileName.join(",");
+        // }
         var size = fileSizeCal(_files[0].size);
         console.log(_files[0].name + ' ' + size);
         $(this).next("label").text(_files[0].name);
@@ -329,7 +326,7 @@ $(document).ready(function() {
                 return xhr;
             },
             type: "POST",
-            url: '../Admin_student_data/Add_Data_ctl_csv',
+            url: '../Admin_admin_data/Add_Data_ctl_csv',
             data: form_data,
             contentType: false,
             cache: false,
@@ -368,55 +365,13 @@ $(document).ready(function() {
         });
     });
 
-    $('#facultySelectAdd').change(function (e) { 
-        e.preventDefault();
-        getMajor();
-    });
-
-    function getFaculty(){ 
-        $.ajax({
-            url: "../Admin_student_data/Show_Data_faculty",
-            dataType: "json",
-            success: function(response) {
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
-                    }
-                }
-                $('#facultySelectAdd').html(html);
-                //$('#facultySelectAdd').val(datatable[ivalue].faculty_id);
-            }
-        });
-    }
-
-    function getMajor(){
-        //facultySelect = $('#facultySelectAdd :selected').val();
-        $.ajax({
-            type: "POST",
-            url: "../Admin_student_data/Show_Data_Major",
-            data: '&facultySelect=' + $('#facultySelectAdd :selected').val(),
-            dataType: "json",
-            success: function(response) {
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
-                    }
-                }
-                $('#majorSelectAdd').html(html);
-            }
-        });
-    }
-
     $('#btnAdd').click(function(e) {
         e.preventDefault();
-        iurl = '../Admin_student_data/Add_Data_ctl';
+        iurl = '../Admin_admin_data/Add_Data_ctl';
         $('#Modal').find('.modal-title').text('เพิ่มข้อมูลผู้ใช้งาน');
         $('#Modal').find('#btnSave').text('เพิ่มข้อมูลผู้ใช้งาน');
         $('#Modal').modal('show');
+
     });
 
     $('#btnAddcsv').click(function(e) {
@@ -440,7 +395,7 @@ $(document).ready(function() {
             check += i;
         }
         if (check == result) {
-            if (iurl == '../Admin_student_data/Add_Data_ctl') {
+            if (iurl == '../Admin_admin_data/Add_Data_ctl') {
                 txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
             } else {
@@ -448,16 +403,15 @@ $(document).ready(function() {
                 txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
             }
             data = $('#formAdd').serialize();
-            data2 = $("#majorSelectAdd :selected").val();
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: data + '&majorSelect=' + data2 + '&org_id=' + iddata,
+                data: data + '&org_id=' + iddata,
                 success: function(response) {
-                    document.getElementById('std_code_id').value = "";
+                    document.getElementById('admin_id').value = "";
                     formDataValClr();
                     show_data();
-                    if (iurl != '../Admin_student_data/Add_Data_ctl') {
+                    if (iurl != '../Admin_admin_data/Add_Data_ctl') {
                         $('#Modal').modal('hide');
                     };
                     Snackbar.show({
@@ -486,23 +440,19 @@ $(document).ready(function() {
     $('#showAllData').on('click', '.item-edit', function() {
         iddata = $(this).attr('data');
         ivalue = $(this).attr('value');
-        $('#std_code_id').val(datatable[ivalue].std_code_id);
-        $('#std_Tname').val(datatable[ivalue].std_Tname);
-        $('#std_Ename').val(datatable[ivalue].std_Ename);
-        $('#std_email').val(datatable[ivalue].std_email); 
-        console.log(datatable[ivalue].major_id,datatable[ivalue].major_name);
-        $('#facultySelectAdd').val(datatable[ivalue].faculty_id);
-        getMajor();
-        $('#majorSelectAdd').val(datatable[ivalue].major_id);
+        $('#admin_id').val(datatable[ivalue].admin_id);
+        //$('#admin_password').val(datatable[ivalue].admin_password);
+        $('#admin_Tname').val(datatable[ivalue].admin_Tname);
+        $('#admin_Ename').val(datatable[ivalue].admin_Ename);
+        $('#admin_email').val(datatable[ivalue].admin_email);
         $('#Modal').modal('show');
         $('#Modal').find('.modal-title').text('แก้ไขข้อมูลผู้ใช้งาน');
         $('#Modal').find('#btnSave').text('แก้ไขข้อมูลผู้ใช้งาน');
-        iurl = '../Admin_student_data/Edit_Data_ctl';
+        iurl = '../Admin_admin_data/Edit_Data_ctl';
     });
 
     $('#btnClose').click(function(e) {
         formDataValClr();
-        document.getElementById('majorSelectAdd').value = datatable[0].major_id;
         hideAllPop();
     });
 
@@ -512,11 +462,10 @@ $(document).ready(function() {
         data2 = $('#select_search').val();
         $.ajax({
             type: "POST",
-            url: "../Admin_student_data/Search_Show_Data_ctl",
+            url: "../Admin_admin_data/Search_Show_Data_ctl",
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
             success: function(response) {
-                datatable = response;
                 var html = '';
                 var i;
                 if (response != null) {
@@ -525,16 +474,15 @@ $(document).ready(function() {
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].std_code_id + '" id="' + response[i].std_code_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].std_code_id + i + '">' + response[i].std_code_id + '</label>' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].admin_id + '" id="' + response[i].admin_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].admin_id + i + '">' + response[i].admin_id + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].std_Tname + '</td>' +
-                            '<td>' + response[i].std_Ename + '</td>' +
-                            '<td>' + response[i].std_email + '</td>' +
-                            '<td>' + response[i].faculty_name + '</td>' +
-                            '<td>' + response[i].major_name + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
+                            //'<td>' + response[i].admin_password + '</td>' +
+                            '<td>' + response[i].admin_Tname + '</td>' +
+                            '<td>' + response[i].admin_Ename + '</td>' +
+                            '<td>' + response[i].admin_email + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].admin_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
@@ -549,7 +497,7 @@ $(document).ready(function() {
         if ($data.length > 0) {
             $.ajax({
                 type: "POST",
-                url: "../Admin_student_data/Delete_Data_ctl",
+                url: "../Admin_admin_data/Delete_Data_ctl",
                 data: {
                     $data
                 },

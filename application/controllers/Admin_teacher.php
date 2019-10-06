@@ -7,6 +7,7 @@ class Admin_teacher extends MY_Controller
     {
         parent::__construct();
         $this->load->model('manage_su/Model_su_teacher');
+        $this->load->model('manage_su/Model_su_teacher_major');
     }
 
     public function Show_Max_Data_ctl()
@@ -26,28 +27,37 @@ class Admin_teacher extends MY_Controller
     public function Add_Data_ctl()
     {
         $data = array(
-            'teacher_id' => $this->input->post('id_teacher'),
-            'teacher_name' => $this->input->post('name_teacher'),
-            'teacher_lastname' => $this->input->post('lastname_teacher'),
-            'teacher_email' => $this->input->post('email_teacher'),
-            'teacher_username' => $this->input->post('username_teacher'),
-            'teacher_major' => $this->input->post('major_id'),
-            'teacher_permission' => $this->input->post('permission_id')
+            'teacher_code_id' => $this->input->post('teacher_code_id'),
+            'teacher_Tname' => $this->input->post('teacher_Tname'),
+            'teacher_Ename' => $this->input->post('teacher_Ename'),
+            'teacher_email' => $this->input->post('teacher_email'),
+            'teacher_username' => $this->input->post('teacher_username'),
+            'teacher_password' => $this->input->post('teacher_password')
+            //'teacher_major' => $this->input->post('major_id'),
         );
         $this->Model_su_teacher->Add_data_model($data);
+        $this->Add_Data_TeacherMajor();
+    }
+
+    public function Add_Data_TeacherMajor()
+    {
+        $data = array(
+            'teamaj_teacherid' => $this->input->post('teacher_code_id'),
+            'teamaj_majorid' => $this->input->post('major_id'),
+        );
+        $this->Model_su_teacher_major->Add_data_model($data);
     }
 
     public function Edit_Data_ctl()
     {
         $org_id = $this->input->post('org_id');
         $data = array(
-            'teacher_id' => $this->input->post('id_teacher'),
-            'teacher_name' => $this->input->post('name_teacher'),
-            'teacher_lastname' => $this->input->post('lastname_teacher'),
-            'teacher_email' => $this->input->post('email_teacher'),
-            'teacher_username' => $this->input->post('username_teacher'),
-            'teacher_major' => $this->input->post('major_id'),
-            'teacher_permission' => $this->input->post('permission_id')
+            'teacher_code_id' => $this->input->post('teacher_code_id'),
+            'teacher_Tname' => $this->input->post('teacher_Tname'),
+            'teacher_Ename' => $this->input->post('teacher_Ename'),
+            'teacher_email' => $this->input->post('teacher_email'),
+            'teacher_username' => $this->input->post('teacher_username'),
+            'teacher_password' => $this->input->post('teacher_password')
         );
         $this->Model_su_teacher->Edit_data_model($org_id, $data);
     }
@@ -60,8 +70,10 @@ class Admin_teacher extends MY_Controller
 
     public function Search_Show_Data_ctl()
     {
-        $keyword = $this->input->post('data');
-        $result = $this->Model_su_teacher->Search_data_model($keyword);
+        $data = $this->input->post('data');
+        $keyword = $this->input->post('search');
+        $result = $this->Model_su_teacher->Search_data_model($data,$keyword);
         echo json_encode($result);
     }
+
 }

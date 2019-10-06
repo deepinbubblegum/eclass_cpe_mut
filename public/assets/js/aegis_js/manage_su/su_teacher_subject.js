@@ -6,6 +6,8 @@ $(document).ready(function() {
     var subjectdata;
     var teacherdata;
     var data_select_semester;
+    var iddata;
+    var iddata2;
 
     var limit = 10;
     var start = 0;
@@ -27,13 +29,13 @@ $(document).ready(function() {
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['semester_name', 'เทอม'],
-        ['subject_name', 'วิชา'],
-        ['user_Ename', 'ชื่ออาจารย์']
+        ['teasub_subjectid', 'รหัสวิชาวิชา'],
+        ['subject_name', 'ชื่อวิชา'],
+        ['teasub_teacherid', 'อาจารย์'],
     ];
 
     //head of table
-    var theadGenValue = ['Semester', 'Subject', 'Teacher', 'Option'];
+    var theadGenValue = ['Subject_id', 'Subject_name', 'Teacher', 'Option'];
 
     function dropPag() {
         var html = '';
@@ -58,8 +60,13 @@ $(document).ready(function() {
         var html = '';
         html += '<div class="form-row" >';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Semester</label>' +
-            '<select id="selectAddSemester" class="form-control">' +
+            '<label>Faculty</label>' +
+            '<select id="selectAddFaculty" class="form-control">' +
+            '</select>' +
+            '</div>';
+        html += '<div class="col-md-4 mb-3" >' +
+            '<label>Major</label>' +
+            '<select id="selectAddMajor" class="form-control">' +
             '</select>' +
             '</div>';
         html += '<div class="col-md-4 mb-3" >' +
@@ -75,36 +82,18 @@ $(document).ready(function() {
         html += '</div>';
         $('#inModelBody').html(html);
         $.ajax({
-            url: "../Admin_teacher_subject/Select_Data_Semester",
+            url: "../Admin_faculty/Show_Data_ctl",
             dataType: "json",
             success: function(response) {
-                console.log(response);
                 var html = '';
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].subsem_semester + '">' + response[i].semester_name + '</option>';
+                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
                     }
                 }
-                $('#selectAddSemester').html(html);
-                data_select_semester = $("#selectAddSemester :selected").val();
-                select_semester_for_subject();
-            }
-        });
-
-        $.ajax({
-            url: "../Admin_teacher/Show_Data_ctl",
-            dataType: "json",
-            success: function(response) {
-                console.log(response);
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].user_code_id + '">' + response[i].user_Ename + '</option>';
-                    }
-                }
-                $('#selectAddTeacher').html(html);
+                $('#selectAddFaculty').html(html);
+                select_major_add();
             }
         });
     }
@@ -214,6 +203,7 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 datatable = response;
+                console.log(response);
                 var html = '';
                 var i;
                 if (response != null) {
@@ -222,13 +212,13 @@ $(document).ready(function() {
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].semester_id + '" value="' + response[i].subject_id + '" data2="' + response[i].user_code_id + '" id="' + response[i].semester_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].semester_id + i + '">' + response[i].semester_name + '</label>' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].teacher_code_id + '" value="' + response[i].subject_id + '"  id="' + response[i].subject_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].subject_id + i + '">' + response[i].subject_id + '</label>' +
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
-                            '<td>' + response[i].user_Ename + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].semester_id + '" class="item-edit">Edit</a></td>' +
+                            '<td>' + response[i].teacher_Ename + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
 
@@ -250,6 +240,8 @@ $(document).ready(function() {
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
             success: function(response) {
+                datatable = response;
+                console.log(response);
                 var html = '';
                 var i;
                 if (response != null) {
@@ -258,16 +250,18 @@ $(document).ready(function() {
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].semester_id + '" value="' + response[i].subject_id + '" data2="' + response[i].user_code_id + '" id="' + response[i].semester_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].semester_id + i + '">' + response[i].semester_name + '</label>' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].teacher_code_id + '" value="' + response[i].subject_id + '"  id="' + response[i].subject_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].subject_id + i + '">' + response[i].subject_id + '</label>' +
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
-                            '<td>' + response[i].user_Ename + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].semester_id + '" class="item-edit">Edit</a></td>' +
+                            '<td>' + response[i].teacher_Ename + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
+
                 }
+
                 $('#showAllData').html(html);
             }
         });
@@ -281,39 +275,97 @@ $(document).ready(function() {
         subjectdata = null;
         iurl = "../Admin_teacher_subject/Add_Data_ctl";
         $('#Modal').find('.modal-title').text('เพิ่มข้อมูลอาจารย์ประจำวิชา');
+        $('#Modal').find('#btnSave').text('เพิ่มข้อมูล');
         $('#Modal').modal('show');
+        // $.ajax({
+        //     url: "../Admin_teacher/Show_Data_ctl",
+        //     dataType: "json",
+        //     success: function(response) {
+        //         console.log(response);
+        //         var html = '';
+        //         var i;
+        //         if (response != null) {
+        //             for (i = 0; i < response.length; i++) {
+        //                 html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Ename + '</option>';
+        //             }
+        //         }
+        //         $('#selectAddFaculty').html(html);
+        //     }
+        // });
     });
 
-    function select_semester_for_subject() {
+    $('#selectAddFaculty').change(function() {
+        select_major_add();
+    });
+
+    $('#selectAddMajor').change(function() {
+        select_teacher_add();
+        select_subject_add();
+    });
+
+    function select_major_add() {
+        $data = $('#selectAddFaculty :selected').val();
         $.ajax({
             type: "POST",
-            url: "../Admin_teacher_subject/Select_Data_Subject",
-            data: '&semester=' + data_select_semester,
+            url: "../Admin_major/Select_major",
+            data: '&datamajor=' + $data,
             dataType: "json",
             success: function(response) {
                 var html = '';
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].subsem_subject + '">' + response[i].subject_name + '</option>';
+                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
                     }
                 }
-                $('#selectAddSubject').html(html);
-                if (subjectdata != null) {
-                    $('#selectAddSubject').val(subjectdata);
-                }
+                $('#selectAddMajor').html(html);
+                select_teacher_add();
+                select_subject_add();
             }
         });
     }
 
+    function select_teacher_add() {
+        $data = $('#selectAddMajor :selected').val();
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher_subject/Select_Teacher_Add_ctl",
+            data: '&data=' + $data,
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Ename + '</option>';
+                    }
+                }
+                $('#selectAddTeacher').html(html);
+            }
+        });
+    }
 
-    $('#selectAddSemester').change(function(e) {
-        e.preventDefault();
-        data_select_semester = $("#selectAddSemester :selected").val();
-        subjectdata = null;
-        select_semester_for_subject();
-    });
-
+    function select_subject_add() {
+        $data = $('#selectAddMajor :selected').val();
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher_subject/Select_Subject_Add_ctl",
+            data: '&data=' + $data,
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].subject_id + '">' + response[i].subject_id + ' - ' + response[i].subject_name + '</option>';
+                    }
+                }
+                $('#selectAddSubject').html(html);
+            }
+        });
+    }
 
     $('#btnSave').click(function(e) {
         e.preventDefault();
@@ -324,17 +376,15 @@ $(document).ready(function() {
             txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
             txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
         }
-        data = $("#selectAddSemester :selected").val();
-        data2 = $("#selectAddSubject :selected").val();
-        data3 = $("#selectAddTeacher :selected").val();
+        data = $("#selectAddSubject :selected").val();
+        data2 = $("#selectAddTeacher :selected").val();
         $.ajax({
             type: "POST",
             url: iurl,
-            data: '&semester=' + data + '&subject=' + data2 + '&teacher=' + data3 + '&org_semester=' + semesterdata + '&org_subject=' + subjectdata + '&org_teacher=' + teacherdata,
+            data: '&subject=' + data + '&teacher=' + data2 + '&org_subject=' + iddata + '&org_teacher=' + iddata2,
             success: function(response) {
                 // document.getElementById("selectAddSemester").value = datatable[0].id;
                 // document.getElementById("selectAddSubject").value = datatable[0].subject_id;
-                document.getElementById("selectAddTeacher").value = datatable[0].user_code_id;
                 show_data();
                 if (iurl != "../Admin_teacher_subject/Add_Data_ctl") {
                     $('#Modal').modal('hide');
@@ -363,20 +413,93 @@ $(document).ready(function() {
 
     $('#showAllData').on('click', '.item-edit', function() {
         iddata = $(this).attr('data');
+        iddata2 = $(this).attr('data2');
+        iddata3 = $(this).attr('data3');
         ivalue = $(this).attr('value');
-        semesterdata = datatable[ivalue].semester_id;
-        subjectdata = datatable[ivalue].subject_id;
-        teacherdata = datatable[ivalue].user_code_id;
         $('#Modal').modal('show');
         $('#Modal').find('.modal-title').text('แก้ไขข้อมูลอาจารย์ประจำวิชา');
         $('#Modal').find('#btnSave').text('แก้ไขข้อมูล');
         iurl = '../Admin_teacher_subject/Edit_Data_ctl';
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher_subject/Select_Edit_Faculty",
+            data: '&datamajor=' + iddata3,
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
+                    }
+                }
+                $('#selectAddFaculty').html(html);
+                Edit_Select();
+            }
+        });
     });
+
+    function Edit_Select() {
+        $data = $('#selectAddFaculty :selected').val();
+        $.ajax({
+            type: "POST",
+            url: "../Admin_major/Select_major",
+            data: '&datamajor=' + $data,
+            dataType: "json",
+            success: function(response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                    }
+                }
+                $('#selectAddMajor').html(html);
+                $('#selectAddMajor').val(iddata3);
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher_subject/Select_Teacher_Add_ctl",
+            data: '&data=' + iddata3,
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Ename + '</option>';
+                    }
+                }
+                $('#selectAddTeacher').html(html);
+                $('#selectAddTeacher').val(iddata2);
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher_subject/Select_Subject_Add_ctl",
+            data: '&data=' + iddata3,
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].subject_id + '">' + response[i].subject_id + ' - ' + response[i].subject_name + '</option>';
+                    }
+                }
+                $('#selectAddSubject').html(html);
+                $('#selectAddSubject').val(iddata);
+            }
+        });
+    }
 
     $('#btnDel').click(function(e) {
         e.preventDefault();
         data_subject = selectchb();
-        data_semester = selectchb_semes();
         data_teacher = selectchb_tea();
         if (data_subject.length > 0) {
             $.ajax({
@@ -384,7 +507,6 @@ $(document).ready(function() {
                 url: "../Admin_teacher_subject/Delete_Data_ctl",
                 data: {
                     data_subject,
-                    data_semester,
                     data_teacher
                 },
                 success: function(response) {
@@ -425,18 +547,10 @@ $(document).ready(function() {
         return item;
     }
 
-    function selectchb_semes() {
-        var item = [];
-        $('input[name^=checkitem]:checked').each(function() {
-            item.push($(this).attr('data'));
-        });
-        return item;
-    }
-
     function selectchb_tea() {
         var item = [];
         $('input[name^=checkitem]:checked').each(function() {
-            item.push($(this).attr('data2'));
+            item.push($(this).attr('data'));
         });
         return item;
     }

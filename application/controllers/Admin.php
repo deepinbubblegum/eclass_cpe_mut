@@ -73,6 +73,14 @@ class Admin extends MY_Controller
         $this->load->view('admin/template_su/footer_su_view');
     }
 
+    public function teacher_major_data()
+    {
+        $this->load->view('admin/template_su/header_view');
+        $this->load->view('admin/template_su/side_menu_su_view');
+        $this->load->view('admin/teacher_major_data_view');
+        $this->load->view('admin/template_su/footer_su_view');
+    }
+
     public function admin_data()
     {
         $this->load->view('admin/template_su/header_view');

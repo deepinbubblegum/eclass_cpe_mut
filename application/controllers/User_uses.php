@@ -52,7 +52,6 @@ class User_uses extends MY_Controller
                                         'ses_id' => $sign_status[0]['teacher_code_id'],
                                         'ses_tname' => $sign_status[0]['teacher_Tname'],
                                         'ses_ename' => $sign_status[0]['teacher_Ename'],
-                                        'ses_mojor_id' => $sign_status[0]['teacher_major'],
                                         'ses_status' => 'teacher'
                                 );
                                 $this->session->set_userdata($newdata);

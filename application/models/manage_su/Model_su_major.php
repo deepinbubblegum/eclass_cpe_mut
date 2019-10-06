@@ -65,4 +65,12 @@ class Model_su_major extends CI_Model
                 $this->db->where_in('major_id', $data);
                 $this->db->delete('major');
         }
+
+        public function Select_major_medel($major)
+        {
+                $query = $this->db->query('SELECT * FROM major WHERE major_faculty="'.$major.'" ');
+                if ($query->num_rows() > 0) {
+                        return $query->result();
+                }
+        }
 }

@@ -15,10 +15,11 @@ class Model_su_subject_semester extends CI_Model
             $limit = null;
             $start = null;
         }
-        $this->db->select('semester_id,semester_name,subject_id, subject_name, subject_teacher');
+        $this->db->select('*');
         $this->db->from('subject_semester');
         $this->db->join('semester', 'subject_semester.subsem_semester = semester.semester_id', 'inner');
         $this->db->join('subject', 'subject_semester.subsem_subject = subject.subject_id', 'left');
+        $this->db->join('teacher', 'subject_semester.subsem_teacher = teacher.teacher_code_id', 'inner');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

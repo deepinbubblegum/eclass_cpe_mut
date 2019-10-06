@@ -30,12 +30,10 @@ $(document).ready(function() {
         //[VALUE,TEXT]
         ['subject_id', 'รหัสวิชา'],
         ['subject_name', 'ชื่อวิชา'],
-        ['major_name', 'คณะ'],
-        ['user_Ename', 'ชื่ออาจารย์']
-
+        ['major_name', 'สาขา'],
     ];
     //head of table
-    var theadGenValue = ['subject_id', 'subject_name', 'major_name', 'teacher_name', 'Option'];
+    var theadGenValue = ['subject_id', 'subject_name', 'major_name', 'Option'];
 
     var formData = ["#subject_id", "#subject_name", "#major_name"];
 
@@ -99,32 +97,16 @@ $(document).ready(function() {
                 '<input type="text" type="text" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
                 '</div>';
         }
+        html += '<div class="col-md-4 mb-3" id="facultySelect">' +
+            '<label>Faculty</label>' +
+            '<select id="facultySelectAdd" class="form-control"></select>' +
+            '</div>';
         html += '<div class="col-md-4 mb-3" >' +
             '<label>Major</label>' +
             '<select id="selectAddMajor" class="form-control"></select>' +
             '</div>';
-        html += '<div class="col-md-4 mb-3" >' +
-            '<label>Teacher</label>' +
-            '<select id="selectAddTeacher" class="form-control"></select>' +
-            '</div>';
         html += '</div>';
         $('#inModelBody').html(html);
-
-        $.ajax({
-            url: "../Admin_subject/Show_Data_user",
-            dataType: "json",
-            success: function(response) {
-                console.log(response);
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].user_code_id + '">' + response[i].user_Ename + '</option>';
-                    }
-                }
-                $('#selectAddTeacher').html(html);
-            }
-        });
     }
 
     function theadGen() {
@@ -240,8 +222,7 @@ $(document).ready(function() {
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
-                            '<td>' + response[i].user_Ename + '</td>' +
-                            '<td><a data="' + response[i].subject_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            '<td><a data="' + response[i].subject_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
@@ -260,6 +241,7 @@ $(document).ready(function() {
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
             success: function(response) {
+                datatable = response;
                 var html = '';
                 var i;
                 if (response != null) {
@@ -274,8 +256,7 @@ $(document).ready(function() {
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
-                            '<td>' + response[i].user_Ename + '</td>' +
-                            '<td><a data="' + response[i].subject_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            '<td><a data="' + response[i].subject_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
@@ -308,9 +289,36 @@ $(document).ready(function() {
         $('#Modal').find('.modal-title').text(btnAddText);
         $('#Modal').modal('show');
         $.ajax({
-            url: "../Admin_major/Show_Data_ctl",
+            url: "../Admin_faculty/Show_Data_ctl",
             dataType: "json",
             success: function(response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
+                    }
+                }
+                $('#facultySelectAdd').html(html);
+                select_major_add();
+            }
+        });
+    });
+
+    $('#facultySelectAdd').change(function() {
+        //alert($('#facultySelectAdd').val());
+        select_major_add();
+    });
+
+    function select_major_add() {
+        $data = $('#facultySelectAdd :selected').val();
+        $.ajax({
+            type: "POST",
+            url: "../Admin_major/Select_major",
+            data: '&datamajor=' + $data,
+            dataType: "json",
+            success: function(response) {
+                console.log(response.length);
                 var html = '';
                 var i;
                 if (response != null) {
@@ -321,7 +329,7 @@ $(document).ready(function() {
                 $('#selectAddMajor').html(html);
             }
         });
-    });
+    }
 
     $('#btnSave').click(function(e) {
         e.preventDefault();
@@ -341,7 +349,6 @@ $(document).ready(function() {
         if (check == result) {
             data = $('#formAdd').serialize();
             data2 = $("#selectAddMajor :selected").val();
-            data3 = $("#selectAddTeacher :selected").val();
             if (iurl == '../Admin_subject/Add_Data_ctl') {
                 txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
@@ -355,7 +362,7 @@ $(document).ready(function() {
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: data + '&major_id=' + data2 + '&teacher=' + data3,
+                data: data + '&major_id=' + data2,
                 success: function(response) {
                     formDataValClr();
                     show_data();
@@ -384,18 +391,22 @@ $(document).ready(function() {
 
     $('#showAllData').on('click', '.item-edit', function() {
         iddata = $(this).attr('data');
+        iddata2 = $(this).attr('data2');
+        iddata3 = $(this).attr('data3');
         ivalue = $(this).attr('value');
         $('#subject_id').val(datatable[ivalue].subject_id);
         $('#subject_name').val(datatable[ivalue].subject_name);
-        console.log(datatable[ivalue].subject_name, datatable[ivalue].subject_id)
         $('#Modal').modal('show');
         $('#Modal').find('.modal-title').text(btnEditText);
 
         iurl = '../Admin_subject/Edit_Data_ctl';
         $.ajax({
-            url: "../Admin_major/Show_Data_ctl",
+            type: "POST",
+            url: "../Admin_major/Select_major",
+            data: '&datamajor=' + iddata3,
             dataType: "json",
             success: function(response) {
+                console.log(response.length);
                 var html = '';
                 var i;
                 if (response != null) {
@@ -404,9 +415,26 @@ $(document).ready(function() {
                     }
                 }
                 $('#selectAddMajor').html(html);
+                $('#selectAddMajor').val(iddata2);
+            }
+        });
+        $.ajax({
+            url: "../Admin_faculty/Show_Data_ctl",
+            dataType: "json",
+            success: function(response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
+                    }
+                }
+                $('#facultySelectAdd').html(html);
+                $('#facultySelectAdd').val(iddata3);
             }
         });
     });
+
 
     $('#btnDel').click(function(e) {
         e.preventDefault();

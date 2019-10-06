@@ -42,7 +42,7 @@ class Model_user_uses extends CI_Model
                 if ($query_admin->num_rows() == 1) {
                        return $query_admin->result_array();
                 }else{
-                        $this->db->select('teacher_code_id, teacher_Tname, teacher_Ename, teacher_major');
+                        $this->db->select('teacher_code_id, teacher_Tname, teacher_Ename');
                         $this->db->from('teacher');
                         $this->db->where('teacher_username', $username);
                         $this->db->where('teacher_password', $password);

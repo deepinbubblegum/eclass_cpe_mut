@@ -36,7 +36,6 @@ class Admin_subject extends MY_Controller
                         'subject_id' => $this->input->post('subject_id'),
                         'subject_name' => $this->input->post('subject_name'),
                         'subject_major' => $this->input->post('major_id'),
-                        'subject_teacher' => $this->input->post('teacher')
                 );
                 $this->Model_su_subject->Add_data_model($data);
         }
@@ -47,7 +46,6 @@ class Admin_subject extends MY_Controller
                         'subject_id' => $this->input->post('subject_id'),
                         'subject_name' => $this->input->post('subject_name'),
                         'subject_major' => $this->input->post('major_id'),
-                        'subject_teacher' => $this->input->post('teacher')
                 );
                 $this->Model_su_subject->Edit_data_model($org_id,$data);
         }
@@ -63,4 +61,10 @@ class Admin_subject extends MY_Controller
                 echo json_encode($result);
         }
 
+        public function showMajor()
+        { 
+                $faculty_id = $this->input->post('faculty_id');
+                $result = $this->Model_su_subject->getMajor($faculty_id);
+                echo json_encode($result);
+        }
 }
