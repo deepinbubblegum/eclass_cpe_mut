@@ -16,7 +16,7 @@ class Model_su_teacher extends CI_Model
             $limit = null;
             $start = null;
         }
-        $this->db->select('teacher_code_id, teacher_Tname, teacher_Ename, teacher_email, teacher_username, teacher_password');
+        $this->db->select('teacher_code_id, teacher_Tname, teacher_Ename, teacher_email, teacher_username');
         $this->db->from('teacher');
         $this->db->limit($limit, $start);
         $query = $this->db->get();

@@ -72,7 +72,7 @@ class Admin_admin_data extends MY_Controller
 
         $arg = array(
             'admin_id' => $this->input->post('admin_id'),
-            'admin_password' => sha1('7x33gv3a4dfc' . $this->input->post('admin_id')),
+            'admin_password' => $this->encryption_pass($this->input->post('admin_id')),
             'admin_Tname' => $this->input->post('admin_Tname'),
             'admin_Ename' => $this->input->post('admin_Ename'),
             'admin_email' => $this->input->post('admin_email'),
@@ -91,7 +91,7 @@ class Admin_admin_data extends MY_Controller
         $org_id = $this->input->post('org_id');
         $data = array(
             'admin_id' => $this->input->post('admin_id'),
-            'admin_password' => sha1('7x33gv3a4dfc' . $this->input->post('admin_id')),
+            'admin_password' => $this->encryption_pass($this->input->post('admin_id')),
             'admin_Tname' => $this->input->post('admin_Tname'),
             'admin_Ename' => $this->input->post('admin_Ename'),
             'admin_email' => $this->input->post('admin_email'), 

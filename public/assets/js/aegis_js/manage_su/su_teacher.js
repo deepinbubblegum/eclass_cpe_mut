@@ -23,9 +23,9 @@ $(document).ready(function() {
 
     var theadGenValue = ['teacher_code_id', 'teacher_Tname', 'teacher_Ename', 'teacher_email', 'teacher_username', 'option'];
 
-    var formData = ["#teacher_code_id", "#teacher_Tname", "#teacher_Ename", "#teacher_email", "#teacher_username", "#teacher_password"];
+    var formData = ["#teacher_code_id", "#teacher_Tname", "#teacher_Ename", "#teacher_email", "#teacher_username"];
 
-    var popData = ["#popupID", "#popupTname", "#popupEname", "#popupEmail", "#popupusername", "#popuppassword"];
+    var popData = ["#popupID", "#popupTname", "#popupEname", "#popupEmail", "#popupusername"];
 
     var popValue = [
         //[POP_ID,POP_TEXT]
@@ -33,8 +33,7 @@ $(document).ready(function() {
         ['popupTname', 'กรุณาระบุชื่อ(TH)'],
         ['popupEname', 'กรุณาระบุชื่อ(EN)'],
         ['popupEmail', 'กรุณาระบุอีเมล'],
-        ['popupusername', 'กรุณาระบุชื่อผู้ใช้'],
-        ['popuppassword', 'กรุณาระบุรหัสผ่านผู้ใช้'],
+        ['popupusername', 'กรุณาระบุชื่อผู้ใช้']
     ];
 
     var inModelValue = [
@@ -43,8 +42,7 @@ $(document).ready(function() {
         ['teacher_Tname', 'teacher_Tname', 'teacher_Tname', 'teacher_Tname'],
         ['teacher_Ename', 'teacher_Ename', 'teacher_Ename', 'teacher_Ename'],
         ['teacher_email', 'teacher_email', 'teacher_email', 'teacher_email'],
-        ['teacher_username', 'teacher_username', 'teacher_username', 'teacher_username'],
-        ['teacher_password', 'teacher_password', 'teacher_password', 'teacher_password']
+        ['teacher_username', 'teacher_username', 'teacher_username', 'teacher_username']
     ];
 
     var dropSearchValue = [
@@ -282,7 +280,6 @@ $(document).ready(function() {
         document.getElementById('teacher_Ename').value = "";
         document.getElementById('teacher_email').value = "";
         document.getElementById('teacher_username').value = "";
-        document.getElementById('teacher_password').value = "";
     });
 
     $('#facultySelectAdd').change(function() {
@@ -348,7 +345,6 @@ $(document).ready(function() {
                     document.getElementById('teacher_Ename').value = "";
                     document.getElementById('teacher_email').value = "";
                     document.getElementById('teacher_username').value = "";
-                    document.getElementById('teacher_password').value = "";
                     //document.getElementById('majorSelectAdd').value = datatable[0].major_id;
                     show_data();
                     if (iurl != '../Admin_teacher/Add_Data_ctl') {
@@ -386,7 +382,6 @@ $(document).ready(function() {
         $('#teacher_Ename').val(datatable[ivalue].teacher_Ename);
         $('#teacher_email').val(datatable[ivalue].teacher_email);
         $('#teacher_username').val(datatable[ivalue].teacher_username);
-        $('#teacher_password').val(datatable[ivalue].teacher_password);
         $('#majorSelect').hide();
         $('#facultySelect').hide();
         $('#Modal').modal('show');
