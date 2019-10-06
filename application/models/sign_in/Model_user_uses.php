@@ -46,6 +46,8 @@ class Model_user_uses extends CI_Model
                         $this->db->from('teacher');
                         $this->db->where('teacher_username', $username);
                         $this->db->where('teacher_password', $password);
+                        $this->db->or_where('teacher_email',$username);
+                        $this->db->where('teacher_password', $password);
                         $query_teacher = $this->db->get();
                         if ($query_teacher->num_rows() == 1) {
                                 return $query_teacher->result_array();
@@ -53,6 +55,8 @@ class Model_user_uses extends CI_Model
                                 $this->db->select('std_code_id, std_Tname, std_Ename, std_major');
                                 $this->db->from('student');
                                 $this->db->where('std_code_id', $username);
+                                $this->db->where('std_password', $password);
+                                $this->db->or_where('std_email',$username);
                                 $this->db->where('std_password', $password);
                                 $query_student = $this->db->get();
                                 if ($query_student->num_rows() == 1) {
