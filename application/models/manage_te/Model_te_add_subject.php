@@ -33,13 +33,34 @@ class Model_te_add_subject extends CI_Model
 
     public function Show_Data_subject_add_model($te_id)
     {
-        $query = $this->db->query('SELECT subject_id, subject_name, subject_teacher
-            FROM subject
-            WHERE subject_teacher = "'.$te_id.'"');
+        $query = $this->db->query('SELECT subject_id, subject_name
+            FROM teacher_subject
+            LEFT JOIN subject
+            ON teasub_subjectid = subject_id
+            WHERE teasub_teacherid = "'.$te_id.'"');
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {
             return 0;
         }
+    }
+
+    public function selectSemester()
+    {
+        
+            $this->db->select('semester_id, semester_year, semester_part, semester_name');
+            $this->db->from('semester');
+            $this->db->order_by("semester_id", "DESC");
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                        return $query->result();
+            } else {
+                    return 0;
+            }
+    }
+
+    public function Add_data_model_subject($data)
+    {
+        $this->db->insert('subject_semester', $data);
     }
 }

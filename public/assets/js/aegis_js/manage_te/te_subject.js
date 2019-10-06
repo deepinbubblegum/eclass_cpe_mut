@@ -8,7 +8,7 @@ $(document).ready(function() {
 
     function showSemester() {
         $.ajax({
-            url: "../Std_subject/getSemester",
+            url: "../Teacher_add_subject/getSemester",
             dataType: "json",
             success: function(response) {
                 var html = '';
@@ -79,14 +79,15 @@ $(document).ready(function() {
     var url = $(location).attr('href').split("/");
 
     add_modal_data();
+
     function add_modal_data() {
-        iurl = "/" + url[3] + "/Admin_subject_semester/Add_Data_ctl";
+        iurl = "/" + url[3] + "/Teacher_add_subject/Add_Data_ctl_te";
         $('#Modal').find('.modal-title').text('เพิ่มข้อมูลวิชาประจำปีการศึกษา');
         $('#Modal').modal('show');
         $.ajax({
-            url: "/" + url[3] + "/Admin_semester/Show_Data_ctl",
+            url: "../Teacher_add_subject/getSemester",
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -100,7 +101,7 @@ $(document).ready(function() {
         $.ajax({
             url: "/" + url[3] + "/Teacher_add_subject/Subject_Add_data_ctl",
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 console.log(response);
                 var html = '';
                 var i;
@@ -114,9 +115,9 @@ $(document).ready(function() {
         });
     }
 
-    $('#btnSave').click(function (e) {
+    $('#btnSave').click(function(e) {
         e.preventDefault();
-        if (iurl == "/" + url[3] + '/Admin_subject_semester/Add_Data_ctl') {
+        if (iurl == "/" + url[3] + '/Teacher_add_subject/Add_Data_ctl_te') {
             txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
             txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
         } else {
@@ -125,12 +126,12 @@ $(document).ready(function() {
         }
         data = $("#Semester_Form_add_option :selected").val();
         data2 = $("#Subject_Form_add_option :selected").val();
-        update_teasub = $("#Subject_Form_add_option").find(':selected').data('2');
+        //update_teasub = $("#Subject_Form_add_option").find(':selected').data('2');
         $.ajax({
             type: "POST",
             url: iurl,
             data: '&semester_id=' + data + '&subject_id=' + data2,
-            success: function () {
+            success: function() {
                 $('#Modal_add').modal('hide');
                 Snackbar.show({
                     actionText: 'close',
@@ -141,7 +142,7 @@ $(document).ready(function() {
                     text: txtsnack
                 });
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -150,14 +151,6 @@ $(document).ready(function() {
                     width: 'auto',
                     text: txtsnackerr + errorThrown + ' )'
                 });
-            }
-        });
-        $.ajax({
-            type: "POST",
-            url: "/" + url[3] + "/Admin_teacher_subject/Add_Data_ctl",
-            data: '&semester=' + data + '&subject=' + data2 + '&teacher=' + update_teasub,
-            success: function () {
-                $('#Modal_add').modal('hide');
             }
         });
         showSemester();

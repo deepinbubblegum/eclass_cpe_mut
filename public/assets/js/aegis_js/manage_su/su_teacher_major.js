@@ -2,6 +2,7 @@ $(document).ready(function() {
     var iddata;
     var iurl;
     var datatable;
+    var iddata;
     var iddata2;
 
     var limit = 10;
