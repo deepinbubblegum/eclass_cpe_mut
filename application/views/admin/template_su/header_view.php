@@ -167,25 +167,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 &nbsp;&nbsp;ข้อมูลวิชาประจำเทอม
                                         </span>
                                 </a>
-                                <!-- <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher'); ?>">
+                                <a class="nav-item nav-link" href="<?php echo base_url('admin/student_data'); ?>">
+                                        <span style="font-size: 1.5em;">
+                                                <i class="fas fa-barcode"></i></span>
+                                        <span style="font-size: 1.2em;">
+                                                &nbsp;&nbsp;ข้อมูลนักศึกษา
+                                        </span>
+                                </a>
+                                <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_data'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-barcode"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ข้อมูลอาจารย์
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/student'); ?>">
-                                        <span style="font-size: 1.5em;">
-                                                <i class="fas fa-barcode"></i></span>
-                                        <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;ข้อมูลนักศึกษา
-                                        </span>
-                                </a> -->
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/user_data'); ?>">
+                                <a class="nav-item nav-link" href="<?php echo base_url('admin/admin_data'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-users"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;ข้อมูลผู้ใช้งาน
+                                                &nbsp;&nbsp;ข้อมูลแอดมิน
                                         </span>
                                 </a>
                                 <a class="nav-item nav-link" href="<?php echo base_url('admin/permission'); ?>">

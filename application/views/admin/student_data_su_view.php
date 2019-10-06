@@ -5,11 +5,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <html lang="en">
 
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <?php echo assets_js('aegis_js/manage_su/su_student.js'); ?>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <?php
+    echo assets_js('aegis_js/manage_su/su_student_data.js');
+    ?>
 </head>
+
 <body>
     <div class="col text-center mt-3">
         <nav class="navbar navbar-light " style="max-height: auto; min-width: 335px; background-color: #dadfe4;">
@@ -17,7 +20,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <span style="font-size: 1.2em;">
                     <i class="fas fa-tachometer-alt"></i></span>
                 <span style="font-size: 0.8em;">
-                &nbsp;<span class="title-name" id="titleNameTxt">TITLE_NAME</span>
+                    &nbsp;<span class="title-name" id="titleNameTxt">TITLE_NAME</span>
                 </span>
             </div>
             <div class="form-inline">
@@ -26,7 +29,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </span>
                 <select class="custom-select mr-sm-2" id="select_search">
                     <!-- dropSearch(); -->
-                    <option >SELECT_SEARCH_TEXT</option>
+                    <option>SELECT_SEARCH_TEXT</option>
                 </select>
                 <input class="form-control mr-sm-2" id="SearchName" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn btn-secondary my-2 my-sm-0" id="btnSearch">
@@ -65,6 +68,47 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
         <!-- End Modal -->
 
+        <!-- Modal CSV-->
+        <div class="modal fade text-left" id="Modalcsv" tabindex="-1" role="dialog" aria-labelledby="Modalcsv" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="saveModalTxt">เพิ่มไฟล์ CSV</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="needs-validation" novalidate>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="inputFile" name="inputFile" enctype="multipart/form-data" accept=".csv, text/csv" />
+                                    <label class="custom-file-label" for="inputFile">Choose file</label>
+                                </div>
+                                <!-- <div class="col-md-4 mb-3">
+                                    <label>Permission</label>
+                                    <select id="permissionSelectAddcsv" class="form-control"></select>
+                                </div> -->
+                            </div>
+                        </form>
+
+                        <div class="progress mt-2" id="progressupload">
+                        </div>
+
+                        <ul class="list-group mt-2" id="filedetail">
+                        </ul>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnUpload" class="btn btn-primary">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+
         <!-- Modal Delete-->
         <div class="modal fade text-left" id="modaldel" tabindex="-1" role="dialog" aria-labelledby="modaldel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -92,6 +136,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardTableDrop2" type="button"><i class="material-icons">more_vert</i></button>
                             <div aria-labelledby="cardTableDrop2" class="dropdown-menu dropdown-menu-right menu">
                                 <a class="dropdown-item" id="btnAdd">Add</a>
+                                <a class="dropdown-item" id="btnAddcsv">Add (File csv)</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" data-toggle="modal" data-target="#modaldel">Delete</a>
                             </div>
