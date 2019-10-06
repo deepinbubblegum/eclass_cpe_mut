@@ -75,9 +75,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_data'); ?>">
                                                                 <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-tachometer-alt"></i></span>
+                                                                        <i class="fas fa-users"></i></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;ข้อมูลอาจารย์
+                                                                </span>
+                                                        </a>
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_major_data'); ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-users"></i></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;ข้อมูลอาจารย์ประจำสาขา
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('admin/admin_data'); ?>">

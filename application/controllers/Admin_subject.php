@@ -36,7 +36,6 @@ class Admin_subject extends MY_Controller
                         'subject_id' => $this->input->post('subject_id'),
                         'subject_name' => $this->input->post('subject_name'),
                         'subject_major' => $this->input->post('major_id'),
-                        'subject_faculty' => $this->input->post('faculty_id')
                 );
                 $this->Model_su_subject->Add_data_model($data);
         }
@@ -47,7 +46,6 @@ class Admin_subject extends MY_Controller
                         'subject_id' => $this->input->post('subject_id'),
                         'subject_name' => $this->input->post('subject_name'),
                         'subject_major' => $this->input->post('major_id'),
-                        'subject_faculty' => $this->input->post('faculty_id')
                 );
                 $this->Model_su_subject->Edit_data_model($org_id,$data);
         }

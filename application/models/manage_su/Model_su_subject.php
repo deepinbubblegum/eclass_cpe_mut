@@ -30,10 +30,9 @@ class Model_su_subject extends CI_Model
                         $limit = null;
                         $start = null;
                 }
-                $this->db->select('*');
+                $this->db->select('subject_id, subject_name, major_name,major_id,major_faculty');
                 $this->db->from('subject');
                 $this->db->join('major', 'subject_major = major_id', 'left');
-                $this->db->join('faculty', 'subject_faculty = faculty_id', 'left');
                 $this->db->limit($limit, $start);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
@@ -48,17 +47,16 @@ class Model_su_subject extends CI_Model
 
         public function Search_data_model($keyword, $type)
         {
-                $this->db->select('subject_id, subject_name, major_name, subject_faculty, user_Ename');
+                $this->db->select('subject_id, subject_name, major_name');
                 $this->db->from('subject');
                 $this->db->join('major', 'subject_major = major_id', 'left');
-                $this->db->join('faculty', 'subject_faculty = faculty_id', 'left');
                 if ($type != null) {
                         $this->db->or_like($type, $keyword);
                 } else {
 
                         $this->db->like('subject_id', $keyword);
                         $this->db->or_like('subject_name', $keyword);
-                        $this->db->or_like('user_Ename', $keyword);
+                        $this->db->or_like('major_name', $keyword);
                 }
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {

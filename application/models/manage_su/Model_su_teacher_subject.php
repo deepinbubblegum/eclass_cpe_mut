@@ -15,11 +15,10 @@ class Model_su_teacher_subject extends CI_Model
             $limit = null;
             $start = null;
         }
-        $this->db->select('semester_id,semester_name,subject_id, subject_name,user_code_id,user_Ename');
+        $this->db->select('subject_id, subject_name,teacher_code_id,teacher_Ename,subject_major');
         $this->db->from('teacher_subject');
-        $this->db->join('semester', 'teacher_subject.teasub_semester = semester.semester_id', 'inner');
-        $this->db->join('subject', 'teacher_subject.teasub_subject = subject.subject_id', 'left');
-        $this->db->join('user_data', 'teacher_subject.teasub_teacher = user_data.user_code_id', 'left');
+        $this->db->join('subject', 'teacher_subject.teasub_subjectid = subject.subject_id', 'left');
+        $this->db->join('teacher', 'teacher_subject.teasub_teacherid = teacher.teacher_code_id', 'left');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -29,6 +28,32 @@ class Model_su_teacher_subject extends CI_Model
         }
     }
 
+    public function Select_teacher_medel($data)
+    {
+        $this->db->select('teacher_code_id,teacher_Ename');
+        $this->db->from('teacher_major');
+        $this->db->join('teacher', 'teacher_major.teamaj_teacherid = teacher.teacher_code_id', 'left');
+        $this->db->where('teamaj_majorid', $data);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Select_subject_medel($data)
+    {
+        $this->db->select('subject_id,subject_name');
+        $this->db->from('subject');
+        $this->db->where('subject_major', $data);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
 
     public function Add_data_model($data)
     {
@@ -36,38 +61,35 @@ class Model_su_teacher_subject extends CI_Model
     }
 
 
-    public function Edit_data_model($org_semester, $org_subject, $user_data, $data)
+    public function Edit_data_model($org_subject, $user_data, $data)
     {
-        $this->db->where('teasub_semester', $org_semester);
-        $this->db->where('teasub_subject', $org_subject);
-        $this->db->where('teasub_teacher', $user_data);
+        $this->db->where('teasub_subjectid', $org_subject);
+        $this->db->where('teasub_teacherid', $user_data);
         $this->db->update('teacher_subject', $data);
     }
 
 
-    public function Delete_Data_model($data_semester, $data_subject, $data_teacher)
+    public function Delete_Data_model($data_subject, $data_teacher)
     {
-        $this->db->where_in('teasub_semester', $data_semester);
-        $this->db->where_in('teasub_subject', $data_subject);
-        $this->db->where_in('teasub_teacher', $data_teacher);
+        $this->db->where_in('teasub_subjectid', $data_subject);
+        $this->db->where_in('teasub_teacherid', $data_teacher);
         $this->db->delete('teacher_subject');
     }
 
 
     public function Search_data_model($keyword, $type)
     {
-        $this->db->select('semester_id,semester_name,subject_id, subject_name,user_code_id,user_Ename , teasub_subject');
+        $this->db->select('subject_id, subject_name,teacher_code_id,teacher_Ename,subject_major');
         $this->db->from('teacher_subject');
-        $this->db->join('semester', 'teacher_subject.teasub_semester = semester.semester_id', 'inner');
-        $this->db->join('subject', 'teacher_subject.teasub_subject = subject.subject_id', 'left');
-        $this->db->join('user_data', 'teacher_subject.teasub_teacher = user_data.user_code_id', 'left');
+        $this->db->join('subject', 'teacher_subject.teasub_subjectid = subject.subject_id', 'left');
+        $this->db->join('teacher', 'teacher_subject.teasub_teacherid = teacher.teacher_code_id', 'left');
         if ($type != null) {
 
             $this->db->like($type, $keyword);
         } else {
-            $this->db->like('semester_name', $keyword);
             $this->db->or_like('subject_name', $keyword);
-            $this->db->or_like('user_Ename', $keyword);
+            $this->db->or_like('subject_id', $keyword);
+            $this->db->or_like('teacher_Ename', $keyword);
         }
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -96,6 +118,21 @@ class Model_su_teacher_subject extends CI_Model
         $this->db->from('subject_semester');
         $this->db->join('subject', 'subject_semester.subsem_subject = subject.subject_id', 'inner');
         $this->db->where('subsem_semester', $data);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Select_Faculty($data)
+    {
+        //$query = $this->db->query('SELECT DISTINCT  faculty_id ,faculty_name FROM major left join faculty on major_faculty = faculty_id WHERE major_id="'.$data.'" ');
+        $this->db->select('faculty_id ,faculty_name');
+        $this->db->from('major');
+        $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
+        $this->db->where('major_id', $data);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
