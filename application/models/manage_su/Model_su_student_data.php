@@ -15,7 +15,7 @@ class Model_su_student_data extends CI_Model
             $limit = null;
             $start = null;
         }
-        $this->db->select('std_code_id, std_Tname, std_Ename, std_email, faculty_name, major_name');
+        $this->db->select('std_code_id, std_Tname, std_Ename, std_email, faculty_name, faculty_id, major_name,major_id');
         $this->db->from('student');
         $this->db->join('major', 'std_major = major_id', 'left');
         $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
@@ -55,22 +55,32 @@ class Model_su_student_data extends CI_Model
 
     public function Search_data_model($keyword, $type)
     {
-        $this->db->select('std_code_id, std_Tname, std_Ename, std_email, faculty_name, major_name');
+        $this->db->select('std_code_id, std_Tname, std_Ename, std_email, faculty_name, faculty_id, major_name,major_id');
         $this->db->from('student');
         $this->db->join('major', 'std_major = major_id', 'left');
         $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
         if ($type != null) {
             if ($type == 'std_major') {
-                $searchData = 'std_major';
+                $searchData = 'major_name';
+            } else if ($type == 'std_Tname') {
+                $searchData = 'std_Tname';
+            } else if ($type == 'std_Ename') {
+                $searchData = 'std_Ename';
+            } else if ($type == 'std_email') {
+                $searchData = 'std_email';
+            } else if ($type == 'faculty_name') {
+                $searchData = 'faculty_name';
+            } else if ($type == 'std_code_id') {
+                $searchData = 'std_code_id';
             }
-            $this->db->or_like($searchData, $keyword);
+                $this->db->like($searchData, $keyword);
         } else {
             $this->db->like('std_code_id', $keyword);
             $this->db->or_like('std_Tname', $keyword);
             $this->db->or_like('std_Ename', $keyword);
             $this->db->or_like('std_email', $keyword);
-            $this->db->or_like('faculty_name', $keyword);
-            $this->db->or_like('std_major', $keyword);
+            // $this->db->or_like('faculty_name', $keyword);
+            $this->db->or_like('major_name', $keyword);
         }
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

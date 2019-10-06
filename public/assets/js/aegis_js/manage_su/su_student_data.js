@@ -260,8 +260,8 @@ $(document).ready(function() {
                             '<td>' + response[i].std_Tname + '</td>' +
                             '<td>' + response[i].std_Ename + '</td>' +
                             '<td>' + response[i].std_email + '</td>' +
-                            '<td>' + response[i].major_name + '</td>' +
                             '<td>' + response[i].faculty_name + '</td>' +
+                            '<td>' + response[i].major_name + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -269,6 +269,7 @@ $(document).ready(function() {
                 $('#showAllData').html(html);
             }
         });
+        getFaculty();
     }
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
 
@@ -369,11 +370,33 @@ $(document).ready(function() {
 
     $('#facultySelectAdd').change(function (e) { 
         e.preventDefault();
-        facultySelect = $('#facultySelectAdd :selected').val();
+        getMajor();
+    });
+
+    function getFaculty(){ 
+        $.ajax({
+            url: "../Admin_student_data/Show_Data_faculty",
+            dataType: "json",
+            success: function(response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
+                    }
+                }
+                $('#facultySelectAdd').html(html);
+                //$('#facultySelectAdd').val(datatable[ivalue].faculty_id);
+            }
+        });
+    }
+
+    function getMajor(){
+        //facultySelect = $('#facultySelectAdd :selected').val();
         $.ajax({
             type: "POST",
             url: "../Admin_student_data/Show_Data_Major",
-            data: '&facultySelect=' + facultySelect,
+            data: '&facultySelect=' + $('#facultySelectAdd :selected').val(),
             dataType: "json",
             success: function(response) {
                 var html = '';
@@ -386,7 +409,7 @@ $(document).ready(function() {
                 $('#majorSelectAdd').html(html);
             }
         });
-    });
+    }
 
     $('#btnAdd').click(function(e) {
         e.preventDefault();
@@ -394,21 +417,6 @@ $(document).ready(function() {
         $('#Modal').find('.modal-title').text('เพิ่มข้อมูลผู้ใช้งาน');
         $('#Modal').find('#btnSave').text('เพิ่มข้อมูลผู้ใช้งาน');
         $('#Modal').modal('show');
-        $.ajax({
-            url: "../Admin_student_data/Show_Data_faculty",
-            dataType: "json",
-            success: function(response) {
-                var html = '';
-                var i;
-                if (response != null) {
-                    html += '<option value="" disabled selected hidden>โปรดเลือกคณะ</option>';
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
-                    }
-                }
-                $('#facultySelectAdd').html(html);
-            }
-        });
     });
 
     $('#btnAddcsv').click(function(e) {
@@ -481,26 +489,15 @@ $(document).ready(function() {
         $('#std_code_id').val(datatable[ivalue].std_code_id);
         $('#std_Tname').val(datatable[ivalue].std_Tname);
         $('#std_Ename').val(datatable[ivalue].std_Ename);
-        $('#std_email').val(datatable[ivalue].std_email);
+        $('#std_email').val(datatable[ivalue].std_email); 
+        console.log(datatable[ivalue].major_id,datatable[ivalue].major_name);
+        $('#facultySelectAdd').val(datatable[ivalue].faculty_id);
+        getMajor();
+        $('#majorSelectAdd').val(datatable[ivalue].major_id);
         $('#Modal').modal('show');
         $('#Modal').find('.modal-title').text('แก้ไขข้อมูลผู้ใช้งาน');
         $('#Modal').find('#btnSave').text('แก้ไขข้อมูลผู้ใช้งาน');
         iurl = '../Admin_student_data/Edit_Data_ctl';
-        $.ajax({
-            url: "../Admin_student_data/Show_Data_faculty",
-            dataType: "json",
-            success: function(response) {
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
-                    }
-                }
-                $('#facultySelectAdd').html(html);
-                $('#facultySelectAdd').val(datatable[ivalue].faculty_id);
-            }
-        });
     });
 
     $('#btnClose').click(function(e) {
@@ -519,6 +516,7 @@ $(document).ready(function() {
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
             success: function(response) {
+                datatable = response;
                 var html = '';
                 var i;
                 if (response != null) {
