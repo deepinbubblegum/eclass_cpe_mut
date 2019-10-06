@@ -21,7 +21,7 @@ $(document).ready(function() {
     var pagingSize = [10, 25, 50, 100];
     dropGen();
 
-    var theadGenValue = ['teacher_code_id', 'teacher_Tname', 'teacher_Ename', 'teacher_email', 'teacher_username', 'option'];
+    var theadGenValue = ['teacher_code_id', 'teacher_Ename', 'teacher_Tname', 'teacher_email', 'teacher_username', 'option'];
 
     var formData = ["#teacher_code_id", "#teacher_Tname", "#teacher_Ename", "#teacher_email", "#teacher_username", "#teacher_password"];
 
@@ -40,8 +40,8 @@ $(document).ready(function() {
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
         ['teacher_code_id', 'teacher_code_id', 'teacher_code_id', 'teacher_code_id'],
-        ['teacher_Tname', 'teacher_Tname', 'teacher_Tname', 'teacher_Tname'],
         ['teacher_Ename', 'teacher_Ename', 'teacher_Ename', 'teacher_Ename'],
+        ['teacher_Tname', 'teacher_Tname', 'teacher_Tname', 'teacher_Tname'],
         ['teacher_email', 'teacher_email', 'teacher_email', 'teacher_email'],
         ['teacher_username', 'teacher_username', 'teacher_username', 'teacher_username'],
         ['teacher_password', 'teacher_password', 'teacher_password', 'teacher_password']

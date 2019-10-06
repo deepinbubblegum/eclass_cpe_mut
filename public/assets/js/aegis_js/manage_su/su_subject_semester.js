@@ -323,14 +323,14 @@ $(document).ready(function() {
                 });
             }
         });
-        $.ajax({
-            type: "POST",
-            url: "../Admin_teacher_subject/Add_Data_ctl",
-            data: '&semester=' + data + '&subject=' + data2 + '&teacher=' + update_teasub,
-            success: function() {
+        // $.ajax({
+        //     type: "POST",
+        //     url: "../Admin_teacher_subject/Add_Data_ctl",
+        //     data: '&semester=' + data + '&subject=' + data2 + '&teacher=' + update_teasub,
+        //     success: function() {
 
-            }
-        });
+        //     }
+        // });
     });
 
 

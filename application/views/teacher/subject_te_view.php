@@ -14,8 +14,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </head>
 
 <body>
+
         <!-- Modal -->
-        <div class="modal fade text-left" id="Modal_add" tabindex="-1" role="dialog" aria-labelledby="Modal_add" aria-hidden="true">
+        <div class="modal fade" id="Modal_Add_subject" tabindex="-1" role="dialog" aria-labelledby="Modal_Add_subject" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                                 <div class="modal-header">
