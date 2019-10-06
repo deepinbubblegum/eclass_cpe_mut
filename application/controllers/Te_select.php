@@ -127,4 +127,22 @@ class Te_select extends MY_Controller
                 $this->load->view('teacher/add_student_view', $data);
                 $this->load->view('teacher/template_te/footer_te_view');
         }
+
+        public function add_teacher_assist($sid)
+        {
+                $data = convertData($sid);
+                $this->load->view('teacher/template_te/select/header_view', $data);
+                $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                $this->load->view('teacher/add_teacher_assist_view', $data);
+                $this->load->view('teacher/template_te/footer_te_view');
+        }
+
+        public function add_permission($sid)
+        {
+                $data = convertData($sid);
+                $this->load->view('teacher/template_te/select/header_view', $data);
+                $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                $this->load->view('teacher/add_teacher_assist_view', $data);
+                $this->load->view('teacher/template_te/footer_te_view');
+        }
 }

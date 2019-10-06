@@ -63,7 +63,7 @@ class Admin_student_data extends MY_Controller
                         'std_Ename' => $column[3],
                         'std_email' => $column[6],
                         'std_major' => $column[4],
-                        'std_password' => sha1('7x33gv3a4dfc' . $column[0])
+                        'std_password' => $this->encryption_pass($column[0])
                     );
                     $this->Model_su_student_data->Add_data_model_csv($arg);
                 }
@@ -81,7 +81,7 @@ class Admin_student_data extends MY_Controller
             'std_Ename' => $this->input->post('std_Ename'),
             'std_email' => $this->input->post('std_email'),
             'std_major' => $this->input->post('majorSelect'),
-            'std_password' => sha1('7x33gv3a4dfc' . $this->input->post('std_code_id'))
+            'std_password' => $this->encryption_pass($this->input->post('std_code_id'))
         );
         $this->Model_su_student_data->Add_data_model($arg);
     }

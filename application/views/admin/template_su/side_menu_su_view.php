@@ -80,13 +80,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         &nbsp;&nbsp;ข้อมูลอาจารย์
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_major_data'); ?>">
-                                                                <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-users"></i></i></span>
-                                                                <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลอาจารย์ประจำสาขา
-                                                                </span>
-                                                        </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('admin/admin_data'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></i></span>
@@ -94,14 +87,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         &nbsp;&nbsp;ข้อมูลแอดมิน
                                                                 </span>
                                                         </a>
-
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('admin/permission'); ?>">
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_major_data'); ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-users"></i></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;ข้อมูลอาจารย์ประจำสาขา
+                                                                </span>
+                                                        </a>
+                                                        <!-- <a class="nav-item nav-link" href="<?php echo base_url('admin/permission'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-fingerprint"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;ข้อมูลระดับสิทธิ์
                                                                 </span>
-                                                        </a>
+                                                        </a> -->
 
                                                         <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_subject'); ?>">
                                                                 <span style="font-size: 1.5em;">

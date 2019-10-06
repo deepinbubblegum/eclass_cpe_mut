@@ -17,6 +17,7 @@ class Model_su_semester extends CI_Model
                 }
                 $this->db->select('semester_id, semester_year, semester_part, semester_name');
                 $this->db->from('semester');
+                $this->db->order_by("semester_id", "DESC");
                 $this->db->limit($limit, $start);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {

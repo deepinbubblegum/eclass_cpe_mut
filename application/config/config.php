@@ -326,6 +326,7 @@ $config['cache_query_string'] = FALSE;
 */
 $config['encryption_key'] = 'UOGvXUztqTN0mtrhVF44Lr5RPiU6Gfez';
 
+$config['encryption_password'] = '7x33gv3a4dfc';
 /*
 |--------------------------------------------------------------------------
 | Session Variables
