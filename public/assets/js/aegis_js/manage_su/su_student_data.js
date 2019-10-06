@@ -17,35 +17,36 @@ $(document).ready(function() {
     $('#findByTxt').text("ค้นหาด้วย");
     $('#btnFindTxt').text("ค้นหา");
     $('#saveModalTxt').text("SAVE_MODAL");
-    $('#delModalTxt').text("ยืนยันการลบข้อมูล");
+    $('#delModalTxt').text("ยืนยันการลดข้อมูล");
     $('#tableTitleTxt').text("จัดการข้อมูลนักศึกษา");
     $('#rowPerPageTxt').text("Rows per page:");
 
-    var btnAddText = 'เพิ่มข้อมูลสาขา';
-    var btnEditText = 'แก้ไขข้อมูลสาขา';
+    // var btnAddText = 'เพิ่มข้อมูลสาขา';
+    // var btnEditText = 'แก้ไขข้อมูลสาขา';
 
     var pagingSize = [10, 25, 50, 100];
 
     var dropSearchValue = [
         //[VALUE,TEXT]
         ['std_code_id', 'รหัส'],
-        ['std_Tname', 'ชื่อ ไทย'],
-        ['user_Ename', 'ชื่อ อังกฤษ'],
-        ['user_email', 'อีเมล'],
-        ['user_major', 'สาขา'],
+        ['std_Tname', 'ชื่อ ภาษาไทย'],
+        ['std_Ename', 'ชื่อ ภาษาอังกฤษ'],
+        ['std_email', 'อีเมล'],
+        ['faculty_name', 'คณะ'],
+        ['std_major', 'สาขา']
     ];
 
     //head of table
-    var theadGenValue = ['รหัส', 'ชื่อภาษาไทย', 'ชื่อภาษาอังกฤษ', 'อีเมล', 'สาขา', 'ตัวเลือก'];
+    var theadGenValue = ['รหัส', 'ชื่อ (ไทย)', 'ชื่อ (อังกฤษ)', 'อีเมล', 'คณะ', 'สาขา', 'option'];
 
-    var formData = ["#std_code_id", "#std_Tname", "#user_Ename", "#user_email"];
+    var formData = ["#std_code_id", "#std_Tname", "#std_Ename", "#std_email"];
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['std_code_id', 'std_code_id', 'std_code_id', 'std_code_id'],
-        ['std_Tname', 'std_Tname', 'std_Tname', 'std_Tname'],
-        ['user_Ename', 'user_Ename', 'user_Ename', 'user_Ename'],
-        ['user_email', 'user_email', 'user_email', 'user_email']
+        ['รหัส', 'std_code_id', 'std_code_id', ''],
+        ['ชื่อ (ไทย)', 'std_Tname', 'std_Tname', ''],
+        ['ชื่อ (อังกฤษ)', 'std_Ename', 'std_Ename', ''],
+        ['อีเมล', 'std_email', 'std_email', '']
     ];
 
     var popData = ["#popupID", "#popupTname", "#popupEname", "#popupEmail"];
@@ -104,13 +105,15 @@ $(document).ready(function() {
                 '<input type="text" type="text" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
                 '</div>';
         }
+
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Major</label>' +
+        '<label>คณะ</label>' +
+        '<select id="facultySelectAdd" class="form-control"></select>' +
+        '</div>';
+
+        html += '<div class="col-md-4 mb-3" >' +
+            '<label>สาขา</label>' +
             '<select id="majorSelectAdd" class="form-control"></select>' +
-            '</div>';
-        html += '<div class="col-md-4 mb-3" >' +
-            '<label>Permission</label>' +
-            '<select id="permissionSelectAdd" class="form-control"></select>' +
             '</div>';
         html += '</div>';
         $('#inModelBody').html(html);
@@ -215,7 +218,7 @@ $(document).ready(function() {
     //--------------------------------------------START_CANT_TOUCH_THIS--------------------------------------------//
     function show_data() {
         $.ajax({
-            url: "../Admin_user_data/Show_Max_Data_ctl",
+            url: "../Admin_student_data/Show_Max_Data_ctl",
             dataType: "json",
             success: function(maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
@@ -237,13 +240,14 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             data: "&start=" + start + "&limit=" + limit,
-            url: "../Admin_user_data/Show_Data_ctl",
+            url: "../Admin_student_data/Show_Data_ctl",
             dataType: "json",
             success: function(response) {
                 datatable = response;
                 var html = '';
                 var i;
                 if (response != null) {
+                    console.log(response);
                     for (i = 0; i < response.length; i++) {
                         html +=
                             '<tr>' +
@@ -254,10 +258,10 @@ $(document).ready(function() {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].std_Tname + '</td>' +
-                            '<td>' + response[i].user_Ename + '</td>' +
-                            '<td>' + response[i].user_email + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
+                            '<td>' + response[i].std_email + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
-                            '<td>' + response[i].permission_name + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -273,29 +277,6 @@ $(document).ready(function() {
     $("#inputFile").on("change", function() {
         html = '';
         _files = $(this)[0].files;
-        // var _listFileName = "";
-        // if (_files.length > 0) {
-        //     var _fileName = [];
-        //     $.each(_files, function(k, v) {
-        //         _fileName[k] = v.name;
-        //         console.log(_fileName[k])
-        //     });
-        //     _listFileName = _fileName.join(",");
-        // }
-        $.ajax({
-            url: "../Admin_permission/Show_Data_ctl",
-            dataType: "json",
-            success: function(response) {
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].permission_id + '">' + response[i].permission_name + '</option>';
-                    }
-                }
-                $('#permissionSelectAddcsv').html(html);
-            }
-        });
 
         var size = fileSizeCal(_files[0].size);
         console.log(_files[0].name + ' ' + size);
@@ -321,11 +302,9 @@ $(document).ready(function() {
 
     $('#btnUpload').click(function(e) {
         e.preventDefault();
-        $permiss = $("#permissionSelectAddcsv :selected").val();
         var snacktxt = '';
         var form_data = new FormData();
         form_data.append('file', _files[0]);
-        form_data.append('permission', $permiss);
         $.ajax({
             xhr: function() {
                 var xhr = new window.XMLHttpRequest();
@@ -349,7 +328,7 @@ $(document).ready(function() {
                 return xhr;
             },
             type: "POST",
-            url: '../Admin_user_data/Add_Data_ctl_csv',
+            url: '../Admin_student_data/Add_Data_ctl_csv',
             data: form_data,
             contentType: false,
             cache: false,
@@ -388,14 +367,13 @@ $(document).ready(function() {
         });
     });
 
-    $('#btnAdd').click(function(e) {
+    $('#facultySelectAdd').change(function (e) { 
         e.preventDefault();
-        iurl = '../Admin_user_data/Add_Data_ctl';
-        $('#Modal').find('.modal-title').text('เพิ่มข้อมูลผู้ใช้งาน');
-        $('#Modal').find('#btnSave').text('เพิ่มข้อมูลผู้ใช้งาน');
-        $('#Modal').modal('show');
+        facultySelect = $('#facultySelectAdd :selected').val();
         $.ajax({
-            url: "../Admin_major/Show_Data_ctl",
+            type: "POST",
+            url: "../Admin_student_data/Show_Data_Major",
+            data: '&facultySelect=' + facultySelect,
             dataType: "json",
             success: function(response) {
                 var html = '';
@@ -408,18 +386,27 @@ $(document).ready(function() {
                 $('#majorSelectAdd').html(html);
             }
         });
+    });
+
+    $('#btnAdd').click(function(e) {
+        e.preventDefault();
+        iurl = '../Admin_student_data/Add_Data_ctl';
+        $('#Modal').find('.modal-title').text('เพิ่มข้อมูลผู้ใช้งาน');
+        $('#Modal').find('#btnSave').text('เพิ่มข้อมูลผู้ใช้งาน');
+        $('#Modal').modal('show');
         $.ajax({
-            url: "../Admin_permission/Show_Data_ctl",
+            url: "../Admin_student_data/Show_Data_faculty",
             dataType: "json",
             success: function(response) {
                 var html = '';
                 var i;
                 if (response != null) {
+                    html += '<option value="" disabled selected hidden>โปรดเลือกคณะ</option>';
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].permission_id + '">' + response[i].permission_name + '</option>';
+                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
                     }
                 }
-                $('#permissionSelectAdd').html(html);
+                $('#facultySelectAdd').html(html);
             }
         });
     });
@@ -445,7 +432,7 @@ $(document).ready(function() {
             check += i;
         }
         if (check == result) {
-            if (iurl == '../Admin_user_data/Add_Data_ctl') {
+            if (iurl == '../Admin_student_data/Add_Data_ctl') {
                 txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
             } else {
@@ -457,12 +444,12 @@ $(document).ready(function() {
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: data + '&user_major=' + data2 + '&org_id=' + iddata,
+                data: data + '&majorSelect=' + data2 + '&org_id=' + iddata,
                 success: function(response) {
                     document.getElementById('std_code_id').value = "";
                     formDataValClr();
                     show_data();
-                    if (iurl != '../Admin_user_data/Add_Data_ctl') {
+                    if (iurl != '../Admin_student_data/Add_Data_ctl') {
                         $('#Modal').modal('hide');
                     };
                     Snackbar.show({
@@ -493,42 +480,25 @@ $(document).ready(function() {
         ivalue = $(this).attr('value');
         $('#std_code_id').val(datatable[ivalue].std_code_id);
         $('#std_Tname').val(datatable[ivalue].std_Tname);
-        $('#user_Ename').val(datatable[ivalue].user_Ename);
-        $('#user_email').val(datatable[ivalue].user_email);
+        $('#std_Ename').val(datatable[ivalue].std_Ename);
+        $('#std_email').val(datatable[ivalue].std_email);
         $('#Modal').modal('show');
         $('#Modal').find('.modal-title').text('แก้ไขข้อมูลผู้ใช้งาน');
         $('#Modal').find('#btnSave').text('แก้ไขข้อมูลผู้ใช้งาน');
-        iurl = '../Admin_user_data/Edit_Data_ctl';
+        iurl = '../Admin_student_data/Edit_Data_ctl';
         $.ajax({
-            url: "../Admin_major/Show_Data_ctl",
+            url: "../Admin_student_data/Show_Data_faculty",
             dataType: "json",
             success: function(response) {
                 var html = '';
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
                     }
                 }
-                $('#majorSelectAdd').html(html);
-                // alert(datatable[ivalue].faculty_id);
-                $('#majorSelectAdd').val(datatable[ivalue].major_id);
-            }
-        });
-        $.ajax({
-            url: "../Admin_permission/Show_Data_ctl",
-            dataType: "json",
-            success: function(response) {
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].permission_id + '">' + response[i].permission_name + '</option>';
-                    }
-                }
-                $('#permissionSelectAdd').html(html);
-                // alert(datatable[ivalue].faculty_id);
-                $('#permissionSelectAdd').val(datatable[ivalue].permission_id);
+                $('#facultySelectAdd').html(html);
+                $('#facultySelectAdd').val(datatable[ivalue].faculty_id);
             }
         });
     });
@@ -536,7 +506,6 @@ $(document).ready(function() {
     $('#btnClose').click(function(e) {
         formDataValClr();
         document.getElementById('majorSelectAdd').value = datatable[0].major_id;
-        document.getElementById('permissionSelectAdd').value = datatable[0].permission_id;
         hideAllPop();
     });
 
@@ -546,7 +515,7 @@ $(document).ready(function() {
         data2 = $('#select_search').val();
         $.ajax({
             type: "POST",
-            url: "../Admin_user_data/Search_Show_Data_ctl",
+            url: "../Admin_student_data/Search_Show_Data_ctl",
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
             success: function(response) {
@@ -563,10 +532,10 @@ $(document).ready(function() {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].std_Tname + '</td>' +
-                            '<td>' + response[i].user_Ename + '</td>' +
-                            '<td>' + response[i].user_email + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
+                            '<td>' + response[i].std_email + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
-                            '<td>' + response[i].permission_name + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -582,7 +551,7 @@ $(document).ready(function() {
         if ($data.length > 0) {
             $.ajax({
                 type: "POST",
-                url: "../Admin_user_data/Delete_Data_ctl",
+                url: "../Admin_student_data/Delete_Data_ctl",
                 data: {
                     $data
                 },

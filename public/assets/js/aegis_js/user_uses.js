@@ -31,7 +31,6 @@ $(document).ready(function () {
                         data: "&username=" + username + "&password=" + password,
                         success: function (response) {
                                 url = window.location.pathname;
-                                console.log(url);
                                 window.location.href = url;
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {

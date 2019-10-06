@@ -8,7 +8,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <?php
     echo assets_js('aegis_js/manage_su/su_student_data.js');
     ?>
@@ -87,10 +86,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <input type="file" class="custom-file-input" id="inputFile" name="inputFile" enctype="multipart/form-data" accept=".csv, text/csv" />
                                     <label class="custom-file-label" for="inputFile">Choose file</label>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <!-- <div class="col-md-4 mb-3">
                                     <label>Permission</label>
                                     <select id="permissionSelectAddcsv" class="form-control"></select>
-                                </div>
+                                </div> -->
                             </div>
                         </form>
 
