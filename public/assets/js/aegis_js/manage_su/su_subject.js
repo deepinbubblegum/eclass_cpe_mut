@@ -102,8 +102,8 @@ $(document).ready(function() {
             '<select id="facultySelectAdd" class="form-control"></select>' +
             '</div>';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Faculty</label>' +
-            '<select id="selectAddFaculty" class="form-control"></select>' +
+            '<label>Major</label>' +
+            '<select id="selectAddMajor" class="form-control"></select>' +
             '</div>';
         html += '</div>';
         $('#inModelBody').html(html);
@@ -309,7 +309,7 @@ $(document).ready(function() {
                 select_major_add();
             }
         });
-    });
+    };
 
     $('#facultySelectAdd').change(function() {
         //alert($('#facultySelectAdd').val());
