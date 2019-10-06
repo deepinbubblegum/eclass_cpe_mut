@@ -88,6 +88,7 @@ class Model_su_teacher_subject extends CI_Model
             $this->db->like($type, $keyword);
         } else {
             $this->db->or_like('subject_name', $keyword);
+            $this->db->or_like('subject_id', $keyword);
             $this->db->or_like('teacher_Ename', $keyword);
         }
         $query = $this->db->get();
@@ -127,7 +128,12 @@ class Model_su_teacher_subject extends CI_Model
 
     public function Select_Faculty($data)
     {
-        $query = $this->db->query('SELECT DISTINCT  faculty_id ,faculty_name FROM major left join faculty on major_faculty = faculty_id WHERE major_id="'.$data.'" ');
+        //$query = $this->db->query('SELECT DISTINCT  faculty_id ,faculty_name FROM major left join faculty on major_faculty = faculty_id WHERE major_id="'.$data.'" ');
+        $this->db->select('faculty_id ,faculty_name');
+        $this->db->from('major');
+        $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
+        $this->db->where('major_id', $data);
+        $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {

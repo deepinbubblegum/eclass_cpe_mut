@@ -6,6 +6,8 @@ $(document).ready(function() {
     var subjectdata;
     var teacherdata;
     var data_select_semester;
+    var iddata;
+    var iddata2;
 
     var limit = 10;
     var start = 0;
@@ -27,7 +29,8 @@ $(document).ready(function() {
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['teasub_subjectid', 'วิชา'],
+        ['teasub_subjectid', 'รหัสวิชาวิชา'],
+        ['subject_name', 'ชื่อวิชา'],
         ['teasub_teacherid', 'อาจารย์'],
     ];
 
@@ -247,7 +250,7 @@ $(document).ready(function() {
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].subject_id + '" value="' + response[i].teacher_code_id + '"  id="' + response[i].subject_id + i + '">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].teacher_code_id + '" value="' + response[i].subject_id + '"  id="' + response[i].subject_id + i + '">' +
                             '<label class="custom-control-label" for="' + response[i].subject_id + i + '">' + response[i].subject_id + '</label>' +
                             '</div>' +
                             '</th>' +
@@ -356,7 +359,7 @@ $(document).ready(function() {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].subject_id + '">(' + response[i].subject_id + ') ' + response[i].subject_name + '</option>';
+                        html += '<option value="' + response[i].subject_id + '">' + response[i].subject_id + ' - ' + response[i].subject_name + '</option>';
                     }
                 }
                 $('#selectAddSubject').html(html);
@@ -366,8 +369,6 @@ $(document).ready(function() {
 
     $('#btnSave').click(function(e) {
         e.preventDefault();
-        iddata = '';
-        iddata2 = '';
         if (iurl == "../Admin_teacher_subject/Add_Data_ctl") {
             txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
             txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
@@ -487,7 +488,7 @@ $(document).ready(function() {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].subject_id + '">(' + response[i].subject_id + ') ' + response[i].subject_name + '</option>';
+                        html += '<option value="' + response[i].subject_id + '">' + response[i].subject_id + ' - ' + response[i].subject_name + '</option>';
                     }
                 }
                 $('#selectAddSubject').html(html);
