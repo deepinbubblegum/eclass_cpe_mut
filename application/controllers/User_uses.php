@@ -35,7 +35,7 @@ class User_uses extends MY_Controller
         public function sign_in()
         {
                 $username = $this->input->post('username');
-                $password = sha1('7x33gv3a4dfc' . $this->input->post('password'));
+                $password = $this->encryption_pass($this->input->post('password'));
                 $sign_status = $this->Model_user_uses->sign_in_ck($username, $password);
                 if ($sign_status != false) {
                         if ($sign_status[0]['std_code_id'] != '') {

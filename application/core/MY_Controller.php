@@ -46,4 +46,8 @@ class MY_Controller extends CI_Controller
                     chmod($dir.'/CSV', 0777);
                 }
         }
+
+        public function encryption_pass($password){
+                return sha1($this->config->item['encryption_password'].$password);
+        }
 }

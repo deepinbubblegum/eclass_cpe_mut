@@ -55,7 +55,7 @@ class Model_su_admin_data extends CI_Model
         }
     }
 
-    public function Add_data_model($arg, $arg2)
+    public function Add_data_model($arg)
     {
         $this->db->insert('admin', $arg);
     }
