@@ -35,7 +35,7 @@ $(document).ready(function() {
 
     ];
     //head of table
-    var theadGenValue = ['subject_id', 'subject_name', 'major_name', 'teacher_name', 'Option'];
+    var theadGenValue = ['subject_id', 'subject_name', 'faculty_name', 'major_name', 'Option'];
 
     var formData = ["#subject_id", "#subject_name", "#major_name"];
 
@@ -100,31 +100,15 @@ $(document).ready(function() {
                 '</div>';
         }
         html += '<div class="col-md-4 mb-3" >' +
+            '<label>Faculty</label>' +
+            '<select id="selectAddFaculty" class="form-control"></select>' +
+            '</div>';
+        html += '<div class="col-md-4 mb-3" >' +
             '<label>Major</label>' +
             '<select id="selectAddMajor" class="form-control"></select>' +
             '</div>';
-        html += '<div class="col-md-4 mb-3" >' +
-            '<label>Teacher</label>' +
-            '<select id="selectAddTeacher" class="form-control"></select>' +
-            '</div>';
         html += '</div>';
         $('#inModelBody').html(html);
-
-        $.ajax({
-            url: "../Admin_subject/Show_Data_user",
-            dataType: "json",
-            success: function(response) {
-                console.log(response);
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].user_code_id + '">' + response[i].user_Ename + '</option>';
-                    }
-                }
-                $('#selectAddTeacher').html(html);
-            }
-        });
     }
 
     function theadGen() {
@@ -239,13 +223,14 @@ $(document).ready(function() {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
-                            '<td>' + response[i].user_Ename + '</td>' +
                             '<td><a data="' + response[i].subject_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
                 $('#showAllData').html(html);
+                getFaculty();
             }
         });
     }
@@ -273,6 +258,7 @@ $(document).ready(function() {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
                             '<td>' + response[i].user_Ename + '</td>' +
                             '<td><a data="' + response[i].subject_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
@@ -307,10 +293,38 @@ $(document).ready(function() {
         iurl = '../Admin_subject/Add_Data_ctl';
         $('#Modal').find('.modal-title').text(btnAddText);
         $('#Modal').modal('show');
+
+    });
+
+    function getFaculty() {
         $.ajax({
-            url: "../Admin_major/Show_Data_ctl",
+            url: "../Admin_faculty/Show_Data_ctl",
             dataType: "json",
             success: function(response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
+                    }
+                }
+                $('#selectAddFaculty').html(html);
+                getMajor();
+                $('#selectAddFaculty').change(function(e) {
+                    getMajor();
+                });
+            }
+        });
+    }
+
+    function getMajor() {
+        $.ajax({
+            type: "POST",
+            url: "../Admin_subject/showMajor",
+            data: '&faculty_id=' + $("#selectAddFaculty :selected").val(),
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
                 var html = '';
                 var i;
                 if (response != null) {
@@ -321,7 +335,7 @@ $(document).ready(function() {
                 $('#selectAddMajor').html(html);
             }
         });
-    });
+    }
 
     $('#btnSave').click(function(e) {
         e.preventDefault();
@@ -340,8 +354,8 @@ $(document).ready(function() {
         }
         if (check == result) {
             data = $('#formAdd').serialize();
+            data3 = $("#selectAddFaculty :selected").val();
             data2 = $("#selectAddMajor :selected").val();
-            data3 = $("#selectAddTeacher :selected").val();
             if (iurl == '../Admin_subject/Add_Data_ctl') {
                 txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
@@ -355,7 +369,7 @@ $(document).ready(function() {
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: data + '&major_id=' + data2 + '&teacher=' + data3,
+                data: data + '&major_id=' + data2 + '&faculty_id=' + data3,
                 success: function(response) {
                     formDataValClr();
                     show_data();
@@ -387,25 +401,14 @@ $(document).ready(function() {
         ivalue = $(this).attr('value');
         $('#subject_id').val(datatable[ivalue].subject_id);
         $('#subject_name').val(datatable[ivalue].subject_name);
+        $('#selectAddFaculty').val(datatable[ivalue].subject_faculty);
+        getMajor();
+        $('#selectAddMajor').val(datatable[ivalue].subject_major);
         console.log(datatable[ivalue].subject_name, datatable[ivalue].subject_id)
         $('#Modal').modal('show');
         $('#Modal').find('.modal-title').text(btnEditText);
 
         iurl = '../Admin_subject/Edit_Data_ctl';
-        $.ajax({
-            url: "../Admin_major/Show_Data_ctl",
-            dataType: "json",
-            success: function(response) {
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
-                    }
-                }
-                $('#selectAddMajor').html(html);
-            }
-        });
     });
 
     $('#btnDel').click(function(e) {

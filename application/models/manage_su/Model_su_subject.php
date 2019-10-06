@@ -11,11 +11,11 @@ class Model_su_subject extends CI_Model
 
         public function Show_Data_user_data_model()
         { 
-            $this->db->select('user_code_id, user_Tname, user_Ename,user_email,major_id,major_name,permission_id,permission_name');
-            $this->db->from('user_data');
-            $this->db->join('major', 'user_major = major_id', 'left');
-            $this->db->join('permission', 'user_permission = permission_id', 'left');
-            $this->db->where('permission_id = "11102"'); 
+            $this->db->select('*');
+            $this->db->from('teacher');
+        //     $this->db->join('major', 'user_major = major_id', 'left');
+        //     $this->db->join('permission', 'user_permission = permission_id', 'left');
+        //     $this->db->where('permission_id = "11102"'); 
             $query = $this->db->get();
             if ($query->num_rows() > 0) {
                 return $query->result();
@@ -30,10 +30,10 @@ class Model_su_subject extends CI_Model
                         $limit = null;
                         $start = null;
                 }
-                $this->db->select('subject_id, subject_name, major_name, subject_teacher, user_Ename');
+                $this->db->select('*');
                 $this->db->from('subject');
                 $this->db->join('major', 'subject_major = major_id', 'left');
-                $this->db->join('user_data', 'subject_teacher = user_code_id', 'left');
+                $this->db->join('faculty', 'subject_faculty = faculty_id', 'left');
                 $this->db->limit($limit, $start);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
@@ -48,10 +48,10 @@ class Model_su_subject extends CI_Model
 
         public function Search_data_model($keyword, $type)
         {
-                $this->db->select('subject_id, subject_name, major_name, subject_teacher, user_Ename');
+                $this->db->select('subject_id, subject_name, major_name, subject_faculty, user_Ename');
                 $this->db->from('subject');
                 $this->db->join('major', 'subject_major = major_id', 'left');
-                $this->db->join('user_data', 'subject_teacher = user_code_id', 'left');
+                $this->db->join('faculty', 'subject_faculty = faculty_id', 'left');
                 if ($type != null) {
                         $this->db->or_like($type, $keyword);
                 } else {
@@ -90,5 +90,18 @@ class Model_su_subject extends CI_Model
         {
                 $this->db->where_in('subject_id', $data);
                 $this->db->delete('subject');
+        }
+
+        public function getMajor($faculty_id)
+        {
+                $this->db->select('*');
+                $this->db->from('major'); 
+                $this->db->where('major_faculty', $faculty_id);
+                $query = $this->db->get();
+                if ($query->num_rows() > 0) {
+                        return $query->result();
+                } else {
+                        return 0;
+                }
         }
 }

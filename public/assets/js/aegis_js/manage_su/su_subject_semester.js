@@ -35,7 +35,7 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['Semester', 'Subject', 'Option'];
+    var theadGenValue = ['Semester', 'Subject_id', 'Subject', 'Teacher_id', 'Teacher', 'Option'];
 
     function dropPag() {
         var html = '';
@@ -60,7 +60,7 @@ $(document).ready(function() {
         var html = '';
         html += '<div class="form-row" >';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Part</label>' +
+            '<label>Semester</label>' +
             '<select id="selectAddSemester" class="form-control">' +
             '</select>' +
             '</div>';
@@ -210,7 +210,10 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].semester_id + i + '"> ' + response[i].semester_name + ' </label>' +
                             '</div>' +
                             '</th>' +
+                            '<td>' + response[i].subject_id + '</td>' +
                             '<td>' + response[i].subject_name + '</td>' +
+                            '<td>' + response[i].teacher_code_id + '</td>' +
+                            '<td>' + response[i].teacher_Ename + '</td>' +
                             '<td><a data="' + response[i].semester_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -245,6 +248,7 @@ $(document).ready(function() {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
+                            '<td>' + response[i].teacher_Ename + '</td>' +
                             '<td><a data="' + response[i].semester_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
