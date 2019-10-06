@@ -71,4 +71,12 @@ class Model_su_subject_semester extends CI_Model
             return 0;
         }
     }
+
+    public function get_sub_teacher($selectAddSemester)
+    {
+        $this->db->select('*');
+        $this->db->from('teacher_subject');
+        $this->db->join('teacher_subject');
+        $this->db->where('teasub_subjectid', $selectAddSemester);
+    }
 }

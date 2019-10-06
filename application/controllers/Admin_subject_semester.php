@@ -79,13 +79,17 @@ class Admin_subject_semester extends MY_Controller
          
     }
 
-    
-
     public function Search_Show_Data_ctl()
     {
         $keyword = $this->input->post('data');
         $type = $this->input->post('search');
         $result = $this->Model_su_subject_semester->Search_data_model($keyword,$type);
         echo json_encode($result);
+    }
+
+    public function get_teacher()
+    {
+        $selectAddSemester = $this->input->post('selectAddSemester');
+        $this->Model_su_subject_semester->get_sub_teacher($selectAddSemester);
     }
 }
