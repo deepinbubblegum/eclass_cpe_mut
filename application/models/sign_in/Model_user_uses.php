@@ -36,7 +36,9 @@ class Model_user_uses extends CI_Model
         public function sign_in_ck($username, $password){
                 $this->db->select('admin_id, admin_Tname, admin_Ename');
                 $this->db->from('admin');
-                $this->db->where('admin_username', $username);
+                $this->db->where('admin_id', $username);
+                $this->db->where('admin_password', $password);
+                $this->db->or_where('admin_email',$username);
                 $this->db->where('admin_password', $password);
                 $query_admin = $this->db->get();
                 if ($query_admin->num_rows() == 1) {
