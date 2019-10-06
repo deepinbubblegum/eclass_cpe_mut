@@ -24,35 +24,45 @@ class Admin_teacher_subject extends MY_Controller
         echo json_encode($result);
     }
 
+    public function Select_Teacher_Add_ctl()
+    {
+        $data = $this->input->post('data');
+        $result = $this->Model_su_teacher_subject->Select_teacher_medel($data);
+        echo json_encode($result);
+    }
+
+    public function Select_Subject_Add_ctl()
+    {
+        $data = $this->input->post('data');
+        $result = $this->Model_su_teacher_subject->Select_subject_medel($data);
+        echo json_encode($result);
+    }
+
     public function Add_Data_ctl()
     {
         $data = array(
-            'teasub_semester' => $this->input->post('semester'),
-            'teasub_subject' => $this->input->post('subject'),
-            'teasub_teacher' => $this->input->post('teacher')
+            'teasub_subjectid' => $this->input->post('subject'),
+            'teasub_teacherid' => $this->input->post('teacher')
         );
         $this->Model_su_teacher_subject->Add_data_model($data);
     }
 
     public function Edit_Data_ctl()
     {
-        $org_semester = $this->input->post('org_semester');
         $org_subject = $this->input->post('org_subject');
         $org_teacher = $this->input->post('org_teacher');
         $data = array(
-            'teasub_semester' => $this->input->post('semester'),
-            'teasub_subject' => $this->input->post('subject'),
-            'teasub_teacher' => $this->input->post('teacher')
+            'teasub_subjectid' => $this->input->post('subject'),
+            'teasub_teacherid' => $this->input->post('teacher')
         );
-        $this->Model_su_teacher_subject->Edit_data_model($org_semester, $org_subject, $org_teacher, $data);
+        $this->Model_su_teacher_subject->Edit_data_model($org_subject, $org_teacher, $data);
     }
 
     public function Delete_Data_ctl()
     {
         $data_subject = $this->input->post('data_subject[]');
-        $data_semester = $this->input->post('data_semester[]');
         $data_teacher = $this->input->post('data_teacher[]');
-        $this->Model_su_teacher_subject->Delete_Data_model($data_semester, $data_subject, $data_teacher);
+        $this->Model_su_teacher_subject->Delete_Data_model($data_subject, $data_teacher);
     }
 
     public function Search_Show_Data_ctl()
@@ -73,6 +83,13 @@ class Admin_teacher_subject extends MY_Controller
     {
         $data = $this->input->post('semester');
         $result = $this->Model_su_teacher_subject->Show_Data_Subject_model($data);
+        echo json_encode($result);
+    }
+
+    public function Select_Edit_Faculty()
+    {
+        $data = $this->input->post('datamajor');
+        $result = $this->Model_su_teacher_subject->Select_Faculty($data);
         echo json_encode($result);
     }
 }

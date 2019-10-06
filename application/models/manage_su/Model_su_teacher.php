@@ -6,7 +6,7 @@ class Model_su_teacher extends CI_Model
 
     public function Show_Max_Data_model()
     {
-        $query = $this->db->get('user_data');
+        $query = $this->db->get('teacher');
         return $query->num_rows();
     }
 
@@ -16,10 +16,8 @@ class Model_su_teacher extends CI_Model
             $limit = null;
             $start = null;
         }
-        $this->db->select('user_code_id, user_Ename, ,user_email,major_id,major_name, permission_id,permission_name');
-        $this->db->from('user_data');
-        $this->db->join('major', 'user_major = major_id', 'left');
-        $this->db->join('permission', 'user_permission = permission_id', 'left');
+        $this->db->select('teacher_code_id, teacher_Tname, teacher_Ename, teacher_email, teacher_username, teacher_password');
+        $this->db->from('teacher');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -29,17 +27,19 @@ class Model_su_teacher extends CI_Model
         }
     }
 
-    public function Search_data_model($keyword)
+    public function Search_data_model($data,$keyword)
     {
-        $this->db->select('user_code_id, user_Ename, user_email,major_id,major_name, permission_id,permission_name');
-        $this->db->from('user_data');
-        $this->db->join('major', 'user_major = major_id', 'left');
-        $this->db->join('permission', 'user_permission = permission_id', 'left');
-        $this->db->like('user_code_id', $keyword);
-        $this->db->or_like('user_Ename', $keyword);
-        $this->db->or_like('user_email', $keyword);
-        $this->db->or_like('major_name', $keyword);
-        $this->db->or_like('permission_name', $keyword);
+        $this->db->select('*');
+        $this->db->from('teacher');
+        if ($data != null) {
+            $this->db->or_like($data, $keyword);
+        } else {
+            $this->db->like('teacher_code_id', $keyword);
+            $this->db->or_like('teacher_Tname', $keyword);
+            $this->db->or_like('teacher_Ename', $keyword);
+            $this->db->or_like('teacher_email', $keyword);
+            $this->db->or_like('teacher_username', $keyword);
+        }
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -50,18 +50,19 @@ class Model_su_teacher extends CI_Model
 
     public function Add_data_model($data)
     {
-        $this->db->insert('user_data', $data);
+        $this->db->insert('teacher', $data);
     }
 
     public function Edit_data_model($org_id, $data)
     {
-        $this->db->where('user_code_id', $org_id);
-        $this->db->update('user_data', $data);
+        $this->db->where('teacher_code_id', $org_id);
+        $this->db->update('teacher', $data);
     }
 
     public function Delete_Data_model($data)
     {
-        $this->db->where_in('user_code_id', $data);
-        $this->db->delete('user_data');
+        $this->db->where_in('teacher_code_id', $data);
+        $this->db->delete('teacher');
     }
+
 }

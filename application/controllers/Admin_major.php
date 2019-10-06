@@ -57,4 +57,11 @@ class Admin_major extends MY_Controller
                 $data = $this->input->post('$data[]');
                 $this->Model_su_major->Delete_Data_model($data);
         }
+
+        public function Select_major()
+        {
+            $major = $this->input->post('datamajor');
+            $result = $this->Model_su_major->Select_major_medel($major);
+            echo json_encode($result);
+        }
 }
