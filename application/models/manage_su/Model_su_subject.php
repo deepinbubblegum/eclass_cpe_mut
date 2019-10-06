@@ -47,7 +47,7 @@ class Model_su_subject extends CI_Model
 
         public function Search_data_model($keyword, $type)
         {
-                $this->db->select('subject_id, subject_name, major_name');
+                $this->db->select('subject_id, subject_name, major_name,major_id,major_faculty');
                 $this->db->from('subject');
                 $this->db->join('major', 'subject_major = major_id', 'left');
                 if ($type != null) {

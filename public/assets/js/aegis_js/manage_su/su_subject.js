@@ -221,14 +221,12 @@ $(document).ready(function() {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
-                            '<td>' + response[i].faculty_name + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
                             '<td><a data="' + response[i].subject_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
                 $('#showAllData').html(html);
-                getFaculty();
             }
         });
     }
@@ -243,6 +241,7 @@ $(document).ready(function() {
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
             success: function(response) {
+                datatable = response;
                 var html = '';
                 var i;
                 if (response != null) {
@@ -251,14 +250,13 @@ $(document).ready(function() {
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].subject_id + '" id="' + response[i].major_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].major_id + i + '">' + response[i].subject_id + '</label>' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].subject_id + '" id="' + response[i].major_name + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].major_name + i + '">' + response[i].subject_id + '</label>' +
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
-                            '<td>' + response[i].faculty_name + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
-                            '<td><a data="' + response[i].subject_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            '<td><a data="' + response[i].subject_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
@@ -290,10 +288,6 @@ $(document).ready(function() {
         iurl = '../Admin_subject/Add_Data_ctl';
         $('#Modal').find('.modal-title').text(btnAddText);
         $('#Modal').modal('show');
-
-    });
-
-    function getFaculty() {
         $.ajax({
             url: "../Admin_faculty/Show_Data_ctl",
             dataType: "json",
@@ -309,7 +303,7 @@ $(document).ready(function() {
                 select_major_add();
             }
         });
-    };
+    });
 
     $('#facultySelectAdd').change(function() {
         //alert($('#facultySelectAdd').val());
@@ -325,30 +319,6 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 console.log(response.length);
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
-                    }
-                }
-                $('#selectAddFaculty').html(html);
-                getMajor();
-                $('#selectAddFaculty').change(function(e) {
-                    getMajor();
-                });
-            }
-        });
-    }
-
-    function getMajor() {
-        $.ajax({
-            type: "POST",
-            url: "../Admin_subject/showMajor",
-            data: '&faculty_id=' + $("#selectAddFaculty :selected").val(),
-            dataType: "json",
-            success: function(response) {
-                console.log(response);
                 var html = '';
                 var i;
                 if (response != null) {
@@ -378,7 +348,6 @@ $(document).ready(function() {
         }
         if (check == result) {
             data = $('#formAdd').serialize();
-            data3 = $("#selectAddFaculty :selected").val();
             data2 = $("#selectAddMajor :selected").val();
             if (iurl == '../Admin_subject/Add_Data_ctl') {
                 txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
