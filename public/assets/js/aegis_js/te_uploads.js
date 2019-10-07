@@ -88,6 +88,7 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response);
                 showMenuUploaded();
+                showMenuUpload();
                 $('#CMenuupload').val('');
                 $('#discription_menu').val('');
                 $('#addMenuupload').modal('hide');
@@ -95,8 +96,6 @@ $(document).ready(function() {
                 menuUpdate = 0;
             }
         });
-        showMenuUploaded();
-        showMenuUpload();
     });
 
     function showMenuUpload() {
@@ -336,6 +335,8 @@ $(document).ready(function() {
             console.log('else');
             $('#uploadeds_files' + pos).html(html);
         }
+
+        showMenuUploaded();
     }
 
     function uploadBtn(pos) {
