@@ -75,8 +75,4 @@ class User_uses extends MY_Controller
                 $this->session->sess_destroy();
                 redirect();
         }
-
-        public function check_duplicate($data_check){
-               return $this->Model_user_uses->check_duplicate_model($data_check);
-        }
 }
