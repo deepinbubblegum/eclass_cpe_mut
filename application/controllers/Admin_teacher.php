@@ -20,23 +20,27 @@ class Admin_teacher extends MY_Controller
     {
         $start = $this->input->post('start');
         $limit = $this->input->post('limit');
-        $result = $this->Model_su_teacher->Show_Data_Teacher_model($limit,$start);
+        $result = $this->Model_su_teacher->Show_Data_Teacher_model($limit, $start);
         echo json_encode($result);
     }
 
     public function Add_Data_ctl()
     {
-        $data = array(
-            'teacher_code_id' => $this->input->post('teacher_code_id'),
-            'teacher_Tname' => $this->input->post('teacher_Tname'),
-            'teacher_Ename' => $this->input->post('teacher_Ename'),
-            'teacher_email' => $this->input->post('teacher_email'),
-            'teacher_username' => $this->input->post('teacher_username'),
-            'teacher_password' => $this->encryption_pass($this->input->post('teacher_code_id'))
-            //'teacher_major' => $this->input->post('major_id'),
-        );
-        $this->Model_su_teacher->Add_data_model($data);
-        $this->Add_Data_TeacherMajor();
+        if ($this->check_duplicate($this->input->post('teacher_username')) && $this->check_duplicate($this->input->post('teacher_email'))) {
+            $data = array(
+                'teacher_code_id' => $this->input->post('teacher_code_id'),
+                'teacher_Tname' => $this->input->post('teacher_Tname'),
+                'teacher_Ename' => $this->input->post('teacher_Ename'),
+                'teacher_email' => $this->input->post('teacher_email'),
+                'teacher_username' => $this->input->post('teacher_username'),
+                'teacher_password' => $this->encryption_pass($this->input->post('teacher_username'))
+                //'teacher_major' => $this->input->post('major_id'),
+            );
+            $this->Model_su_teacher->Add_data_model($data);
+            $this->Add_Data_TeacherMajor();
+        }else{
+            show_error('Duplicate', 409, 'An Error Was Encountered Value is Duplicate');
+        }
     }
 
     public function Add_Data_TeacherMajor()
@@ -71,8 +75,7 @@ class Admin_teacher extends MY_Controller
     {
         $data = $this->input->post('data');
         $keyword = $this->input->post('search');
-        $result = $this->Model_su_teacher->Search_data_model($data,$keyword);
+        $result = $this->Model_su_teacher->Search_data_model($data, $keyword);
         echo json_encode($result);
     }
-
 }
