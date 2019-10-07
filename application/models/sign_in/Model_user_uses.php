@@ -71,20 +71,20 @@ class Model_user_uses extends CI_Model
         }
 
 
-        public function get_permis_name($arg)
-        {
-                $this->db->select('permission_name');
-                $this->db->from('permission');
-                $this->db->where('permission_id', $arg);
-                $query = $this->db->get();
-                if ($query->num_rows() > 0) {
-                        foreach ($query->result() as $row)
-                        {
-                             $permission_name = $row->permission_name;
-                        }
-                        return  $permission_name;
-                } else {
-                        return false;
-                }
-        }
+        // public function get_permis_name($arg)
+        // {
+        //         $this->db->select('permission_name');
+        //         $this->db->from('permission');
+        //         $this->db->where('permission_id', $arg);
+        //         $query = $this->db->get();
+        //         if ($query->num_rows() > 0) {
+        //                 foreach ($query->result() as $row)
+        //                 {
+        //                      $permission_name = $row->permission_name;
+        //                 }
+        //                 return  $permission_name;
+        //         } else {
+        //                 return false;
+        //         }
+        // }
 }

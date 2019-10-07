@@ -75,4 +75,8 @@ class User_uses extends MY_Controller
                 $this->session->sess_destroy();
                 redirect();
         }
+
+        public function check_duplicate(){
+                
+        }
 }
