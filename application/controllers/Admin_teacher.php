@@ -32,7 +32,7 @@ class Admin_teacher extends MY_Controller
             'teacher_Ename' => $this->input->post('teacher_Ename'),
             'teacher_email' => $this->input->post('teacher_email'),
             'teacher_username' => $this->input->post('teacher_username'),
-            'teacher_password' => $this->encryption_pass($this->input->post('teacher_code_id'))
+            'teacher_password' => $this->encryption_pass($this->input->post('teacher_username'))
             //'teacher_major' => $this->input->post('major_id'),
         );
         $this->Model_su_teacher->Add_data_model($data);
