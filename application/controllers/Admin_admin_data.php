@@ -77,6 +77,7 @@ class Admin_admin_data extends MY_Controller
             'admin_Ename' => $this->input->post('admin_Ename'),
             'admin_email' => $this->input->post('admin_email'),
         );
+        
         $this->Model_su_admin_data->Add_data_model($arg);
     }
 

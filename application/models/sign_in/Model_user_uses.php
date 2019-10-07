@@ -91,11 +91,11 @@ class Model_user_uses extends CI_Model
                                 $this->db->or_where('std_email', $data_check);
                                 $query_student = $this->db->get();
                                 if ($query_student->num_rows() == 0) {
-                                        return false;
+                                        return true;
                                 }
                         }
                 }
-                return true;
+                return false;
         }
 
 
