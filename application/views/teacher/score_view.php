@@ -19,6 +19,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         color: white;
                 }
 
+                .f34r-bg-p-txt{
+                        background-color:rgba(153,204,102,1);
+                        color: white;
+                }
+
+                .f34r-bg-o-txt{
+                        background-color:rgba(255,153,102,1);
+                        color: white;
+                }
+
                 .f34r-txt-white {
                         color: white;
                 }
@@ -80,19 +90,49 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                         <div class="modal-body">
                                                 <div class="form-group">
+ 
+                                                        <!-- <div class="custom-control custom-radio">
+                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupOfDefaultRadios" checked>
+                                                        <label class="custom-control-label" for="defaultGroupExample1">แสดงรหัสใบงาน</label>
+                                                        </div>
+ 
+                                                        <div class="custom-control custom-radio">
+                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupOfDefaultRadios">
+                                                        <label class="custom-control-label" for="defaultGroupExample2">แสดงผลการคำนวณตามสูตร</label>
+                                                        </div>
+ 
+                                                        <div class="custom-control custom-radio">
+                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample3" name="groupOfDefaultRadios">
+                                                        <label class="custom-control-label" for="defaultGroupExample3">แสดงคะแนนจากไฟล์รายชื่อนักศึกษา</label>
+                                                        </div> -->
+                                                        <label for="Textarea">setpoint_option</label>
+                                                        <form class="form-inline">
+                                                                <select name="optionSet" id="optionSet" class="form-control">
+                                                                        <!-- <option value="25611" id="25611">Ticket</option>
+                                                                        <option value="25612" id="25612">Formula</option>
+                                                                        <option value="25612" id="25612">Import CSV</option> -->
+                                                                </select>
+                                                        </form>
+
                                                         <label for="Textarea">setpoint_fullname</label>
                                                         <input class="form-control" id="addFieldFN">
                                                         <label for="Textarea">setpoint_mininame</label>
                                                         <input class="form-control" id="addFieldMN">
-                                                        <label for="Textarea">setpoint_ticket</label>
-                                                        <input class="form-control" id="addFieldTK">
+                                                        <!-- <label for="Textarea">setpoint_ticket</label> -->
+                                                        <!-- <input class="form-control" id="addFieldTK"> --> 
                                                         <label for="Textarea">setpoint_maxpoint</label>
                                                         <input class="form-control" id="addFieldMP">
+                                                        <!--  -->
+                                                        <div class="custom-control custom-checkbox mt-3 mb-2">
+                                                        <input type="checkbox" class="custom-control-input" id="addFieldTK">
+                                                        <label class="custom-control-label" for="addFieldTK">เปิดให้กรอกคะแนน</label>
+                                                        </div>
+                                                        <!--  -->  
                                                 </div>
 
                                         </div>
                                         <div class="modal-footer">
-                                                <button type="button" class="btn btn-dark" data-dismiss="modal">ปิด</button>
+                                                <button type="button" class="btn btn-dark" id="fieldClose" data-dismiss="modal">ปิด</button>
                                                 <button type="button" class="btn btn-info" id="fieldSave">บันทึกข้อมูล</button>
                                         </div>
                                 </div>
