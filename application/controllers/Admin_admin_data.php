@@ -69,7 +69,7 @@ class Admin_admin_data extends MY_Controller
     public function Add_Data_ctl()
     {
         // $salt_rd = bin2hex(openssl_random_pseudo_bytes(2));
-        if ($this->check_duplicate($this->input->post('admin_id')) && $this->check_duplicate($this->input->post('admin_email'))); {
+        if ($this->check_duplicate($this->input->post('admin_id')) && $this->check_duplicate($this->input->post('admin_email'))){
             $arg = array(
                 'admin_id' => $this->input->post('admin_id'),
                 'admin_password' => $this->encryption_pass($this->input->post('admin_id')),
@@ -78,6 +78,8 @@ class Admin_admin_data extends MY_Controller
                 'admin_email' => $this->input->post('admin_email')
             );
             $this->Model_su_admin_data->Add_data_model($arg);
+        }else{
+            echo "Duplicate";
         }
     }
 
