@@ -89,8 +89,8 @@ class Admin_student_data extends MY_Controller
                 'std_password' => $this->encryption_pass($this->input->post('std_code_id'))
             );
             $this->Model_su_student_data->Add_data_model($arg);
-        }else{
-            echo "Duplicate";
+        } else {
+            show_error('Duplicate', 409, 'An Error Was Encountered Value is Duplicate');
         }
     }
 

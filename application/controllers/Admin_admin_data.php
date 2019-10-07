@@ -79,7 +79,7 @@ class Admin_admin_data extends MY_Controller
             );
             $this->Model_su_admin_data->Add_data_model($arg);
         }else{
-            echo "Duplicate";
+            show_error('Duplicate', 409, 'An Error Was Encountered Value is Duplicate');
         }
     }
 

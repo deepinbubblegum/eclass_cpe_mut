@@ -39,7 +39,7 @@ class Admin_teacher extends MY_Controller
             $this->Model_su_teacher->Add_data_model($data);
             $this->Add_Data_TeacherMajor();
         }else{
-            echo "Duplicate";
+            show_error('Duplicate', 409, 'An Error Was Encountered Value is Duplicate');
         }
     }
 
