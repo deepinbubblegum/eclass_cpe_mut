@@ -36,7 +36,7 @@ class Model_te_subject_point extends CI_Model
         $this->db->where('setpoint_subject', $subjectId);
         $this->db->where('setpoint_semester', $semesterId);
         $this->db->where('setpoint_id', $menuId);
-        //$this->db->order_by('menuDowId', 'DESC');
+        $this->db->order_by('setpoint_index', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -57,7 +57,7 @@ class Model_te_subject_point extends CI_Model
         $this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','" . $newIndex . "','" . $point . "')");
     }
 
-    public function insertField($semester, $subject_id, $pointId, $ticket, $fullName, $miniName, $maxPoint)
+    public function insertField($semester, $subject_id, $pointId, $ticket, $fullName, $miniName, $maxPoint,$option)
     { //$data['semester'],$data['subject_id'],$data['pointId'],$data['ticket'],$data['fullName'],$data['miniName'],$data['maxPoint']
 
         $maxid = $this->db->query("
@@ -74,7 +74,7 @@ class Model_te_subject_point extends CI_Model
     ");
         $maxindex = $maxindex->row()->newindex;
 
-        $this->db->query("insert into subject_setpoint values('" . $semester . "','" . $subject_id . "','" . $pointId . "','" . $newid . "','" . $maxindex . "','" . $ticket . "','" . $fullName . "','" . $miniName . "','" . $maxPoint . "');");
+        $this->db->query("insert into subject_setpoint values('" . $semester . "','" . $subject_id . "','" . $pointId . "','" . $newid . "','" . $maxindex . "','" . $ticket . "','" . $fullName . "','" . $miniName . "','" . $maxPoint . "','" . $option . "');");
     }
 
     public function updateField($semester, $subject_id, $pointId,$pointIdChild, $ticket, $fullName, $miniName, $maxPoint)

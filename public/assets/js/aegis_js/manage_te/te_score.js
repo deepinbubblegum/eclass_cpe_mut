@@ -139,23 +139,76 @@ $(document).ready(function() {
     var pointId;
     var pointIdChild
     var fieldSaveUrl = '';
+
+    //------------------------------------------------------------------------------------------------------------------------
+    //<option value="1" id="opt1">Ticket</option>
+    var optionValuesEN = [
+        ['1', 'Ticket'],
+        ['2', 'Formula'],
+        ['3', 'Import CSV'],
+    ];
+
+    var optionValuesTH = [
+        ['1', 'แสดงรหัสใบงาน'],
+        ['2', 'แสดงผลการคำนวณตามสูตร'],
+        ['3', 'แสดงคะแนนจากไฟล์รายชื่อนักศึกษา'],
+    ];
+
+    genOptionValues(optionValuesTH);
+
+    function genOptionValues(optionValues) {
+        var html = '';
+        for (i = 0; i < optionValues.length; i++) {
+            html += '<option value="' + optionValues[i][0] + '">' + optionValues[i][1] + '</option>';
+        }
+        $('#optionSet').html(html);
+    }
+    //------------------------------------------------------------------------------------------------------------------------
+
     $('#fieldSave').click(function(e) {
+        fieldCheck = '';
         fullName = $('#addFieldFN').val();
         miniName = $('#addFieldMN').val();
-        ticket = $('#addFieldTK').val();
         maxPoint = $('#addFieldMP').val();
-        takeField(fullName, miniName, ticket, maxPoint);
+        check = $('#addFieldTK')[0].checked;
+        optionSet = $("#optionSet :selected").val();
+        //ticket = $('#addFieldTK').val();
+
+        if (check) {
+            ticket = '1';
+        } else {
+            ticket = '0';
+        }
+
+
+        if (maxPoint * 1.00 > 0) {
+            fieldCheck += '1';
+        } else {
+            //alert('The max point must be larger than zero!');
+        }
+
+
+
+        console.log(ticket, optionSet);
+        takeField(fullName, miniName, ticket, maxPoint, optionSet);
     });
 
-    function takeField(fullName, miniName, ticket, maxPoint) {
+    $('#fieldClose').click(function(e) {
+        $('#addFieldFN').val('');
+        $('#addFieldMN').val('');
+        $('#addFieldTK')[0].checked = false;
+        $('#addFieldMP').val('');
+    });
+
+    function takeField(fullName, miniName, ticket, maxPoint, optionSet) {
         $.ajax({
             type: "POST",
             url: fieldSaveUrl,
-            data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&pointId=' + pointId + '&pointIdChild=' + pointIdChild + /*|*/ '&ticket=' + ticket + '&fullName=' + fullName + '&miniName=' + miniName + '&maxPoint=' + maxPoint,
+            data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&setpoint_option=' + optionSet + '&pointId=' + pointId + '&pointIdChild=' + pointIdChild + /*|*/ '&ticket=' + ticket + '&fullName=' + fullName + '&miniName=' + miniName + '&maxPoint=' + maxPoint,
             success: function() {
                 $('#addFieldFN').val("");
                 $('#addFieldMN').val("");
-                $('#addFieldTK').val("");
+                $('#addFieldTK')[0].checked = false;
                 $('#addFieldMP').val("");
                 $('#addField').modal('hide');
                 showMenuPoint();
@@ -179,17 +232,43 @@ $(document).ready(function() {
                 getField[popUp] = response;
                 if (response.length != undefined) {
                     for (i = 0; i < response.length; i++) {
-                        html +=
-                            '<center>' +
-                            '<div class="p-2 f34r-bg-n-txt">' + response[i].setpoint_mininame + '<br>' +
-                            '<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
-                            '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
-                            '<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
-                            '<br>' +
-                            '<span style="font-size: 1em;"><a href="#" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
-                            '&nbsp;&nbsp;<span style="font-size: 1em;"><a id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
-                            '</div>' +
-                            '</center>&nbsp;';
+                        if (response[i].setpoint_option == '1') {
+                            html +=
+                                '<center>' +
+                                '<div class="p-2 f34r-bg-n-txt">' + response[i].setpoint_mininame + '<br>' +
+                                '<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
+                                '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
+                                '<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
+                                '<br>' +
+                                '<span style="font-size: 1em;"><a href="#" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
+                                '&nbsp;&nbsp;<span style="font-size: 1em;"><a id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
+                                '</div>' +
+                                '</center>&nbsp;';
+                        } else if (response[i].setpoint_option == '2') {
+                            html +=
+                                '<center>' +
+                                '<div class="p-2 f34r-bg-p-txt">' + response[i].setpoint_mininame + '<br>' +
+                                //'<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
+                                '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
+                                //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
+                                '<br>' +
+                                '<span style="font-size: 1em;"><a href="#" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
+                                '&nbsp;&nbsp;<span style="font-size: 1em;"><a id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
+                                '</div>' +
+                                '</center>&nbsp;';
+                        } else if (response[i].setpoint_option == '3') {
+                            html +=
+                                '<center>' +
+                                '<div class="p-2 f34r-bg-o-txt">' + response[i].setpoint_mininame + '<br>' +
+                                //'<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
+                                '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
+                                //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
+                                '<br>' +
+                                '<span style="font-size: 1em;"><a href="#" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
+                                '&nbsp;&nbsp;<span style="font-size: 1em;"><a id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
+                                '</div>' +
+                                '</center>&nbsp;';
+                        }
 
                     }
                 } else {
@@ -214,7 +293,14 @@ $(document).ready(function() {
                     $('#editField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
                         $('#addFieldFN').val(response[i].setpoint_fullname);
                         $('#addFieldMN').val(response[i].setpoint_mininame);
-                        $('#addFieldTK').val(response[i].setpoint_ticket);
+                        //$('#addFieldTK').val(response[i].setpoint_ticket);
+                        if (response[i].setpoint_ticket == '1') {
+                            $('#addFieldTK')[0].checked = true;
+                        } else {
+                            $('#addFieldTK')[0].checked = false;
+                        }
+                        $("#optionSet").val(response[i].setpoint_option);
+
                         $('#addFieldMP').val(response[i].setpoint_maxpoint);
                         $('#addField').modal('show');
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_point/updateFieldScore';
@@ -391,7 +477,7 @@ $(document).ready(function() {
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&tPoint=' + tPoint + '&uID=' + uID,
             success: function() {
                 $('#addTicketUID').val("");
-                $('#addTicketP').val("");
+                //$('#addTicketP').val("");
             }
         });
     });

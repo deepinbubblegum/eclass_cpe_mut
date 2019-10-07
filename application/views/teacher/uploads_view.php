@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span style="font-size: 1.2em;">
                                         <i class="fas fa-chalkboard"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        &nbsp; UPLOADS
+                                        &nbsp; DOWNLOADS
                                 </span>
                         </div>
                         <!-- <form class="form-inline">
@@ -57,7 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <button class="btn btn btn-secondary my-2 my-sm-0" data-toggle="modal" data-target="#addMenuupload">
                                 <span style="font-size: 1.1em;">
                                         <i class="fas fa-plus"></i></span>
-                                &nbsp;เพิ่มเมนูอัปโหลด
+                                &nbsp;เพิ่มเมนูดาวน์โหลด
                         </button>
                 </nav>
                 <!-- Modal Delete -->
@@ -86,22 +86,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                         <div class="modal-header">
-                                                <h5 class="modal-title" id="addMenuuploadLabel">เพิ่มเมนูอัปโหลด</h5>
+                                                <h5 class="modal-title" id="addMenuuploadLabel">เพิ่มเมนูดาวน์โหลด</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                 </button>
                                         </div>
                                         <div class="modal-body">
                                                 <div class="floating text-left">
-                                                        <!-- <label for="CMenuupload">ชื่อเมนู อัปโหลด</label> -->
-                                                        <input aria-describedby="CMenuuploadHelp" class="form-control" id="CMenuupload" placeholder="ชื่อเมนู อัปโหลด" type="text">
+                                                        <!-- <label for="CMenuupload">ชื่อเมนู ดาวน์โหลด</label> -->
+                                                        <input aria-describedby="CMenuuploadHelp" class="form-control" id="CMenuupload" placeholder="ชื่อเมนู ดาวน์โหลด" type="text">
                                                         <div class="invalid-feedback">
                                                                 *กรุณากรอกชื่อเมนู
                                                         </div>
                                                 </div>
 
                                                 <div class="input-group mt-3">
-                                                        <textarea class="form-control" id="discription_menu" placeholder="รายละเอียดเมนู อัปโหลด" rows="10"></textarea>
+                                                        <textarea class="form-control" id="discription_menu" placeholder="รายละเอียดเมนู ดาวน์โหลด" rows="10"></textarea>
                                                 </div>
                                         </div>
                                         <div class="modal-footer">

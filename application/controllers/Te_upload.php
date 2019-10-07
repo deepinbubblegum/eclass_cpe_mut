@@ -76,7 +76,7 @@ class Te_upload extends MY_Controller
                 );
                 //$config['upload_path'] = '../uploads/file/25611CPEN1010/Uploads/';
                 //echo $data2['semester'].$data2['subject_id'];
-                $dir ='../uploads/file/'.$data2['semester'].$data2['subject_id'].'/'.'Downloads/'.$data2['menuId'];
+                $dir ='../uploads/file/'.$data2['semester'].$data2['subject_id'].'/'.'Uploads/'.$data2['menuId'];
                 if (!is_dir($dir)) {
                         mkdir($dir, 0777, true); 
                         chmod($dir, 0777); 
@@ -143,7 +143,7 @@ class Te_upload extends MY_Controller
             $subject = $this->input->post('subject');
             $menuID = $this->input->post('menuID');  
             $this->Model_te_upload->deleteMenu($semester,$subject,$menuID); 
-            $filePath = '../uploads/file/' . $semester .$subject. '/' . 'Downloads' . '/' . $menuID ;
+            $filePath = '../uploads/file/' . $semester .$subject. '/' . 'Uploads' . '/' . $menuID ;
             rrmdir($filePath); 
         }
 }

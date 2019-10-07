@@ -360,14 +360,27 @@ $(document).ready(function() {
                     });
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    Snackbar.show({
-                        actionText: 'close',
-                        pos: 'top-center',
-                        actionTextColor: '#4CAF50',
-                        backgroundColor: '#323232',
-                        width: 'auto',
-                        text: txtsnackerr + errorThrown + ' )'
-                    });
+                    if (XMLHttpRequest.statusText == 'Conflict') {
+                        txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ข้อมูลซ้ำ ';
+                        Snackbar.show({
+                            actionText: 'close',
+                            pos: 'top-center',
+                            actionTextColor: '#4CAF50',
+                            backgroundColor: '#323232',
+                            width: 'auto',
+                            text: txtsnackerr + ' )'
+                        });
+                    } else {
+                        Snackbar.show({
+                            actionText: 'close',
+                            pos: 'top-center',
+                            actionTextColor: '#4CAF50',
+                            backgroundColor: '#323232',
+                            width: 'auto',
+                            text: txtsnackerr + errorThrown + ' )'
+
+                        });
+                    }
                 }
             });
         }

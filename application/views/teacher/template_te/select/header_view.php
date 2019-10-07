@@ -141,14 +141,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-download"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;ดาวน์โหลด
+                                                &nbsp;&nbsp;อับโหลด
                                         </span>
                                 </a>
                                 <a class="nav-item nav-link" href="<?php echo base_url('te_select/uploads/').$subject_id.'-'.$semester; ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-upload"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;อับโหลด
+                                                &nbsp;&nbsp;ดาวน์โหลด 
                                         </span>
                                 </a>
                                 <a class="nav-item nav-link" href="<?php echo base_url('select/videos/').$subject_id.'-'.$semester; ?>">

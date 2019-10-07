@@ -66,8 +66,8 @@ $(document).ready(function() {
         }
         return html_ico;
     }
-    showMenuUpload();
     showMenuUploaded();
+    showMenuUpload();
     var editMenuId;
     var menuUpdate = 0;
     $('#btnModalSave').click(function(e) {
@@ -87,6 +87,7 @@ $(document).ready(function() {
             data: "&menuname=" + menuname + "&descrip=" + menudiscription + "&subject_id=" + subject_id + "&semester=" + semester + "&editId=" + editMenuId,
             success: function(response) {
                 console.log(response);
+                showMenuUploaded();
                 showMenuUpload();
                 $('#CMenuupload').val('');
                 $('#discription_menu').val('');
@@ -127,7 +128,7 @@ $(document).ready(function() {
                         html += '<div class="expansion-panel-body">' +
                             /* --------BTN-------- */
                             //'<span style="font-size: 1.7em;"><a href="/Te_select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].menuDowId + '" id="showInMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
-                            //'<span style="font-size: 1.7em;"><a id="allDownload-' + response[i].menuDowId + '" href="/Te_download/dowZip/' + subject_id + '-' + semester + '-' + response[i].menuDowId + '" class="f34r-txt-black"><i class="fas fa-download"></a></i></span>&nbsp;' +
+                            //'<span style="font-size: 1.7em;"><a id="allDownload-' + response[i].menuDowId + '" href="/Te_uploaded/dowZip/' + subject_id + '-' + semester + '-' + response[i].menuDowId + '" class="f34r-txt-black"><i class="fas fa-download"></a></i></span>&nbsp;' +
                             //'<span style="font-size: 1.7em;"><a id="impInMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-file-import"></a></i></span>&nbsp;' +
                             //'<span style="font-size: 1.7em;"><a id="expInMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-file-export"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a id="delMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
@@ -201,6 +202,7 @@ $(document).ready(function() {
             data: '&semester=' + semester + '&subject=' + subject_id + '&menuID=' + delPid,
             success: function() {
                 // console.log('Deleted Successfully');
+                showMenuUploaded();
                 showMenuUpload();
             }
         });
@@ -333,6 +335,8 @@ $(document).ready(function() {
             console.log('else');
             $('#uploadeds_files' + pos).html(html);
         }
+
+        showMenuUploaded();
     }
 
     function uploadBtn(pos) {
@@ -445,12 +449,12 @@ $(document).ready(function() {
                             '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionTwo" id="collapse' + i + '">' +
                             '<div class="expansion-panel-body">' +
                             /* --------BTN-------- */
-                            //'<span style="font-size: 1.7em;"><a href="/Te_select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].menuUpId + '" id="showInMenu-' + response[i].menuUpId + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a id="allDownload-' + response[i].menuDowId + '" href="/Te_download/dowZip/' + subject_id + '-' + semester + '-' + response[i].menuDowId + '" class="f34r-txt-black"><i class="fas fa-download"></a></i></span>&nbsp;' +
-                            //'<span style="font-size: 1.7em;"><a id="impInMenu-' + response[i].menuUpId + '" href="#" class="f34r-txt-black"><i class="fas fa-file-import"></a></i></span>&nbsp;' +
-                            //'<span style="font-size: 1.7em;"><a id="expInMenu-' + response[i].menuUpId + '" href="#" class="f34r-txt-black"><i class="fas fa-file-export"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a id="delMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a id="editMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
+                            //'<span style="font-size: 1.7em;"><a href="/Te_select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].menuDowId + '" id="showInMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a id="allDownload-' + response[i].menuDowId + '" href="/Te_uploaded/dowZip/' + subject_id + '-' + semester + '-' + response[i].menuDowId + '" class="f34r-txt-black"><i class="fas fa-download"></a></i></span>&nbsp;' +
+                            //'<span style="font-size: 1.7em;"><a id="impInMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-file-import"></a></i></span>&nbsp;' +
+                            //'<span style="font-size: 1.7em;"><a id="expInMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-file-export"></a></i></span>&nbsp;' +
+                            //'<span style="font-size: 1.7em;"><a id="delMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
+                            //'<span style="font-size: 1.7em;"><a id="editMenu-' + response[i].menuDowId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].menuDowDescrpition +
@@ -485,7 +489,7 @@ $(document).ready(function() {
 
     function showUploaded(popUp) {
         $.ajax({
-            url: '/' + url[3] + '/Te_download/showDownloadList/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuUpId,
+            url: '/' + url[3] + '/Te_uploaded/showDownloadList/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId,
             dataType: "json",
             success: function(response) {
                 getData = response;
@@ -507,12 +511,12 @@ $(document).ready(function() {
                             '<button class="btn btn-float btn-success my-1"><i class="fas fa-check"></i></button>' +
                             '<button class="btn btn-float btn-danger my-1"><i class="fas fa-undo-alt"></i></button> -->' +
                             '</span>' +
-                            '<a class="btn btn-success" href="/Te_download/download/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuUpId + '-' + response[i].fileName + '">download</a>' +
-                            '<a class="btn btn-danger" href="/Te_download/delete/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuUpId + '-' + response[i].fileName + '">delete</a>' +
+                            '<a class="btn btn-success" href="/Te_uploaded/download/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId + '-' + response[i].fileName + '">download</a>' +
+                            '<a class="btn btn-danger" href="/Te_uploaded/delete/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId + '-' + response[i].fileName + '">delete</a>' +
                             '</li>';
                     }
                 }
-                $('#menuDowId-' + getUploaded[popUp].menuUpId).html(html);
+                $('#menuDowId-' + getUploaded[popUp].menuDowId).html(html);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
