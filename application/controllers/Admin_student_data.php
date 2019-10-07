@@ -15,12 +15,14 @@ class Admin_student_data extends MY_Controller
         echo json_encode($result);
     }
 
-    public function Show_Data_faculty(){
+    public function Show_Data_faculty()
+    {
         $result = $this->Model_su_student_data->Show_Data_faculty_model();
         echo json_encode($result);
     }
 
-    public function Show_Data_Major(){
+    public function Show_Data_Major()
+    {
         $facuty = $this->input->post('facultySelect');
         $result = $this->Model_su_student_data->Show_Data_Major_model($facuty);
         echo json_encode($result);
@@ -57,15 +59,17 @@ class Admin_student_data extends MY_Controller
                 }
                 if ($flag) {
                     //echo $column[0] . ' ' . $column[2] . ' ' . $column[3] . ' ' . $column[4] . ' ' . $column[6] . '<br>';
-                    $arg = array(
-                        'std_code_id' => $column[0],
-                        'std_Tname' => $column[2],
-                        'std_Ename' => $column[3],
-                        'std_email' => $column[6],
-                        'std_major' => $column[4],
-                        'std_password' => $this->encryption_pass($column[0])
-                    );
-                    $this->Model_su_student_data->Add_data_model_csv($arg);
+                    if ($this->check_duplicate($column[0]) && $this->check_duplicate($column[6])) {
+                        $arg = array(
+                            'std_code_id' => $column[0],
+                            'std_Tname' => $column[2],
+                            'std_Ename' => $column[3],
+                            'std_email' => $column[6],
+                            'std_major' => $column[4],
+                            'std_password' => $this->encryption_pass($column[0])
+                        );
+                        $this->Model_su_student_data->Add_data_model_csv($arg);
+                    }
                 }
                 $flag = true;
             }
@@ -75,15 +79,19 @@ class Admin_student_data extends MY_Controller
 
     public function Add_Data_ctl()
     {
-        $arg = array(
-            'std_code_id' => $this->input->post('std_code_id'),
-            'std_Tname' => $this->input->post('std_Tname'),
-            'std_Ename' => $this->input->post('std_Ename'),
-            'std_email' => $this->input->post('std_email'),
-            'std_major' => $this->input->post('majorSelect'),
-            'std_password' => $this->encryption_pass($this->input->post('std_code_id'))
-        );
-        $this->Model_su_student_data->Add_data_model($arg);
+        if ($this->check_duplicate($this->input->post('std_code_id')) && $this->check_duplicate($this->input->post('std_email'))) {
+            $arg = array(
+                'std_code_id' => $this->input->post('std_code_id'),
+                'std_Tname' => $this->input->post('std_Tname'),
+                'std_Ename' => $this->input->post('std_Ename'),
+                'std_email' => $this->input->post('std_email'),
+                'std_major' => $this->input->post('majorSelect'),
+                'std_password' => $this->encryption_pass($this->input->post('std_code_id'))
+            );
+            $this->Model_su_student_data->Add_data_model($arg);
+        }else{
+            echo "Duplicate";
+        }
     }
 
     public function Edit_Data_ctl()
