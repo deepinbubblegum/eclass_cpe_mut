@@ -28,9 +28,11 @@ class Model_te_subject extends CI_Model
         }
     }
 
-    public function selectSubject($data)
+    public function selectSubject($data,$userID)
     { 
-        $query = $this->db->query('select * from subject_semester ,subject where subsem_subject = subject_id and subsem_semester = ' . $data);
+        $query = $this->db->query('SELECT subsem_subject,subject_name,subsem_semester FROM subject_semester 
+        LEFT JOIN subject ON subject_id = subsem_subject 
+        WHERE subsem_semester = "'.$data.'" AND subsem_teacher = "'.$userID.'" ');
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {

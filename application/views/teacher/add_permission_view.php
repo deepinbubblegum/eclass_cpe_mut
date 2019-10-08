@@ -13,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         semester = '<?php echo $semester; ?>';
     </script>
     <?php
-    echo assets_js('aegis_js/manage_te/te_add_teacher_assist.js');
+    echo assets_js('aegis_js/manage_te/te_add_permission.js');
     ?>
 </head>
 

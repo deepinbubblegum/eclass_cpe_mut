@@ -75,6 +75,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         </a>
                                                         <div class="navdrawer-divider"></div>
 
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('te_select/add_permission/').$subject_id.'-'.$semester; ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                <i class="fas fa-user-shield"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;เพิ่มระดับสิทธิ์อาจารย์ผู้ช่วย
+                                                                </span>
+                                                        </a>
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('te_select/add_teacher_assist/').$subject_id.'-'.$semester; ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                <i class="fas fa-users"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;เพิ่มอาจารย์ผู้ช่วย
+                                                                </span>
+                                                        </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('te_select/add_student/').$subject_id.'-'.$semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                 <i class="fas fa-users"></i></span>

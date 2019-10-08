@@ -20,7 +20,8 @@ class Teacher_subject extends MY_Controller
 
     public function getSubject(){
         $data = $this->input->post('data');
-        $result = $this->Model_te_subject->selectSubject($data);
+        $userID = $this->session->ses_id;
+        $result = $this->Model_te_subject->selectSubject($data,$userID);
         echo json_encode($result);
     }
 
