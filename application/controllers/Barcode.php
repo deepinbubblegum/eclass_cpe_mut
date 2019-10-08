@@ -69,7 +69,7 @@ class Barcode extends MY_Controller {
 
         $txt = array('ชื่อ-สกุล','รหัสประจำตัวนักศึกษา','หลักสูตร');
     // for ($i=0; $i < 10; $i++) { จำนวนแผ่น
-        $pdf->AddPage();
+        $pdf->AddPage('P','A4');
         for ($j=0; $j < 7; $j++) { 
             for($l=0; $l < 3; $l++){
                 $pdf->MultiCell(62.5, 0, ''.$txt[$l].'  '.$data[$l], 0, 'C', 0, 0, '', '', true, 0, false, true, 40, 'T');
