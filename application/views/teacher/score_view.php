@@ -156,7 +156,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <div class="form-group">
                                                         <label for="Textarea">Ticket Discription</label>
                                                         <input class="form-control" id="ticket_discrip">
-                                                        <label for="Textarea">Ticket Discription</label>
+                                                        <label for="Textarea">Ticket Point</label>
                                                         <input class="form-control" id="ticket_point">
                                                         <label for="Textarea">Number of Ticket</label>
                                                         <input class="form-control" id="ticketNumber">
