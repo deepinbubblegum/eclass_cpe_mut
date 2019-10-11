@@ -351,6 +351,10 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 console.log(response);
+                if(response){
+                    url = '/Gen_ticket/ticket_and_qrCode/'+ response;
+                    window.open(url,'_blank');
+                }
             },
         });
     });

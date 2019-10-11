@@ -34,8 +34,8 @@ class Gen_ticket extends MY_Controller
                         'lot_id' => $auto_lot_id,
                         'lot_semester' => $this->input->post('semester'),
                         'lot_subject' => $this->input->post('subject'),
-                        'lot_menu' => $this->input->post('parentTK'),
-                        'lot_field' => $this->input->post('childTK'),
+                        'lot_menu' => $this->input->post('childTK'),
+                        'lot_field' => $this->input->post('parentTK'),
                         'lot_description' => $this->input->post('ticket_discrip')
                 );
                 $this->Model_te_ticket->add_lot($data_menu_ticket);
@@ -43,10 +43,10 @@ class Gen_ticket extends MY_Controller
                 $item_num = $this->input->post('ticketNumber');
                 $semester = $this->input->post('semester');
                 $subject = $this->input->post('subject');
-                $parentTK = $this->input->post('parentTK');
-                $childTK = $this->input->post('childTK');
+                $parentTK = $this->input->post('childTK');
+                $childTK = $this->input->post('parentTK');
                 $ticket_point = $this->input->post('ticket_point');
-                for ($i=1; $i <= $item_num; $i++) { 
+                for ($i = 1; $i <= $item_num; $i++) {
                         $data_ticket = array(
                                 'token' => $this->code_keygen(20),
                                 'semester' => $semester,
@@ -58,10 +58,14 @@ class Gen_ticket extends MY_Controller
                         );
                         $this->Model_te_ticket->add_ticket($data_ticket);
                 }
+                echo json_encode($auto_lot_id);
         }
 
-        public function ticket_and_qrCode()
+        public function ticket_and_qrCode($arg = null)
         {
+                $ticket_data = $this->Model_te_ticket->get_ticket($arg);
+
+
                 $this->load->library('Pdf');
 
                 // สร้าง object สำหรับใช้สร้าง pdf 
@@ -89,7 +93,7 @@ class Gen_ticket extends MY_Controller
 
                 // กำหนดฟอนท์ 
                 // ฟอนท์ THSarabunnew รองรับภาษาไทย
-                $pdf->SetFont('THSarabunnew', '', 12, '', true);
+                $pdf->SetFont('THSarabunnew', '', 12.5, '', true);
 
                 // สามารถปรับรูปแบบA4
                 // $pdf->AddPage('P', 'A4');
@@ -109,13 +113,20 @@ class Gen_ticket extends MY_Controller
                 );
 
                 // set some text for example
-                $title = " วิชา EECP0101\n";
-                $name = " Introductioon to Computer...\n";
-                $semester = " ประจำภาคการศึกษาที่1/2562\n";
-                $lots = " [ชุดที่1]     [1คะแนน]\n";
-                $discript = " ทดสอบ\n";
+                $title = " วิชา " . $ticket_data[0]['lot_subject'] . "\n";
+                $name = " ";
+                if(strlen($ticket_data[0]['subject_name']) > 25){
+                        $name = $name.substr_replace($ticket_data[0]['subject_name'],’…’,25)."\n";
+                }else{
+                        $name = " ".$ticket_data[0]['subject_name']."\n";
+                }
+                $lot_semester = str_split($ticket_data[0]['lot_semester']);
+
+                $semester = " ประจำภาคการศึกษาที่ ".$lot_semester[4]."/".substr($ticket_data[0]['lot_semester'],0,4)."\n";
+                $lots = " [ชุดที่".substr($arg,3)."] [".$ticket_data[0]['point']."คะแนน]\n";
+                $discript = " ".$ticket_data[0]['lot_description']."\n";
                 $key = " รหัส[";
-                $item = 27;
+                $item = count($ticket_data);
 
                 $tic_count = 0;
                 $newpagecount = 0;
@@ -125,14 +136,14 @@ class Gen_ticket extends MY_Controller
                 for ($i = 0; $i < $item; $i++) {
                         $tic_count++;
                         if ($tic_count == 1) {
-                                $pdf->MultiCell(62.5, 32, $title . $name . $semester . $lots . $discript . $key . '1KOC-ED9S-BLTW-G4S4-K0OW]', 1, 'L', false, 0, '', '', true, 0, '', true, 0, 'T', true);
-                                $pdf->write2DBarcode('1KOC-ED9S-BLTW-G4S4-K0OW', 'QRCODE,H', 47, $y, 25, 25, $style);
+                                $pdf->MultiCell(62.5, 32, $title . $name . $semester . $lots . $discript . $key . $ticket_data[$i]['token'].']', 1, 'L', false, 0, '', '', true, 0, '', true, 0, 'T', true);
+                                $pdf->write2DBarcode($ticket_data[$i]['token'], 'QRCODE,H', 47, $y, 25, 25, $style);
                         } else if ($tic_count == 2) {
-                                $pdf->MultiCell(62.5, 32, $title . $name . $semester . $lots . $discript . $key . '1KOC-ED9S-BLTW-G4S4-K0OW]', 1, 'L', false, 0, '', '', true, 0, '', true, 0, 'T', true);
-                                $pdf->write2DBarcode('36DQ-C7VN-OBOK-0WCW-O4OC', 'QRCODE,H', 111, $y, 25, 25, $style);
+                                $pdf->MultiCell(62.5, 32, $title . $name . $semester . $lots . $discript . $key . $ticket_data[$i]['token'].']', 1, 'L', false, 0, '', '', true, 0, '', true, 0, 'T', true);
+                                $pdf->write2DBarcode($ticket_data[$i]['token'], 'QRCODE,H', 111, $y, 25, 25, $style);
                         } else if ($tic_count == 3) {
-                                $pdf->MultiCell(62.5, 32, $title . $name . $semester . $lots . $discript . $key . 'J74O-PUL1-93C4-W4W8-OG8W]', 1, 'L', false, 1, '', '', true, 0, '', true, 0, 'T', true);
-                                $pdf->write2DBarcode('J74O-PUL1-93C4-W4W8-OG8W', 'QRCODE,H', 175, $y, 25, 25, $style);
+                                $pdf->MultiCell(62.5, 32, $title . $name . $semester . $lots . $discript . $key . $ticket_data[$i]['token'].']', 1, 'L', false, 1, '', '', true, 0, '', true, 0, 'T', true);
+                                $pdf->write2DBarcode($ticket_data[$i]['token'], 'QRCODE,H', 175, $y, 25, 25, $style);
                                 $tic_count = 0;
                                 $y = $y + 33.6;
                         }
