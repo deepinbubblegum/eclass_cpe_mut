@@ -68,7 +68,6 @@ class Barcode extends MY_Controller {
         );
 
         $txt = array('ชื่อ-สกุล','รหัสประจำตัวนักศึกษา','หลักสูตร');
-    // for ($i=0; $i < 10; $i++) { จำนวนแผ่น
         $pdf->AddPage('P','A4');
         for ($j=0; $j < 7; $j++) { 
             for($l=0; $l < 3; $l++){
@@ -85,7 +84,6 @@ class Barcode extends MY_Controller {
             }
             $pdf->Ln();  
         }
-    // }
     $pdf->Output($data[1].'_Barcode.pdf', 'I');
     }
 }
