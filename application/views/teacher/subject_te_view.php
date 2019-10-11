@@ -78,7 +78,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </nav>
 
                 <div class="container-fluid mx-auto">
+                        <div calss="mt-3"> วิชาหลัก </div>
                         <div class="card-deck mt-3" id="showSubject">
+                        </div>
+                        <div class="navdrawer-divider"></div>
+                        วิชาช่วยสอน
+                        <div class="card-deck mt-3" id="showSubject_assist">
                         </div>
                 </div>
 </body>

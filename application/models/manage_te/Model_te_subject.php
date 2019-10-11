@@ -28,9 +28,36 @@ class Model_te_subject extends CI_Model
         }
     }
 
-    public function selectSubject($data)
+    public function selectSubject($data,$userID)
     { 
-        $query = $this->db->query('select * from subject_semester ,subject where subsem_subject = subject_id and subsem_semester = ' . $data);
+        $query = $this->db->query('SELECT subsem_subject,subject_name,subsem_semester FROM subject_semester 
+        LEFT JOIN subject ON subject_id = subsem_subject 
+        WHERE subsem_semester = "'.$data.'" AND subsem_teacher = "'.$userID.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function selectSubjectForAssist($data,$userID)
+    {
+        $query = $this->db->query('SELECT subject_id, subject_name ,teaassist_semester , per_bit FROM teacher_assist 
+        LEFT JOIN subject ON subject_id = teaassist_subject
+        LEFT JOIN permission ON per_id = teaassist_permission
+        WHERE teaassist_semester = "'.$data.'" AND teaassist_teacherid = "'.$userID.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Show_Permission_bit($semester,$subject,$userID)
+    {
+        $query = $this->db->query('SELECT per_bit FROM teacher_assist 
+        LEFT JOIN permission ON per_id = teaassist_permission
+        WHERE teaassist_semester = "'.$semester.'" AND teaassist_subject = "'.$subject.'" AND teaassist_teacherid = "'.$userID.'" ');
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {

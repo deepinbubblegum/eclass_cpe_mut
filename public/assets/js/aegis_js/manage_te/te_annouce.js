@@ -7,6 +7,7 @@ $(document).ready(function() {
     var idAnnouce;
     ShowDataAnnouce();
 
+
     $("input[name^=EndDatePicker]").css('cursor', 'pointer');
 
     $('.datepicker').on(
