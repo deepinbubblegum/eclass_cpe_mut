@@ -37,7 +37,7 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['Semester', 'Subject_id', 'Subject_name', 'Teacher_id', 'Teacher_name', 'Option'];
+    var theadGenValue = ['Semester', 'Subject_id', 'Subject_name', 'Teacher_id', 'Teacher_name'];
 
     function dropPag() {
         var html = '';
@@ -299,7 +299,7 @@ $(document).ready(function() {
                             '<td>' + response[i].subject_name + '</td>' +
                             '<td>' + response[i].teacher_code_id + '</td>' +
                             '<td>' + response[i].teacher_Ename + '</td>' +
-                            '<td><a data="' + response[i].semester_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            // '<td><a data="' + response[i].semester_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
@@ -342,7 +342,7 @@ $(document).ready(function() {
                             '<td>' + response[i].subject_name + '</td>' +
                             '<td>' + response[i].teacher_code_id + '</td>' +
                             '<td>' + response[i].teacher_Ename + '</td>' +
-                            '<td><a data="' + response[i].semester_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            // '<td><a data="' + response[i].semester_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }

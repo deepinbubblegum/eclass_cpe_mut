@@ -25,6 +25,23 @@ class Teacher_subject extends MY_Controller
         echo json_encode($result);
     }
 
+    public function getSubject_Assist()
+    {
+        $data = $this->input->post('data');
+        $userID = $this->session->ses_id;
+        $result = $this->Model_te_subject->selectSubjectForAssist($data,$userID);
+        echo json_encode($result);
+    }
+
+    public function Hide_menu()
+    {
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject');
+        $userID = $this->session->ses_id;
+        $result = $this->Model_te_subject->Show_Permission_bit($semester,$subject,$userID);
+        echo json_encode($result);
+    }
+
     public function subject_menu_news($data = null)
     {
         // $data = $this->input->get('semesterdata');

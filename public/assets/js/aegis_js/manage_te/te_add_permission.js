@@ -49,7 +49,6 @@ $(document).ready(function() {
     ];
 
     var inModelPermis = [
-        ['annouce', 'annouce', 'annouce', 'annouce'],
         ['video', 'video', 'video', 'video'],
         ['download', 'download', 'download', 'download'],
         ['upload', 'upload', 'upload', 'upload'],
