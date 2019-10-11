@@ -59,4 +59,10 @@ class Te_table_score extends MY_Controller
         $result = $this->Model_te_table_score->getPoint($subject_id, $semester, $point_id);
         echo json_encode($result);
     } 
+
+    public function takeFormula(){
+        $formula = $this->input->post('formula');
+        $result = $this->Model_te_table_score->getSum($formula);
+        echo json_encode($result);
+    }
 }
