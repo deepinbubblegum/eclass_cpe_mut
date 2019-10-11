@@ -18,14 +18,46 @@ class Gen_ticket extends MY_Controller
                 return $keygen;
         }
 
+        private function lot_auto_id()
+        {
+                return $this->Model_te_ticket->auto_lot_id();
+        }
+
         public function gen_key()
         {
                 // for ($i = 0; $i < 10000; $i++) {
                 //         echo $this->code_keygen(20);
                 //         echo '<br>';
                 // }
+                $auto_lot_id = $this->lot_auto_id();
+                $data_menu_ticket = array(
+                        'lot_id' => $auto_lot_id,
+                        'lot_semester' => $this->input->post('semester'),
+                        'lot_subject' => $this->input->post('subject'),
+                        'lot_menu' => $this->input->post('parentTK'),
+                        'lot_field' => $this->input->post('childTK'),
+                        'lot_description' => $this->input->post('ticket_discrip')
+                );
+                $this->Model_te_ticket->add_lot($data_menu_ticket);
 
-                
+                $item_num = $this->input->post('ticketNumber');
+                $semester = $this->input->post('semester');
+                $subject = $this->input->post('subject');
+                $parentTK = $this->input->post('parentTK');
+                $childTK = $this->input->post('childTK');
+                $ticket_point = $this->input->post('ticket_point');
+                for ($i=1; $i <= $item_num; $i++) { 
+                        $data_ticket = array(
+                                'token' => $this->code_keygen(20),
+                                'semester' => $semester,
+                                'subject' => $subject,
+                                'pointMenu' => $parentTK,
+                                'pointField' => $childTK,
+                                'point' => $ticket_point,
+                                'ticketLots' => $auto_lot_id
+                        );
+                        $this->Model_te_ticket->add_ticket($data_ticket);
+                }
         }
 
         public function ticket_and_qrCode()

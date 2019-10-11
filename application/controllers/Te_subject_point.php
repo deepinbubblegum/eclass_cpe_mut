@@ -22,33 +22,33 @@ class Te_subject_point extends MY_Controller
         $this->load->model('manage_te/Model_te_subject_point');
     }
     
-    public function genTicket()
-    {
-        //$salt = $this->input->post('salt');
-        $ticketNumber = $this->input->post('ticketNumber');
+    // public function genTicket()
+    // {
+    //     //$salt = $this->input->post('salt');
+    //     $ticketNumber = $this->input->post('ticketNumber');
 
-        $semester = $this->input->post('semester');
-        $subject = $this->input->post('subject_id');
+    //     $semester = $this->input->post('semester');
+    //     $subject = $this->input->post('subject_id');
 
-        $parentTK = $this->input->post('parentTK');
-        $childTK = $this->input->post('childTK');
+    //     $parentTK = $this->input->post('parentTK');
+    //     $childTK = $this->input->post('childTK');
 
-        $userId = $this->session->ses_id;
+    //     $userId = $this->session->ses_id;
 
-        //$result = $this->Model_te_subject_point->printTicket($salt,$ticketNumber,$semester,$subject,$parentTK,$childTK,$userId); 
+    //     //$result = $this->Model_te_subject_point->printTicket($salt,$ticketNumber,$semester,$subject,$parentTK,$childTK,$userId); 
 
-        $this->load->library('encryption');
+    //     $this->load->library('encryption');
 
-        $key = $this->encryption->create_key(16); 
-        $config['encryption_key'] = $key;
+    //     $key = $this->encryption->create_key(16); 
+    //     $config['encryption_key'] = $key;
 
-        $plain_text = $semester.$subject.$parentTK.$childTK.$userId.$salt;
-        $ciphertext = $this->encryption->encrypt($plain_text);
+    //     $plain_text = $semester.$subject.$parentTK.$childTK.$userId.$salt;
+    //     $ciphertext = $this->encryption->encrypt($plain_text);
 
-        echo $ciphertext;
+    //     echo $ciphertext;
 
-        $this->Model_te_subject_point->printTicket($salt,$ticketNumber,$semester,$subject,$parentTK,$childTK,$userId);
-    }  
+    //     $this->Model_te_subject_point->printTicket($salt,$ticketNumber,$semester,$subject,$parentTK,$childTK,$userId);
+    // }  
 
     public function showMenuPoint($sid)
     {

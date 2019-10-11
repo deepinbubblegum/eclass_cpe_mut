@@ -333,19 +333,21 @@ $(document).ready(function() {
     var childTK = 0;
 
     $('#genTicketClose').click(function(e) {
-        $('#ticketSalt').val('');
+        $('#ticket_discrip').val('');
         $('#ticketNumber').val('');
+        $('#ticket_point').val('');
     });
 
     $('#genTicketSave').click(function(e) {
-        salt = $('#ticketSalt').val();
+        discript = $('#ticket_discrip').val();
         tknb = $('#ticketNumber').val();
-        console.log(parentTK, childTK, salt, tknb);
+        ticket_point = $('#ticket_point').val();
+        console.log(parentTK, childTK, discript, tknb);
 
         $.ajax({
             type: "POST",
-            url: '/' + url[3] + '/Te_subject_point/genTicket',
-            data: '&ticketSalt=' + salt + '&ticketNumber=' + tknb + '&parentTK=' + parentTK + '&childTK=' + childTK + '&semester=' + semester + '&subject=' + subject_id,
+            url: '/' + url[3] + '/Gen_ticket/gen_key',
+            data: '&ticket_discrip=' + discript + '&ticketNumber=' + tknb + '&parentTK=' + parentTK + '&childTK=' + childTK + '&semester=' + semester + '&subject=' + subject_id + '&ticket_point=' + ticket_point,
             dataType: "json",
             success: function(response) {
                 console.log(response);
