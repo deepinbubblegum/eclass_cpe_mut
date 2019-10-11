@@ -19,7 +19,7 @@ class Model_std_ticket extends CI_Model
 
         foreach ($query->result() as $row)
         { 
-            if($row->status == 0){
+            if($row->userId == null){
                 $this->db->query("
                 insert into subject_point_student 
                 values(
@@ -32,7 +32,7 @@ class Model_std_ticket extends CI_Model
                 '" . $row->point . 
                 "')");
     
-                $this->db->set('status', '1');
+                //$this->db->set('status', '1');
                 $this->db->set('userId', $userId);
                 $this->db->where('token', $ticket);
                 $this->db->update('ticket');
