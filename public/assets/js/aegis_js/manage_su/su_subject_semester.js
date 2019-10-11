@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var iddata;
     var iurl;
     var dataSubSemester;
@@ -81,7 +81,7 @@ $(document).ready(function () {
         $.ajax({
             url: "../Admin_semester/Show_Data_ctl",
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -95,12 +95,11 @@ $(document).ready(function () {
         });
     }
 
-    function gen_subject()
-    {
+    function gen_subject() {
         $.ajax({
             url: "../Admin_subject/Show_Data_ctl",
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -168,13 +167,13 @@ $(document).ready(function () {
         });
     }
 
-    function get_teacher(){
+    function get_teacher() {
         $.ajax({
             type: "POST",
             url: "../Admin_subject/get_teacher",
             data: "&selectAddSemester=" + $("#selectAddSubject").val(),
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -186,6 +185,7 @@ $(document).ready(function () {
             }
         });
     }
+
     function theadGen() {
         var html = '';
         html += '<tr>' +
@@ -212,7 +212,7 @@ $(document).ready(function () {
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
-    $('.row_set').click(function () {
+    $('.row_set').click(function() {
         limit = $(this).attr('value');
         showBtnTxt = limit;
         if (limit == 0) {
@@ -224,14 +224,14 @@ $(document).ready(function () {
         show_data();
     });
 
-    $('#chevron_right').click(function () {
+    $('#chevron_right').click(function() {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
         show_data();
     });
 
-    $('#chevron_left').click(function () {
+    $('#chevron_left').click(function() {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
@@ -259,7 +259,7 @@ $(document).ready(function () {
         $.ajax({
             url: "../Admin_subject_semester/Show_Max_Data_ctl",
             dataType: "json",
-            success: function (maxdata) {
+            success: function(maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -281,7 +281,7 @@ $(document).ready(function () {
             data: "&start=" + start + "&limit=" + limit,
             url: "../Admin_subject_semester/Show_Data_ctl",
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 dataSubSemester = response;
                 var html = '';
                 var i;
@@ -310,13 +310,13 @@ $(document).ready(function () {
         });
     }
 
-    $('#selectAddSubject').change(function (e) { 
+    $('#selectAddSubject').change(function(e) {
         e.preventDefault();
         get_teacher();
     });
 
 
-    $('#btnSearch').click(function (e) {
+    $('#btnSearch').click(function(e) {
         e.preventDefault();
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
@@ -325,7 +325,7 @@ $(document).ready(function () {
             url: "../Admin_subject_semester/Search_Show_Data_ctl",
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -352,7 +352,7 @@ $(document).ready(function () {
     });
 
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
-    $(document).keyup(function (e) {
+    $(document).keyup(function(e) {
         if ($('#Modal').is(':visible') == true) {
             if (e.keyCode === 13) $('#btnSave').click(); // enter
             if (e.keyCode === 27) $('#btnClose').click(); // esc
@@ -360,12 +360,12 @@ $(document).ready(function () {
         }
     });
 
-    $('#btnClose').click(function (e) {
+    $('#btnClose').click(function(e) {
         $('#selectAddSemester').val(dataSubSemester[0].semester_id);
         $('#selectAddSubject').val(dataSubSemester[0].subject_id);
     });
 
-    $('#btnAdd').click(function (e) {
+    $('#btnAdd').click(function(e) {
         e.preventDefault();
         iurl = "../Admin_subject_semester/Add_Data_ctl";
 
@@ -380,7 +380,7 @@ $(document).ready(function () {
     });
 
 
-    $('#btnSave').click(function (e) {
+    $('#btnSave').click(function(e) {
         e.preventDefault();
         if (iurl == '../Admin_subject_semester/Add_Data_ctl') {
             txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
@@ -413,7 +413,7 @@ $(document).ready(function () {
                     text: txtsnack
                 });
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -427,7 +427,7 @@ $(document).ready(function () {
     });
 
 
-    $('#showAllData').on('click', '.item-edit', function () {
+    $('#showAllData').on('click', '.item-edit', function() {
         iddata = $(this).attr('data');
         ivalue = $(this).attr('value');
 
@@ -446,7 +446,7 @@ $(document).ready(function () {
 
 
 
-    $('#btnDel').click(function (e) {
+    $('#btnDel').click(function(e) {
         e.preventDefault();
         data_semester = selectchb();
         data_subject = selectchb_sub();
@@ -460,7 +460,7 @@ $(document).ready(function () {
                     data_semester,
                     data_subject
                 },
-                success: function (dataSub) {
+                success: function(dataSub) {
                     $('#modaldel').modal('hide');
                     show_data();
                     Snackbar.show({
@@ -487,13 +487,13 @@ $(document).ready(function () {
         }
     });
 
-    $('#selectall').change(function () {
+    $('#selectall').change(function() {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
     function selectchb() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function () {
+        $('input[name^=checkitem]:checked').each(function() {
             item.push($(this).val());
         });
         return item;
@@ -501,7 +501,7 @@ $(document).ready(function () {
 
     function selectchb_sub() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function () {
+        $('input[name^=checkitem]:checked').each(function() {
             item.push($(this).attr('data'));
         });
         return item;
@@ -509,12 +509,11 @@ $(document).ready(function () {
 
     function selectchb_teacher() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function () {
+        $('input[name^=checkitem]:checked').each(function() {
             item.push($(this).attr('data2'));
         });
         return item;
     }
-
 
 
 });
