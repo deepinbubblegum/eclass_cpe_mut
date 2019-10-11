@@ -49,7 +49,8 @@ class MY_Controller extends CI_Controller
 
         public function encryption_pass($password)
         {
-                return sha1($this->config->item['encryption_password'] . $password);
+                $key_get = $this->config->item['encryption_password'];
+                return sha1($key_get.$password);
         }
 
         public function check_duplicate($data_check)

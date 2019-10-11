@@ -154,8 +154,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                         <div class="modal-body">
                                                 <div class="form-group">
-                                                        <label for="Textarea">Ticket Salt</label>
-                                                        <input class="form-control" id="ticketSalt">
+                                                        <label for="Textarea">Ticket Discription</label>
+                                                        <input class="form-control" id="ticket_discrip">
+                                                        <label for="Textarea">Ticket Discription</label>
+                                                        <input class="form-control" id="ticket_point">
                                                         <label for="Textarea">Number of Ticket</label>
                                                         <input class="form-control" id="ticketNumber">
                                                 </div>
