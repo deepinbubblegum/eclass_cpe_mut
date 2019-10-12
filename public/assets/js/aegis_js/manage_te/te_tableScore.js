@@ -184,11 +184,10 @@ $(document).ready(function() {
                 loopStop = pointData.length;
             } else {
                 loopStart = pointData.length - formulaMax + F34R;
-                loopStop = pointData.length + (F34R - 1);
-                formulaField--;
+                loopStop = pointData.length + (F34R - 1); 
                 F34R++;
             }
-
+            formulaField--;
             loopStart = 0;
             loopStop = pointData.length;
 
