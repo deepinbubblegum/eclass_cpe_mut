@@ -361,7 +361,6 @@ $(document).ready(function() {
         discript = $('#ticket_discrip').val();
         tknb = $('#ticketNumber').val();
         ticket_point = $('#ticket_point').val();
-        console.log(parentTK, childTK, salt, tknb);
 
         $.ajax({
             type: "POST",
