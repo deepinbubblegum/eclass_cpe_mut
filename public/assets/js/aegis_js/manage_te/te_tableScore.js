@@ -174,8 +174,9 @@ $(document).ready(function() {
 
     $(document).ajaxStop(function() {
         ajaxCount++;
-        //console.log('ajaxComplete', ajaxCount, formulaField);
+        //console.log('ajaxComplete', ajaxCount, formulaField); 
         if (ajaxCount >= 1 && formulaField > 0) {
+
             //console.log('---------------------ifCondition')
             //F34REXECUTION();
             //console.log(formulaMax);
@@ -185,9 +186,9 @@ $(document).ready(function() {
             } else {
                 loopStart = pointData.length - formulaMax + F34R;
                 loopStop = pointData.length + (F34R - 1);
-                formulaField--;
                 F34R++;
             }
+            formulaField--;
 
             loopStart = 0;
             loopStop = pointData.length;

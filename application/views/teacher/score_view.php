@@ -19,13 +19,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         color: white;
                 }
 
-                .f34r-bg-p-txt{
-                        background-color:rgba(153,204,102,1);
+                .f34r-bg-p-txt {
+                        background-color: rgba(153, 204, 102, 1);
                         color: white;
                 }
 
-                .f34r-bg-o-txt{
-                        background-color:rgba(255,153,102,1);
+                .f34r-bg-o-txt {
+                        background-color: rgba(255, 153, 102, 1);
                         color: white;
                 }
 
@@ -39,27 +39,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                 .f34r-txt-think {
                         color: rgba(0, 150, 136, 0.7)
-                }
-                .dtHorizontalExampleWrapper {
-                        
-                max-width: 600px;
-                margin: 0 auto;
-                }
-                #dtHorizontalExample th, td {
-                white-space: nowrap;
-                }
-
-                table.dataTable thead .sorting:after,
-                table.dataTable thead .sorting:before,
-                table.dataTable thead .sorting_asc:after,
-                table.dataTable thead .sorting_asc:before,
-                table.dataTable thead .sorting_asc_disabled:after,
-                table.dataTable thead .sorting_asc_disabled:before,
-                table.dataTable thead .sorting_desc:after,
-                table.dataTable thead .sorting_desc:before,
-                table.dataTable thead .sorting_desc_disabled:after,
-                table.dataTable thead .sorting_desc_disabled:before {
-                bottom: .5em;
                 }
         </style>
 </head>
@@ -111,7 +90,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                         <div class="modal-body">
                                                 <div class="form-group">
- 
+
                                                         <!-- <div class="custom-control custom-radio">
                                                         <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupOfDefaultRadios" checked>
                                                         <label class="custom-control-label" for="defaultGroupExample1">แสดงรหัสใบงาน</label>
@@ -140,15 +119,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <label for="Textarea">setpoint_mininame</label>
                                                         <input class="form-control" id="addFieldMN">
                                                         <!-- <label for="Textarea">setpoint_ticket</label> -->
-                                                        <!-- <input class="form-control" id="addFieldTK"> --> 
+                                                        <!-- <input class="form-control" id="addFieldTK"> -->
                                                         <label for="Textarea">setpoint_maxpoint</label>
                                                         <input class="form-control" id="addFieldMP">
                                                         <!--  -->
                                                         <div class="custom-control custom-checkbox mt-3 mb-2">
-                                                        <input type="checkbox" class="custom-control-input" id="addFieldTK">
-                                                        <label class="custom-control-label" for="addFieldTK">เปิดให้กรอกคะแนน</label>
+                                                                <input type="checkbox" class="custom-control-input" id="addFieldTK">
+                                                                <label class="custom-control-label" for="addFieldTK">เปิดให้กรอกคะแนน</label>
                                                         </div>
-                                                        <!--  -->  
+                                                        <!--  -->
                                                 </div>
 
                                         </div>

@@ -90,7 +90,7 @@ $(document).ready(function() {
                             '<br>' +
                             '<div class="table-responsive">' +
                             '<table class="table">' +
-                            '<span class="d-flex" id="genIn-' + response[i].point_id + '">' +
+                            '<span class="d-flex flex-wrap" id="genIn-' + response[i].point_id + '">' +
 
                             '</span>' +
                             '</table>' +
@@ -188,10 +188,12 @@ $(document).ready(function() {
         check = $('#addFieldTK')[0].checked;
         optionSet = $("#optionSet :selected").val();
         //ticket = $('#addFieldTK').val();
+
+        // matchup = fullName.match(/\#/g);
+        // console.log(matchup);
+
         maxPoint = htmlEncodeF34R(maxPoint);
-
         fullName = htmlEncodeF34R(fullName);
-
         miniName = htmlEncodeF34R(miniName);
 
 
@@ -250,10 +252,11 @@ $(document).ready(function() {
                 getField[popUp] = response;
                 if (response.length != undefined) {
                     for (i = 0; i < response.length; i++) {
+                        //html += '<div class ="flex-shrink-1">';
                         if (response[i].setpoint_option == '1') {
                             html +=
                                 '<center>' +
-                                '<div class="p-2 f34r-bg-n-txt">' + response[i].setpoint_mininame + '<br>' +
+                                '<div style="width:93px;height:93px" class="p-2 mb-2 f34r-bg-n-txt">' + response[i].setpoint_mininame + '<br>' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
@@ -265,7 +268,7 @@ $(document).ready(function() {
                         } else if (response[i].setpoint_option == '2') {
                             html +=
                                 '<center>' +
-                                '<div class="p-2 f34r-bg-p-txt">' + response[i].setpoint_mininame + '<br>' +
+                                '<div style="width:93px;height:93px" class="p-2 mb-2 f34r-bg-p-txt">' + response[i].setpoint_mininame + '<br>' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
@@ -277,7 +280,7 @@ $(document).ready(function() {
                         } else if (response[i].setpoint_option == '3') {
                             html +=
                                 '<center>' +
-                                '<div class="p-2 f34r-bg-o-txt">' + response[i].setpoint_mininame + '<br>' +
+                                '<div style="width:93px;height:93px" class="p-2 mb-2 f34r-bg-o-txt">' + response[i].setpoint_mininame + '<br>' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
@@ -287,6 +290,7 @@ $(document).ready(function() {
                                 '</div>' +
                                 '</center>&nbsp;';
                         }
+                        //html += '</div>';
 
                     }
                 } else {
