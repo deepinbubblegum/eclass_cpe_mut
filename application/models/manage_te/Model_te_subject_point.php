@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 function code_keygen($length)
 {
-   $gencode = strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length));
+   $gencode = strtoupper( base_convert(sha1(uniqid(mt_rand())), 16, 36) );
    $gencode = str_split($gencode,4);
    
    $keygen = implode("-",$gencode);
@@ -36,7 +36,7 @@ class Model_te_subject_point extends CI_Model
         $this->db->where('setpoint_subject', $subjectId);
         $this->db->where('setpoint_semester', $semesterId);
         $this->db->where('setpoint_id', $menuId);
-        $this->db->order_by('setpoint_index', 'ASC');
+        $this->db->order_by('cast(setpoint_index as int)', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -61,7 +61,7 @@ class Model_te_subject_point extends CI_Model
     { //$data['semester'],$data['subject_id'],$data['pointId'],$data['ticket'],$data['fullName'],$data['miniName'],$data['maxPoint']
 
         $maxid = $this->db->query("
-        select IFNULL(max(setpoint_setpoint_id),0)+1 as newid
+        select lpad(IFNULL(max(setpoint_setpoint_id),0)+1,4,0) as newid
         from subject_setpoint
         where setpoint_semester = '" . $semester . "' and setpoint_subject='" . $subject_id . "' and setpoint_id = '" . $pointId . "';
     ");
@@ -77,13 +77,14 @@ class Model_te_subject_point extends CI_Model
         $this->db->query("insert into subject_setpoint values('" . $semester . "','" . $subject_id . "','" . $pointId . "','" . $newid . "','" . $maxindex . "','" . $ticket . "','" . $fullName . "','" . $miniName . "','" . $maxPoint . "','" . $option . "');");
     }
 
-    public function updateField($semester, $subject_id, $pointId,$pointIdChild, $ticket, $fullName, $miniName, $maxPoint)
+    public function updateField($semester, $subject_id, $pointId,$pointIdChild, $ticket, $fullName, $miniName, $maxPoint,$setOption)
     {  
         $data = [
             'setpoint_ticket' => $ticket,
             'setpoint_fullname' => $fullName,
             'setpoint_mininame' => $miniName,
             'setpoint_maxpoint' => $maxPoint,
+            'setpoint_option' => $setOption,
         ];
 
         $this->db->where('setpoint_semester', $semester);

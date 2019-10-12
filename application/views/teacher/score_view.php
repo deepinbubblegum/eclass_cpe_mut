@@ -40,6 +40,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 .f34r-txt-think {
                         color: rgba(0, 150, 136, 0.7)
                 }
+                .dtHorizontalExampleWrapper {
+                        
+                max-width: 600px;
+                margin: 0 auto;
+                }
+                #dtHorizontalExample th, td {
+                white-space: nowrap;
+                }
+
+                table.dataTable thead .sorting:after,
+                table.dataTable thead .sorting:before,
+                table.dataTable thead .sorting_asc:after,
+                table.dataTable thead .sorting_asc:before,
+                table.dataTable thead .sorting_asc_disabled:after,
+                table.dataTable thead .sorting_asc_disabled:before,
+                table.dataTable thead .sorting_desc:after,
+                table.dataTable thead .sorting_desc:before,
+                table.dataTable thead .sorting_desc_disabled:after,
+                table.dataTable thead .sorting_desc_disabled:before {
+                bottom: .5em;
+                }
         </style>
 </head>
 

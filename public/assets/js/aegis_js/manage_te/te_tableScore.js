@@ -31,6 +31,10 @@ $(document).ready(function() {
                         if (response[i].setpoint_option == '1') {
                             html += ' [' + response[i].setpoint_maxpoint + ']</th>';
                         } else if (response[i].setpoint_option == '2') {
+                            showMax = response[i].setpoint_maxpoint.split(':');
+                            if (showMax[1] != undefined) {
+                                html += ' [' + showMax[1] + ']</th>';
+                            }
                             formulaField++;
                             formulaMax++;
                         }
@@ -164,56 +168,73 @@ $(document).ready(function() {
         textInPut = textInPut.replace(/\+/gi, "%2B");
         textInPut = textInPut.replace(/\-/gi, "%2D");
         textInPut = textInPut.replace(/\//gi, "%2F");
+        textInPut = textInPut.replace(/\:/gi, "%3A");
         return textInPut;
-    }
-    //'/' + url[3] + '/Te_table_score/takeFormula'
-    function takeFormula(stdId, colId, takeFormula) {
-        $.ajax({
-            type: "POST",
-            url: '/' + url[3] + '/Te_table_score/takeFormula',
-            data: '&formula=' + '(' + takeFormula + ')',
-            dataType: "json",
-            success: function(getSum) {
-                console.log(stdId, colId);
-                console.log('takeFormula->' + getSum[0].sum + '<-');
-                $('#point-' + stdId + '-' + colId).text(getSum[0].sum);
-            }
-        });
     }
 
     $(document).ajaxStop(function() {
         ajaxCount++;
-        console.log('ajaxComplete', ajaxCount, formulaField);
+        //console.log('ajaxComplete', ajaxCount, formulaField);
         if (ajaxCount >= 1 && formulaField > 0) {
-            console.log('---------------------ifCondition')
-                //F34REXECUTION();
-            console.log(formulaMax);
+            //console.log('---------------------ifCondition')
+            //F34REXECUTION();
+            //console.log(formulaMax);
             if (formulaMax == 1) {
                 loopStart = pointData.length - formulaMax;
                 loopStop = pointData.length;
             } else {
                 loopStart = pointData.length - formulaMax + F34R;
                 loopStop = pointData.length + (F34R - 1);
+                formulaField--;
+                F34R++;
             }
+
+            loopStart = 0;
+            loopStop = pointData.length;
 
             for (i = loopStart; i < loopStop; i++) { //FIELD 
                 for (j = 0; j < bodyData.length; j++) { //STD  
-                    console.log(i, j);
+                    //console.log(i, j);
                     if (pointData[i].setpoint_option == '2') {
                         setFormula = '';
-                        getFormula = pointData[i].setpoint_maxpoint.split("#");
-                        //console.log('split', bodyData[j].substd_stdid, pointData[i].setpoint_setpoint_id);
+                        // splitMax = pointData[i].setpoint_maxpoint.split(":");
+                        // setMax = splitMax[1];
+                        // getFormula = splitMax[0];
+                        // if (pointData[i].setpoint_maxpoint.split(":").length == 1 || pointData[i].setpoint_maxpoint.split(":").length == undefined) {
+                        //     getFormula = pointData[i].setpoint_maxpoint.split("#");
+                        // } else if (pointData[i].setpoint_maxpoint.split(":").length == 2) {
+                        //     splitFormula = pointData[i].setpoint_maxpoint.split(":");
+                        //     console.log(splitFormula, '-------------------------------------------------');
+                        //     getFormula = splitFormula[0];
+                        //     getSumMaxFormula = splitFormula[1];
+                        //     console.log(getSumMaxFormula);
+                        // }
+                        //console.log('split', bodyData[j].substd_stdid, pointData[i].setpoint_setpoint_id); 
+                        splitFormula = pointData[i].setpoint_maxpoint.split(":");
+                        getSumMaxFormula = null;
+                        if (splitFormula.length == 1) {
+                            getFormula = splitFormula[0].split("#");
+                            getSumMaxFormula = null;
+                        } else if (splitFormula.length == 2) {
+                            getFormula = splitFormula[0].split("#");
+                            getSumMaxFormula = splitFormula[1];
+                        }
+                        //console.log(splitFormula, 'SPLITTING FORMULA----------------------', splitFormula.length);
+
+
                         for (l = 0; l < getFormula.length; l++) {
-                            for (k = 0; k < pointData.length; k++) { //CHECK ALL FIELD 
+                            for (k = 0; k < pointData.length; k++) { //CHECK ALL FIELD  
                                 if (pointData[k].setpoint_mininame == getFormula[l]) {
                                     setFormula += $('#point-' + bodyData[j].substd_stdid + '-' + pointData[k].setpoint_setpoint_id).text();
                                     setFormula += getFormula[l + 1];
+                                } else if (pointData[k].setpoint_mininame != getFormula[l] && l == 0 && k == 0) {
+                                    setFormula += getFormula[l];
                                 }
                             }
                         }
-                        console.log(setFormula);
+                        //console.log(setFormula);
                         setFormula = htmlEncodeF34R(setFormula);
-                        takeFormula(bodyData[j].substd_stdid, pointData[i].setpoint_setpoint_id, setFormula);
+                        takeFormula(bodyData[j].substd_stdid, pointData[i].setpoint_setpoint_id, setFormula, getSumMaxFormula);
 
                         // console.log('F34REXECUTION');
                         // if (!keeper[i]) keeper[i] = []
@@ -223,10 +244,30 @@ $(document).ready(function() {
                 }
             }
             //console.log(rowCount, colCount, formulaField);
-            formulaField--;
-            F34R++;
+
         }
     });
+
+    //'/' + url[3] + '/Te_table_score/takeFormula'
+    function takeFormula(stdId, colId, takeFormula, sumMax) {
+        $.ajax({
+            type: "POST",
+            url: '/' + url[3] + '/Te_table_score/takeFormula',
+            data: '&formula=' + '(' + takeFormula + ')',
+            dataType: "json",
+            success: function(getSum) {
+                //console.log(stdId, colId);
+                console.log('takeFormula->' + getSum[0].sum + '<-');
+                //if (getSum[0].sum > formulaMaxPoint) getSum[0].sum = formulaMaxPoint;
+                if (sumMax != null && getSum[0].sum * 1 >= sumMax) {
+                    getSum[0].sum = sumMax;
+                }
+                $('#point-' + stdId + '-' + colId).text(getSum[0].sum * 1);
+
+            }
+        });
+    }
+
     F34R = 0;
 
     function F34REXECUTION() {

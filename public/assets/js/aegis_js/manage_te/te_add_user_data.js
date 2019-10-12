@@ -29,29 +29,29 @@ $(document).ready(function() {
     var dropSearchValue = [
         //[VALUE,TEXT]
         ['substd_stdid', 'ID'],
-        ['user_Tname', 'TNAME'],
-        ['user_Ename', 'ENAME'],
+        ['std_Tname', 'TNAME'],
+        ['std_Ename', 'ENAME'],
         ['substd_sec', 'SEC'],
-        // ['user_email', 'EMAIL'],
-        // ['user_major', 'MAJOR'],
-        // ['user_permission', 'PERMISSION']
+        // ['std_email', 'EMAIL'],
+        // ['std_major', 'MAJOR'],
+        // ['std_permission', 'PERMISSION']
     ];
 
     //head of table
-    var theadGenValue = ['substd_stdid', 'user_Tname', 'user_Ename',"substd_sec"];
+    var theadGenValue = ['substd_stdid', 'std_Tname', 'std_Ename', "substd_sec"];
 
-    var formData = ["#substd_stdid", "#user_Tname", "#user_Ename","#substd_sec"];
+    var formData = ["#substd_stdid", "#std_Tname", "#std_Ename", "#substd_sec"];
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
         ['substd_stdid', 'substd_stdid', 'substd_stdid', 'substd_stdid'],
         ['substd_sec', 'substd_sec', 'substd_sec', 'substd_sec'],
-        // ['user_Tname', 'user_Tname', 'user_Tname', 'user_Tname'],
-        // ['user_Ename', 'user_Ename', 'user_Ename', 'user_Ename'],
-        // ['user_email', 'user_email', 'user_email', 'user_email']
+        // ['std_Tname', 'std_Tname', 'std_Tname', 'std_Tname'],
+        // ['std_Ename', 'std_Ename', 'std_Ename', 'std_Ename'],
+        // ['std_email', 'std_email', 'std_email', 'std_email']
     ];
 
-    var popData = ["#popupID", "#popupTname", "#popupEname","#popupSec"];
+    var popData = ["#popupID", "#popupTname", "#popupEname", "#popupSec"];
 
     var popValue = [
         //[POP_ID,POP_TEXT]
@@ -212,7 +212,7 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             data: '&subject_id=' + subject_id + '&semester=' + semester,
-            url: "/"+ url[3] + "/Teacher_add_student/Show_Max_Data_ctl",
+            url: "/" + url[3] + "/Teacher_add_student/Show_Max_Data_ctl",
             dataType: "json",
             success: function(maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
@@ -234,7 +234,7 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             data: "&start=" + start + "&limit=" + limit + "&subject_id=" + subject_id + '&semester=' + semester,
-            url: "/"+ url[3] + "/Teacher_add_student/Show_Data_ctl",
+            url: "/" + url[3] + "/Teacher_add_student/Show_Data_ctl",
             dataType: "json",
             success: function(response) {
                 console.log(response);
@@ -251,10 +251,10 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].substd_stdid + i + '">' + response[i].substd_stdid + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].user_Tname + '</td>' +
-                            '<td>' + response[i].user_Ename + '</td>' +
+                            '<td>' + response[i].std_Tname + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
                             '<td>' + response[i].substd_sec + '</td>' +
-                            // '<td>' + response[i].user_email + '</td>' +
+                            // '<td>' + response[i].std_email + '</td>' +
                             // '<td>' + response[i].major_name + '</td>' +
                             // '<td>' + response[i].permission_name + '</td>' +
                             // '<td><a value="' + i + '" data="' + response[i].substd_stdid + '" class="item-edit">Edit</a></td>' +
@@ -350,7 +350,7 @@ $(document).ready(function() {
                 return xhr;
             },
             type: "POST",
-            url: '/'+ url[3] + '/Teacher_add_student/Add_Data_ctl_csv',
+            url: '/' + url[3] + '/Teacher_add_student/Add_Data_ctl_csv',
             data: form_data,
             contentType: false,
             cache: false,
@@ -391,7 +391,7 @@ $(document).ready(function() {
 
     $('#btnAdd').click(function(e) {
         e.preventDefault();
-        iurl = '/'+ url[3] + '/Teacher_add_student/Add_Data_ctl';
+        iurl = '/' + url[3] + '/Teacher_add_student/Add_Data_ctl';
         $('#Modal').find('.modal-title').text('เพิ่มข้อมูลผู้ใช้งาน');
         $('#Modal').find('#btnSave').text('เพิ่มข้อมูลผู้ใช้งาน');
         $('#Modal').modal('show');
@@ -446,7 +446,7 @@ $(document).ready(function() {
             check += i;
         }
         if (check == result) {
-            if (iurl == '/'+ url[3] + '/Teacher_add_student/Add_Data_ctl') {
+            if (iurl == '/' + url[3] + '/Teacher_add_student/Add_Data_ctl') {
                 txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
             } else {
@@ -464,7 +464,7 @@ $(document).ready(function() {
                     document.getElementById('substd_stdid').value = "";
                     formDataValClr();
                     show_data();
-                    if (iurl != '/'+ url[3] + '/Teacher_add_student/Add_Data_ctl') {
+                    if (iurl != '/' + url[3] + '/Teacher_add_student/Add_Data_ctl') {
                         $('#Modal').modal('hide');
                     };
                     Snackbar.show({
@@ -494,15 +494,15 @@ $(document).ready(function() {
         iddata = $(this).attr('data');
         ivalue = $(this).attr('value');
         $('#substd_stdid').val(datatable[ivalue].substd_stdid);
-        $('#user_Tname').val(datatable[ivalue].user_Tname);
-        $('#user_Ename').val(datatable[ivalue].user_Ename);
-        $('#user_email').val(datatable[ivalue].user_email);
+        $('#std_Tname').val(datatable[ivalue].std_Tname);
+        $('#std_Ename').val(datatable[ivalue].std_Ename);
+        $('#std_email').val(datatable[ivalue].std_email);
         $('#Modal').modal('show');
         $('#Modal').find('.modal-title').text('แก้ไขข้อมูลผู้ใช้งาน');
         $('#Modal').find('#btnSave').text('แก้ไขข้อมูลผู้ใช้งาน');
-        iurl = '/'+ url[3] +'/Teacher_add_student/Edit_Data_ctl';
+        iurl = '/' + url[3] + '/Teacher_add_student/Edit_Data_ctl';
         $.ajax({
-            url: "/"+ url[3] + "/Teacher_add_student/Show_Data_ctl",
+            url: "/" + url[3] + "/Teacher_add_student/Show_Data_ctl",
             dataType: "json",
             success: function(response) {
                 var html = '';
@@ -518,7 +518,7 @@ $(document).ready(function() {
             }
         });
         $.ajax({
-            url: "/"+ url[3] +"/Teacher_add_student/Show_Data_ctl",
+            url: "/" + url[3] + "/Teacher_add_student/Show_Data_ctl",
             dataType: "json",
             success: function(response) {
                 var html = '';
@@ -548,7 +548,7 @@ $(document).ready(function() {
         data2 = $('#select_search').val();
         $.ajax({
             type: "POST",
-            url: "/"+ url[3] +"/Teacher_add_student/Search_Show_Data_ctl",
+            url: "/" + url[3] + "/Teacher_add_student/Search_Show_Data_ctl",
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
             success: function(response) {
@@ -564,10 +564,10 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].substd_stdid + i + '">' + response[i].substd_stdid + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].user_Tname + '</td>' +
-                            '<td>' + response[i].user_Ename + '</td>' +
+                            '<td>' + response[i].std_Tname + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
                             '<td>' + response[i].substd_sec + '</td>' +
-                            // '<td>' + response[i].user_email + '</td>' +
+                            // '<td>' + response[i].std_email + '</td>' +
                             // '<td>' + response[i].major_name + '</td>' +
                             // '<td>' + response[i].permission_name + '</td>' +
                             // '<td><a value="' + i + '" data="' + response[i].substd_stdid + '" class="item-edit">Edit</a></td>' +
@@ -588,7 +588,7 @@ $(document).ready(function() {
         if (_deldata.length > 0) {
             $.ajax({
                 type: "POST",
-                url: "/"+ url[3] + "/Teacher_add_student/Delete_Data_ctl",
+                url: "/" + url[3] + "/Teacher_add_student/Delete_Data_ctl",
                 data: {
                     _deldata,
                     subject,
