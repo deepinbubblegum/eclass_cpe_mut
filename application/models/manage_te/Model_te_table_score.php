@@ -10,7 +10,8 @@ class Model_te_table_score extends CI_Model
         $this->db->where('setpoint_subject', $subject_id);
         $this->db->where('setpoint_semester', $semester);
         $this->db->where('setpoint_id', $point_id); 
-        $this->db->order_by('setpoint_index', 'ASC');
+        //$this->db->order_by('setpoint_index', 'ASC');
+        $this->db->order_by('cast(setpoint_index as int)', 'ASC');
         //$this->db->order_by('menuDowId', 'DESC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

@@ -88,9 +88,14 @@ $(document).ready(function() {
                             // '</div>' + 
                             /*--------------------------------------------------*/
                             '<br>' +
-                            '<div class="d-flex" id="genIn-' + response[i].point_id + '">' +
+                            '<div class="table-responsive">' +
+                            '<table class="table">' +
+                            '<span class="d-flex" id="genIn-' + response[i].point_id + '">' +
 
+                            '</span>' +
+                            '</table>' +
                             '</div>' +
+                            '<br>' +
                             /*--------------------------------------------------*/
                             '</div>' +
                             '</div>' +
@@ -164,6 +169,16 @@ $(document).ready(function() {
         $('#optionSet').html(html);
     }
     //------------------------------------------------------------------------------------------------------------------------
+    function htmlEncodeF34R(textInPut) {
+        textInPut = textInPut.replace(/\(/gi, "%28");
+        textInPut = textInPut.replace(/\)/gi, "%29");
+        textInPut = textInPut.replace(/\*/gi, "%2A");
+        textInPut = textInPut.replace(/\+/gi, "%2B");
+        textInPut = textInPut.replace(/\-/gi, "%2D");
+        textInPut = textInPut.replace(/\//gi, "%2F");
+        textInPut = textInPut.replace(/\:/gi, "%3A");
+        return textInPut;
+    }
 
     $('#fieldSave').click(function(e) {
         fieldCheck = '';
@@ -173,6 +188,12 @@ $(document).ready(function() {
         check = $('#addFieldTK')[0].checked;
         optionSet = $("#optionSet :selected").val();
         //ticket = $('#addFieldTK').val();
+        maxPoint = htmlEncodeF34R(maxPoint);
+
+        fullName = htmlEncodeF34R(fullName);
+
+        miniName = htmlEncodeF34R(miniName);
+
 
         if (check) {
             ticket = '1';
@@ -186,9 +207,6 @@ $(document).ready(function() {
         } else {
             //alert('The max point must be larger than zero!');
         }
-
-
-
         console.log(ticket, optionSet);
         takeField(fullName, miniName, ticket, maxPoint, optionSet);
     });
@@ -303,6 +321,7 @@ $(document).ready(function() {
 
                         $('#addFieldMP').val(response[i].setpoint_maxpoint);
                         $('#addField').modal('show');
+                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_point/updateFieldScore';
                         pointIdChild = response[i].setpoint_setpoint_id;
                         pointId = response[i].setpoint_id;
@@ -333,28 +352,22 @@ $(document).ready(function() {
     var childTK = 0;
 
     $('#genTicketClose').click(function(e) {
-        $('#ticket_discrip').val('');
+        $('#ticketSalt').val('');
         $('#ticketNumber').val('');
-        $('#ticket_point').val('');
     });
 
     $('#genTicketSave').click(function(e) {
-        discript = $('#ticket_discrip').val();
+        salt = $('#ticketSalt').val();
         tknb = $('#ticketNumber').val();
-        ticket_point = $('#ticket_point').val();
-        console.log(parentTK, childTK, discript, tknb);
+        console.log(parentTK, childTK, salt, tknb);
 
         $.ajax({
             type: "POST",
-            url: '/' + url[3] + '/Gen_ticket/gen_key',
-            data: '&ticket_discrip=' + discript + '&ticketNumber=' + tknb + '&parentTK=' + parentTK + '&childTK=' + childTK + '&semester=' + semester + '&subject=' + subject_id + '&ticket_point=' + ticket_point,
+            url: '/' + url[3] + '/Te_subject_point/genTicket',
+            data: '&ticketSalt=' + salt + '&ticketNumber=' + tknb + '&parentTK=' + parentTK + '&childTK=' + childTK + '&semester=' + semester + '&subject=' + subject_id,
             dataType: "json",
             success: function(response) {
                 console.log(response);
-                if(response){
-                    url = '/Gen_ticket/ticket_and_qrCode/'+ response;
-                    window.open(url,'_blank');
-                }
             },
         });
     });
