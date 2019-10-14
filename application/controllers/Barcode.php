@@ -14,7 +14,7 @@ class Barcode extends MY_Controller {
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         
 
-        $data = array($this->session->ses_tname,$this->session->ses_id,$this->session->ses_major_name);
+        $data = array($this->session->ses_tname,$this->session->ses_id,$this->session->ses_mojor_id);
         // กำหนดรายละเอียดของ pdf
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor($data[0]);
@@ -67,13 +67,13 @@ class Barcode extends MY_Controller {
             'stretchtext' => 6
         );
 
-        $txt = array('ชื่อ-สกุล','รหัสประจำตัวนักศึกษา','หลักสูตร');
+        $txt = array(' ชื่อ-สกุล',' รหัสประจำตัวนักศึกษา',' หลักสูตร');
         $pdf->AddPage('P','A4');
         for ($j=0; $j < 7; $j++) { 
             for($l=0; $l < 3; $l++){
-                $pdf->MultiCell(62.5, 0, ''.$txt[$l].'  '.$data[$l], 0, 'C', 0, 0, '', '', true, 0, false, true, 40, 'T');
-                $pdf->MultiCell(62.5, 0, ''.$txt[$l].'  '.$data[$l], 0, 'C', 0, 0, '', '', true, 0, false, true, 40, 'T');
-                $pdf->MultiCell(62.5, 0, ''.$txt[$l].'  '.$data[$l], 0, 'C', 0, 1, '', '', true, 0, false, true, 40, 'T');
+                $pdf->MultiCell(62.5, 0, ''.$txt[$l].'  '.$data[$l], 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+                $pdf->MultiCell(62.5, 0, ''.$txt[$l].'  '.$data[$l], 0, 'L', 0, 0, '', '', true, 0, false, true, 40, 'T');
+                $pdf->MultiCell(62.5, 0, ''.$txt[$l].'  '.$data[$l], 0, 'L', 0, 1, '', '', true, 0, false, true, 40, 'T');
             }
             for ($k=0; $k < 3; $k++) { 
                 $x = $pdf->GetX(); 
