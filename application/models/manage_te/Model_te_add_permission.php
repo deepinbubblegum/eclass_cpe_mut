@@ -72,8 +72,10 @@ class Model_te_add_permission extends CI_Model
         public function Delete_Data_model($data,$subject,$semester)
         {
                 $this->db->where_in('per_id', $data);
-                $this->db->where_in('per_semester', $semester);
-                $this->db->where_in('per_subject', $subject);
-                $this->db->delete('permission'); 
+                $this->db->group_start();
+                $this->db->where('per_semester', $semester);
+                $this->db->where('per_subject', $subject);
+                $this->db->group_end();
+                $this->db->delete('permission');
         }
 }

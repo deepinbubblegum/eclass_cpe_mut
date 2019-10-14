@@ -13,12 +13,12 @@ $(document).ready(function() {
     // 2.formAdd
     // 3.modaldel
 
-    $('#titleNameTxt').text("จัดการข้อมูลแอดมิน");
+    $('#titleNameTxt').text("จัดการข้อมูลผู้ดูแลระบบ");
     $('#findByTxt').text("ค้นหาด้วย");
     $('#btnFindTxt').text("ค้นหา");
     $('#saveModalTxt').text("SAVE_MODAL");
     $('#delModalTxt').text("ยืนยันการลดข้อมูล");
-    $('#tableTitleTxt').text("จัดการข้อมูลแอดมิน");
+    $('#tableTitleTxt').text("จัดการข้อมูลผู้ดูแลระบบ");
     $('#rowPerPageTxt').text("Rows per page:");
 
     var btnAddText = 'เพิ่มข้อมูลสาขา';
@@ -379,8 +379,8 @@ $(document).ready(function() {
     $('#btnAdd').click(function(e) {
         e.preventDefault();
         iurl = '../Admin_admin_data/Add_Data_ctl';
-        $('#Modal').find('.modal-title').text('เพิ่มข้อมูลแอดมิน');
-        $('#Modal').find('#btnSave').text('เพิ่มข้อมูลแอดมิน');
+        $('#Modal').find('.modal-title').text('เพิ่มข้อมูลผู้ดูแลระบบ');
+        $('#Modal').find('#btnSave').text('เพิ่มข้อมูลผู้ดูแลระบบ');
         $('#Modal').modal('show');
 
     });
@@ -457,8 +457,8 @@ $(document).ready(function() {
         $('#admin_Ename').val(datatable[ivalue].admin_Ename);
         $('#admin_email').val(datatable[ivalue].admin_email);
         $('#Modal').modal('show');
-        $('#Modal').find('.modal-title').text('แก้ไขข้อมูลแอดมิน');
-        $('#Modal').find('#btnSave').text('แก้ไขข้อมูลแอดมิน');
+        $('#Modal').find('.modal-title').text('แก้ไขข้อมูลผู้ดูแลระบบ');
+        $('#Modal').find('#btnSave').text('แก้ไขข้อมูลผู้ดูแลระบบ');
         iurl = '../Admin_admin_data/Edit_Data_ctl';
     });
 
