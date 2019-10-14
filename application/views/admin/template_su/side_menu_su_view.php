@@ -84,7 +84,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลแอดมิน
+                                                                        &nbsp;&nbsp;ข้อมูลผู้ดูแลระบบ
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_major_data'); ?>">

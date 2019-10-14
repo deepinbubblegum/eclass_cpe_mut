@@ -57,8 +57,8 @@ class Teacher_add_permission extends MY_Controller
     public function Delete_Data_ctl()
     {
         $data = $this->input->post('$data[]');
-        $subject = $this->input->post('subject_id[]');
-        $semester = $this->input->post('semester[]');
+        $subject = $this->input->post('subject_id');
+        $semester = $this->input->post('semester');
         $this->Model_te_add_permission->Delete_Data_model($data,$subject,$semester);
     }
 
