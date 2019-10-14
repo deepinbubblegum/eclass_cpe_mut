@@ -45,7 +45,7 @@ class Model_te_subject extends CI_Model
         $query = $this->db->query('SELECT subject_id, subject_name ,teaassist_semester , per_bit FROM teacher_assist 
         LEFT JOIN subject ON subject_id = teaassist_subject
         LEFT JOIN permission ON per_id = teaassist_permission
-        WHERE teaassist_semester = "'.$data.'" AND teaassist_teacherid = "'.$userID.'" ');
+        WHERE teaassist_semester = "'.$data.'" AND teaassist_teacherid = "'.$userID.'" GROUP BY teaassist_teacherid ');
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {

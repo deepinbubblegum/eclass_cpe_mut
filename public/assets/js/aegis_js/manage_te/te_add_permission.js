@@ -393,17 +393,13 @@ $(document).ready(function() {
     $('#btnDel').click(function(e) {
         e.preventDefault();
         $data = selectchb();
-        $datasemes = selectchb_semes();
-        $datasub = selectchb_sub();
+        //$semester = selectchb_semes();
+        //$subject_id = selectchb_sub();
         if ($data.length > 0) {
             $.ajax({
                 type: "POST",
                 url: '/' + url[3] + '/Teacher_add_permission/Delete_Data_ctl',
-                data: {
-                    $data,
-                    $datasemes,
-                    $datasub
-                },
+                data: { $data, subject_id, semester },
                 success: function(response) {
                     $('#modaldel').modal('hide');
                     show_data();

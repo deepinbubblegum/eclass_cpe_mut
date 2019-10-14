@@ -25,6 +25,7 @@ class Model_te_assist extends CI_Model
         $this->db->join('permission', 'per_id = teaassist_permission', 'left');
         $this->db->where('teaassist_subject', $arg);
         $this->db->where('teaassist_semester', $arg2);
+        $this->db->group_by('teaassist_teacherid'); 
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -52,6 +53,7 @@ class Model_te_assist extends CI_Model
             $this->db->or_like('per_name', $keyword);
             $this->db->group_end();
         }
+        $this->db->group_by('teaassist_teacherid'); 
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -118,8 +120,8 @@ class Model_te_assist extends CI_Model
     {
         $this->db->where_in('teaassist_teacherid', $datatea);
         $this->db->where_in('teaassist_permission', $dataper);
-        $this->db->where_in('teaassist_semester', $semester);
-        $this->db->where_in('teaassist_subject', $subject);
+        $this->db->where('teaassist_semester', $semester);
+        $this->db->where('teaassist_subject', $subject);
         $this->db->delete('teacher_assist');
     }
 }
