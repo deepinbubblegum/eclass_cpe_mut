@@ -93,7 +93,7 @@ class Gen_ticket extends MY_Controller
 
                 // กำหนดฟอนท์ 
                 // ฟอนท์ THSarabunnew รองรับภาษาไทย
-                $pdf->SetFont('THSarabunnew', '', 12.5, '', true);
+                $pdf->SetFont('THSarabunnew', '', 16, '', true);
 
                 // สามารถปรับรูปแบบA4
                 // $pdf->AddPage('P', 'A4');
@@ -115,19 +115,19 @@ class Gen_ticket extends MY_Controller
                 // set some text for example
                 $title = " วิชา " . $ticket_data[0]['lot_subject'] . "\n";
                 $name = " ";
-                if(strlen($ticket_data[0]['subject_name']) > 25){
-                        $name = $name.substr_replace($ticket_data[0]['subject_name'],’…’,25)."\n";
-                }else{
-                        $name = " ".$ticket_data[0]['subject_name']."\n";
+                if (strlen($ticket_data[0]['subject_name']) > 25) {
+                        $name = $name . substr_replace($ticket_data[0]['subject_name'], '…', 25) . "\n";
+                } else {
+                        $name = " " . $ticket_data[0]['subject_name'] . "\n";
                 }
                 $lot_semester = str_split($ticket_data[0]['lot_semester']);
 
-                $semester = " ประจำภาคการศึกษาที่ ".$lot_semester[4]."/".substr($ticket_data[0]['lot_semester'],0,4)."\n";
-                $lots = " [ชุดที่".substr($arg,3)."] [".$ticket_data[0]['point']."คะแนน]\n";
-                $discript = " ".$ticket_data[0]['lot_description']."\n";
-                $key = " รหัส[";
+                $semester = " ประจำภาคการศึกษาที่ " . $lot_semester[4] . "/" . substr($ticket_data[0]['lot_semester'], 0, 4) . "\n";
+                $lots = " [ชุดที่" . substr($arg, 3) . "] [" . $ticket_data[0]['point'] . "คะแนน]\n";
+                $discript = " " . $ticket_data[0]['lot_description'] . "\n";
+                $key = " รหัส [";
                 $item = count($ticket_data);
-
+                // $pdf->WriteHTML();
                 $tic_count = 0;
                 $newpagecount = 0;
                 $y = 13;
@@ -136,19 +136,22 @@ class Gen_ticket extends MY_Controller
                 for ($i = 0; $i < $item; $i++) {
                         $tic_count++;
                         if ($tic_count == 1) {
-                                $pdf->MultiCell(62.5, 32, $title . $name . $semester . $lots . $discript . $key . $ticket_data[$i]['token'].']', 1, 'L', false, 0, '', '', true, 0, '', true, 0, 'T', true);
-                                $pdf->write2DBarcode($ticket_data[$i]['token'], 'QRCODE,H', 47, $y, 25, 25, $style);
+                                $pdf->MultiCell(46, 26, $title . $name . $semester . $lots . $discript . $key . $ticket_data[$i]['token'] . ']', true, 'L', false, 0, '', '', true, 0, '', true, 0, 'T', true);
+                                $pdf->write2DBarcode($ticket_data[$i]['token'], 'QRCODE,H', 40.5, $y, 15, 15, $style);
                         } else if ($tic_count == 2) {
-                                $pdf->MultiCell(62.5, 32, $title . $name . $semester . $lots . $discript . $key . $ticket_data[$i]['token'].']', 1, 'L', false, 0, '', '', true, 0, '', true, 0, 'T', true);
-                                $pdf->write2DBarcode($ticket_data[$i]['token'], 'QRCODE,H', 111, $y, 25, 25, $style);
+                                $pdf->MultiCell(46, 26, $title . $name . $semester . $lots . $discript . $key . $ticket_data[$i]['token'] . ']', true, 'L', false, 0, '', '', true, 0, '', true, 0, 'T', true);
+                                $pdf->write2DBarcode($ticket_data[$i]['token'], 'QRCODE,H', 88, $y, 15, 15, $style);
                         } else if ($tic_count == 3) {
-                                $pdf->MultiCell(62.5, 32, $title . $name . $semester . $lots . $discript . $key . $ticket_data[$i]['token'].']', 1, 'L', false, 1, '', '', true, 0, '', true, 0, 'T', true);
-                                $pdf->write2DBarcode($ticket_data[$i]['token'], 'QRCODE,H', 175, $y, 25, 25, $style);
+                                $pdf->MultiCell(46, 26, $title . $name . $semester . $lots . $discript . $key . $ticket_data[$i]['token'] . ']', true, 'L', false, 0, '', '', true, 0, '', true, 0, 'T', true);
+                                $pdf->write2DBarcode($ticket_data[$i]['token'], 'QRCODE,H', 135.5, $y, 15, 15, $style);
+                        } else if ($tic_count == 4) {
+                                $pdf->MultiCell(46, 26, $title . $name . $semester . $lots . $discript . $key . $ticket_data[$i]['token'] . ']', true, 'L', false, 1, '', '', true, 0, '', true, 0, 'T', true);
+                                $pdf->write2DBarcode($ticket_data[$i]['token'], 'QRCODE,H', 183, $y, 15, 15, $style);
                                 $tic_count = 0;
-                                $y = $y + 33.6;
+                                $y = $y + 27.6;
                         }
                         $newpagecount++;
-                        if ($newpagecount % 24 == 0) {
+                        if ($newpagecount % 40 == 0) {
                                 $pdf->AddPage('P', 'A4');
                                 $y = 13;
                         }
