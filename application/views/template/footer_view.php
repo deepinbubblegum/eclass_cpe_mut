@@ -8,19 +8,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <?php
-                $multi_assets_js = array(
-                        'jsQR/jsQR.js',
-                        'jsQR/qr_reader.js'
-                );
-                echo assets_js($multi_assets_js);
-        ?>
         <script>
                 $('#ticket').click(function(e) {
                         e.preventDefault();
                         $('#navdrawer-left-admin').navdrawer('hide');
                 });
         </script>
+
+        <?php
+        $multi_assets_js = array(
+                'jsQR/jsQR.js',
+                'jsQR/qr_reader.js'
+        );
+        echo assets_js($multi_assets_js);
+        ?>
 </head>
 
 <body>
@@ -37,8 +38,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                                 <div class="modal-body">
                                         <form>
-                                        <canvas id="canvas" hidden></canvas>
-                                                <div class="form-group">
+                                                <canvas class="mx-auto" id="canvas" style="border: 1px solid rgb(14, 168, 234); width: 100%;" ></canvas>
+                                                <div class="form-group mt-1">
                                                         <div class="floating-label">
                                                                 <label for="Ticket"><i class="fas fa-hashtag"></i>&nbsp;&nbsp;รหัสใบงาน</label>
                                                                 <input aria-describedby="TicketHelp" class="form-control" id="Ticket" name="Ticket" placeholder=" XXXX-XXXX-XXXX-XXXX" type="text" autocomplete="off">
@@ -50,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </form>
                                 </div>
                                 <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                        <button type="button" class="btn btn-secondary" id="btn_start_reader">QR Code Scan</button>
                                         <button type="button" class="btn btn-primary" id="btnTicketSave">บันทึก</button>
                                 </div>
                         </div>
