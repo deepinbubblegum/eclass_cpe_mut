@@ -12,8 +12,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+        <meta content="initial-scale=1, shrink-to-fit=no, width=device-width" name="viewport">
+
+        <!-- CSS -->
+        <!-- Add Material font (Roboto) and Material icon as needed -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i|Roboto+Mono:300,400,700|Roboto+Slab:300,400,700"
+                rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+
         <title>eclass : มหาวิทยาลัยเทคโนโลยีมหานคร</title>
         <script>
             subject_id = '<?php echo $subject_id; ?>';
@@ -57,7 +64,113 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </thead>
             <tbody id="tbodyScoreZone"> 
             </tbody>
-    </div>
+    </div> 
+
+    <!--  -->
+        <!-- Large modal -->  
+                <div id="exampleModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 id="exampleModalLabel"class="modal-title">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                </button>
+                                        </div>
+                                        <div class="modal-body">
+                                                <div style="width:100%; height:100%;">
+                                                        <canvas id="score_show"></canvas>
+                                                </div>
+                                                <br>
+                                                <div id="f34r-here">
+                                                    Tables here 
+
+                                                </div>
+                                                <!-- <table class="table table-striped mt-2">
+                                                        <tbody>
+                                                                <tr>
+                                                                        <td>รายละเอียด</td>
+                                                                        <td>จำนวน</td>
+                                                                        <td>หน่วย</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>จำนวนนักศึกษาทั้งหมด</td>
+                                                                        <td>16</td>
+                                                                        <td>คน</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>ค่าต่ำสุด</td>
+                                                                        <td>5</td>
+                                                                        <td>คะแนน</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>ค่าสูงสุด</td>
+                                                                        <td>17</td>
+                                                                        <td>คะแนน</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>ค่าเฉลี่ย</td>
+                                                                        <td>9.75</td>
+                                                                        <td>คะแนน</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>ค่าเบี่ยงเบนมาตรฐาน</td>
+                                                                        <td>3.455</td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>ค่าเฉลี่ย (ไม่รวมคะแนนศูนย์)</td>
+                                                                        <td>9.75</td>
+                                                                        <td>คะแนน</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>คะแนน SD</td>
+                                                                        <td>3.455</td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>คะแนนเต็ม</td>
+                                                                        <td>10</td>
+                                                                        <td>คะแนน</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>ต่ำกว่าครึ่ง</td>
+                                                                        <td>0</td>
+                                                                        <td>คน</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>คิดเป็น</td>
+                                                                        <td>0</td>
+                                                                        <td>เปอร์เซ็น</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>มากว่าครึ่งขึ้นไป</td>
+                                                                        <td>16</td>
+                                                                        <td>คน</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>คิดเป็น</td>
+                                                                        <td>100</td>
+                                                                        <td>เปอร์เซ็น</td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td>จากทั้งหมด</td>
+                                                                        <td>16</td>
+                                                                        <td>คน (ไม่รวมคะแนนลบ)</td>
+                                                                </tr>
+                                                        </tbody>
+                                                </table> -->
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button> 
+                                        </div> 
+                                </div>
+                        </div>
+                </div>
+        </div>
+    <!--  -->
 </body>
 
 </html>

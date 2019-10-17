@@ -22,6 +22,10 @@ $(document).ready(function() {
                     //console.log('IF -1');
                     $('#txtShowReturn').addClass('text-danger');
                     $('#txtShowReturn').text('*รหัสใบงานนี้ถูกใช้งานแล้ว');
+                } else if (response == '-2') {
+                    //console.log('IF -1');
+                    $('#txtShowReturn').addClass('text-danger');
+                    $('#txtShowReturn').text('*ช่องคะแนนถูกปิดแล้ว');
                 } else {
                     //console.log('dafug?');
                     $('#txtShowReturn').addClass('text-secondary');

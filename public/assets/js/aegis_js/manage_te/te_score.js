@@ -156,7 +156,7 @@ $(document).ready(function() {
     var optionValuesTH = [
         ['1', 'แสดงรหัสใบงาน'],
         ['2', 'แสดงผลการคำนวณตามสูตร'],
-        ['3', 'แสดงคะแนนจากไฟล์รายชื่อนักศึกษา'],
+        //['3', 'แสดงคะแนนจากไฟล์รายชื่อนักศึกษา'],
     ];
 
     genOptionValues(optionValuesTH);
@@ -489,7 +489,7 @@ $(document).ready(function() {
         uID = $('#addTicketUID').val();
         tPoint = $('#addTicketP').val();
         //if (tPoint > setMaxPoint) tPoint = setMaxPoint;
-        console.log(uID, tPoint, setMaxPoint, subject_id + '-' + semester, setIdParent, setIdChild);
+        //console.log(uID, tPoint, setMaxPoint, subject_id + '-' + semester, setIdParent, setIdChild);
 
         //pUrl = '/' + url[3] + '/Te_subject_point/insertFieldScore/' + semester + '-' + subject_id + '-' + pointId + '-' + ticket + '-' + fullName + '-' + miniName + '-' + maxPoint;
         pUrl = '/' + url[3] + '/Te_subject_point/insertInFieldPoint';
@@ -498,8 +498,15 @@ $(document).ready(function() {
             type: "POST",
             url: pUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&tPoint=' + tPoint + '&uID=' + uID,
-            success: function() {
+            dataType: "json",
+            success: function(response) {
                 $('#addTicketUID').val("");
+                console.log(response);
+                if (response == true) {
+                    console.log('success');
+                } else {
+                    alert('failed');
+                }
                 //$('#addTicketP').val("");
             }
         });

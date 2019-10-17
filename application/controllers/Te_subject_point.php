@@ -192,6 +192,7 @@ class Te_subject_point extends MY_Controller
         //$point_std_index = '0';
         $point_std_user_id = $this->input->post('uID');
         //$User = $this->input->post('dataUser');
-        $this->Model_te_subject_point->insertPoint($point_std_semester,$point_std_subject,$point_std_id,$point_std_setpoint_id,$point_std_user_id,$point_std_point);
+        $result = $this->Model_te_subject_point->insertPoint($point_std_semester,$point_std_subject,$point_std_id,$point_std_setpoint_id,$point_std_user_id,$point_std_point);
+        echo json_encode($result); 
     }
 }

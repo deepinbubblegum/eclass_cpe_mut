@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var url = $(location).attr('href').split("/");
+
     genOverHead();
     showTableHead();
 
@@ -7,6 +8,7 @@ $(document).ready(function() {
     pointData = [];
     bodyData = [];
     getFieldPoint = [];
+    getMaxPointData = [];
 
     function showTableHead() { //tableScoreZone
         takeThisUrl = '/' + url[3] + '/Te_table_score/showTableHeader';
@@ -27,13 +29,17 @@ $(document).ready(function() {
                         '<tr>' +
                         '<th scope="col">Student ID</th>';
                     for (i = 0; i < response.length; i++) {
-                        html += '<th scope="col">' + response[i].setpoint_mininame;
+                        html += '<th scope="col"><a id="charts-' + i + '" >' + response[i].setpoint_mininame + '</a>';
                         if (response[i].setpoint_option == '1') {
                             html += ' [' + response[i].setpoint_maxpoint + ']</th>';
+                            getMaxPointData[i] = response[i].setpoint_maxpoint * 1;
                         } else if (response[i].setpoint_option == '2') {
                             showMax = response[i].setpoint_maxpoint.split(':');
                             if (showMax[1] != undefined) {
                                 html += ' [' + showMax[1] + ']</th>';
+                                getMaxPointData[i] = showMax[1] * 1;
+                            } else {
+                                html += ' [maxpoint-' + i + ']</th>';
                             }
                             formulaField++;
                             formulaMax++;
@@ -43,7 +49,30 @@ $(document).ready(function() {
                     // html += '<th scope="col" id="maxSum">SUM</th>';
                     html += '</tr>';
                 } else {
-                    html = '<label>NO DATA</label>';
+                    html += '<label>NO DATA</label>';
+                }
+                $('#theadScoreZone').html(html);
+                for (i = 0; i < getFieldPoint.length; i++) {
+                    if (response[i].setpoint_option == '2') {
+                        getShowMax = response[i].setpoint_maxpoint.split(':');
+                        if (getShowMax[1] == undefined) {
+                            takeShowMax = getShowMax[0].split("#");
+                            setNewMaxPoint = 0;
+                            for (j = 0; j < getFieldPoint.length; j++) {
+                                for (k = 0; k < takeShowMax.length; k++) {
+                                    if (getFieldPoint[j].setpoint_mininame == takeShowMax[k]) {
+                                        getMaxPointField = $('#charts-' + j).parent().text();
+                                        getForSlice = getMaxPointField.search(/\[/)
+                                        sliced = getMaxPointField.slice(getForSlice + 1, getMaxPointField.length - 1);
+                                        setNewMaxPoint += sliced * 1;
+                                        console.log(setNewMaxPoint);
+                                    }
+                                }
+                            }
+                            getMaxPointData[i] = setNewMaxPoint;
+                            html = html.replace('maxpoint-' + i, setNewMaxPoint);
+                        }
+                    }
                 }
                 $('#theadScoreZone').html(html);
                 //$('#maxSum').text('SUM [' + maxSum + ']');
@@ -152,6 +181,106 @@ $(document).ready(function() {
                         }
                     }
                 }
+
+                $.each(getFieldPoint, function(i, p) {
+                    $("#charts-" + i).click(function(e) {
+                        //console.log(i);
+                        $('#exampleModalLabel').text(getFieldPoint[i].setpoint_mininame);
+                        $('#exampleModal').modal('show');
+                        getData = [];
+                        for (j = 0; j < bodyData.length; j++) {
+                            getData[j] = $('#point-' + bodyData[j].substd_stdid + '-' + getFieldPoint[i].setpoint_setpoint_id).text();
+                        }
+
+                        getData.sort(function(a, b) { return a - b });
+                        k = 0;
+                        headData = [];
+                        valueData = [];
+                        sumData = 0;
+
+                        moreThan = lessThan = 0;
+
+                        for (j = 0; j < getData.length; j++) {
+                            if (!valueData[k]) valueData[k] = 0;
+                            if (getData[j] != getData[j + 1]) {
+                                headData[k] = getData[j];
+                                valueData[k] = (valueData[k] * 1) + 1;
+                                k++;
+                            } else {
+                                valueData[k] = (valueData[k] * 1) + 1;
+                            }
+                            sumData += getData[j] * 1;
+                            if (getData[j] >= (getMaxPointData[i] / 2)) {
+                                moreThan++;
+                            } else {
+                                lessThan++;
+                            }
+                        }
+
+                        avgData = sumData / (getData.length * 1);
+                        findSd1 = 0;
+                        checkPow = [];
+
+                        for (j = 0; j < getData.length; j++) {
+                            findSd1 += Math.pow(getData[j] - avgData, 2);
+                            checkPow[j] = Math.pow(getData[j] - avgData, 2);
+                        }
+                        findSd2 = findSd1 / (getData.length - 1);
+                        findSd3 = Math.sqrt(findSd2);
+                        findSd4 = Math.round(findSd3 * 10000) / 10000;
+
+                        console.log(findSd1, findSd2);
+                        console.log(checkPow);
+                        console.log(headData);
+
+
+
+                        new Chart(document.getElementById("score_show"), {
+                            "type": "horizontalBar",
+                            "data": {
+                                //"labels": ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Grey"],
+                                "labels": headData,
+                                "datasets": [{
+                                    "label": "People",
+                                    "data": valueData,
+                                    "fill": false,
+                                    "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
+                                        "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
+                                        "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"
+                                    ],
+                                    "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
+                                        "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"
+                                    ],
+                                    "borderWidth": 1
+                                }]
+                            },
+                            "options": {
+                                "scales": {
+                                    "xAxes": [{
+                                        "ticks": {
+                                            "beginAtZero": true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                        console.log(sumData);
+                        html = '<table class="table table-striped mt-2"><tbody>';
+                        html += '<tr><td>Student</td> <td>' + getData.length + '</td> <td>People</td> </tr>';
+                        html += '<tr><td>Max</td> <td>' + Math.max(...getData) + '</td> <td>Point</td> </tr>';
+                        html += '<tr><td>Min</td> <td>' + Math.min(...getData) + '</td> <td>Point</td> </tr>';
+                        html += '<tr><td>Average</td> <td>' + avgData + '</td> <td>Point</td> </tr>';
+                        html += '<tr><td>S.D.</td> <td>' + findSd4 + '</td> <td>Point</td> </tr>';
+                        html += '<tr><td>Max Point</td> <td>' + getMaxPointData[i] + '</td> <td>Point</td> </tr>';
+                        html += '<tr><td>More than or equal 50%</td> <td>' + moreThan + '</td> <td>People</td> </tr>';
+                        html += '<tr><td>Less than 50%</td> <td>' + lessThan + '</td> <td>People</td> </tr>';
+                        html += '</tbody></table>'
+                        $('#f34r-here').html(html);
+                        // console.log(getData);
+                        // console.log(Math.max(...getData), 'max');
+                        // console.log(Math.min(...getData), 'min');
+                    });
+                });
             },
         });
     }

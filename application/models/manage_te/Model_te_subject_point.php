@@ -54,7 +54,9 @@ class Model_te_subject_point extends CI_Model
         ");
         $newIndex = $qIndex->row()->newIndex;
 
-        $this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','" . $newIndex . "','" . $point . "')");
+        $this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','star','" . $point . "')");
+        return ($this->db->affected_rows() != 1) ? false : true; 
+        //$this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','" . $newIndex . "','" . $point . "')");
     }
 
     public function insertField($semester, $subject_id, $pointId, $ticket, $fullName, $miniName, $maxPoint,$option)
