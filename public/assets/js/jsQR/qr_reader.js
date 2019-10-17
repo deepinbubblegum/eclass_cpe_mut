@@ -42,7 +42,7 @@ $(document).ready(function () {
                                         drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
                                         drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
                                         $('#Ticket').val(code.data);
-                                        // canvasElement.hidden = true;
+                                        canvasElement.hidden = true;
                                         return;
                                 }
                         }
