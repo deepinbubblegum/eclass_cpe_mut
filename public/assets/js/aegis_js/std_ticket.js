@@ -31,4 +31,17 @@ $(document).ready(function() {
             },
         });
     });
+
+    $('#btnQrModal').click(function (e) { 
+        e.preventDefault();
+        $('#modal_ticket').modal('hide');
+        $('#modal_ticket_QRCode').modal('show');
+    });
+
+    $('#close_qr_model').click(function (e) { 
+        e.preventDefault();
+        $('#modal_ticket_QRCode').modal('hide');
+        $('#modal_ticket').modal('show');
+    });
+
 });

@@ -42,8 +42,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </form>
                                 </div>
                                 <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                        <button type="button" class="btn btn-secondary" id="btnQrModal" >แสกน QR Code</button>
                                         <button type="button" class="btn btn-primary" id="btnTicketSave">บันทึก</button>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
+        <!-- Modal ticket QR-->
+        <div class="modal fade text-left" id="modal_ticket_QRCode" tabindex="-1" role="dialog" aria-labelledby="modal_ticketLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h5 class="modal-title" id="modal_ticketLabel">แสกน QR Code รหัสคะแนน</h5>
+                                        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+                                                <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                        <form>
+                                                <div class="form-group">
+                                                        qrcode
+                                                </div>
+                                        </form>
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" id="close_qr_model" >ปิด</button>
                                 </div>
                         </div>
                 </div>
