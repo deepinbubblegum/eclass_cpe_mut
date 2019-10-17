@@ -48,7 +48,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </form>
                                 </div>
                                 <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" id="btn_start_reader">QR Code Scan</button>
+                                        <button type="button" class="btn btn-secondary" id="btn_start_reader" disabled>QR Code Scan</button>
                                         <button type="button" class="btn btn-primary" id="btnTicketSave">บันทึก</button>
                                 </div>
                         </div>
@@ -57,6 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         </div>
         </div>
+        
 </body>
 
 </html>
