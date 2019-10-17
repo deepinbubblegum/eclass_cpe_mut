@@ -6,6 +6,10 @@ class Admin extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+
+        if($this->session->ses_status != 'admin'){
+            show_404();
+        }
     }
 
     public function index()

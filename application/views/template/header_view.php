@@ -132,7 +132,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </span>
                                 </a>
                                 <?php
-                                        echo '<a class="nav-item nav-link" href="' . base_url('barcode') . '" target="_blank">
+                                echo '<a class="nav-item nav-link" href="' . base_url('barcode') . '" target="_blank">
                                                         <span style="font-size: 1.5em;">
                                                                 <i class="fas fa-tachometer-alt"></i></span>
                                                         <span style="font-size: 1.2em;">
@@ -148,7 +148,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </span>
                                 </a>
                                 <?php
-                                        echo '<div class="navdrawer-divider"></div>
+                                echo '<div class="navdrawer-divider"></div>
                                                 <a class="nav-item nav-link" id="ticket" data-toggle="modal" data-target="#modal_ticket">
                                                         <span style="font-size: 1.5em;">
                                                                 <i class="fas fa-ticket-alt"></i></span>
@@ -187,8 +187,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="container">
                                         <?php
                                         if (isset($this->session->ses_tname)) {
+                                                if ($this->session->ses_status == 'teacher' || $this->session->ses_status == 'admin') {
                                                         echo '<a href="' . base_url('teacher') . '"><button type="button" id="" class="btn btn-info btn-lg btn-block">หน้าจัดการอาจารย์</button></a>';
                                                         echo '<div class="navdrawer-divider mt-3"></div>';
+                                                }
                                                 echo '<button type="button" id="Signout_btn" class="btn btn-danger btn-lg btn-block">ออกจากระบบ</button>';
                                         } else {
                                                 echo '<div class="form-group">
