@@ -136,7 +136,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 }
                                 ?>
                                 <?php
-                                if ($this->session->ses_status != 'teacher' && $this->session->ses_status != 'admin') {
+                                if ($this->session->ses_status == 'student') {
                                         echo '<a class="nav-item nav-link" href="' . base_url('barcode') . '" target="_blank">
                                                         <span style="font-size: 1.5em;">
                                                                 <i class="fas fa-tachometer-alt"></i></span>
