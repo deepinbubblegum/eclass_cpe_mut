@@ -25,13 +25,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         &nbsp;&nbsp;หน้าแรก
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('subject'); ?>">
+                                                        <?php
+                                                        if ($this->session->ses_status) {
+                                                                echo '<a class="nav-item nav-link" href="' . base_url('subject') . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-atlas"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;รายวิชา
                                                                 </span>
-                                                        </a>
+                                                                </a>';
+                                                        }
+                                                        ?>
                                                         <?php
                                                         if ($this->session->ses_status != 'teacher' && $this->session->ses_status != 'admin') {
                                                                 echo '<a class="nav-item nav-link" href="' . base_url('barcode') . '" target="_blank">
@@ -51,7 +55,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                         </a>
                                                         <?php
-                                                        if ($this->session->ses_status != 'teacher' && $this->session->ses_status != 'admin') {
+                                                        if ($this->session->ses_status == 'student') {
                                                                 echo '<div class="navdrawer-divider"></div>
                                                                 <a class="nav-item nav-link" id="ticket" data-toggle="modal" data-target="#modal_ticket">
                                                                         <span style="font-size: 1.5em;">
