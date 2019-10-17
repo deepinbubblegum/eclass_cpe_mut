@@ -33,6 +33,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                         </a>
                                                         <?php
+                                                        if ($this->session->ses_status != 'teacher' && $this->session->ses_status != 'admin') {
                                                                 echo '<a class="nav-item nav-link" href="' . base_url('barcode') . '" target="_blank">
                                                                         <span style="font-size: 1.5em;">
                                                                                 <i class="fas fa-tachometer-alt"></i></span>
@@ -40,6 +41,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                                 &nbsp;&nbsp;พิมพ์บาร์โค้ด
                                                                         </span>
                                                                         </a>';
+                                                        }
                                                         ?>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
                                                                 <span style="font-size: 1.5em;">
