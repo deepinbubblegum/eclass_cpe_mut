@@ -33,8 +33,14 @@ $(document).ready(function() {
                             '<div id="menuScoreId-' + response[i].point_id + '">' +
                             /*--------------------------------------------------*/
                             '<br>' +
-                            '<div class="d-flex" id="genIn-' + response[i].point_id + '">' +
+                            '<div class="table-responsive">' +
+                            '<table class="table">' +
+                            '<span class="d-flex flex-wrap" id="genIn-' + response[i].point_id + '">' +
+
+                            '</span>' +
+                            '</table>' +
                             '</div>' +
+                            '<br>' +
                             /*--------------------------------------------------*/
                             '</div>' +
                             '</div>' +
@@ -62,7 +68,7 @@ $(document).ready(function() {
                     for (i = 0; i < response.length; i++) {
                         html +=
                             '<center>' +
-                            '<div class="p-2 f34r-bg-n-txt">' + response[i].setpoint_mininame + '<br>' +
+                            '<div style="width:93px;height:93px" class="p-2 mb-2 f34r-bg-n-txt">' + response[i].setpoint_mininame + '<br>' +
                             '<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                             '</div>' +
                             '</center>&nbsp;';
