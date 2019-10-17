@@ -38,7 +38,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                                 <div class="modal-body">
                                         <form>
-                                                <canvas class="mx-auto" id="canvas" style="border: 1px solid rgb(14, 168, 234); width: 100%;" ></canvas>
+                                                <canvas class="mx-auto" id="canvas" style="border: 1px solid rgb(14, 168, 234); width: 100%; height: 100%;" ></canvas>
                                                 <div class="form-group mt-1">
                                                         <div class="floating-label">
                                                                 <label for="Ticket"><i class="fas fa-hashtag"></i>&nbsp;&nbsp;รหัสใบงาน</label>
