@@ -150,7 +150,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </span>
                                 </a>
                                 <?php
-                                echo '<div class="navdrawer-divider"></div>
+                                if ($this->session->ses_status != 'teacher' && $this->session->ses_status != 'admin') {
+                                        echo '<div class="navdrawer-divider"></div>
                                                 <a class="nav-item nav-link" id="ticket" data-toggle="modal" data-target="#modal_ticket">
                                                         <span style="font-size: 1.5em;">
                                                                 <i class="fas fa-ticket-alt"></i></span>
@@ -158,6 +159,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 &nbsp;&nbsp;กรอกรหัสคะแนน
                                                         </span>
                                                 </a>';
+                                }
                                 ?>
                                 <div class="navdrawer-divider"></div>
                                 <a href="">
