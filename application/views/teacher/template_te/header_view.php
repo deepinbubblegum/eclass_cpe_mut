@@ -120,7 +120,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                         </div>
                         <nav class="navdrawer-nav">
-                                <a class="nav-item nav-link" id="btn_add" data-toggle="modal" data-target="#Modal_add">
+                                <a class="nav-item nav-link" id="btn_add" data-toggle="modal" data-target="#Modal_Add_subject">
                                         <span style="font-size: 1.5em;">
                                                 <i class="far fa-address-card"></i></span>
                                         <span style="font-size: 1.2em;">
