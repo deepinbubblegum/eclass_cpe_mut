@@ -172,8 +172,8 @@ $(document).ready(function () {
                             '<!-- <button class="btn btn-float btn-danger my-1"><i class="far fa-trash-alt"></i></button>' +
                             '<button class="btn btn-float btn-success my-1"><i class="fas fa-check"></i></button>' +
                             '<button class="btn btn-float btn-danger my-1"><i class="fas fa-undo-alt"></i></button> -->' +
-                            '</span>' +
                             '<a class="btn btn-danger" href="/Std_download/download/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuDowId + '-' + response[i].fileName + '">download</a>' +
+                            '</span>' +
                             '</li>';
                     }
                 }
