@@ -507,12 +507,12 @@ $(document).ready(function() {
                             '</div>' +
                             '</span>' +
                             '<span>' +
-                            '<!-- <button class="btn btn-float btn-danger my-1"><i class="far fa-trash-alt"></i></button>' +
-                            '<button class="btn btn-float btn-success my-1"><i class="fas fa-check"></i></button>' +
-                            '<button class="btn btn-float btn-danger my-1"><i class="fas fa-undo-alt"></i></button> -->' +
+                            '<!-- <a class="btn btn-float btn-danger my-1"><i class="far fa-trash-alt"></i></a>' +
+                            '<a class="btn btn-float btn-success my-1"><i class="fas fa-check"></i></a>' +
+                            '<a class="btn btn-float btn-danger my-1"><i class="fas fa-undo-alt"></i></a>-->' +
+                            '<a class="btn btn-success mr-1" href="/Te_uploaded/download/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId + '-' + response[i].fileName + '">download</a>' +
+                            '<a class="btn btn-danger mr-1" href="/Te_uploaded/delete/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId + '-' + response[i].fileName + '">delete</a>' +
                             '</span>' +
-                            '<a class="btn btn-success" href="/Te_uploaded/download/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId + '-' + response[i].fileName + '">download</a>' +
-                            '<a class="btn btn-danger" href="/Te_uploaded/delete/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId + '-' + response[i].fileName + '">delete</a>' +
                             '</li>';
                     }
                 }
