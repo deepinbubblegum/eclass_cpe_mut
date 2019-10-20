@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var url = $(location).attr('href').split("/");
 
     genOverHead();
@@ -17,7 +17,7 @@ $(document).ready(function() {
             url: takeThisUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&parent_id=' + point_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log('showTableHead');
                 //console.log(response);
                 getFieldPoint = response;
@@ -87,7 +87,7 @@ $(document).ready(function() {
             url: takeThisUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&parent_id=' + point_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log('genOverHead');
                 //console.log(response);
                 html = '';
@@ -112,7 +112,7 @@ $(document).ready(function() {
             url: takeThisUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log('showTableBody');
                 //console.log(response);
                 html = '';
@@ -147,7 +147,7 @@ $(document).ready(function() {
             url: takeThisUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&parent_id=' + point_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log('showPoint');
                 dataPoint = response;
                 //console.log(response);
@@ -182,8 +182,8 @@ $(document).ready(function() {
                     }
                 }
 
-                $.each(getFieldPoint, function(i, p) {
-                    $("#charts-" + i).click(function(e) {
+                $.each(getFieldPoint, function (i, p) {
+                    $("#charts-" + i).click(function (e) {
                         //console.log(i);
                         $('#exampleModalLabel').text(getFieldPoint[i].setpoint_mininame);
                         $('#exampleModal').modal('show');
@@ -192,7 +192,9 @@ $(document).ready(function() {
                             getData[j] = $('#point-' + bodyData[j].substd_stdid + '-' + getFieldPoint[i].setpoint_setpoint_id).text();
                         }
 
-                        getData.sort(function(a, b) { return a - b });
+                        getData.sort(function (a, b) {
+                            return a - b
+                        });
                         k = 0;
                         headData = [];
                         valueData = [];
@@ -225,6 +227,8 @@ $(document).ready(function() {
                             findSd1 += Math.pow(getData[j] - avgData, 2);
                             checkPow[j] = Math.pow(getData[j] - avgData, 2);
                         }
+                        avgData = Math.round(avgData * 10000) / 10000;
+
                         findSd2 = findSd1 / (getData.length - 1);
                         findSd3 = Math.sqrt(findSd2);
                         findSd4 = Math.round(findSd3 * 10000) / 10000;
@@ -301,7 +305,7 @@ $(document).ready(function() {
         return textInPut;
     }
 
-    $(document).ajaxStop(function() {
+    $(document).ajaxStop(function () {
         ajaxCount++;
         //console.log('ajaxComplete', ajaxCount, formulaField); 
         if (ajaxCount >= 1 && formulaField > 0) {
@@ -385,7 +389,7 @@ $(document).ready(function() {
             url: '/' + url[3] + '/Te_table_score/takeFormula',
             data: '&formula=' + '(' + takeFormula + ')',
             dataType: "json",
-            success: function(getSum) {
+            success: function (getSum) {
                 //console.log(stdId, colId);
                 console.log('takeFormula->' + getSum[0].sum + '<-');
                 //if (getSum[0].sum > formulaMaxPoint) getSum[0].sum = formulaMaxPoint;
@@ -421,4 +425,30 @@ $(document).ready(function() {
             }
         }
     }
+
+    $('#download_PDF').click(function (e) {
+        e.preventDefault();
+        // var reportPageHeight = $('#reportPage').innerHeight();
+        // var reportPageWidth = $('#reportPage').innerWidth();
+        var canvas = document.getElementById('score_show');
+        var imgData = canvas.toDataURL("image/png", 1.0);
+        var pdf = new jsPDF("p", "cm", "a4");
+        var margins = {
+            top: 2.54,
+            bottom: 2.54,
+            left: 2.54
+        };
+        pdf.addImage(imgData, 'PNG', margins.left, margins.top, 16, 8);
+        pdf.text('Hello ทด world!', margins.left, 12);
+        pdf.text('Hello world!', margins.left, 12.7);
+        pdf.save("download.pdf");
+
+        // var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
+        // pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
+
+        // console.log(pdfCanvas);
+
+        // filename = $('.modal-title').val();
+        // pdf.save(filename + '.pdf');
+    });
 });
