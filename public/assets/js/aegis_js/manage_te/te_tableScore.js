@@ -181,10 +181,14 @@ $(document).ready(function () {
                         }
                     }
                 }
-
+                var chartCheck = 0;
                 $.each(getFieldPoint, function (i, p) {
                     $("#charts-" + i).click(function (e) {
                         //console.log(i);
+                        chartCheck++;
+                        if(chartCheck > 1){
+                            char.destroy();
+                        }
                         $('#exampleModalLabel').text(getFieldPoint[i].setpoint_mininame);
                         $('#exampleModal').modal('show');
                         getData = [];
@@ -236,10 +240,7 @@ $(document).ready(function () {
                         console.log(findSd1, findSd2);
                         console.log(checkPow);
                         console.log(headData);
-
-
-
-                        new Chart(document.getElementById("score_show"), {
+                        char = new Chart(document.getElementById("score_show"), {
                             "type": "horizontalBar",
                             "data": {
                                 //"labels": ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Grey"],
