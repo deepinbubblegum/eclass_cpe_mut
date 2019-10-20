@@ -9,7 +9,7 @@ $(document).ready(function () {
     bodyData = [];
     getFieldPoint = [];
     getMaxPointData = [];
-    var index;
+
     function showTableHead() { //tableScoreZone
         takeThisUrl = '/' + url[3] + '/Te_table_score/showTableHeader';
         $.ajax({
@@ -269,7 +269,6 @@ $(document).ready(function () {
                             }
                         });
                         console.log(sumData);
-                        index = getMaxPointData[i];
                         html = '<table class="table table-striped mt-2"><tbody>';
                         html += '<tr><td>Student</td> <td>' + getData.length + '</td> <td>People</td> </tr>';
                         html += '<tr><td>Max</td> <td>' + Math.max(...getData) + '</td> <td>Point</td> </tr>';
@@ -429,6 +428,8 @@ $(document).ready(function () {
 
     $('#download_PDF').click(function (e) {
         e.preventDefault();
+        // var reportPageHeight = $('#reportPage').innerHeight();
+        // var reportPageWidth = $('#reportPage').innerWidth();
         var canvas = document.getElementById('score_show');
         var imgData = canvas.toDataURL("image/png", 1.0);
         var pdf = new jsPDF("p", "cm", "a4");
@@ -438,7 +439,7 @@ $(document).ready(function () {
             bottom: 2.54,
             left: 2.54
         };
-        pdf.addImage(imgData, 'PNG', margins.left, margins.top, 16, 9);
+        pdf.addImage(imgData, 'PNG', margins.left, margins.top, 16, 8);
         pdf.autoTable({
             // head: [['Name', 'Email', 'Country']],
             body: [
@@ -447,16 +448,15 @@ $(document).ready(function () {
                 ['Min', Math.min(...getData), 'Point'],
                 ['Average', avgData, 'Point'],
                 ['S.D.', findSd4, 'Point'],
-                ['Max Point', index, 'Point'],
+                ['Max Point', getMaxPointData[i], 'Point'],
                 ['More than or equal 50%', moreThan, 'People'],
                 ['Less than 50%', lessThan, 'People'],
             ],
-            startY: 12.5,
+            startY: 11,
             margin: margins.left,
-            tableWidth: 16,
+            tableWidth: number = 16
         });
-        filename = $('.modal-title').val();
-        pdf.save(filename + ".pdf");
+        pdf.save("download.pdf");
 
         // var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
         // pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
