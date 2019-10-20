@@ -433,6 +433,7 @@ $(document).ready(function () {
         var canvas = document.getElementById('score_show');
         var imgData = canvas.toDataURL("image/png", 1.0);
         var pdf = new jsPDF("p", "cm", "a4");
+        pdf.setFont('THSarabunNew');
         var margins = {
             top: 2.54,
             bottom: 2.54,
