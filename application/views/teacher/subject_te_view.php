@@ -40,6 +40,48 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         </select>
                                                                 </div>
                                                         </div>
+
+                                                        <div class="form-row mt-3">
+                                                                <div class="col-sm-3 mb-2">
+                                                                        <div class="custom-control custom-switch mb-2">
+                                                                                <input class="custom-control-input" id="customSwitch" type="checkbox">
+                                                                                <span class="custom-control-track"></span>
+                                                                                <label class="custom-control-label" for="customSwitch">เพิ่มวิชาร่วม</label>
+                                                                        </div>
+
+                                                                        
+                                                                </div>
+                                                        </div>
+
+                                                        <div class="form-row mt-1" id="Class_Join">
+                                                                <!-- <div class="col-sm mb-1">
+                                                                        <label>Subject</label>
+                                                                        <select class="form-control" id="SubjectJoin_add_option">
+
+                                                                        </select>
+                                                                </div> -->
+                                                                <div class="col-sm mb-1">
+                                                                <form>
+                                                                        <div class="form-group">
+                                                                                <label for="SubjectJoin_add_option">เพิ่มรายวิชาเรียนร่วม</label>
+                                                                                <select class="form-control" id="SubjectJoin_add_option">
+
+                                                                                </select>
+                                                                                <span style="font-size: 1.5rem;" id="add_Subjoin">
+                                                                                        <span style="color: #ff4081;">
+                                                                                                <a><i class="fas fa-plus-circle"></i></a>
+                                                                                        </span>
+                                                                                </span>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                                <label for="SubjectJoin">รายวิชาเรียนร่วมที่เพิ่ม</label>
+                                                                                <select multiple class="form-control" id="SubjectJoin">
+
+                                                                                </select>
+                                                                        </div>
+                                                                </form>
+                                                                </div>
+                                                        </div>
                                                 </form>
                                         </div>
                                 </form>

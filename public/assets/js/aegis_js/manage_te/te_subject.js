@@ -4,7 +4,16 @@ $(document).ready(function() {
     var datatable_semester;
     var datatable_subject;
     var data_semester;
+    var Sel_Sub;
     showSemester();
+    hideSubJoin();
+
+
+    function hideSubJoin() {
+        $('#Class_Join').hide();
+        $('#add_Subjoin').hide();
+    }
+
 
     function showSemester() {
         $.ajax({
@@ -75,7 +84,6 @@ $(document).ready(function() {
             data: "data=" + semesterSelected,
             dataType: "json",
             success: function(response) {
-                console.log(response);
                 var html = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
@@ -136,12 +144,98 @@ $(document).ready(function() {
                     }
                 }
                 $('#Subject_Form_add_option').html(html);
+                Sel_Sub = $('#Subject_Form_add_option').val();
             }
         });
     }
 
+    $('#Subject_Form_add_option').change(function(e) {
+        e.preventDefault();
+        Sel_Sub = $('#Subject_Form_add_option').val();
+        Select_SubChange();
+    });
+
+    $('#customSwitch').change(function(e) {
+        e.preventDefault();
+        var Swck;
+        if ($(this).prop("checked") == true) {
+            Swck = 1;
+            $('#Class_Join').show();
+            $('#add_Subjoin').show();
+            $.ajax({
+                url: "/" + url[3] + "/Teacher_add_subject/Subject_Add_data_ctl",
+                dataType: "json",
+                success: function(response) {
+                    var html = '';
+                    var i;
+                    if (response != null) {
+                        for (i = 0; i < response.length; i++) {
+                            if (response[i].subject_id != Sel_Sub) {
+                                html += '<option value="' + response[i].subject_id + '" data-2="' + response[i].subject_teacher + '">' + response[i].subject_name + ' </option>';
+                            }
+                        }
+                    }
+                    $('#SubjectJoin_add_option').html(html);
+                }
+            });
+        } else {
+            Swck = 0;
+            $("#SubjectJoin").find('option').val('');
+            $('#Class_Join').hide();
+            $('#add_Subjoin').hide();
+        }
+    });
+
+    function Select_SubChange() {
+        if ($('#customSwitch').prop("checked") == true) {
+            Swck = 1;
+            $('#Class_Join').show();
+            $('#add_Subjoin').show();
+            $.ajax({
+                url: "/" + url[3] + "/Teacher_add_subject/Subject_Add_data_ctl",
+                dataType: "json",
+                success: function(response) {
+                    var html = '';
+                    var i;
+                    if (response != null) {
+                        for (i = 0; i < response.length; i++) {
+                            if (response[i].subject_id != Sel_Sub) {
+                                html += '<option value="' + response[i].subject_id + '" data-2="' + response[i].subject_teacher + '">' + response[i].subject_name + ' </option>';
+                            }
+                        }
+                    }
+                    $('#SubjectJoin_add_option').html(html);
+                }
+            });
+        }
+    }
+
+    $('#add_Subjoin').click(function(e) {
+        e.preventDefault();
+        idSub = $('#SubjectJoin_add_option').val();
+        nameSub = $("#SubjectJoin_add_option :selected").text();
+        chk = 0;
+        if ($('#SubjectJoin').has('option').length > 0) {
+            $("#SubjectJoin > option").each(function() {
+                if (this.value == idSub) {
+                    alert('ซ้ำ');
+                    chk = 1;
+                }
+            });
+            if (chk != 1) {
+                $('#SubjectJoin').append('<option value="' + idSub + '"> ' + nameSub + ' </option>');
+            }
+        } else {
+            $('#SubjectJoin').append('<option value="' + idSub + '"> ' + nameSub + ' </option>');
+        }
+    });
+
     $('#btnSave').click(function(e) {
         e.preventDefault();
+
+        data = $("#Semester_Form_add_option :selected").val();
+        data2 = $("#Subject_Form_add_option :selected").val();
+
         if (iurl == "/" + url[3] + '/Teacher_add_subject/Add_Data_ctl_te') {
             txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
             txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
@@ -149,13 +243,54 @@ $(document).ready(function() {
             txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
             txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
         }
-        data = $("#Semester_Form_add_option :selected").val();
-        data2 = $("#Subject_Form_add_option :selected").val();
+        // data = $("#Semester_Form_add_option :selected").val();
+        // data2 = $("#Subject_Form_add_option :selected").val();
         //update_teasub = $("#Subject_Form_add_option").find(':selected').data('2');
         $.ajax({
             type: "POST",
             url: iurl,
             data: '&semester_id=' + data + '&subject_id=' + data2,
+            success: function() {
+                $('#Modal_add').modal('hide');
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: txtsnack
+                });
+                add_sunjoin();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: txtsnackerr + errorThrown + ' )'
+                });
+            }
+        });
+        showSemester();
+    });
+
+
+    function add_sunjoin() {
+        arr_subsjoin = [];
+        arr_semes = [];
+        arr_sub = [];
+        $("#SubjectJoin option").each(function() {
+            arr_subsjoin.push(this.value);
+            arr_semes.push(data);
+            arr_sub.push(data2);
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/" + url[3] + '/Teacher_add_subject/Add_SubJoin_Data_ctl_te',
+            data: { $semes: arr_semes, $sub: arr_sub, $subjoin: arr_subsjoin },
             success: function() {
                 $('#Modal_add').modal('hide');
                 Snackbar.show({
@@ -178,6 +313,7 @@ $(document).ready(function() {
                 });
             }
         });
-        showSemester();
-    });
+    }
+
+
 });

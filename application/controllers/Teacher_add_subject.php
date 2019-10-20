@@ -38,5 +38,18 @@ class Teacher_add_subject extends MY_Controller
         $result = $this->Model_te_add_subject->selectSemester();
         echo json_encode($result);
     }
+
+    public function Add_SubJoin_Data_ctl_te()
+    {
+        $semes = $this->input->post('$semes[]');
+        $sub = $this->input->post('$sub[]');
+        $subjoin = $this->input->post('$subjoin[]');
+        // print_r($semes);
+        // $arrayLength = count($semes);
+        // for ($i = 0; $i < $arrayLength; $i++)  {
+        //     echo $semes[$i] ."<br />";
+        // }
+        $this->Model_te_add_subject->Add_Subject_Join($semes,$sub,$subjoin);
+    }
     
 }
