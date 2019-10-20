@@ -49,6 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         'aegis_js/user_uses.js',
                         'aegis_js/langSwitching.js',
                         'jspdf/jspdf.min.js',
+                        'jspdf/plugin/jspdf.plugin.autotable.min.js',
                         'jspdf/font/th_sarabun_new/THSarabunNew-normal.js'
                 );
                 echo assets_css($multi_assets_css);

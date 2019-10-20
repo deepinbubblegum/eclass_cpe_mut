@@ -440,8 +440,22 @@ $(document).ready(function () {
             left: 2.54
         };
         pdf.addImage(imgData, 'PNG', margins.left, margins.top, 16, 8);
-        pdf.text('Hello ทด world!', margins.left, 12);
-        pdf.text('Hello world!', margins.left, 12.7);
+        pdf.autoTable({
+            // head: [['Name', 'Email', 'Country']],
+            body: [
+                ['Student', getData.length, 'People'],
+                ['Max', Math.max(...getData), 'Point'],
+                ['Min', Math.min(...getData), 'Point'],
+                ['Average', avgData, 'Point'],
+                ['S.D.', findSd4, 'Point'],
+                ['Max Point', getMaxPointData[i], 'Point'],
+                ['More than or equal 50%', moreThan, 'People'],
+                ['Less than 50%', lessThan, 'People'],
+            ],
+            startY: 11,
+            margin: margins.left,
+            tableWidth: number = 16
+        });
         pdf.save("download.pdf");
 
         // var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
