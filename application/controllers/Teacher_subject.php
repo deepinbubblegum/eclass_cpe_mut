@@ -18,6 +18,14 @@ class Teacher_subject extends MY_Controller
         echo json_encode($result);
     }
 
+    public function getSubject_Coop()
+    {
+        $data = $this->input->post('data');
+        $userID = $this->session->ses_id;
+        $result = $this->Model_te_subject->selectSubjectCoop($data,$userID);
+        echo json_encode($result);
+    }
+
     public function getSubject(){
         $data = $this->input->post('data');
         $userID = $this->session->ses_id;

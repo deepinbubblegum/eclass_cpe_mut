@@ -5,6 +5,9 @@ $(document).ready(function() {
     var datatable_subject;
     var data_semester;
     var Sel_Sub;
+    var SubCoop;
+    var SubAssCoop;
+
     showSemester();
     hideSubJoin();
 
@@ -12,6 +15,7 @@ $(document).ready(function() {
     function hideSubJoin() {
         $('#Class_Join').hide();
         $('#add_Subjoin').hide();
+        $("#SubjectJoin").empty();
     }
 
 
@@ -27,6 +31,22 @@ $(document).ready(function() {
                     }
                 }
                 $('#yearterm').html(html);
+                SubjectCoop();
+            }
+        });
+    }
+
+    function SubjectCoop() {
+        var url = $(location).attr('href').split("/");
+        semesterSelected = $("#yearterm :selected").val();
+        $.ajax({
+            type: "POST",
+            url: "../" + url[3] + "/Teacher_subject/getSubject_Coop",
+            data: "data=" + semesterSelected,
+            dataType: "json",
+            success: function(response) {
+                SubCoop = response;
+                console.log(response);
                 showSubject();
             }
         });
@@ -43,38 +63,27 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 console.log(response);
+                var txtSub = '';
                 var html = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        txtSub = response[i].subsem_subject;
+                        for (a = 0; a < SubCoop.length; a++) {
+                            if (SubCoop[a].subcoop_mainsub == response[i].subsem_subject) {
+                                txtSub += " / " + SubCoop[a].subcoop_supsub;
+                            }
+                        }
                         html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../' + url[3] + '/te_select/annouce/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZXAH2gX3tc7LJpgr0GaPOYnys6MkCpPi6VRmN6We88Uaq8wi" alt="Card image cap">' +
                             '<div class="card-body">' +
-                            '<h5 class="card-title">' + response[i].subsem_subject + '</h5>' +
+                            '<h5 class="card-title">' + txtSub + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
                             '</div>' +
                             '</a>';
                     }
                 }
                 $('#showSubject').html(html);
-                $.each(response, function(i, v) {
-                    $('#' + response[i].subsem_subject + ' a').click(function() {
-                        alert(response[i].subsem_subject);
-                        //window.location.href = '../Std_download/download/' + response[i].fileName;
-
-                        // console.log(response[i].filePath, response[i].fileName);
-                        // $.ajax({
-                        //     type: "POST",
-                        //     url: "../Std_download/download",
-                        //     data: "&data1=" + response[i].fileName + "&data2=" + response[i].filePath,
-                        //     //data: "&data1=" + getFile,
-                        //     dataType: "json",
-                        //     success: function(response) {
-                        //         alert("Success!");
-                        //     }
-                        // });
-                    });
-                });
             }
         });
 
@@ -85,13 +94,20 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 var html = '';
+                var txtSubAssist = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        txtSubAssist = response[i].subject_id;
+                        for (a = 0; a < SubCoop.length; a++) {
+                            if (SubCoop[a].subcoop_mainsub == response[i].subject_id) {
+                                txtSubAssist += " / " + SubCoop[a].subcoop_supsub;
+                            }
+                        }
                         html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subject_id + '" href="../' + url[3] + '/te_select/annouce/' + response[i].subject_id + '-' + response[i].teaassist_semester + '" >' +
                             '<img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZXAH2gX3tc7LJpgr0GaPOYnys6MkCpPi6VRmN6We88Uaq8wi" alt="Card image cap">' +
                             '<div class="card-body">' +
-                            '<h5 class="card-title">' + response[i].subject_id + '</h5>' +
+                            '<h5 class="card-title">' + txtSubAssist + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
                             '</div>' +
                             '</a>';
@@ -180,10 +196,15 @@ $(document).ready(function() {
             });
         } else {
             Swck = 0;
-            $("#SubjectJoin").find('option').val('');
+            $("#SubjectJoin").empty();
             $('#Class_Join').hide();
             $('#add_Subjoin').hide();
         }
+    });
+
+    $('#btnCloseAdd').click(function(e) {
+        e.preventDefault();
+        $("#SubjectJoin").empty();
     });
 
     function Select_SubChange() {
@@ -251,7 +272,7 @@ $(document).ready(function() {
             url: iurl,
             data: '&semester_id=' + data + '&subject_id=' + data2,
             success: function() {
-                $('#Modal_add').modal('hide');
+                //$('#Modal_add').modal('hide');
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -292,7 +313,8 @@ $(document).ready(function() {
             url: "/" + url[3] + '/Teacher_add_subject/Add_SubJoin_Data_ctl_te',
             data: { $semes: arr_semes, $sub: arr_sub, $subjoin: arr_subsjoin },
             success: function() {
-                $('#Modal_add').modal('hide');
+                $("#SubjectJoin").empty();
+                $('#Modal_Add_subject').modal('hide');
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',

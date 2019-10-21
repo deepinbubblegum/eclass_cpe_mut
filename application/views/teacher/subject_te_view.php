@@ -86,7 +86,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                 </form>
                                 <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                        <button type="button" id="btnCloseAdd" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                         <button type="button" id="btnSave" class="btn btn-primary">เพิ่มวิชา</button>
                                 </div>
                         </div>

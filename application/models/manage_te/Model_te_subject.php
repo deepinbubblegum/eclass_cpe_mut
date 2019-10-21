@@ -28,6 +28,19 @@ class Model_te_subject extends CI_Model
         }
     }
 
+    public function selectSubjectCoop($data,$userID)
+    {
+        $query = $this->db->query('SELECT subcoop_supsub,subject_name,subcoop_semester,subcoop_mainsub  FROM subject_coop 
+        LEFT JOIN subject ON subject_id = subcoop_supsub
+        LEFT JOIN subject_semester ON subsem_subject = subcoop_mainsub
+        WHERE subcoop_semester = "'.$data.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
     public function selectSubject($data,$userID)
     { 
         $query = $this->db->query('SELECT subsem_subject,subject_name,subsem_semester FROM subject_semester 
@@ -45,7 +58,7 @@ class Model_te_subject extends CI_Model
         $query = $this->db->query('SELECT subject_id, subject_name ,teaassist_semester , per_bit FROM teacher_assist 
         LEFT JOIN subject ON subject_id = teaassist_subject
         LEFT JOIN permission ON per_id = teaassist_permission
-        WHERE teaassist_semester = "'.$data.'" AND teaassist_teacherid = "'.$userID.'" GROUP BY teaassist_teacherid ');
+        WHERE teaassist_semester = "'.$data.'" AND teaassist_teacherid = "'.$userID.'" GROUP BY teaassist_subject ');
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {

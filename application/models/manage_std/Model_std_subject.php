@@ -16,7 +16,20 @@ class Model_std_subject extends CI_Model
         }
     }
 
-    public function selectSubject($data)
+    public function selectSubjectCoop($data)
+    {
+        $query = $this->db->query('SELECT subcoop_supsub,subject_name,subcoop_semester,subcoop_mainsub  FROM subject_coop 
+        LEFT JOIN subject ON subject_id = subcoop_supsub
+        LEFT JOIN subject_semester ON subsem_subject = subcoop_mainsub
+        WHERE subcoop_semester = "'.$data.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function selectSubject($data,$userID)
     {
         // $this->db->select('*');
         // $this->db->from('subject_semester');
@@ -27,7 +40,10 @@ class Model_std_subject extends CI_Model
         //     return $query->result();
         // }
 
-        $query = $this->db->query('select * from subject_semester ,subject where subsem_subject = subject_id and subsem_semester = ' . $data);
+        $query = $this->db->query('SELECT subject_name,subsem_subject, subsem_semester FROM subject_semester 
+        LEFT JOIN subject ON subsem_subject = subject_id 
+        LEFT JOIN subject_student ON subsem_subject = substd_subject 
+        WHERE substd_stdid = "'.$userID.'" AND substd_semester = "'.$data.'" ');
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {
