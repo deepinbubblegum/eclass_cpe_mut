@@ -286,7 +286,7 @@ $(document).ready(function() {
     }
     dataPoint = [];
 
-
+    
     var ajaxCount = 0;
     keeper = [];
 
