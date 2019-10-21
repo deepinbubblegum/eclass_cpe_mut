@@ -1,5 +1,6 @@
 $(document).ready(function() {
     showSemester();
+    var SubCoop = '';
 
     function showSemester() {
         $.ajax({
@@ -13,6 +14,23 @@ $(document).ready(function() {
                     }
                 }
                 $('#yearterm').html(html);
+                //showSubject();
+                SubjectCoop();
+            }
+        });
+    }
+
+    function SubjectCoop() {
+        var url = $(location).attr('href').split("/");
+        semesterSelected = $("#yearterm :selected").val();
+        $.ajax({
+            type: "POST",
+            url: "../" + url[3] + "/Std_subject/getSubject_Coop",
+            data: "data=" + semesterSelected,
+            dataType: "json",
+            success: function(response) {
+                SubCoop = response;
+                console.log(response);
                 showSubject();
             }
         });
@@ -29,13 +47,20 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 var html = '';
+                var txtSubAssist = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        txtSubAssist = response[i].subsem_subject;
+                        for (a = 0; a < SubCoop.length; a++) {
+                            if (SubCoop[a].subcoop_mainsub == response[i].subsem_subject) {
+                                txtSubAssist += " / " + SubCoop[a].subcoop_supsub;
+                            }
+                        }
                         html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/annouce/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZXAH2gX3tc7LJpgr0GaPOYnys6MkCpPi6VRmN6We88Uaq8wi" alt="Card image cap">' +
                             '<div class="card-body">' +
-                            '<h5 class="card-title">' + response[i].subsem_subject + '</h5>' +
+                            '<h5 class="card-title">' + txtSubAssist + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
                             '</div>' +
                             '</a>';
@@ -66,6 +91,6 @@ $(document).ready(function() {
 
     $('#yearterm').change(function(e) {
         e.preventDefault();
-        showSubject();
+        SubjectCoop();
     });
 });

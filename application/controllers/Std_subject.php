@@ -14,10 +14,18 @@ class Std_subject extends MY_Controller
             echo json_encode($result);
         }
 
+        public function getSubject_Coop()
+        {
+            $data = $this->input->post('data');
+            $result = $this->Model_std_subject->selectSubjectCoop($data);
+            echo json_encode($result);
+        }
+
         public function getSubject(){
             $data = $this->input->post('data'); 
+            $userID = $this->session->ses_id;
             //echo $semester; 
-            $result = $this->Model_std_subject->selectSubject($data);
+            $result = $this->Model_std_subject->selectSubject($data,$userID);
             echo json_encode($result);
         }
          

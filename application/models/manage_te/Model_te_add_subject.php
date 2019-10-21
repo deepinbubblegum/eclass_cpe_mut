@@ -63,4 +63,12 @@ class Model_te_add_subject extends CI_Model
     {
         $this->db->insert('subject_semester', $data);
     }
+
+    public function Add_Subject_Join($semes,$sub,$subjoin){
+        //print_r($semes);
+        $arrayLength = count($semes);
+        for ($i = 0; $i < $arrayLength; $i++)  {
+            $this->db->query('INSERT INTO subject_coop(subcoop_semester,subcoop_mainsub,subcoop_supsub) VALUES("'.$semes[$i].'"  ,"'.$sub[$i].'" , "'.$subjoin[$i].'") ');
+        }
+    }
 }
