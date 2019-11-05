@@ -16,9 +16,9 @@ class Teacher_add_subject extends MY_Controller
             'subsem_subject' => $this->input->post('subject_id'),
             'subsem_teacher' => $this->session->userdata('ses_id')
         );
-        if($this->Model_te_add_subject->Add_data_model_subject($data)){
-            $this->genDir($this->input->post('semester_id'),$this->input->post('subject_id'));
-        }
+        $this->Model_te_add_subject->Add_data_model_subject($data);
+        $this->genDir($this->input->post('semester_id'),$this->input->post('subject_id'));
+        
     }
 
     public function Show_Data_ctl()
