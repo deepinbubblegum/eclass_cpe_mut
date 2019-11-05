@@ -217,7 +217,7 @@ $(document).ready(function() {
         $('#addFieldFN').val('');
         $('#addFieldMN').val('');
         $('#addFieldTK')[0].checked = false;
-        $('#addFieldMP').val('');
+        $('#addFieldMP').val('1');
     });
 
     function takeField(fullName, miniName, ticket, maxPoint, optionSet) {
@@ -373,9 +373,9 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 console.log(response);
-                if(response){
-                    url = '/Gen_ticket/ticket_and_qrCode/'+ response;
-                    window.open(url,'_blank');
+                if (response) {
+                    url = '/Gen_ticket/ticket_and_qrCode/' + response;
+                    window.open(url, '_blank');
                 }
             },
         });
