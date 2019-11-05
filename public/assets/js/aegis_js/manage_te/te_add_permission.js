@@ -17,7 +17,7 @@ $(document).ready(function() {
     $('#findByTxt').text("ค้นหาด้วย");
     $('#btnFindTxt').text("ค้นหา");
     $('#saveModalTxt').text("SAVE_MODAL");
-    $('#delModalTxt').text("ยืนยันการลดข้อมูล");
+    $('#delModalTxt').text("ยืนยันการลบข้อมูล");
     $('#tableTitleTxt').text("จัดการข้อมูลระดับสิทธิ์อาจารย์ผู้ช่วย");
     $('#rowPerPageTxt').text("Rows per page:");
 
