@@ -117,14 +117,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <label for="Textarea">setpoint_fullname</label>
                                                         <input class="form-control" id="addFieldFN">
                                                         <label for="Textarea">setpoint_mininame</label>
-                                                        <input class="form-control" id="addFieldMN">
+                                                        <input class="form-control" id="addFieldMN" value="1">
                                                         <!-- <label for="Textarea">setpoint_ticket</label> -->
                                                         <!-- <input class="form-control" id="addFieldTK"> -->
                                                         <label for="Textarea">setpoint_maxpoint</label>
                                                         <input class="form-control" id="addFieldMP">
                                                         <!--  -->
                                                         <div class="custom-control custom-checkbox mt-3 mb-2">
-                                                                <input type="checkbox" class="custom-control-input" id="addFieldTK">
+                                                                <input type="checkbox" class="custom-control-input" id="addFieldTK" checked>
                                                                 <label class="custom-control-label" for="addFieldTK">เปิดให้กรอกคะแนน</label>
                                                         </div>
                                                         <!--  -->
