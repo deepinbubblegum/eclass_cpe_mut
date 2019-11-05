@@ -49,7 +49,7 @@ class MY_Controller extends CI_Controller
 
         public function encryption_pass($password)
         {
-                $key_get = $this->config->item['encryption_password'];
+                $key_get = $this->config->item('encryption_password');
                 return sha1($key_get.$password);
         }
 
