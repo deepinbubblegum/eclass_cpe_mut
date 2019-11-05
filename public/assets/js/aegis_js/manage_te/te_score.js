@@ -256,7 +256,7 @@ $(document).ready(function() {
                         if (response[i].setpoint_option == '1') {
                             html +=
                                 '<center>' +
-                                '<div style="width:93px;height:93px" class="p-2 mb-2 f34r-bg-n-txt">' + response[i].setpoint_mininame + '<br>' +
+                                '<div style="width:94px;height:94px" class="p-2 mb-2 f34r-bg-n-txt">' + response[i].setpoint_mininame + '<br>' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
@@ -268,7 +268,7 @@ $(document).ready(function() {
                         } else if (response[i].setpoint_option == '2') {
                             html +=
                                 '<center>' +
-                                '<div style="width:93px;height:93px" class="p-2 mb-2 f34r-bg-p-txt">' + response[i].setpoint_mininame + '<br>' +
+                                '<div style="width:94px;height:94px" class="p-2 mb-2 f34r-bg-p-txt">' + response[i].setpoint_mininame + '<br>' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
@@ -280,7 +280,7 @@ $(document).ready(function() {
                         } else if (response[i].setpoint_option == '3') {
                             html +=
                                 '<center>' +
-                                '<div style="width:93px;height:93px" class="p-2 mb-2 f34r-bg-o-txt">' + response[i].setpoint_mininame + '<br>' +
+                                '<div style="width:94px;height:94px" class="p-2 mb-2 f34r-bg-o-txt">' + response[i].setpoint_mininame + '<br>' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
