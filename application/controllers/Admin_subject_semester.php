@@ -61,8 +61,6 @@ class Admin_subject_semester extends MY_Controller
         $dir = '../uploads/file/'.$this->input->post('org_id').$this->input->post('org_sub');
         $ndir = '../uploads/file/'.$this->input->post('semester_id').$this->input->post('subject_id');
         if (is_dir($dir)) {
-            //mkdir('../uploads/file/' . $this->input->post('semester_id').$this->input->post('subject_id'), 0777);
-            //rename($oldname, $newname);
             rename($dir, $ndir); 
         }
     } 

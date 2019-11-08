@@ -31,19 +31,19 @@ class MY_Controller extends CI_Controller
 
         public function genDir($semester_id, $subject_id)
         {
-                $dir = '../uploads/file/' . $semester_id . $subject_id;
+                $dir = '/home/uploads/file/' . $semester_id . $subject_id;
                 if (!is_dir($dir)) {
-                        mkdir($dir, 0777, true);
-                        chmod($dir, 0777);
+                        mkdir($dir, 0755, true);
+                        chmod($dir, 0755);
 
-                        mkdir($dir . '/Downloads', 0777, true);
-                        chmod($dir . '/Downloads', 0777);
+                        mkdir($dir . '/Downloads', 0755, true);
+                        chmod($dir . '/Downloads', 0755);
 
-                        mkdir($dir . '/Uploads', 0777, true);
-                        chmod($dir . '/Uploads', 0777);
+                        mkdir($dir . '/Uploads', 0755, true);
+                        chmod($dir . '/Uploads', 0755);
 
-                        mkdir($dir . '/CSV', 0777, true);
-                        chmod($dir . '/CSV', 0777);
+                        mkdir($dir . '/CSV', 0755, true);
+                        chmod($dir . '/CSV', 0755);
                 }
         }
 
