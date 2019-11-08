@@ -87,8 +87,8 @@ class Std_upload extends MY_Controller
                 //echo $data2['semester'].$data2['subject_id'];
 
                 if (!is_dir($dir)) {
-                        mkdir($dir, 0755, true); 
-                        chmod($dir, 0755); 
+                        mkdir($dir, 0700, true); 
+                        chmod($dir, 0700); 
                 }
                 $config['upload_path'] = $dir;
                 $config['allowed_types'] = '*';
