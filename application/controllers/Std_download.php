@@ -57,7 +57,7 @@ class Std_download extends MY_Controller
             ); 
             $this->load->helper('download'); 
             $this->load->library('zip'); 
-            $getFile = file_get_contents('../uploads/file/'.$data['semester'].$data['subject_id'].'/'.'Downloads'.'/'.$data['menu_id'].'/'.$data['fileName']);
+            $getFile = file_get_contents('/Eclass/uploads/file/'.$data['semester'].$data['subject_id'].'/'.'Downloads'.'/'.$data['menu_id'].'/'.$data['fileName']);
             force_download($data['fileName'], $getFile); 
         }  
 }

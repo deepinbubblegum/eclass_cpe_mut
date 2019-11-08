@@ -25,7 +25,7 @@ class Admin_user_data extends MY_Controller
 
     public function Add_Data_ctl_csv()
     {
-        $config['upload_path'] = '../uploads/Admin/tmp/';
+        $config['upload_path'] = '/Eclass/uploads/Admin/tmp/';
         $config['allowed_types'] = 'csv';
         $config['max_filename'] = '255';
         $config['max_size'] = '2147483648'; //2 GB

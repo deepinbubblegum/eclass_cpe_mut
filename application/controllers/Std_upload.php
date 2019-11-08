@@ -79,11 +79,11 @@ class Std_upload extends MY_Controller
                  
                 $result = $this->check_late($data2['semester'],$data2['subject_id'],$data2['menuId']);
                 if($result){
-                        $dir ='../uploads/file/'.$data2['semester'].$data2['subject_id'].'/'.'Uploads/'.$data2['menuId'];
+                        $dir ='/Eclass/uploads/file/'.$data2['semester'].$data2['subject_id'].'/'.'Uploads/'.$data2['menuId'];
                 }else{
-                        $dir ='../uploads/file/'.$data2['semester'].$data2['subject_id'].'/'.'Uploads/'.$data2['menuId'].'/late';
+                        $dir ='/Eclass/uploads/file/'.$data2['semester'].$data2['subject_id'].'/'.'Uploads/'.$data2['menuId'].'/late';
                 }
-                //$config['upload_path'] = '../uploads/file/25611CPEN1010/Uploads/';
+                //$config['upload_path'] = '/Eclass/uploads/file/25611CPEN1010/Uploads/';
                 //echo $data2['semester'].$data2['subject_id'];
 
                 if (!is_dir($dir)) {

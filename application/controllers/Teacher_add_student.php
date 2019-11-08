@@ -29,7 +29,7 @@ class Teacher_add_student extends MY_Controller
 
     public function Add_Data_ctl_csv()
     {
-        $dir = '../uploads/file/'.$this->input->post('semester').$this->input->post('subject_id'); 
+        $dir = '/Eclass/uploads/file/'.$this->input->post('semester').$this->input->post('subject_id'); 
         $config['upload_path'] = $dir.'/CSV/';
         $config['allowed_types'] = 'csv';
         $config['max_filename'] = '255';

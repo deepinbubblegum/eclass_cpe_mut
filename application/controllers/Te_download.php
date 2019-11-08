@@ -69,7 +69,7 @@ class Te_download extends MY_Controller
                         'menuId' => $str_arr[2],
                 );
 
-                $dir ='../uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menuId'] . '/';
+                $dir ='/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menuId'] . '/';
                 //$path = '/path/to/your/directory/';
         
                 $this->zip->read_dir($dir,FALSE); 
@@ -86,7 +86,7 @@ class Te_download extends MY_Controller
                         'menu_id' => $str_arr[2],
                         'fileName' => substr($sid, $count),
                 );
-                $getFile = file_get_contents('../uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
+                $getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
                 force_download($data['fileName'], $getFile);
         }
 
@@ -100,7 +100,7 @@ class Te_download extends MY_Controller
                         'menu_id' => $str_arr[2],
                         'fileName' => substr($sid, $count),
                 ); 
-                $filePath = '../uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName'];
+                $filePath = '/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName'];
                 if(unlink($filePath)) {
                         echo 'deleted successfully';
                         $this->Model_te_download->fileDelete($data['subject_id'], $data['semester'], $data['menu_id'], $data['fileName']);
@@ -108,7 +108,7 @@ class Te_download extends MY_Controller
                    else {
                         echo 'errors occured';
                    }
-                //$getFile = file_get_contents('../uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
+                //$getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
                 //force_download($data['fileName'], $getFile);
         }
 
@@ -149,7 +149,7 @@ class Te_download extends MY_Controller
             $subject = $this->input->post('subject');
             $menuID = $this->input->post('menuID');  
             $this->Model_te_download->deleteMenu($semester,$subject,$menuID); 
-            $filePath = '../uploads/file/' . $semester .$subject. '/' . 'Uploads' . '/' . $menuID ;
+            $filePath = '/Eclass/uploads/file/' . $semester .$subject. '/' . 'Uploads' . '/' . $menuID ;
             rrmdir($filePath); 
         }
 }

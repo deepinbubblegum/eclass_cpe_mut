@@ -58,8 +58,8 @@ class Admin_subject_semester extends MY_Controller
         );
         $this->Model_su_subject_semester->Edit_data_model($org_id, $org_sub, $data);
         
-        $dir = '../uploads/file/'.$this->input->post('org_id').$this->input->post('org_sub');
-        $ndir = '../uploads/file/'.$this->input->post('semester_id').$this->input->post('subject_id');
+        $dir = '/Eclass/uploads/file/'.$this->input->post('org_id').$this->input->post('org_sub');
+        $ndir = '/Eclass/uploads/file/'.$this->input->post('semester_id').$this->input->post('subject_id');
         if (is_dir($dir)) {
             rename($dir, $ndir); 
         }
@@ -73,7 +73,7 @@ class Admin_subject_semester extends MY_Controller
         $this->Model_su_subject_semester->Delete_Data_model($data_semester, $data_subject);
 
         for($i = 0 ; $i < count($data_semester) ; $i++){
-            $dir = '../uploads/file/'.$data_semester[$i].$data_subject[$i]; 
+            $dir = '/Eclass/uploads/file/'.$data_semester[$i].$data_subject[$i]; 
             rrmdir($dir);
         }
          
