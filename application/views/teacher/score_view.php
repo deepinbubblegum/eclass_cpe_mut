@@ -279,59 +279,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
                                         <div class="list-group mt-3 showMenuScore" id="accordionOne">
-                                                <div class="expansion-panel list-group-item show">
-                                                        <a aria-controls="collapseOne" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseOne" id="headingOne">
-                                                                การบ้านครั้งที่ #1
-                                                                <div class="expansion-panel-icon ml-3 text-black-secondary">
-                                                                        <i class="collapsed-show material-icons">keyboard_arrow_down</i>
-                                                                        <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
-                                                                </div>
-                                                        </a>
-                                                        <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionOne" id="collapseOne">
-                                                                <div class="expansion-panel-body">
-                                                                        รายละเอียดการบ้าน
-                                                                        <div id="uploads_files">
-                                                                                <div id="uploads_files">
-                                                                                        <div class="dropzone" id="dropzone"><input type="file" id="FileInput[]" style="display:none;" multiple="">
-                                                                                                <p class="droptext text-justify text-center font-weight-bold">Drop file here or click to upload</p>
-                                                                                        </div>
-                                                                                </div>
-                                                                        </div>
-                                                                        <button class="btn btn-success my-1" id="btnUpload">Upload</button>
-                                                                        <button class="btn btn-success my-1" id="btnClearAll">Clear All</button>
-                                                                        <div id="uploadeds_files">
-                                                                        </div>
-                                                                </div>
-                                                        </div>
-                                                </div>
-                                                <div class="expansion-panel list-group-item">
-                                                        <a aria-controls="collapseTwo" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseTwo" id="headingTwo">
-                                                                การบ้านครั้งที่ #2
-                                                                <div class="expansion-panel-icon ml-3 text-black-secondary">
-                                                                        <i class="collapsed-show material-icons">keyboard_arrow_down</i>
-                                                                        <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
-                                                                </div>
-                                                        </a>
-                                                        <div aria-labelledby="headingTwo" class="collapse" data-parent="#accordionOne" id="collapseTwo">
-                                                                <div class="expansion-panel-body">
-                                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                                                </div>
-                                                        </div>
-                                                </div>
-                                                <div class="expansion-panel list-group-item">
-                                                        <a aria-controls="collapseThree" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseThree" id="headingThree">
-                                                                การบ้านครั้งที่ #3
-                                                                <div class="expansion-panel-icon ml-3 text-black-secondary">
-                                                                        <i class="collapsed-show material-icons">keyboard_arrow_down</i>
-                                                                        <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
-                                                                </div>
-                                                        </a>
-                                                        <div aria-labelledby="headingThree" class="collapse" data-parent="#accordionOne" id="collapseThree">
-                                                                <div class="expansion-panel-body">
-                                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                                                </div>
-                                                        </div>
-                                                </div>
                                         </div>
                                 </div>
                                 <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
