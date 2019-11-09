@@ -16,6 +16,9 @@ class Te_select extends MY_Controller
         public function __construct()
         {
                 parent::__construct();
+                if ($this->session->ses_status != 'teacher' && $this->session->ses_status != 'admin') {
+                        show_404();
+                }
         }
 
         public function index()
