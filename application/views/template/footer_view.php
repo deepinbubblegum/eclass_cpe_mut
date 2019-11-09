@@ -17,7 +17,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         <?php
         echo assets_js('jsQR/jsQR.js');
-        // echo assets_js('jsQR/qr_reader.js');
+        echo assets_js('jsQR/qr_reader.js');
         ?>
 </head>
 
@@ -35,7 +35,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                                 <div class="modal-body">
                                         <form>
-                                                <canvas class="mx-auto" id="canvas" style="border: 1px solid rgb(14, 168, 234); width: 100%; height: 100%;" hidden></canvas>
+                                                <canvas class="mx-auto" id="qr_canvas" style="border: 1px solid rgb(14, 168, 234); width: 100%; height: 100%;"></canvas>
                                                 <div class="form-group mt-1">
                                                         <div class="floating-label">
                                                                 <label for="Ticket"><i class="fas fa-hashtag"></i>&nbsp;&nbsp;รหัสใบงาน</label>
@@ -48,7 +48,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </form>
                                 </div>
                                 <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" id="btn_start_reader" disabled>QR Code Scan</button>
+                                        <button type="button" class="btn btn-secondary" id="btn_start_reader">QR Code Scan</button>
                                         <button type="button" class="btn btn-primary" id="btnTicketSave">บันทึก</button>
                                 </div>
                         </div>
@@ -57,7 +57,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         </div>
         </div>
-        
 </body>
 
 </html>
