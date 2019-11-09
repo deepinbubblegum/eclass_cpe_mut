@@ -121,22 +121,6 @@ $(document).ready(function () {
                         html += '<div class="expansion-panel-body">' +
                             response[i].menuDowDescrpition +
                             '<div id="menuDowId-' + response[i].menuDowId + '">' +
-                            '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2">' +
-                            '<span class="mr-2 mb-0" style="font-size: 28px;">' +
-                            '<i class="fas fa-file-download"></i>' +
-                            '<span class="mr-2 text-black" style="font-size: 18px;">ทดสอบ</span>' +
-                            '<div class="mt-0">' +
-                            '<small class="mr-2 text-black-50" style="font-size: 12px;">size : 20GB</small>' +
-                            '<small class="mr-2 text-black-50" style="font-size: 12px;">type : pdf</small>' +
-                            '</div>' +
-                            '</span>' +
-                            '<span>' +
-                            '<button class="btn btn-float btn-info my-1"><i class="fas fa-download"></i></button>' +
-                            '</span>' +
-                            '</li>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
                             '</div>';
                     }
                 }
