@@ -1,9 +1,8 @@
 $(document).ready(function () {
         $('#qr_canvas').hide();
-        
         $('#btn_start_reader').click(function (e) { 
-                $('#qr_canvas').show(400);
                 e.preventDefault();
+                $('#qr_canvas').show(500);
                 var video = document.createElement("video");
                 var canvasElement = document.getElementById("qr_canvas");
                 var canvas = canvasElement.getContext("2d"); 
@@ -43,6 +42,8 @@ $(document).ready(function () {
                                         drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
                                         drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
                                         $('#qr_text').val(code.data);
+                                        video.pause();
+                                        localstream.getTracks()[0].stop();
                                         return;
                                 }
                         }
