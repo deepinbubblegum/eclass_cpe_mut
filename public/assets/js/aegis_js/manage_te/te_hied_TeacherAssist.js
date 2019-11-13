@@ -1,4 +1,4 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function(event) {
 
     var url = $(location).attr('href').split("/");
     var hideMenu = ['videos', 'downloads', 'uploads', 'score', 'quiz_vote', '0'];

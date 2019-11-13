@@ -479,8 +479,10 @@ $(document).ready(function() {
                     }
                 }
                 $('.showUploaded').html(html);
-                for (i = 0; i < getUploaded.length; i++) {
-                    showUploaded(i);
+                if (getUploaded != null) {
+                    for (i = 0; i < getUploaded.length; i++) {
+                        showUploaded(i);
+                    }
                 }
 
             }

@@ -50,8 +50,8 @@ $(document).ready(function() {
 
     var inModelPermis = [
         ['video', 'video', 'video', 'video'],
-        ['download', 'download', 'download', 'download'],
         ['upload', 'upload', 'upload', 'upload'],
+        ['download', 'download', 'download', 'download'],
         ['point', 'point', 'point', 'point'],
         ['vote', 'vote', 'vote', 'vote'],
         ['quiz', 'quiz', 'quiz', 'quiz'],

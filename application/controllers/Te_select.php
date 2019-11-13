@@ -16,6 +16,8 @@ class Te_select extends MY_Controller
         public function __construct()
         {
                 parent::__construct();
+                $this->load->model('manage_te/Model_te_subject');
+                $this->load->model('manage_te/Model_te_annouce');
         }
 
         public function index()
@@ -45,9 +47,22 @@ class Te_select extends MY_Controller
         // $this->load->view('teacher/subject_menu_te_view');
         // $this->load->view('teacher/template_te/footer_te_view');
 
+        public function chkPermis($data)
+        {
+                $userID = $this->session->ses_id;
+                // $data['semester'];
+                $result = $this->Model_te_subject->Show_Permission_bit($data['semester'], $data['subject_id'], $userID);
+                //echo $result[0]->per_bit;
+                if ($result !== 0) {
+                        return $result[0]->per_bit;
+                }
+                return 0;
+        }
+
         public function annouce($sid)
         {
                 $data = convertData($sid);
+                $this->Model_te_annouce->Permission_Medel($data);
                 $this->load->view('teacher/template_te/select/header_view', $data);
                 $this->load->view('teacher/template_te/select/side_menu_view', $data);
                 $this->load->view('teacher/annouce_view', $data);
@@ -57,46 +72,71 @@ class Te_select extends MY_Controller
         public function score($sid)
         {
                 $data = convertData($sid);
-                $this->load->view('teacher/template_te/select/header_view', $data);
-                $this->load->view('teacher/template_te/select/side_menu_view', $data);
-                $this->load->view('teacher/score_view', $data);
-                $this->load->view('teacher/template_te/footer_te_view');
+                $bit = $this->chkPermis($data);
+                if (substr($bit, 3, 1) == '1' || $bit == '0' ) {
+                        $this->load->view('teacher/template_te/select/header_view', $data);
+                        $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                        $this->load->view('teacher/score_view', $data);
+                        $this->load->view('teacher/template_te/footer_te_view');
+                } else {
+                        show_404();
+                }
         }
 
         public function uploads($sid)
         {
                 $data = convertData($sid);
-                $this->load->view('teacher/template_te/select/header_view', $data);
-                $this->load->view('teacher/template_te/select/side_menu_view', $data);
-                $this->load->view('teacher/uploads_view', $data);
-                $this->load->view('teacher/template_te/footer_te_view');
+                $bit = $this->chkPermis($data);
+                if (substr($bit, 2, 1) == '1' || $bit == '0' ) {
+                        $this->load->view('teacher/template_te/select/header_view', $data);
+                        $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                        $this->load->view('teacher/uploads_view', $data);
+                        $this->load->view('teacher/template_te/footer_te_view');
+                } else {
+                        show_404();
+                }
         }
 
         public function downloads($sid)
         {
                 $data = convertData($sid);
-                $this->load->view('teacher/template_te/select/header_view', $data);
-                $this->load->view('teacher/template_te/select/side_menu_view', $data);
-                $this->load->view('teacher/downloads_view', $data);
-                $this->load->view('teacher/template_te/footer_te_view');
+                $bit = $this->chkPermis($data);
+                if (substr($bit, 1, 1) == '1' || $bit == '0' ) {
+                        $this->load->view('teacher/template_te/select/header_view', $data);
+                        $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                        $this->load->view('teacher/downloads_view', $data);
+                        $this->load->view('teacher/template_te/footer_te_view');
+                } else {
+                        show_404();
+                }
         }
 
         public function videos($sid)
         {
                 $data = convertData($sid);
-                $this->load->view('teacher/template_te/select/header_view', $data);
-                $this->load->view('teacher/template_te/select/side_menu_view', $data);
-                $this->load->view('teacher/videos_view', $data);
-                $this->load->view('teacher/template_te/footer_te_view');
+                $bit = $this->chkPermis($data);
+                if (substr($bit, 0, 1) == '1' || $bit == '0' ) {
+                        $this->load->view('teacher/template_te/select/header_view', $data);
+                        $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                        $this->load->view('teacher/videos_view', $data);
+                        $this->load->view('teacher/template_te/footer_te_view');
+                } else {
+                        show_404();
+                }
         }
 
         public function quiz_vote($sid)
         {
                 $data = convertData($sid);
-                $this->load->view('teacher/template_te/select/header_view', $data);
-                $this->load->view('teacher/template_te/select/side_menu_view', $data);
-                $this->load->view('teacher/quiz_vote_view', $data);
-                $this->load->view('teacher/template_te/footer_te_view');
+                $bit = $this->chkPermis($data);
+                if (substr($bit, 4, 1) == '1' || $bit == '0') {
+                        $this->load->view('teacher/template_te/select/header_view', $data);
+                        $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                        $this->load->view('teacher/quiz_vote_view', $data);
+                        $this->load->view('teacher/template_te/footer_te_view');
+                } else {
+                        show_404();
+                }
         }
 
         public function menu($sid)

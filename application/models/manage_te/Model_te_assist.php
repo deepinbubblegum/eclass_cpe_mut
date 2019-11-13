@@ -25,6 +25,8 @@ class Model_te_assist extends CI_Model
         $this->db->join('permission', 'per_id = teaassist_permission', 'left');
         $this->db->where('teaassist_subject', $arg);
         $this->db->where('teaassist_semester', $arg2);
+        $this->db->where('per_subject', $arg);
+        $this->db->where('per_semester', $arg2);
         $this->db->group_by('teaassist_teacherid'); 
         $this->db->limit($limit, $start);
         $query = $this->db->get();

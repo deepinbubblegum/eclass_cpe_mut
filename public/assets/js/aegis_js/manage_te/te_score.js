@@ -374,8 +374,8 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response);
                 if (response) {
-                    url = '/Gen_ticket/ticket_and_qrCode/' + response;
-                    window.open(url, '_blank');
+                    gurl = '/Gen_ticket/ticket_and_qrCode/' + response;
+                    window.open(gurl, '_blank');
                 }
             },
         });

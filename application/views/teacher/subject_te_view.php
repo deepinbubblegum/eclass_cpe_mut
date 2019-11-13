@@ -14,7 +14,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </head>
 
 <body>
+<?php
 
+        //$this->session->unset_userdata('ses_permission');
+ 
+        //print_r($this->session->userdata());
+?>
         <!-- Modal -->
         <div class="modal fade" id="Modal_Add_subject" tabindex="-1" role="dialog" aria-labelledby="Modal_Add_subject" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
