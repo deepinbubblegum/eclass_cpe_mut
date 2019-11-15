@@ -282,6 +282,16 @@ $(document).ready(function() {
         document.getElementById('teacher_username').value = "";
     });
 
+    $(document).on('keyup', function(e) {
+        if (e.keyCode == 27) {
+            document.getElementById('teacher_code_id').value = "";
+            document.getElementById('teacher_Tname').value = "";
+            document.getElementById('teacher_Ename').value = "";
+            document.getElementById('teacher_email').value = "";
+            document.getElementById('teacher_username').value = "";
+        }
+    });
+
     $('#facultySelectAdd').change(function() {
         //alert($('#facultySelectAdd').val());
         select_major_add();
@@ -307,7 +317,6 @@ $(document).ready(function() {
             }
         });
     }
-
 
 
     $('#btnSave').click(function(e) {

@@ -30,7 +30,7 @@ class Model_su_teacher_subject extends CI_Model
 
     public function Select_teacher_medel($data)
     {
-        $this->db->select('teacher_code_id,teacher_Ename');
+        $this->db->select('*');
         $this->db->from('teacher_major');
         $this->db->join('teacher', 'teacher_major.teamaj_teacherid = teacher.teacher_code_id', 'left');
         $this->db->where('teamaj_majorid', $data);

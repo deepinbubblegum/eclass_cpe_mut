@@ -18,6 +18,7 @@ class select extends MY_Controller
         public function __construct()
         {
                 parent::__construct();
+                $this->load->model('manage_te/Model_te_annouce');
         }
 
         public function index()
@@ -46,6 +47,7 @@ class select extends MY_Controller
         public function annouce($sid)
         {
                 $data = convertData($sid);
+                $this->Model_te_annouce->Permission_Medel($data);
                 $this->load->view('template/select/header_view', $data);
                 $this->load->view('template/select/side_menu_view', $data);
                 $this->load->view('student/select_view', $data);

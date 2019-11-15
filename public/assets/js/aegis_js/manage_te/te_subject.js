@@ -93,6 +93,7 @@ $(document).ready(function() {
             data: "data=" + semesterSelected,
             dataType: "json",
             success: function(response) {
+                console.log(response);
                 var html = '';
                 var txtSubAssist = '';
                 if (response != null) {
@@ -281,7 +282,7 @@ $(document).ready(function() {
                     width: 'auto',
                     text: txtsnack
                 });
-                add_sunjoin();
+                add_subjoin();
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 Snackbar.show({
@@ -298,7 +299,7 @@ $(document).ready(function() {
     });
 
 
-    function add_sunjoin() {
+    function add_subjoin() {
         arr_subsjoin = [];
         arr_semes = [];
         arr_sub = [];

@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var iddata;
     var iurl;
     var datatable;
@@ -164,6 +164,8 @@ $(document).ready(function () {
 
     inModelGen();
 
+    getFaculty();
+
     dropPag();
     dropSearch();
     theadGen();
@@ -174,7 +176,7 @@ $(document).ready(function () {
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
-    $('.row_set').click(function () {
+    $('.row_set').click(function() {
         limit = $(this).attr('value');
         showBtnTxt = limit;
         if (limit == 0) {
@@ -186,14 +188,14 @@ $(document).ready(function () {
         show_data();
     });
 
-    $('#chevron_right').click(function () {
+    $('#chevron_right').click(function() {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
         show_data();
     });
 
-    $('#chevron_left').click(function () {
+    $('#chevron_left').click(function() {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
@@ -220,7 +222,7 @@ $(document).ready(function () {
         $.ajax({
             url: "../Admin_student_data/Show_Max_Data_ctl",
             dataType: "json",
-            success: function (maxdata) {
+            success: function(maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 if (currentPage == pageMax) {
                     stop = maxdata;
@@ -242,7 +244,7 @@ $(document).ready(function () {
             data: "&start=" + start + "&limit=" + limit,
             url: "../Admin_student_data/Show_Data_ctl",
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 datatable = response;
                 var html = '';
                 var i;
@@ -269,13 +271,12 @@ $(document).ready(function () {
                 $('#showAllData').html(html);
             }
         });
-        getFaculty();
     }
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
 
     //--------------------------------------------START_BASIC_TOOLS--------------------------------------------//
 
-    $("#inputFile").on("change", function () {
+    $("#inputFile").on("change", function() {
         html = '';
         _files = $(this)[0].files;
 
@@ -301,16 +302,16 @@ $(document).ready(function () {
         $('#filedetail').html(html);
     });
 
-    $('#btnUpload').click(function (e) {
+    $('#btnUpload').click(function(e) {
         e.preventDefault();
         var snacktxt = '';
         var form_data = new FormData();
         form_data.append('file', _files[0]);
         $.ajax({
-            xhr: function () {
+            xhr: function() {
                 var xhr = new window.XMLHttpRequest();
                 html = '';
-                xhr.upload.addEventListener("progress", function (evt) {
+                xhr.upload.addEventListener("progress", function(evt) {
                     if (evt.lengthComputable) {
                         var percentComplete = evt.loaded / evt.total;
                         percentComplete = parseInt(percentComplete * 100);
@@ -318,7 +319,7 @@ $(document).ready(function () {
                         html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">' + percentComplete + '%</div>';
                         if (percentComplete === 100) {
                             html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 $('#Modalcsv').modal('hide');
                             }, 1200);
                         }
@@ -334,7 +335,7 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             processData: false,
-            success: function (response) {
+            success: function(response) {
                 console.log(response);
                 if (response == '<p>upload_invalid_filetype</p>') {
                     snacktxt = 'ไม่สามารถอ่านไฟล์ได้ ' + response;
@@ -354,7 +355,7 @@ $(document).ready(function () {
                 });
                 show_data();
             },
-            error: function (response) {
+            error: function(response) {
                 console.log(response);
                 Snackbar.show({
                     actionText: 'close',
@@ -368,7 +369,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#facultySelectAdd').change(function (e) {
+    $('#facultySelectAdd').change(function(e) {
         e.preventDefault();
         getMajor();
     });
@@ -377,7 +378,7 @@ $(document).ready(function () {
         $.ajax({
             url: "../Admin_student_data/Show_Data_faculty",
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -386,19 +387,20 @@ $(document).ready(function () {
                     }
                 }
                 $('#facultySelectAdd').html(html);
+                getMajor();
                 //$('#facultySelectAdd').val(datatable[ivalue].faculty_id);
             }
         });
     }
 
     function getMajor() {
-        //facultySelect = $('#facultySelectAdd :selected').val();
+        facultySelect = $('#facultySelectAdd :selected').val();
         $.ajax({
             type: "POST",
             url: "../Admin_student_data/Show_Data_Major",
             data: '&facultySelect=' + $('#facultySelectAdd :selected').val(),
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -411,7 +413,7 @@ $(document).ready(function () {
         });
     }
 
-    $('#btnAdd').click(function (e) {
+    $('#btnAdd').click(function(e) {
         e.preventDefault();
         iurl = '../Admin_student_data/Add_Data_ctl';
         $('#Modal').find('.modal-title').text('เพิ่มข้อมูลผู้ใช้งาน');
@@ -419,12 +421,12 @@ $(document).ready(function () {
         $('#Modal').modal('show');
     });
 
-    $('#btnAddcsv').click(function (e) {
+    $('#btnAddcsv').click(function(e) {
         e.preventDefault();
         $('#Modalcsv').modal('show');
     });
 
-    $('#btnSave').click(function (e) {
+    $('#btnSave').click(function(e) {
         e.preventDefault();
         var result = '';
         var check = '';
@@ -453,7 +455,7 @@ $(document).ready(function () {
                 type: "POST",
                 url: iurl,
                 data: data + '&majorSelect=' + data2 + '&org_id=' + iddata,
-                success: function (response) {
+                success: function(response) {
                     document.getElementById('std_code_id').value = "";
                     formDataValClr();
                     show_data();
@@ -469,7 +471,7 @@ $(document).ready(function () {
                         text: txtsnack
                     });
                 },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
                     if (XMLHttpRequest.statusText == 'Conflict') {
                         txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ข้อมูลซ้ำ ';
                         Snackbar.show({
@@ -496,7 +498,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#showAllData').on('click', '.item-edit', function () {
+    $('#showAllData').on('click', '.item-edit', function() {
         iddata = $(this).attr('data');
         ivalue = $(this).attr('value');
         $('#std_code_id').val(datatable[ivalue].std_code_id);
@@ -513,13 +515,23 @@ $(document).ready(function () {
         iurl = '../Admin_student_data/Edit_Data_ctl';
     });
 
-    $('#btnClose').click(function (e) {
+    $('#btnClose').click(function(e) {
         formDataValClr();
-        document.getElementById('majorSelectAdd').value = datatable[0].major_id;
+        //document.getElementById('majorSelectAdd').value = datatable[0].major_id;
         hideAllPop();
+        getFaculty();
     });
 
-    $('#btnSearch').click(function (e) {
+    $(document).on('keyup', function(e) {
+        if (e.keyCode == 27) {
+            formDataValClr();
+            //document.getElementById('majorSelectAdd').value = datatable[0].major_id;
+            hideAllPop();
+            getFaculty();
+        }
+    });
+
+    $('#btnSearch').click(function(e) {
         e.preventDefault();
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
@@ -528,7 +540,7 @@ $(document).ready(function () {
             url: "../Admin_student_data/Search_Show_Data_ctl",
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 datatable = response;
                 var html = '';
                 var i;
@@ -556,7 +568,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#btnDel').click(function (e) {
+    $('#btnDel').click(function(e) {
         e.preventDefault();
         $data = selectchb();
         if ($data.length > 0) {
@@ -566,7 +578,7 @@ $(document).ready(function () {
                 data: {
                     $data
                 },
-                success: function (response) {
+                success: function(response) {
                     $('#modaldel').modal('hide');
                     show_data();
                     Snackbar.show({
@@ -592,13 +604,13 @@ $(document).ready(function () {
         }
     });
 
-    $('#selectall').change(function () {
+    $('#selectall').change(function() {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
     function selectchb() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function () {
+        $('input[name^=checkitem]:checked').each(function() {
             item.push($(this).val());
         });
         return item;

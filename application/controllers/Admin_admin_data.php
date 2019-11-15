@@ -25,18 +25,24 @@ class Admin_admin_data extends MY_Controller
 
     public function Add_Data_ctl()
     {
-        if ($this->check_duplicate($this->input->post('admin_id')) && $this->check_duplicate($this->input->post('admin_email'))){
-            $arg = array(
-                'admin_id' => $this->input->post('admin_id'),
-                'admin_password' => $this->encryption_pass($this->input->post('admin_id')),
-                'admin_Tname' => $this->input->post('admin_Tname'),
-                'admin_Ename' => $this->input->post('admin_Ename'),
-                'admin_email' => $this->input->post('admin_email')
-            );
-            $this->Model_su_admin_data->Add_data_model($arg);
-        }else{
-            show_error('Duplicate', 409, 'An Error Was Encountered Value is Duplicate');
-        }
+        // $salt_rd = bin2hex(openssl_random_pseudo_bytes(2));
+        // if ($this->check_duplicate($this->input->post('admin_id')) && $this->check_duplicate($this->input->post('admin_email'))){
+        //     $arg = array(
+        //         'admin_id' => $this->input->post('admin_id'),
+        //         'admin_password' => $this->encryption_pass($this->input->post('admin_id')),
+        //         'admin_Tname' => $this->input->post('admin_Tname'),
+        //         'admin_Ename' => $this->input->post('admin_Ename'),
+        //         'admin_email' => $this->input->post('admin_email')
+        //     );
+        //     $this->Model_su_admin_data->Add_data_model($arg);
+        // }else{
+        //     show_error('Duplicate', 409, 'An Error Was Encountered Value is Duplicate');
+        // }
+        $data = $this->input->post('data');
+        $arg = array(
+            'teacher_admin' => '1',
+        );
+        $this->Model_su_admin_data->Add_data_model($data,$arg);
     }
 
     public function Edit_Data_ctl()
@@ -54,8 +60,11 @@ class Admin_admin_data extends MY_Controller
 
     public function Delete_Data_ctl()
     {
+        $arg = array(
+            'teacher_admin' => '0',
+        );
         $data = $this->input->post('$data[]');
-        $this->Model_su_admin_data->Delete_Data_model($data);
+        $this->Model_su_admin_data->Delete_Data_model($data,$arg);
     }
 
     public function Search_Show_Data_ctl()
