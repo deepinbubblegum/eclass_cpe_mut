@@ -75,7 +75,7 @@ class Te_select extends MY_Controller
         public function score($sid)
         {
                 $data = convertData($sid);
-                $bit = $this->chkPermis($data);
+                $bit = $this->session->ses_permission;
                 if (substr($bit, 3, 1) == '1' || $bit == '0' ) {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
@@ -89,7 +89,7 @@ class Te_select extends MY_Controller
         public function uploads($sid)
         {
                 $data = convertData($sid);
-                $bit = $this->chkPermis($data);
+                $bit = $this->session->ses_permission;
                 if (substr($bit, 2, 1) == '1' || $bit == '0' ) {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
@@ -103,7 +103,7 @@ class Te_select extends MY_Controller
         public function downloads($sid)
         {
                 $data = convertData($sid);
-                $bit = $this->chkPermis($data);
+                $bit = $this->session->ses_permission;
                 if (substr($bit, 1, 1) == '1' || $bit == '0' ) {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
@@ -117,7 +117,7 @@ class Te_select extends MY_Controller
         public function videos($sid)
         {
                 $data = convertData($sid);
-                $bit = $this->chkPermis($data);
+                $bit = $this->session->ses_permission;
                 if (substr($bit, 0, 1) == '1' || $bit == '0' ) {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
@@ -131,7 +131,7 @@ class Te_select extends MY_Controller
         public function quiz_vote($sid)
         {
                 $data = convertData($sid);
-                $bit = $this->chkPermis($data);
+                $bit = $this->session->ses_permission;
                 if (substr($bit, 4, 1) == '1' || $bit == '0') {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
