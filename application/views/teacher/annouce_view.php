@@ -13,9 +13,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
         semester = '<?php echo $semester; ?>';
     </script>
     <?php echo assets_js('aegis_js/manage_te/te_annouce.js'); ?>
+
 </head>
 
 <body>
+
     <style>
         .picker-day-today {
             color: #2196f3;

@@ -68,9 +68,10 @@ class Model_te_subject extends CI_Model
 
     public function Show_Permission_bit($semester,$subject,$userID)
     {
-        $query = $this->db->query('SELECT per_bit FROM teacher_assist 
-        LEFT JOIN permission ON per_id = teaassist_permission
-        WHERE teaassist_semester = "'.$semester.'" AND teaassist_subject = "'.$subject.'" AND teaassist_teacherid = "'.$userID.'" ');
+        $query = $this->db->query('SELECT per_bit  FROM teacher_assist 
+        LEFT JOIN permission ON teacher_assist.teaassist_permission = permission.per_id 
+        WHERE teaassist_semester = "'.$semester.'" AND teaassist_subject = "'.$subject.'" AND teaassist_teacherid = "'.$userID.'" 
+        AND per_semester = "'.$semester.'" AND per_subject = "'.$subject.'"');
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {

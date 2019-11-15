@@ -25,6 +25,14 @@ class Te_annouce extends MY_Controller
             echo json_encode($result);
         }
 
+        public function Get_Permission()
+        {
+            $semester = $this->input->post('semester');
+            $subject = $this->input->post('subject');
+            
+            $this->Model_te_annouce->Permission_Medel($semester,$subject);
+        }
+
         public function Add_Data_ctl()
         {
             $semester = $this->input->post('semester');

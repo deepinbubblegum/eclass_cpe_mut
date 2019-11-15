@@ -23,7 +23,7 @@ class User_uses extends MY_Controller
                                         'ses_status' => 'student'
                                 );
                                 $this->session->set_userdata($newdata);
-                        } else if ($sign_status[0]['teacher_code_id'] != '') {
+                        } else if ($sign_status[0]['teacher_code_id'] != '' && $sign_status[0]['teacher_admin'] == '0' ) {
                                 $newdata = array(
                                         'ses_id' => $sign_status[0]['teacher_code_id'],
                                         'ses_tname' => $sign_status[0]['teacher_Tname'],
@@ -31,11 +31,11 @@ class User_uses extends MY_Controller
                                         'ses_status' => 'teacher'
                                 );
                                 $this->session->set_userdata($newdata);
-                        } else if ($sign_status[0]['admin_id'] != '') {
+                        } else if ($sign_status[0]['teacher_code_id'] != '' && $sign_status[0]['teacher_admin'] == '1' ) {
                                 $newdata = array(
-                                        'ses_id' => $sign_status[0]['admin_id'],
-                                        'ses_tname' => $sign_status[0]['admin_Tname'],
-                                        'ses_ename' => $sign_status[0]['admin_Ename'],
+                                        'ses_id' => $sign_status[0]['teacher_code_id'],
+                                        'ses_tname' => $sign_status[0]['teacher_Tname'],
+                                        'ses_ename' => $sign_status[0]['teacher_Ename'],
                                         'ses_status' => 'admin'
                                 );
                                 $this->session->set_userdata($newdata);

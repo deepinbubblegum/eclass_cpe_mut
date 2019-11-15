@@ -28,21 +28,28 @@ $(document).ready(function() {
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['admin_id', 'ID'],
-        ['admin_Tname', 'TNAME'],
-        ['admin_Ename', 'ENAME'],
-        ['admin_email', 'EMAIL'],
+        ['teacher_code_id', 'ID'],
+        ['teacher_Tname', 'TNAME'],
+        ['teacher_Ename', 'ENAME'],
+        ['teacher_email', 'EMAIL'],
     ];
 
     //head of table
-    var theadGenValue = ['admin_id' /*, 'admin_Password'*/ , 'admin_Tname', 'admin_Ename', 'admin_email', 'option'];
+    var theadGenValue = ['admin_id' /*, 'admin_Password'*/ , 'admin_Tname', 'admin_Ename', 'admin_email' /*, 'option'*/ ];
 
     var formData = ["#admin_id", /*"#admin_password",*/ "#admin_Tname", "#admin_Ename", "#admin_email"];
+
+    var inModelSelect = [
+        //['TEXT','ID','NAME','HOLDER']
+        ['Faculty', 'selectAddFaculty'],
+        ['Major', 'selectAddMajor'],
+        ['Teacher', 'selectAddTeacher']
+    ];
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
         ['admin_id', 'admin_id', 'admin_id', 'admin_id'],
-        // ['admin_password', 'admin_password', 'admin_password', 'admin_password'],
+        ['admin_password', 'admin_password', 'admin_password', 'admin_password'],
         ['admin_email', 'admin_email', 'admin_email', 'admin_email'],
         ['admin_Tname', 'admin_Tname', 'admin_Tname', 'admin_Tname'],
         ['admin_Ename', 'admin_Ename', 'admin_Ename', 'admin_Ename']
@@ -98,18 +105,45 @@ $(document).ready(function() {
 
     function inModelGen() {
         var html = '';
+        // html += '<div class="form-row" >';
+        // for (i = 0; i < inModelValue.length; i++) {
+        //     html += '<div class="col-md-4 mb-3" >' +
+        //         '<label>' + inModelValue[i][0] + '</label>' +
+        //         '<input type="text" type="text" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
+        //         '</div>';
+        // }
+        // html += '</div>';
+        // $('#inModelBody').html(html);
+        //$('#admin_password').get(0).type = 'password';
+        //$('#admin_password').addClass('password');
+        var html = '';
         html += '<div class="form-row" >';
-        for (i = 0; i < inModelValue.length; i++) {
+        for (i = 0; i < inModelSelect.length; i++) {
             html += '<div class="col-md-4 mb-3" >' +
-                '<label>' + inModelValue[i][0] + '</label>' +
-                '<input type="text" type="text" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
+                '<label>' + inModelSelect[i][0] + '</label>' +
+                '<select id="' + inModelSelect[i][1] + '" class="form-control">' +
+                '</select>' +
                 '</div>';
         }
         html += '</div>';
         $('#inModelBody').html(html);
-        //$('#admin_password').get(0).type = 'password';
-        //$('#admin_password').addClass('password');
+        $.ajax({
+            url: "../Admin_faculty/Show_Data_ctl",
+            dataType: "json",
+            success: function(response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
+                    }
+                }
+                $('#selectAddFaculty').html(html);
+                select_major_add();
+            }
+        });
     }
+
 
     function theadGen() {
         var html = '';
@@ -244,19 +278,72 @@ $(document).ready(function() {
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].admin_id + '" id="' + response[i].admin_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].admin_id + i + '">' + response[i].admin_id + '</label>' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
                             //'<td>' + response[i].admin_password + '</td>' +
-                            '<td>' + response[i].admin_Tname + '</td>' +
-                            '<td>' + response[i].admin_Ename + '</td>' +
-                            '<td>' + response[i].admin_email + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].admin_id + '" class="item-edit">Edit</a></td>' +
+                            '<td>' + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].teacher_email + '</td>' +
+                            // '<td><a value="' + i + '" data="' + response[i].admin_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
                 $('#showAllData').html(html);
+            }
+        });
+    }
+
+
+
+    $('#selectAddFaculty').change(function() {
+        select_major_add();
+    });
+
+    $('#selectAddMajor').change(function() {
+        select_teacher_add();
+    });
+
+    function select_major_add() {
+        $data = $('#selectAddFaculty :selected').val();
+        //alert($data);
+        $.ajax({
+            type: "POST",
+            url: "../Admin_major/Select_major",
+            data: '&datamajor=' + $data,
+            dataType: "json",
+            success: function(response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                    }
+                }
+                $('#selectAddMajor').html(html);
+                select_teacher_add();
+            }
+        });
+    }
+
+    function select_teacher_add() {
+        $data = $('#selectAddMajor :selected').val();
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher_subject/Select_Teacher_Add_ctl",
+            data: '&data=' + $data,
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Ename + '</option>';
+                    }
+                }
+                $('#selectAddTeacher').html(html);
             }
         });
     }
@@ -395,57 +482,57 @@ $(document).ready(function() {
         var result = '';
         var check = '';
 
-        for (i = 0; i < $(formData).length; i++) {
-            if ($(formData[i]).val() == '') {
-                $(popData[i]).show();
+        // for (i = 0; i < $(formData).length; i++) {
+        //     if ($(formData[i]).val() == '') {
+        //         $(popData[i]).show();
 
-            } else {
-                $(popData[i]).hide();
-                result += i;
-            }
-            check += i;
+        //     } else {
+        //         $(popData[i]).hide();
+        //         result += i;
+        //     }
+        //     check += i;
+        // }
+        //if (check == result) {
+        if (iurl == '../Admin_admin_data/Add_Data_ctl') {
+            txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
+            txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
+        } else {
+            txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
+            txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
         }
-        if (check == result) {
-            if (iurl == '../Admin_admin_data/Add_Data_ctl') {
-                txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
-                txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
-            } else {
-                txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
-                txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
+        data = $('#selectAddTeacher :selected').val();
+        $.ajax({
+            type: "POST",
+            url: iurl,
+            data: '&data=' + data + '&org_id=' + iddata,
+            success: function(response) {
+                // document.getElementById('admin_id').value = "";
+                // formDataValClr();
+                show_data();
+                if (iurl != '../Admin_admin_data/Add_Data_ctl') {
+                    $('#Modal').modal('hide');
+                };
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: txtsnack
+                });
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: txtsnackerr + errorThrown + ' )'
+                });
             }
-            data = $('#formAdd').serialize();
-            $.ajax({
-                type: "POST",
-                url: iurl,
-                data: data + '&org_id=' + iddata,
-                success: function(response) {
-                    document.getElementById('admin_id').value = "";
-                    formDataValClr();
-                    show_data();
-                    if (iurl != '../Admin_admin_data/Add_Data_ctl') {
-                        $('#Modal').modal('hide');
-                    };
-                    Snackbar.show({
-                        actionText: 'close',
-                        pos: 'top-center',
-                        actionTextColor: '#4CAF50',
-                        backgroundColor: '#323232',
-                        width: 'auto',
-                        text: txtsnack
-                    });
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    Snackbar.show({
-                        actionText: 'close',
-                        pos: 'top-center',
-                        actionTextColor: '#4CAF50',
-                        backgroundColor: '#323232',
-                        width: 'auto',
-                        text: txtsnackerr + errorThrown + ' )'
-                    });
-                }
-            });
-        }
+        });
+        //}
     });
 
     $('#showAllData').on('click', '.item-edit', function() {
@@ -463,6 +550,7 @@ $(document).ready(function() {
     });
 
     $('#btnClose').click(function(e) {
+        e.preventDefault();
         formDataValClr();
         hideAllPop();
     });
@@ -486,15 +574,15 @@ $(document).ready(function() {
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].admin_id + '" id="' + response[i].admin_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].admin_id + i + '">' + response[i].admin_id + '</label>' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
                             //'<td>' + response[i].admin_password + '</td>' +
-                            '<td>' + response[i].admin_Tname + '</td>' +
-                            '<td>' + response[i].admin_Ename + '</td>' +
-                            '<td>' + response[i].admin_email + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].admin_id + '" class="item-edit">Edit</a></td>' +
+                            '<td>' + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].teacher_email + '</td>' +
+                            // '<td><a value="' + i + '" data="' + response[i].admin_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
