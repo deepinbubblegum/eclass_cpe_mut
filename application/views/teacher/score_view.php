@@ -117,7 +117,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <label for="Textarea">setpoint_fullname</label>
                                                         <input class="form-control" id="addFieldFN">
                                                         <label for="Textarea">setpoint_mininame</label>
-                                                        <input class="form-control" id="addFieldMN" >
+                                                        <input class="form-control" id="addFieldMN">
                                                         <!-- <label for="Textarea">setpoint_ticket</label> -->
                                                         <!-- <input class="form-control" id="addFieldTK"> -->
                                                         <label for="Textarea">setpoint_maxpoint</label>
@@ -186,10 +186,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                         <div class="modal-body">
                                                 <div class="form-group">
-                                                        <label for="Textarea">addTicket_userId</label>
-                                                        <input class="form-control" id="addTicketUID">
                                                         <label for="Textarea">addTicket_point</label>
                                                         <input class="form-control" id="addTicketP">
+                                                        <label for="Textarea">addTicket_userId</label>
+                                                        <input class="form-control" id="addTicketUID">
                                                 </div>
 
                                         </div>
