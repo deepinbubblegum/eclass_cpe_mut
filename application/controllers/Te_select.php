@@ -1,15 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-function convertData($sid)
-{
-        $str_arr = explode("-", $sid);
-        $data = array(
-                'subject_id' => $str_arr[0],
-                'semester' => $str_arr[1]
-        );
-        return $data;
-}
+// function convertData($sid)
+// {
+//         $str_arr = explode("-", $sid);
+//         $data = array(
+//                 'subject_id' => $str_arr[0],
+//                 'semester' => $str_arr[1]
+//         );
+//         return $data;
+// }
 
 class Te_select extends MY_Controller
 {
@@ -23,32 +23,25 @@ class Te_select extends MY_Controller
                 $this->load->model('manage_te/Model_te_annouce');
         }
 
-        public function index()
+        private function convertData($sid)
         {
-                // $this->load->view('teacher/template_te/header_view', $data);
-                // $this->load->view('teacher/template_te/select/side_menu_view');
-                // $this->load->view('select_view');
-                // $this->load->view('teacher/template_te/footer_te_view');
+                $str_arr = explode("-", $sid);
+                $data = array(
+                        'subject_id' => $str_arr[0],
+                        'semester' => $str_arr[1]
+                );
+                if ($this->Model_te_subject->check_subject_semester($data))
+                {
+                        return $data;
+                }else{
+                        show_404();
+                }
         }
 
-        // public function index($sid)
-        // {
-        //         $str_arr = explode ("-", $sid);  
-        //         $data = array(
-        //                 'subject_id' => $str_arr[0],
-        //                 'semester' => $str_arr[1],
-        //                 'heading' => 'My Heading',
-        //                 'message' => 'My Message'
-        //         ); 
-        //         $this->load->view('teacher/template_te/header_view', $data);
-        //         $this->load->view('teacher/template_te/select/side_menu_view',$data);
-        //         $this->load->view('select_view',$data);
-        //         $this->load->view('teacher/template_te/footer_te_view');
-        // }
-        // $this->load->view('teacher/template_te/header_view', $data);
-        // $this->load->view('teacher/template_te/side_menu_te_view', $data);
-        // $this->load->view('teacher/subject_menu_te_view');
-        // $this->load->view('teacher/template_te/footer_te_view');
+        public function index()
+        {
+                show_404();
+        }
 
         public function chkPermis($data)
         {
@@ -64,7 +57,7 @@ class Te_select extends MY_Controller
 
         public function annouce($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $this->Model_te_annouce->Permission_Medel($data);
                 $this->load->view('teacher/template_te/select/header_view', $data);
                 $this->load->view('teacher/template_te/select/side_menu_view', $data);
@@ -74,9 +67,9 @@ class Te_select extends MY_Controller
 
         public function score($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $bit = $this->session->ses_permission;
-                if (substr($bit, 3, 1) == '1' || $bit == '0' ) {
+                if (substr($bit, 3, 1) == '1' || $bit == '0') {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
                         $this->load->view('teacher/score_view', $data);
@@ -88,9 +81,9 @@ class Te_select extends MY_Controller
 
         public function uploads($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $bit = $this->session->ses_permission;
-                if (substr($bit, 2, 1) == '1' || $bit == '0' ) {
+                if (substr($bit, 2, 1) == '1' || $bit == '0') {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
                         $this->load->view('teacher/uploads_view', $data);
@@ -102,9 +95,9 @@ class Te_select extends MY_Controller
 
         public function downloads($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $bit = $this->session->ses_permission;
-                if (substr($bit, 1, 1) == '1' || $bit == '0' ) {
+                if (substr($bit, 1, 1) == '1' || $bit == '0') {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
                         $this->load->view('teacher/downloads_view', $data);
@@ -116,9 +109,9 @@ class Te_select extends MY_Controller
 
         public function videos($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $bit = $this->session->ses_permission;
-                if (substr($bit, 0, 1) == '1' || $bit == '0' ) {
+                if (substr($bit, 0, 1) == '1' || $bit == '0') {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
                         $this->load->view('teacher/videos_view', $data);
@@ -130,7 +123,7 @@ class Te_select extends MY_Controller
 
         public function quiz_vote($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $bit = $this->session->ses_permission;
                 if (substr($bit, 4, 1) == '1' || $bit == '0') {
                         $this->load->view('teacher/template_te/select/header_view', $data);
@@ -144,7 +137,7 @@ class Te_select extends MY_Controller
 
         public function menu($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $this->load->view('teacher/template_te/select/header_view', $data);
                 $this->load->view('teacher/template_te/select/side_menu_view', $data);
                 $this->load->view('teacher/menu_view', $data);
@@ -164,7 +157,7 @@ class Te_select extends MY_Controller
 
         public function add_student($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $this->load->view('teacher/template_te/select/header_view', $data);
                 $this->load->view('teacher/template_te/select/side_menu_view', $data);
                 $this->load->view('teacher/add_student_view', $data);
@@ -173,7 +166,7 @@ class Te_select extends MY_Controller
 
         public function add_teacher_assist($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $this->load->view('teacher/template_te/select/header_view', $data);
                 $this->load->view('teacher/template_te/select/side_menu_view', $data);
                 $this->load->view('teacher/add_teacher_assist_view', $data);
@@ -182,7 +175,7 @@ class Te_select extends MY_Controller
 
         public function add_permission($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $this->load->view('teacher/template_te/select/header_view', $data);
                 $this->load->view('teacher/template_te/select/side_menu_view', $data);
                 $this->load->view('teacher/add_permission_view', $data);

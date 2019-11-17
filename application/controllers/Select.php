@@ -1,52 +1,40 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-function convertData($sid)
-{
-        $str_arr = explode("-", $sid);
-        $data = array(
-                'subject_id' => $str_arr[0],
-                'semester' => $str_arr[1],
-                'heading' => 'My Heading',
-                'message' => 'My Message'
-        );
-        return $data;
-}
-
 class select extends MY_Controller
 {
         public function __construct()
         {
                 parent::__construct();
                 $this->load->model('manage_te/Model_te_annouce');
+                $this->load->model('manage_te/Model_te_subject');
+        }
+
+        private function convertData($sid)
+        {
+                $str_arr = explode("-", $sid);
+                $data = array(
+                        'subject_id' => $str_arr[0],
+                        'semester' => $str_arr[1],
+                        'heading' => 'My Heading',
+                        'message' => 'My Message'
+                );
+                if ($this->Model_te_subject->check_subject_semester($data))
+                {
+                        return $data;
+                }else{
+                        show_404();
+                }
         }
 
         public function index()
         {
-                // $this->load->view('template/select/header_view', $data);
-                // $this->load->view('template/select/side_menu_view');
-                // $this->load->view('select_view');
-                // $this->load->view('template/footer_view');
+                show_404();
         }
-
-        // public function index($sid)
-        // {
-        //         $str_arr = explode ("-", $sid);  
-        //         $data = array(
-        //                 'subject_id' => $str_arr[0],
-        //                 'semester' => $str_arr[1],
-        //                 'heading' => 'My Heading',
-        //                 'message' => 'My Message'
-        //         ); 
-        //         $this->load->view('template/select/header_view', $data);
-        //         $this->load->view('template/select/side_menu_view',$data);
-        //         $this->load->view('select_view',$data);
-        //         $this->load->view('template/footer_view');
-        // }
 
         public function annouce($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $this->Model_te_annouce->Permission_Medel($data);
                 $this->load->view('template/select/header_view', $data);
                 $this->load->view('template/select/side_menu_view', $data);
@@ -56,7 +44,7 @@ class select extends MY_Controller
 
         public function score($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $this->load->view('template/select/header_view', $data);
                 $this->load->view('template/select/side_menu_view', $data);
                 $this->load->view('student/score_view', $data);
@@ -65,7 +53,7 @@ class select extends MY_Controller
 
         public function downloads($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $this->load->view('template/select/header_view', $data);
                 $this->load->view('template/select/side_menu_view', $data);
                 $this->load->view('student/downloads_view', $data);
@@ -74,7 +62,7 @@ class select extends MY_Controller
 
         public function uploads($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $this->load->view('template/select/header_view', $data);
                 $this->load->view('template/select/side_menu_view', $data);
                 $this->load->view('student/uploads_view', $data);
@@ -83,7 +71,7 @@ class select extends MY_Controller
 
         public function videos($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $this->load->view('template/select/header_view', $data);
                 $this->load->view('template/select/side_menu_view', $data);
                 $this->load->view('student/videos_view', $data);
@@ -92,7 +80,7 @@ class select extends MY_Controller
 
         public function quiz_vote($sid)
         {
-                $data = convertData($sid);
+                $data = $this->convertData($sid);
                 $this->load->view('template/select/header_view', $data);
                 $this->load->view('template/select/side_menu_view', $data);
                 $this->load->view('student/quiz_vote_view', $data);
@@ -107,6 +95,11 @@ class select extends MY_Controller
                         'semester' => $str_arr[1],
                         'point_id' => $str_arr[2]
                 );
-                $this->load->view('student/score_table', $data);
+                if ($this->Model_te_subject->check_subject_semester($data))
+                {
+                        $this->load->view('student/score_table', $data);
+                }else{
+                        show_404();
+                }
         }
 }

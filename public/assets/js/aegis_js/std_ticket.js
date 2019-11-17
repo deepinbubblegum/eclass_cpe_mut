@@ -18,6 +18,7 @@ $(document).ready(function() {
                     //console.log('IF 1');
                     $('#txtShowReturn').addClass('text-success');
                     $('#txtShowReturn').text('สำเร็จ');
+                    $('#Ticket').val('');
                 } else if (response == '-1') {
                     //console.log('IF -1');
                     $('#txtShowReturn').addClass('text-danger');
