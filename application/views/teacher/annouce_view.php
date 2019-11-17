@@ -130,9 +130,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <li class="nav-item">
                     <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">ประกาศ</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">เพื่อนในชั้นเรียน</a>
-                </li>
+                </li> -->
             </ul>
             <div class="tab-content" id="justifiedTabContent">
                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
@@ -140,7 +140,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     </div>
                 </div>
-                <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
+                <!-- <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
                     <div class="jumbotron jumbotron-fluid mt-3">
                         <span class="chip mt-1 mr-1 ml-1 mb-1"><i class="chip-icon">C</i>Chip Label</span>
                         <span class="chip mt-1 mr-1 ml-1 mb-1"><i class="chip-icon">C</i>Chip Label</span>
@@ -191,7 +191,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <span class="chip mt-1 mr-1 ml-1 mb-1"><i class="chip-icon">C</i>Chip Label</span>
                         <span class="chip mt-1 mr-1 ml-1 mb-1"><i class="chip-icon">C</i>Chip Label</span>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 </body>

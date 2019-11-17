@@ -272,16 +272,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <li class="nav-item">
                                         <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">เมนูคะแนน</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                         <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">เมนู</a>
-                                </li>
+                                </li> -->
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
                                         <div class="list-group mt-3 showMenuScore" id="accordionOne">
                                         </div>
                                 </div>
-                                <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
+                                <!-- <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
                                         <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
                                                 <div class="list-group mt-3" id="accordionOne">
                                                         <div class="expansion-panel list-group-item show">
@@ -328,7 +328,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         </div>
                                                 </div>
                                         </div>
-                                </div>
+                                </div> -->
                         </div>
                 </div>
 </body>
