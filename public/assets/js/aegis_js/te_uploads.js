@@ -380,7 +380,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-
+            // processbar ยังไม่เสร็จ
             xhr: function() {
                 var xhr = new window.XMLHttpRequest();
                 html = '';
@@ -402,7 +402,7 @@ $(document).ready(function() {
 
                 return xhr;
             },
-            
+
             type: "POST",
             url: '/' + url[3] + '/Te_upload/UploadFile/' + subject_id + '-' + semester + '-' + getMenu[pos].menuDowId,
             data: form_data,
