@@ -380,6 +380,29 @@ $(document).ready(function() {
         }
 
         $.ajax({
+
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                html = '';
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        console.log(percentComplete);
+                        // html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">' + percentComplete + '%</div>';
+                        // if (percentComplete === 100) {
+                        //     html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
+                        //     setTimeout(function() {
+                        //         $('#Modalcsv').modal('hide');
+                        //     }, 1200);
+                        // }
+                        // $('#progressupload').html(html);
+                    }
+                }, false);
+
+                return xhr;
+            },
+            
             type: "POST",
             url: '/' + url[3] + '/Te_upload/UploadFile/' + subject_id + '-' + semester + '-' + getMenu[pos].menuDowId,
             data: form_data,
