@@ -160,11 +160,12 @@ class Te_subject_point extends MY_Controller
         $miniName = $this->input->post('miniName');
         $maxPoint = $this->input->post('maxPoint');
         $option = $this->input->post('setpoint_option');
+        $pointMulti = $this->input->post('pointMulti');
         
 
         //$User = $this->input->post('dataUser');
         //$this->Model_te_subject_point->insertField($data['semester'], $data['subject_id'], $data['pointId'], $data['ticket'], $data['fullName'], $data['miniName'], $data['maxPoint']);
-        $this->Model_te_subject_point->insertField($semester, $subject_id, $pointId, $ticket, $fullName, $miniName, $maxPoint,$option);
+        $this->Model_te_subject_point->insertField($semester, $subject_id, $pointId, $ticket, $fullName, $miniName, $maxPoint,$option,$pointMulti);
     }
 
     public function updateFieldScore(/*$sid*/)
