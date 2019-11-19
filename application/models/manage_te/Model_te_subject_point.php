@@ -47,36 +47,57 @@ class Model_te_subject_point extends CI_Model
     
     public function insertPoint($semester, $subject, $id, $setpoint_id, $user_id, $point)
     {
+        $chkMulyi = $this->db->query('SELECT setpoint_multi AS multi FROM `subject_setpoint` WHERE setpoint_semester = "'.$semester.'" AND setpoint_subject = "'.$subject.'" 
+        AND setpoint_id = "'.$id.'" AND setpoint_setpoint_id = "'.$setpoint_id.'" ');
+        $multi = $chkMulyi->row()->multi;
+
         $qIndex = $this->db->query("
-        select IFNULL(max(point_std_index),0)+1 as newIndex
+        select IFNULL(lpad(lpad(max(substr(point_std_index,4,3))+1,3,'0'),6,'no_'),'no_001') as newIndex
         from subject_point_student
-        where point_std_user_id='" . $user_id . "' and point_std_semester = '" . $semester . "' and point_std_subject='" . $subject . "' and point_std_setpoint_id = '" . $setpoint_id . "' and point_std_id = '" . $id . "';
+        where point_std_user_id='".$user_id."' and point_std_semester = '".$semester."' and point_std_subject='".$subject."' and point_std_setpoint_id = '".$setpoint_id."' 
+        and point_std_id = '".$id."' AND point_std_index LIKE 'no_%' ;
         ");
         $newIndex = $qIndex->row()->newIndex;
 
-        $this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','star','" . $point . "')");
-        return ($this->db->affected_rows() != 1) ? false : true; 
+        if($multi == 0){
+            $stdchk = $this->db->query('SELECT point_std_user_id AS std FROM subject_point_student WHERE point_std_semester = "'.$semester.'" AND point_std_subject = "'.$subject.'" 
+            AND point_std_id = "'.$id.'" AND point_std_setpoint_id = "'.$setpoint_id.'" AND point_std_user_id = "'.$user_id.'" AND point_std_index LIKE "no_%" ');
+            // $std = $stdchk->row()->std;
+            if($stdchk->num_rows() > 0){
+                return 'รหัสนักศึกษาซ้ำ';
+            }
+            else{ 
+                $this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','".$newIndex."','" . $point . "')");
+                return 'เพิ่มคะแนนแล้ว';
+            }
+
+        }else{
+            $this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','".$newIndex."','" . $point . "')");
+            return 'เพิ่มคะแนนแล้ว';
+        }
+
+        //$this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','".$newIndex."','" . $point . "')");
+        
+        // return ($this->db->affected_rows() != 1) ? false : true; 
         //$this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','" . $newIndex . "','" . $point . "')");
     }
 
-    public function insertField($semester, $subject_id, $pointId, $ticket, $fullName, $miniName, $maxPoint,$option)
+    public function insertField($semester, $subject_id, $pointId, $ticket, $fullName, $miniName, $maxPoint,$option,$pointMulti)
     { //$data['semester'],$data['subject_id'],$data['pointId'],$data['ticket'],$data['fullName'],$data['miniName'],$data['maxPoint']
 
         $maxid = $this->db->query("
         select lpad(IFNULL(max(setpoint_setpoint_id),0)+1,4,0) as newid
         from subject_setpoint
-        where setpoint_semester = '" . $semester . "' and setpoint_subject='" . $subject_id . "' and setpoint_id = '" . $pointId . "';
-    ");
+        where setpoint_semester = '" . $semester . "' and setpoint_subject='" . $subject_id . "' and setpoint_id = '" . $pointId . "'; ");
         $newid = $maxid->row()->newid;
 
         $maxindex = $this->db->query("
         select IFNULL(max(setpoint_index),0)+1 as newindex
         from subject_setpoint
-        where setpoint_semester = '" . $semester . "' and setpoint_subject='" . $subject_id . "' and setpoint_id = '" . $pointId . "';
-    ");
+        where setpoint_semester = '" . $semester . "' and setpoint_subject='" . $subject_id . "' and setpoint_id = '" . $pointId . "'; ");
         $maxindex = $maxindex->row()->newindex;
 
-        $this->db->query("insert into subject_setpoint values('" . $semester . "','" . $subject_id . "','" . $pointId . "','" . $newid . "','" . $maxindex . "','" . $ticket . "','" . $fullName . "','" . $miniName . "','" . $maxPoint . "','" . $option . "');");
+        $this->db->query("insert into subject_setpoint values('" . $semester . "','" . $subject_id . "','" . $pointId . "','" . $newid . "','" . $maxindex . "','" . $ticket . "','" . $fullName . "','" . $miniName . "','" . $maxPoint . "','" . $option . "','" . $pointMulti . "');");
     }
 
     public function updateField($semester, $subject_id, $pointId,$pointIdChild, $ticket, $fullName, $miniName, $maxPoint,$setOption)
@@ -135,13 +156,15 @@ class Model_te_subject_point extends CI_Model
     }
 
     public function deletePoint($semester,$subject_id,$setIdChild,$setIdParent,$pointIndex,$stdId){
-        $this->db->where_in('point_std_semester', $semester);
-        $this->db->where_in('point_std_subject', $subject_id);
-        $this->db->where_in('point_std_id', $setIdChild);
-        $this->db->where_in('point_std_setpoint_id', $setIdParent);
-        $this->db->where_in('point_std_user_id', $stdId);
-        $this->db->where_in('point_std_index', $pointIndex);
-        $this->db->delete('subject_point_student');
+        // $this->db->where('point_std_semester', $semester);
+        // $this->db->where('point_std_subject', $subject_id);
+        // $this->db->where('point_std_id', $setIdChild);
+        // $this->db->where('point_std_setpoint_id', $setIdParent);
+        // $this->db->where('point_std_user_id', $stdId);
+        // $this->db->where('point_std_index', $pointIndex);
+        // $this->db->delete('subject_point_student');
+        $this->db->query('DELETE FROM subject_point_student WHERE point_std_semester = "'.$semester.'" AND point_std_subject = "'.$subject_id.'" AND point_std_id = "'.$setIdChild.'" AND
+        point_std_setpoint_id = "'.$setIdParent.'" AND point_std_user_id = "'.$stdId.'" AND point_std_index = "'.$pointIndex.'" ');
     }
 
     public function deleteField($semester,$subject_id,$setIdChild,$setIdParent){
