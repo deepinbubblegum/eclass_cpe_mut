@@ -16,6 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </script>
 
         <?php
+        echo assets_css('bootstrap_css/bootstrap-pugin.css');
         echo assets_js('jsQR/jsQR.js');
         echo assets_js('jsQR/qr_reader.js');
         ?>
