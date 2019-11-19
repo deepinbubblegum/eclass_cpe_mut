@@ -378,7 +378,7 @@ $(document).ready(function() {
                 }
             });
         }
-
+        $('#progress_modal').modal('show');
         $.ajax({
             // processbar ยังไม่เสร็จ
             xhr: function() {
@@ -389,14 +389,14 @@ $(document).ready(function() {
                         var percentComplete = evt.loaded / evt.total;
                         percentComplete = parseInt(percentComplete * 100);
                         console.log(percentComplete);
-                        // html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">' + percentComplete + '%</div>';
-                        // if (percentComplete === 100) {
-                        //     html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
-                        //     setTimeout(function() {
-                        //         $('#Modalcsv').modal('hide');
-                        //     }, 1200);
-                        // }
-                        // $('#progressupload').html(html);
+                        html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%"></div>'+ percentComplete +'%';
+                        if (percentComplete === 100) {
+                            html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%"></div>Complete';
+                            setTimeout(function() {
+                                $('#progress_modal').modal('hide');
+                            }, 1200);
+                        }
+                        $('#progressupload').html(html);
                     }
                 }, false);
 
@@ -416,6 +416,7 @@ $(document).ready(function() {
                     snacktxt = 'ไฟล์มีขนาดใหญ่เกินไป ' + response;
                 } else {
                     snacktxt = 'อับโหลดข้อมูลจากไฟล์สำเร็จ';
+                    $('#progress_modal').modal('hide');
                 }
                 Snackbar.show({
                     actionText: 'close',
@@ -435,9 +436,9 @@ $(document).ready(function() {
                     width: 'auto',
                     text: 'อับโหลดข้อมูลจากไฟล์ไม่สำเร็จ :' + response
                 });
+                $('#progress_modal').modal('hide');
             }
         });
-
         nameCollector[pos] = [];
         upload(0, pos);
         //$('#btnUpload').hide();
