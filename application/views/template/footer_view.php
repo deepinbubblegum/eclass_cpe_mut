@@ -37,7 +37,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="modal-body">
                                         <form>
                                                 <canvas class="mx-auto" id="qr_canvas" style="border: 1px solid rgb(14, 168, 234); width: 100%; height: 100%;"></canvas>
-                                                <div class="form-group mt-1">
+                                                <div class="form-group position-relative mt-1">
                                                         <div class="floating-label">
                                                                 <label for="Ticket"><i class="fas fa-hashtag"></i>&nbsp;&nbsp;รหัสใบงาน</label>
                                                                 <input aria-describedby="TicketHelp" class="form-control" id="Ticket" name="Ticket" placeholder=" XXXX-XXXX-XXXX-XXXX" type="text" autocomplete="off">
