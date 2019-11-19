@@ -1,7 +1,7 @@
 $(document).ready(function () {
         $('#qr_canvas').hide();
         var video = document.createElement("video");
-        var canvasElement = document.getElementById("canvas");
+        var canvasElement = document.getElementById("qr_canvas");
         var canvas = canvasElement.getContext("2d");
         var localstream;
         var flag = 0;
@@ -80,7 +80,7 @@ $(document).ready(function () {
         function qr_reader_stop(){
                 video.pause();
                 localstream.getTracks()[0].stop();
-                $('#canvas').hide();
+                $('#qr_canvas').hide();
         }
 
         $('#qr_close').click(function (e) {
