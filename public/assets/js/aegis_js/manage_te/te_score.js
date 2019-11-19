@@ -1,11 +1,11 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var url = $(location).attr('href').split("/");
     var iurl = '';
     var getMenu;
     var editMenuId = '';
     showMenuPoint();
 
-    $('#btnAddScore').click(function (e) {
+    $('#btnAddScore').click(function(e) {
         e.preventDefault();
         $('#Modal').modal('show');
         $('#ModalLabel').text('เพิ่มเมนูคะแนน');
@@ -15,7 +15,7 @@ $(document).ready(function () {
         iurl = "/" + url[3] + "/Te_subject_point/insertMenuScore";
     });
 
-    $('#save').click(function (e) {
+    $('#save').click(function(e) {
         header = $('#Headtext').val();
         description = $('#Textarea').val();
 
@@ -23,7 +23,7 @@ $(document).ready(function () {
             type: "POST",
             url: iurl,
             data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&editID=' + editMenuId,
-            success: function () {
+            success: function() {
                 $('#Headtext').val("");
                 $('#Textarea').val("");
                 $('#Modal').modal('hide');
@@ -36,7 +36,7 @@ $(document).ready(function () {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_point/showMenuPoint/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 getMenu = response;
                 console.log(response);
                 var html = '';
@@ -54,12 +54,12 @@ $(document).ready(function () {
                             '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
                             '<div class="expansion-panel-body">' +
                             /* --------BTN-------- */
-                            '<span style="font-size: 1.7em;"><a href="/Te_select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].point_id + '" id="showInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a id="addInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a href="/Te_select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].point_id + '" title="ดูคะแนนนักศึกษา" id="showInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="สร้างช่องคะแนน" id="addInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
                             //'<span style="font-size: 1.7em;"><a id="impInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-file-import"></a></i></span>&nbsp;' +
                             //'<span style="font-size: 1.7em;"><a id="expInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-file-export"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a id="delMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a id="editMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="ลบเมนูคะแนน" id="delMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="แก้ไขเมนูคะแนน" id="editMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].point_discription +
@@ -104,18 +104,20 @@ $(document).ready(function () {
                     }
                 }
                 $('.showMenuScore').html(html);
-                $.each(getMenu, function (i, p) {
+                $.each(getMenu, function(i, p) {
                     showUnit(getMenu[i].point_id);
-                    $('#addInMenu-' + getMenu[i].point_id).click(function (e) {
+                    $('#addInMenu-' + getMenu[i].point_id).click(function(e) {
                         pointId = getMenu[i].point_id;
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_point/insertFieldScore';
                         $('#addField').modal('show');
+                        $("#PointMulti").prop("checked", true);
                         $('#addFieldLabel').text('Create in menu : ' + getMenu[i].point_name);
+                        $("input[name=PointMulti]").attr('disabled', false);
                     });
                     //$('#showInMenu-' + getMenu[i].point_id).click(function(e) {}); use da href
                     // $('#impInMenu-' + getMenu[i].point_id).click(function(e) {});
                     // $('#expInMenu-' + getMenu[i].point_id).click(function(e) {});
-                    $('#delMenu-' + getMenu[i].point_id).click(function (e) {
+                    $('#delMenu-' + getMenu[i].point_id).click(function(e) {
                         takeThisDel = 'delMenu';
                         delPid = getMenu[i].point_id;
                         $("#txtDel").text('Menu:' + getMenu[i].point_name);
@@ -124,7 +126,7 @@ $(document).ready(function () {
                         // $('#addField').modal('show');
                         // $('#addFieldLabel').text('Create in menu : ' + getMenu[i].point_name);
                     });
-                    $('#editMenu-' + getMenu[i].point_id).click(function (e) {
+                    $('#editMenu-' + getMenu[i].point_id).click(function(e) {
                         console.log('editMenu');
                         e.preventDefault();
                         $('#Headtext').val(getMenu[i].point_name);
@@ -142,8 +144,9 @@ $(document).ready(function () {
     }
 
     var pointId;
-    var pointIdChild
+    var pointIdChild;
     var fieldSaveUrl = '';
+    var pointMulti;
 
     //------------------------------------------------------------------------------------------------------------------------
     //<option value="1" id="opt1">Ticket</option>
@@ -180,13 +183,14 @@ $(document).ready(function () {
         return textInPut;
     }
 
-    $('#fieldSave').click(function (e) {
+    $('#fieldSave').click(function(e) {
         fieldCheck = '';
         fullName = $('#addFieldFN').val();
         miniName = $('#addFieldMN').val();
         maxPoint = $('#addFieldMP').val();
         check = $('#addFieldTK')[0].checked;
         optionSet = $("#optionSet :selected").val();
+        PointMulti = $("input[name='PointMulti']:checked").val();
         //ticket = $('#addFieldTK').val();
 
         // matchup = fullName.match(/\#/g);
@@ -210,22 +214,22 @@ $(document).ready(function () {
             //alert('The max point must be larger than zero!');
         }
         console.log(ticket, optionSet);
-        takeField(fullName, miniName, ticket, maxPoint, optionSet);
+        takeField(fullName, miniName, ticket, maxPoint, optionSet, PointMulti);
     });
 
-    $('#fieldClose').click(function (e) {
+    $('#fieldClose').click(function(e) {
         $('#addFieldFN').val('');
         $('#addFieldMN').val('');
         $('#addFieldTK')[0].checked = false;
         $('#addFieldMP').val('1');
     });
 
-    function takeField(fullName, miniName, ticket, maxPoint, optionSet) {
+    function takeField(fullName, miniName, ticket, maxPoint, optionSet, PointMulti) {
         $.ajax({
             type: "POST",
             url: fieldSaveUrl,
-            data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&setpoint_option=' + optionSet + '&pointId=' + pointId + '&pointIdChild=' + pointIdChild + /*|*/ '&ticket=' + ticket + '&fullName=' + fullName + '&miniName=' + miniName + '&maxPoint=' + maxPoint,
-            success: function () {
+            data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&setpoint_option=' + optionSet + '&pointId=' + pointId + '&pointIdChild=' + pointIdChild + /*|*/ '&ticket=' + ticket + '&fullName=' + fullName + '&miniName=' + miniName + '&maxPoint=' + maxPoint + '&pointMulti=' + PointMulti,
+            success: function() {
                 $('#addFieldFN').val("");
                 $('#addFieldMN').val("");
                 $('#addFieldTK')[0].checked = false;
@@ -246,7 +250,7 @@ $(document).ready(function () {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_point/showPointField/' + subject_id + '-' + semester + '-' + popUp,
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 var html = "";
                 if (!getField[popUp]) getField[popUp] = []
                 getField[popUp] = response;
@@ -257,12 +261,12 @@ $(document).ready(function () {
                             html +=
                                 '<center>' +
                                 '<div style="width:94px;height:94px" class="p-2 mb-2 f34r-bg-n-txt">' + response[i].setpoint_mininame + '<br>' +
-                                '<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
-                                '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
-                                '<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
+                                '<span style="font-size: 1.5em;"><a href="#" title="ดูคะแนน" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
+                                '<span style="font-size: 1.5em;"><a href="#" title="เพิ่มคะแนน" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
+                                '<span style="font-size: 1.5em;"><a href="#" title="สร้างใบคะแนน" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
                                 '<br>' +
-                                '<span style="font-size: 1em;"><a href="#" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
-                                '&nbsp;&nbsp;<span style="font-size: 1em;"><a id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
+                                '<span style="font-size: 1em;"><a href="#" title="แก้ไขช่องคะแนน" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
+                                '&nbsp;&nbsp;<span style="font-size: 1em;"><a title="ลบช่องคะแนน" id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
                                 '</div>' +
                                 '</center>&nbsp;';
                         } else if (response[i].setpoint_option == '2') {
@@ -273,8 +277,8 @@ $(document).ready(function () {
                                 '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
                                 '<br>' +
-                                '<span style="font-size: 1em;"><a href="#" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
-                                '&nbsp;&nbsp;<span style="font-size: 1em;"><a id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
+                                '<span style="font-size: 1em;"><a href="#" title="แก้ไขช่องคะแนน" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
+                                '&nbsp;&nbsp;<span style="font-size: 1em;"><a title="ลบช่องคะแนน" id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
                                 '</div>' +
                                 '</center>&nbsp;';
                         } else if (response[i].setpoint_option == '3') {
@@ -298,13 +302,13 @@ $(document).ready(function () {
                 }
                 $('#genIn-' + popUp).html(html);
                 console.log(getField[popUp])
-                $.each(getField[popUp], function (i, p) {
-                    $('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
+                $.each(getField[popUp], function(i, p) {
+                    $('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
                         console.log('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         showPoint(getField[popUp][i].setpoint_setpoint_id, popUp);
                         $('#showPoint').modal('show');
                     });
-                    $('#addTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
+                    $('#addTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
                         console.log('#addTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         $('#addTicket').modal('show');
                         $('#addTicketLabel').text('เพิ่มคะแนน ' + getField[popUp][i].setpoint_mininame);
@@ -312,9 +316,10 @@ $(document).ready(function () {
                         setIdParent = getField[popUp][i].setpoint_setpoint_id;
                         setMaxPoint = getField[popUp][i].setpoint_maxpoint;
                     });
-                    $('#editField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
+                    $('#editField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
                         $('#addFieldFN').val(response[i].setpoint_fullname);
                         $('#addFieldMN').val(response[i].setpoint_mininame);
+
                         //$('#addFieldTK').val(response[i].setpoint_ticket);
                         if (response[i].setpoint_ticket == '1') {
                             $('#addFieldTK')[0].checked = true;
@@ -324,19 +329,21 @@ $(document).ready(function () {
                         $("#optionSet").val(response[i].setpoint_option);
 
                         $('#addFieldMP').val(response[i].setpoint_maxpoint);
+                        $("input[name=PointMulti][value=" + response[i].setpoint_multi + "]").attr('checked', 'checked');
+                        $("input[name=PointMulti]").attr('disabled', true);
                         $('#addField').modal('show');
                         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_point/updateFieldScore';
                         pointIdChild = response[i].setpoint_setpoint_id;
                         pointId = response[i].setpoint_id;
                     });
-                    $('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
+                    $('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
                         console.log('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         parentTK = response[i].setpoint_setpoint_id;
                         childTK = response[i].setpoint_id;
                         $('#genTicket').modal('show');
                     });
-                    $('#delField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
+                    $('#delField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
                         //console.log('#delField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         $("#txtDel").text('Field:' + getField[popUp][i].setpoint_mininame);
                         $("#ModalDelete").modal('show');
@@ -347,7 +354,7 @@ $(document).ready(function () {
                     });
                 });
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
@@ -355,13 +362,13 @@ $(document).ready(function () {
     var parentTK = 0;
     var childTK = 0;
 
-    $('#genTicketClose').click(function (e) {
+    $('#genTicketClose').click(function(e) {
         $('#ticket_discrip').val('');
         $('#ticketNumber').val('');
         $('#ticket_point').val('');
     });
 
-    $('#genTicketSave').click(function (e) {
+    $('#genTicketSave').click(function(e) {
         discript = $('#ticket_discrip').val();
         tknb = $('#ticketNumber').val();
         ticket_point = $('#ticket_point').val();
@@ -371,7 +378,7 @@ $(document).ready(function () {
             url: '/' + url[3] + '/Gen_ticket/gen_key',
             data: '&ticket_discrip=' + discript + '&ticketNumber=' + tknb + '&parentTK=' + parentTK + '&childTK=' + childTK + '&semester=' + semester + '&subject=' + subject_id + '&ticket_point=' + ticket_point,
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 console.log(response);
                 if (response) {
                     gurl = '/Gen_ticket/ticket_and_qrCode/' + response;
@@ -384,7 +391,7 @@ $(document).ready(function () {
     var takeThisDel = '';
     var delCid = '';
     var delPid = '';
-    $('#Delete').click(function (e) {
+    $('#Delete').click(function(e) {
         if (takeThisDel == "delField") {
             delField(delCid, delPid);
             //alert('Deleted!');
@@ -406,7 +413,7 @@ $(document).ready(function () {
             type: "POST",
             url: '/' + url[3] + '/Te_subject_point/delMenu',
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid,
-            success: function () {
+            success: function() {
                 // console.log('Deleted Successfully');
                 showMenuPoint();
             }
@@ -418,12 +425,18 @@ $(document).ready(function () {
             type: "POST",
             url: '/' + url[3] + '/Te_subject_point/delField',
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdChild=' + cid + '&setIdParent=' + pid,
-            success: function () {
+            success: function() {
                 // console.log('Deleted Successfully');
                 showMenuPoint();
             }
         });
     }
+
+    var stdId;
+    var pointIndex;
+    var childField;
+    var parentField;
+    var index;
 
     function showPoint(childId, parentId) {
         console.log('showPoint(' + childId + ',' + parentId + ')');
@@ -433,7 +446,7 @@ $(document).ready(function () {
             url: takeThisUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + childId + '&setIdParent=' + parentId,
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 //console.log(response + '<- This is showPoint response');
                 html = '';
                 if (response.length != undefined) {
@@ -459,38 +472,59 @@ $(document).ready(function () {
                     html = '<label>NO DATA</label>';
                 }
                 $('#showPointZone').html(html);
-                $.each(response, function (i, p) {
-                    $('#btnDelPoint-' + response[i].point_std_setpoint_id + '-' + response[i].point_std_id + '-' + i).click(function (e) {
+                $.each(response, function(i, p) {
+                    $('#btnDelPoint-' + response[i].point_std_setpoint_id + '-' + response[i].point_std_id + '-' + i).click(function(e) {
+                        stdId = response[i].point_std_user_id;
+                        pointIndex = response[i].point_std_index;
+                        childField = response[i].point_std_id;
+                        parentField = response[i].point_std_setpoint_id;
+                        index = i;
+                        $('#DelIDSTD').text(response[i].point_std_user_id);
+                        $('#ModalConDel').modal('show');
                         //console.log('btnDelPoint-' + response[i].point_std_setpoint_id + '-' + response[i].point_std_id + '-' + i);
                         //console.log(response[i].point_std_user_id, response[i].point_std_index) 
                         //alert('Deleted!'); 
-                        delPoint(response[i].point_std_user_id, response[i].point_std_index, response[i].point_std_id, response[i].point_std_setpoint_id);
-                        $('#tr-' + response[i].point_std_setpoint_id + '-' + response[i].point_std_id + '-' + i).addClass('text-danger');
+                        // delPoint(response[i].point_std_user_id, response[i].point_std_index, response[i].point_std_id, response[i].point_std_setpoint_id);
+                        // $('#tr-' + response[i].point_std_setpoint_id + '-' + response[i].point_std_id + '-' + i).addClass('text-danger');
                     });
                 });
             },
         });
     }
 
-    function delPoint(stdId, pointIndex, childField, parentField) {
+    $('#btnConfrimDelPointSTD').click(function(e) {
+        delPoint();
+        $('#ModalConDel').modal('hide');
+        $('#tr-' + parentField + '-' + childField + '-' + index).addClass('text-danger');
+    });
+
+    function delPoint() {
         console.log(stdId, pointIndex, childField, parentField, semester, subject_id);
         pUrl = '/' + url[3] + '/Te_subject_point/delPoint';
         $.ajax({
             type: "POST",
             url: pUrl,
-            data: '&semester=' + semester + '&subject=' + subject_id + '&setIdChild=' + childField + '&setIdParent=' + parentField + '&pointIndex=' + pointIndex + '&stdId=' + stdId,
-            success: function () {
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + childField + '&setIdParent=' + parentField + '&pointIndex=' + pointIndex + '&stdId=' + stdId,
+            success: function() {
                 console.log('Deleted Successfully');
+                // Snackbar.show({
+                //     actionText: 'close',
+                //     pos: 'top-center',
+                //     actionTextColor: '#4CAF50',
+                //     backgroundColor: '#323232',
+                //     width: 'auto',
+                //     text: 'ลบข้อมูลแล้ว'
+                // });
             }
         });
     }
 
-    $('#ticketClose').click(function (e) {
+    $('#ticketClose').click(function(e) {
         $('#addTicketUID').val("");
         $('#addTicketP').val("");
     });
 
-    $(document).on('keypress', function (e) {
+    $(document).on('keypress', function(e) {
         if (e.which == 13) {
             uID = $('#addTicketUID').val();
             tPoint = $('#addTicketP').val();
@@ -505,21 +539,37 @@ $(document).ready(function () {
                 url: pUrl,
                 data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&tPoint=' + tPoint + '&uID=' + uID,
                 dataType: "json",
-                success: function (response) {
+                success: function(response) {
                     $('#addTicketUID').val("");
+                    $("#addTicketUID").focus();
                     console.log(response);
-                    if (response == true) {
-                        console.log('success');
-                    } else {
-                        alert('failed');
-                    }
-                    //$('#addTicketP').val("");
+                    Snackbar.show({
+                        actionText: 'close',
+                        pos: 'top-center',
+                        actionTextColor: '#4CAF50',
+                        backgroundColor: '#323232',
+                        width: 'auto',
+                        text: response
+                    });
+                    // $('#addTicketP').val("");
+                },
+                error: function() {
+                    $('#addTicketUID').val("");
+                    $("#addTicketUID").focus();
+                    Snackbar.show({
+                        actionText: 'close',
+                        pos: 'top-center',
+                        actionTextColor: '#FF0000',
+                        backgroundColor: '#323232',
+                        width: 'auto',
+                        text: 'ไม่มีข้อมูลในระบบ'
+                    });
                 }
             });
         }
     });
 
-    $('#ticketSave').click(function (e) {
+    $('#ticketSave').click(function(e) {
         uID = $('#addTicketUID').val();
         tPoint = $('#addTicketP').val();
         //if (tPoint > setMaxPoint) tPoint = setMaxPoint;
@@ -533,15 +583,31 @@ $(document).ready(function () {
             url: pUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&tPoint=' + tPoint + '&uID=' + uID,
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 $('#addTicketUID').val("");
+                $("#addTicketUID").focus();
                 console.log(response);
-                if (response == true) {
-                    console.log('success');
-                } else {
-                    alert('failed');
-                }
-                //$('#addTicketP').val("");
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: response
+                });
+                // $('#addTicketP').val("");
+            },
+            error: function() {
+                $('#addTicketUID').val("");
+                $("#addTicketUID").focus();
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#FF0000',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: 'ไม่มีข้อมูลในระบบ'
+                });
             }
         });
     });

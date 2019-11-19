@@ -122,8 +122,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <!-- <input class="form-control" id="addFieldTK"> -->
                                                         <label for="Textarea">setpoint_maxpoint</label>
                                                         <input class="form-control" id="addFieldMP" value="1">
+
+                                                        <label for="Textarea" class="mt-3">รูปแบบการกรอกคะแนน</label>
+                                                        <div class="custom-control custom-radio custom-control-inline mt-2 mb-2">
+                                                                <input type="radio" id="PointMulti" name="PointMulti" class="custom-control-input" value="0">
+                                                                <label class="custom-control-label" for="PointMulti">กรอกคะแนนได้ครังเดียว</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio custom-control-inline mt-2 mb-2">
+                                                                <input type="radio" id="PointMulti2" name="PointMulti" class="custom-control-input" value="1">
+                                                                <label class="custom-control-label" for="PointMulti2">กรอกคะแนนได้หลายครั้ง</label>
+                                                        </div>
+
                                                         <!--  -->
-                                                        <div class="custom-control custom-checkbox mt-3 mb-2">
+                                                        <div class="custom-control custom-checkbox mt-3 mb-2" id="Div_addTK">
                                                                 <input type="checkbox" class="custom-control-input" id="addFieldTK" checked>
                                                                 <label class="custom-control-label" for="addFieldTK">เปิดให้กรอกคะแนน</label>
                                                         </div>
@@ -246,6 +257,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
         </div>
         <!-- End Modal Delete -->
+
+
+        <!-- Modal Confirm Delete Point Student -->
+        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="ModalConDel">
+                <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                                <div class="modal-body">
+                                        <p>ยืนยันการลบคะแนน (<span id="DelIDSTD"> </span>)</p>
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" id="btnConfrimDelPointSTD">ลบ</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">ปิด</button>
+                                </div>
+                        </div>
+                </div>
+        </div>
+        <!-- End Modal Confirm Delete Point Student -->
+
 
         <div class="col text-center mt-3">
                 <nav class="navbar navbar-light " style="max-height: auto; min-width: 335px; background-color: #dadfe4;">
