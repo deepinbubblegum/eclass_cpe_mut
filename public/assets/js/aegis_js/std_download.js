@@ -104,7 +104,7 @@ $(document).ready(function () {
                         if (i == 0) {
                             html += '<div class="expansion-panel list-group-item show" >';
                         } else {
-                            html += '<div class="expansion-panel list-group-item" >';
+                            html += '<div class="expansion-panel list-group-item " >';
                         }
                         html += '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
                             response[i].menuDowName +
@@ -121,7 +121,7 @@ $(document).ready(function () {
                         html += '<div class="expansion-panel-body">' +
                             response[i].menuDowDescrpition +
                             '<div id="menuDowId-' + response[i].menuDowId + '">' +
-                            '</div>';
+                            '</div></div></div></div>';
                     }
                 }
                 $('.showMenuDownload').html(html);
@@ -143,7 +143,7 @@ $(document).ready(function () {
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
                         html +=
-                            '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
+                            '<li href="#" class="list-group-item d-flex flex-wrap justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
                             '<span class="mr-2 mb-0" style="font-size: 28px;">' + file_ico(response[i].fileType) +
                             '<span class="mr-2 text-black" style="font-size: 18px;"> ' + response[i].fileName + '</span>' +
                             '<div class="mt-0">' +
@@ -156,7 +156,7 @@ $(document).ready(function () {
                             '<!-- <button class="btn btn-float btn-danger my-1"><i class="far fa-trash-alt"></i></button>' +
                             '<button class="btn btn-float btn-success my-1"><i class="fas fa-check"></i></button>' +
                             '<button class="btn btn-float btn-danger my-1"><i class="fas fa-undo-alt"></i></button> -->' +
-                            '<a class="btn btn-danger" href="/Std_download/download/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuDowId + '-' + response[i].fileName + '">download</a>' +
+                            '<div><a class="btn btn-float btn-primary" href="/Std_download/download/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuDowId + '-' + response[i].fileName + '"><i class="fas fa-download"></i></a></div>' +
                             '</span>' +
                             '</li>';
                     }
