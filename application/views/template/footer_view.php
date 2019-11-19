@@ -40,6 +40,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <div class="floating-label">
                                                                 <label for="Ticket"><i class="fas fa-hashtag"></i>&nbsp;&nbsp;รหัสใบงาน</label>
                                                                 <input aria-describedby="TicketHelp" class="form-control" id="Ticket" name="Ticket" placeholder=" XXXX-XXXX-XXXX-XXXX" type="text" autocomplete="off">
+                                                                <span class="form-clear d-none"><i class="material-icons">clear</i></span>
                                                                 <div id='txtShowReturn'>
                                                                         *กรุณากรอกรหัสใบงาน
                                                                 </div>
