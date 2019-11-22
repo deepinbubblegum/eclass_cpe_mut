@@ -37,6 +37,12 @@ class Te_uploaded extends MY_Controller
         $this->load->helper('download');
         $this->load->library('zip');
         $this->load->model('manage_te/Model_te_uploaded');
+
+        $bit = $this->session->ses_status;
+        if($bit != 'teacher' || $bit != 'admin')
+        {
+            return 0;
+        }
     }
 
     public function showMenuDownload($sid)
