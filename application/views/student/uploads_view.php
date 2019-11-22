@@ -9,8 +9,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <script>
-                subject_id =  '<?php echo $subject_id; ?>';
-                semester =  '<?php echo $semester; ?>';
+                subject_id = '<?php echo $subject_id; ?>';
+                semester = '<?php echo $semester; ?>';
         </script>
         <?php
         echo assets_css('aegis_css/uploads_drag_drop.css');
@@ -102,6 +102,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                         </div>
                 </div>
+
+                <!-- modal -->
+                <div class="modal fade bd-example-modal-lg" id="progress_modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="progress_modal" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 class="modal-title" id="progress_modalLabel">
+                                                        กำลังอัปโหลดข้อมูล...
+                                                </h5>
+                                        </div>
+                                        <div class="modal-body">
+                                                <div id="progressupload"></div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!-- End Modal upload -->
 </body>
 
 </html>
