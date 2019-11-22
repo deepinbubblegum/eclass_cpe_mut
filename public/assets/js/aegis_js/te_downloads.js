@@ -245,7 +245,7 @@ $(document).ready(function() {
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
                         html +=
-                            '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
+                            '<li href="#" class="list-group-item d-flex flex-wrap justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
                             '<span class="mr-2 mb-0" style="font-size: 28px;">' + file_ico(response[i].fileType) +
                             '<span class="mr-2 text-black" style="font-size: 18px;"> ' + response[i].fileName + '</span>' +
                             '<div class="mt-0">' +
@@ -259,8 +259,10 @@ $(document).ready(function() {
                             '<button class="btn btn-float btn-success my-1"><i class="fas fa-check"></i></button>' +
                             '<button class="btn btn-float btn-danger my-1"><i class="fas fa-undo-alt"></i></button> -->' +
                             '</span>' +
-                            '<a class="btn btn-success" href="/Te_download/download/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">download</a>' +
-                            '<a class="btn btn-danger" href="/Te_download/delete/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">delete</a>' +
+                            '<span>'+
+                            '<a class="btn btn-success btn-block mr-1 ml-1 mt-1" href="/Te_download/download/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">download</a>' +
+                            '<a class="btn btn-danger btn-block mr-1 ml-1 mt-1" href="/Te_download/delete/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">delete</a>' +
+                            '</span>' +
                             '</li>';
                     }
                 }

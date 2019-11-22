@@ -26,7 +26,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                         </a>
                                                         <?php
-                                                        if ($this->session->ses_status) {
+                                                        if ($this->session->ses_status == 'student') {
                                                                 echo '<a class="nav-item nav-link" href="' . base_url('subject') . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-atlas"></i></span>
