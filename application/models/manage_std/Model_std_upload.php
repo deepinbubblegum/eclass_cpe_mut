@@ -34,6 +34,7 @@ class Model_std_upload extends CI_Model
         $this->db->where('menuUpSubjectId',$subject_id);
         $this->db->where('menuUpId',$menuId);
         $this->db->where('menuUpTimeEnd >=', date("Y-m-d H:i:s"));
+        $this->db->or_where('menuUpTimeEnd', date("0000-00-00 00:00:00"));
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return TRUE;
