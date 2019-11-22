@@ -12,15 +12,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
         echo assets_js('aegis_js/manage_te/te_subject.js');
         echo assets_js('jquery_js/jquery-ui.js');
         ?>
+
+        <style>
+                .placeholder {
+                        border: 2.5px double gray;
+                        /* background-color: white; */
+                        -webkit-box-shadow: 0px 0px 10px #888;
+                        -moz-box-shadow: 0px 0px 10px #888;
+                        box-shadow: 0px 0px 10px #888;
+                }
+        </style>
 </head>
 
 <body>
-<?php
+        <?php
 
         //$this->session->unset_userdata('ses_permission');
- 
+
         //print_r($this->session->userdata());
-?>
+        ?>
         <!-- Modal -->
         <div class="modal fade" id="Modal_Add_subject" tabindex="-1" role="dialog" aria-labelledby="Modal_Add_subject" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
@@ -55,7 +65,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                                 <label class="custom-control-label" for="customSwitch">เพิ่มวิชาร่วม</label>
                                                                         </div>
 
-                                                                        
+
                                                                 </div>
                                                         </div>
 
@@ -67,25 +77,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         </select>
                                                                 </div> -->
                                                                 <div class="col-sm mb-1">
-                                                                <form>
-                                                                        <div class="form-group">
-                                                                                <label for="SubjectJoin_add_option">เพิ่มรายวิชาเรียนร่วม</label>
-                                                                                <select class="form-control" id="SubjectJoin_add_option">
+                                                                        <form>
+                                                                                <div class="form-group">
+                                                                                        <label for="SubjectJoin_add_option">เพิ่มรายวิชาเรียนร่วม</label>
+                                                                                        <select class="form-control" id="SubjectJoin_add_option">
 
-                                                                                </select>
-                                                                                <span style="font-size: 1.5rem;" id="add_Subjoin">
-                                                                                        <span style="color: #ff4081;">
-                                                                                                <a><i class="fas fa-plus-circle"></i></a>
+                                                                                        </select>
+                                                                                        <span style="font-size: 1.5rem;" id="add_Subjoin">
+                                                                                                <span style="color: #ff4081;">
+                                                                                                        <a><i class="fas fa-plus-circle"></i></a>
+                                                                                                </span>
                                                                                         </span>
-                                                                                </span>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                                <label for="SubjectJoin">รายวิชาเรียนร่วมที่เพิ่ม</label>
-                                                                                <select multiple class="form-control" id="SubjectJoin">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                        <label for="SubjectJoin">รายวิชาเรียนร่วมที่เพิ่ม</label>
+                                                                                        <select multiple class="form-control" id="SubjectJoin">
 
-                                                                                </select>
-                                                                        </div>
-                                                                </form>
+                                                                                        </select>
+                                                                                </div>
+                                                                        </form>
                                                                 </div>
                                                         </div>
                                                 </form>
