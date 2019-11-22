@@ -10,6 +10,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <?php
         echo assets_js('aegis_js/manage_te/te_subject.js');
+        echo assets_js('jquery_js/jquery-ui.js');
         ?>
 </head>
 
