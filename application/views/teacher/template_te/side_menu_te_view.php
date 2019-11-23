@@ -9,7 +9,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <?php
-                echo assets_js('');
+        echo assets_js('cropper_js/cropper.js');
+        echo assets_css('cropper_css/cropper.css');
+        echo assets_js('jquery_js/jquery-cropper.js');
         ?>
 </head>
 
@@ -42,7 +44,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                         </a>
 
-                                                        <a class="nav-item nav-link" data-toggle="modal" data-target="#cropper_img">
+                                                        <a class="nav-item nav-link" id="start_crop" data-toggle="modal" data-target="#cropper_img">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="far fa-address-card"></i></span>
                                                                 <span style="font-size: 1.2em;">
@@ -73,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 </div>
                                                 <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-target="#cropper_img" data-dismiss="modal">ปิด</button>
-                                                        <button type="button" class="btn btn-primary">บันทึก</button>
+                                                        <button type="button" id="save_crop" class="btn btn-primary">บันทึก</button>
                                                 </div>
                                         </div>
                                 </div>
@@ -81,24 +83,54 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                         <style>
                                 #image_preview {
+                                        display: block;
                                         max-width: 100%;
                                 }
                         </style>
 
                         <script>
-                                var $image = $('#image_preview');
-                                $image.cropper({
-                                        aspectRatio: 16 / 9,
-                                        crop: function(event) {
-                                                console.log(event.detail.x);
-                                                console.log(event.detail.y);
-                                                console.log(event.detail.width);
-                                                console.log(event.detail.height);
-                                                console.log(event.detail.rotate);
-                                                console.log(event.detail.scaleX);
-                                                console.log(event.detail.scaleY);
-                                        }
+                                $('#start_crop').click(function(e) {
+                                        e.preventDefault();
+                                        start_crop();
                                 });
+
+                                function encodeImageFileAsURL(element) {
+                                        var file = element;
+                                        var reader = new FileReader();
+                                        reader.onloadend = function() {
+                                                console.log('RESULT', reader.result)
+                                        }
+                                        reader.readAsDataURL(file);
+                                }
+
+                                function start_crop() {
+                                        var $image = document.getElementById('image_preview');
+                                        var cropper = new Cropper($image, {
+                                                aspectRatio: 16 / 9,
+                                                crop(event) {
+                                                        console.log(event.detail.x);
+                                                        console.log(event.detail.y);
+                                                        console.log(event.detail.width);
+                                                        console.log(event.detail.height);
+                                                        console.log(event.detail.rotate);
+                                                        console.log(event.detail.scaleX);
+                                                        console.log(event.detail.scaleY);
+                                                },
+                                        })
+                                        cropper.crop();
+                                        $('#save_crop').click(function(e) {
+                                                e.preventDefault();
+                                                cropper.getCroppedCanvas().toBlob(function(blob) {
+                                                        var formData = new FormData();
+                                                        formData.append("Image", blob)
+                                                        console.log(blob);
+                                                        // encodeImageFileAsURL(blob);
+                                                        toDataURL(blob, function(dataUrl) {
+                                                                console.log('RESULT:', dataUrl)
+                                                        })
+                                                })
+                                        });
+                                }
                         </script>
 </body>
 
