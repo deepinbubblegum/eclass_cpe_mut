@@ -120,17 +120,17 @@ $(document).ready(function () {
         });
     }
 
-    function sortui(){
+    function sortui() {
         $("#showSubject").sortable({
             tolerance: 'pointer',
             revert: 'invalid',
             placeholder: 'placeholder',
             forceHelperSize: true,
             connectWith: ".card-deck",
-            stop: function(event, div) {
-                $('.card-deck').each(function() {
+            stop: function (event, div) {
+                $('.card-deck').each(function () {
                     result = "";
-                    $(this).find("h5").each(function(){
+                    $(this).find("h5").each(function () {
                         result += $(this).attr('value') + ",";
                     });
                     console.log(result);
@@ -143,10 +143,10 @@ $(document).ready(function () {
             placeholder: 'placeholder',
             forceHelperSize: true,
             connectWith: ".card-deck",
-            stop: function(event, div) {
-                $('.card-deck').each(function() {
+            stop: function (event, div) {
+                $('.card-deck').each(function () {
                     resultass = "";
-                    $(this).find("h5").each(function(){
+                    $(this).find("h5").each(function () {
                         resultass += $(this).attr('value') + ",";
                     });
                     console.log(resultass);
@@ -379,4 +379,72 @@ $(document).ready(function () {
     }
 
 
+    // =========================== ADD IMG ========================
+    $('#start_crop').click(function (e) {
+        e.preventDefault();
+        $('#cropper_img').modal('show');
+    });
+
+    var result = document.querySelector('.result');
+    var img_result = document.querySelector('.img-result');
+    var img_w = document.querySelector('.img-w');
+    var img_h = document.querySelector('.img-h');
+    var save = document.querySelector('.save');
+    var cropped = document.querySelector('.cropped');
+    var upload = document.querySelector('#file-input');
+    var label_view = document.querySelector('.text_lable');
+    var cropper = '';
+    // on change show image with crop options
+    upload.addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            // start file reader
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (e.target.result) {
+                    // create new image
+                    let img = document.createElement('img');
+                    img.id = 'image';
+                    img.src = e.target.result
+                    // clean result before
+                    result.innerHTML = '';
+                    // append new image
+                    result.appendChild(img);
+                    // show save btn and options
+                    save.classList.remove('hide');
+                    label_view.remove('hide');
+                    // init cropper
+                    cropper = new Cropper(img);
+                }
+            };
+            reader.readAsDataURL(e.target.files[0]);
+            $('#file-input_label').text(e.target.files[0]['name']);
+        }
+    });
+
+    // save on click
+    save.addEventListener('click', (e) => {
+        e.preventDefault();
+        // get result to data uri
+        let imgSrc = cropper.getCroppedCanvas({
+            width: img_w.value // input value
+        }).toDataURL();
+        // remove hide class of img
+        cropped.classList.remove('hide');
+        img_result.classList.remove('hide');
+        // show image cropped
+        cropped.src = imgSrc;
+    });
+
+    $('#display_crop').on('mousemove', function() {
+        let imgSrc = cropper.getCroppedCanvas({
+            width: img_w.value // input value
+        }).toDataURL();
+        // remove hide class of img
+        cropped.classList.remove('hide');
+        img_result.classList.remove('hide');
+        // show image cropped
+        cropped.src = imgSrc;
+    });
+    
+    
 });
