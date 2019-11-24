@@ -307,7 +307,11 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: iurl,
-            data: '&semester_id=' + data + '&subject_id=' + data2,
+            data: {
+                "semester_id": data,
+                "subject_id": data2,
+                "img_data": img_data
+            },
             success: function () {
                 //$('#Modal_add').modal('hide');
                 Snackbar.show({
@@ -394,6 +398,7 @@ $(document).ready(function () {
     var upload = document.querySelector('#file-input');
     var label_view = document.querySelector('.text_lable');
     var cropper = '';
+    var img_data = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAAC0CAMAAACKYMETAAAAA1BMVEWu1ee2vQsxAAAAQ0lEQVR4nO3BgQAAAADDoPlT3+AEVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzwCwfAAB3a7udgAAAABJRU5ErkJggg==';
     // on change show image with crop options
     upload.addEventListener('change', (e) => {
         if (e.target.files.length) {
@@ -432,10 +437,11 @@ $(document).ready(function () {
         cropped.classList.remove('hide');
         img_result.classList.remove('hide');
         // show image cropped
-        cropped.src = imgSrc;
+        img_data = imgSrc;
+        $('#cropper_img').modal('hide');
     });
 
-    $('#display_crop').on('mousemove', function() {
+    $('#display_crop').on('mousemove', function () {
         let imgSrc = cropper.getCroppedCanvas({
             width: img_w.value // input value
         }).toDataURL();
@@ -445,6 +451,5 @@ $(document).ready(function () {
         // show image cropped
         cropped.src = imgSrc;
     });
-    
-    
+
 });
