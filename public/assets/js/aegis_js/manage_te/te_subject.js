@@ -7,7 +7,7 @@ $(document).ready(function () {
     var Sel_Sub;
     var SubCoop;
     var SubAssCoop;
-
+    var semester_data;
     showSemester();
     hideSubJoin();
 
@@ -38,7 +38,7 @@ $(document).ready(function () {
 
     function SubjectCoop() {
         var url = $(location).attr('href').split("/");
-        semesterSelected = $("#yearterm :selected").val();
+        semester_data = semesterSelected = $("#yearterm :selected").val();
         $.ajax({
             type: "POST",
             url: "../" + url[3] + "/Teacher_subject/getSubject_Coop",
@@ -75,7 +75,7 @@ $(document).ready(function () {
                         }
                         html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../' + url[3] + '/te_select/annouce/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
-                            '<img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZXAH2gX3tc7LJpgr0GaPOYnys6MkCpPi6VRmN6We88Uaq8wi" alt="Card image cap">' +
+                            '<img class="card-img-top" src="../Img_sem/'+response[i].subsem_semester+response[i].subsem_subject+'.png" alt="Card image cap">' +
                             '<div class="card-body">' +
                             '<h5 class="card-title" value="' + response[i].subsem_subject + '" >' + txtSub + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +

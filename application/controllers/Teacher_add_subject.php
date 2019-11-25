@@ -19,15 +19,21 @@ class Teacher_add_subject extends MY_Controller
         $this->Model_te_add_subject->Add_data_model_subject($data);
         $this->genDir($this->input->post('semester_id'),$this->input->post('subject_id'));
 
-        $data_img = $this->input->post('img_data');
-        if($data_img != ''){
-            $img_array = explode(";", $data_img);
-            $img_array2 = explode(",", $img_array[1]);
-            $img_decode = base64_decode($img_array2[1]);
-            $path_full = '/Eclass/uploads/';
-            $image = $this->input->post('subject_id').'-'.$this->input->post('semester_id').'png';
+        if($this->input->post('img_data') == ''){
+            $data_img = 'iVBORw0KGgoAAAANSUhEUgAAAPoAAAC0CAMAAACKYMETAAAAA1BMVEWu1ee2vQsxAAAAQ0lEQVR4nO3BgQAAAADDoPlT3+AEVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzwCwfAAB3a7udgAAAABJRU5ErkJggg==';
+            $img_decode = base64_decode($data_img);
+            $path_full = FCPATH.'Img_sem/'.$this->input->post('semester_id').$this->input->post('subject_id');
+            $image = $path_full.'.png';
+            file_put_contents($image, $img_decode);
+        }else{
+            $data_img = $this->input->post('img_data');
+            $img_array = explode("[removed]", $data_img);
+            $img_decode = base64_decode($img_array[1]);
+            $path_full =  FCPATH.'Img_sem/'.$this->input->post('semester_id').$this->input->post('subject_id');
+            $image = $path_full.'.png';
             file_put_contents($image, $img_decode);
         }
+
     }
 
     public function Show_Data_ctl()
