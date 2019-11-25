@@ -106,7 +106,7 @@ $(document).ready(function () {
                         }
                         html +=
                             '<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subject_id + '" href="../' + url[3] + '/te_select/annouce/' + response[i].subject_id + '-' + response[i].teaassist_semester + '" >' +
-                            '<img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZXAH2gX3tc7LJpgr0GaPOYnys6MkCpPi6VRmN6We88Uaq8wi" alt="Card image cap">' +
+                            '<img class="card-img-top" src="../Img_sem/'+response[i].teaassist_semester+response[i].subject_id+'.png" alt="Card image cap">' +
                             '<div class="card-body">' +
                             '<h5 class="card-title" value="' + response[i].subject_id + '">' + txtSubAssist + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
