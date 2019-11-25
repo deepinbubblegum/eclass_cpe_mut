@@ -127,6 +127,10 @@ class Model_te_add_subject extends CI_Model
                             "'.$row['fileName'].'" , "'.$row['fileSize'].'" , "'.$row['fileType'].'" , NOW() ) ');
                         }
                     }
+                    // $getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
+                    $src = '/Eclass/uploads/file/' . $SemCopy . $SubCopy . '/' . 'Downloads' . '/' .$dataDowload[$i];
+                    $dest = '/Eclass/uploads/file/' . $semester . $subject_id . '/' . 'Downloads' . '/';
+                    shell_exec("cp -r $src $dest"); 
                 }
             }
         }

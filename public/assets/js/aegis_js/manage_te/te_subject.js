@@ -383,7 +383,7 @@ $(document).ready(function() {
 
 
     function add_subjoin() {
-        if ($('#customSwitch').prop("checked") == true) {
+        if ($('#customSwitch').is(':checked')) {
             arr_subsjoin = [];
             arr_semes = [];
             arr_sub = [];
@@ -424,7 +424,7 @@ $(document).ready(function() {
     }
 
     function Copy_Subject() {
-        if ($('#customSwitchCopy').prop("checked") == true) {
+        if ($('#customSwitchCopy').is(':checked')) {
             // alert(data);
             // alert(data2);
             SemCopy = $("#SemesterCopy_add_option :selected").val();
