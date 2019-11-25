@@ -398,7 +398,7 @@ $(document).ready(function () {
     var upload = document.querySelector('#file-input');
     var label_view = document.querySelector('.text_lable');
     var cropper = '';
-    var img_data = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAAC0CAMAAACKYMETAAAAA1BMVEWu1ee2vQsxAAAAQ0lEQVR4nO3BgQAAAADDoPlT3+AEVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzwCwfAAB3a7udgAAAABJRU5ErkJggg==';
+    var img_data = null;
     // on change show image with crop options
     upload.addEventListener('change', (e) => {
         if (e.target.files.length) {
