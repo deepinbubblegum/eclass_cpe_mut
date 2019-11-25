@@ -26,7 +26,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="modal-content">
                                 <div class="modal-header">
                                         <h4 class="modal-title">เพิ่มข้อมูลวิชาที่เปิดสอนประจำเทอม</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="IconClose"><span aria-hidden="true">&times;</span></button>
                                 </div>
                                 <form id="Subject_semester_Form_add">
                                         <div class="modal-body">
@@ -47,18 +47,44 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         </div>
 
                                                         <div class="form-row mt-3">
+                                                                <div class="col-sm-5 mb-2">
+                                                                        <div class="custom-control custom-switch mb-2">
+                                                                                <input class="custom-control-input" id="customSwitchCopy" type="checkbox">
+                                                                                <span class="custom-control-track"></span>
+                                                                                <label class="custom-control-label" for="customSwitchCopy">คัดลอกข้อมูลจากวิชาเทอมก่อนหน้า</label>
+                                                                        </div>
+
+                                                                        
+                                                                </div>
+
                                                                 <div class="col-sm-3 mb-2">
                                                                         <div class="custom-control custom-switch mb-2">
                                                                                 <input class="custom-control-input" id="customSwitch" type="checkbox">
                                                                                 <span class="custom-control-track"></span>
-                                                                                <label class="custom-control-label" for="customSwitch">เพิ่มวิชาร่วม</label>
+                                                                                <label class="custom-control-label" for="customSwitch">เพิ่มวิชาเรียนร่วม</label>
                                                                         </div>
 
                                                                         
                                                                 </div>
                                                         </div>
 
-                                                        <div class="form-row mt-1" id="Class_Join">
+                                                        <div class="form-row mt-1" id="Class_Copy">
+                                                                <div class="col-sm mb-1">
+                                                                        <label>ปีการศึกษา</label>
+                                                                        <select class="form-control" id="SemesterCopy_add_option">
+
+                                                                        </select>
+                                                                </div>
+
+                                                                <div class="col-sm mb-1">
+                                                                        <label>วิชาที่ต้องการคัดลอกข้อมูล</label>
+                                                                        <select class="form-control" id="SubjectCopy_add_option">
+
+                                                                        </select>
+                                                                </div>
+                                                        </div>
+
+                                                        <div class="form-row mt-3" id="Class_Join">
                                                                 <!-- <div class="col-sm mb-1">
                                                                         <label>Subject</label>
                                                                         <select class="form-control" id="SubjectJoin_add_option">

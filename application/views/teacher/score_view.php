@@ -12,6 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 subject_id = '<?php echo $subject_id; ?>';
                 semester = '<?php echo $semester; ?>';
         </script>
+        <?php echo assets_js('jquery_js/jquery-ui.min.js'); ?>
         <?php echo assets_js('aegis_js/manage_te/te_score.js'); ?>
         <style>
                 .f34r-bg-n-txt {
@@ -40,7 +41,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 .f34r-txt-think {
                         color: rgba(0, 150, 136, 0.7)
                 }
+
+
+                .placeholder {
+                        border: 40px solid;
+                        background-color: white;
+                        -webkit-box-shadow: 0px 0px 10px #888;
+                        -moz-box-shadow: 0px 0px 10px #888;
+                        box-shadow: 0px 0px 10px #888;
+                }
+
+                .sortableItem {
+                        height: 94px;
+                        weight: 94px;
+                }
+
+                .drag {
+                        margin-top: 1em;
+                }
+
+                /* .sortableItem {cursor: pointer;} */
+
         </style>
+
 </head>
 
 <body>
@@ -307,6 +330,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
+
                                         <div class="list-group mt-3 showMenuScore" id="accordionOne">
                                         </div>
                                 </div>

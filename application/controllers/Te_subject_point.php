@@ -196,4 +196,14 @@ class Te_subject_point extends MY_Controller
         $result = $this->Model_te_subject_point->insertPoint($point_std_semester,$point_std_subject,$point_std_id,$point_std_setpoint_id,$point_std_user_id,$point_std_point);
         echo json_encode($result); 
     }
+
+    public function SortIndex()
+    {
+        $sortArray = $this->input->post('sortArray[]');
+        $sortIDArray = $this->input->post('sortIDArray[]');
+        $ArraySemester = $this->input->post('ArraySemester[]');
+        $ArraySubject = $this->input->post('ArraySubject[]');
+        // print_r($sortArray);
+        $this->Model_te_subject_point->Index($sortArray, $sortIDArray, $ArraySemester, $ArraySubject);
+    }
 }

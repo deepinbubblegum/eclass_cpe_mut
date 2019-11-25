@@ -90,9 +90,12 @@ $(document).ready(function() {
                             '<br>' +
                             '<div class="table-responsive">' +
                             '<table class="table">' +
-                            '<span class="d-flex flex-wrap" id="genIn-' + response[i].point_id + '">' +
+
+                            '<div id="sortable">' +
+                            '<span class="drag d-flex flex-wrap" id="genIn-' + response[i].point_id + '">' +
 
                             '</span>' +
+                            '</div>' +
                             '</table>' +
                             '</div>' +
                             '<br>' +
@@ -138,6 +141,61 @@ $(document).ready(function() {
                         iurl = "/" + url[3] + "/Te_subject_point/editMenuScore";
                         editMenuId = getMenu[i].point_id;
                     });
+                });
+            }
+        });
+    }
+
+    // $('#sortable').sortable();
+
+    // function sort() {
+    //     $("#sortable").sortable({
+    //         connectWith: ".connectedSortable",
+    //         stop: function(event, div) {
+    //             $('.connectedSortable').each(function() {
+    //                 result = "";
+    //                 alert($(this).sortable("toArray"));
+    //                 $(this).find("center").each(function() {
+    //                     result += $(this).text() + ",";
+    //                 });
+    //                 $("." + $(this).attr("id") + ".list").html(result);
+    //             });
+    //         }
+    //     });
+    // }
+
+    function sort() {
+        var sortArray = [];
+        var sortIDArray = [];
+        var ArraySemester = [];
+        var ArraySubject = [];
+        $(".drag").sortable({
+            tolerance: 'pointer',
+            revert: 'invalid',
+            placeholder: 'p-2 f34r-bg-n-txt sortableItem placeholder',
+            forceHelperSize: true,
+
+            stop: function() {
+                $.map($(this).find('div'), function(el) {
+                    var Setid = $(el).attr('id');
+                    var id = $(el).attr('id2');
+                    // console.log('ID+' + id);
+                    sortArray.push(Setid);
+                    sortIDArray.push(id);
+                    ArraySubject.push(subject_id);
+                    ArraySemester.push(semester);
+                });
+                // console.log(sortIDArray);
+                $.ajax({
+                    type: "POST",
+                    url: '/' + url[3] + '/Te_subject_point/SortIndex',
+                    data: { sortArray, sortIDArray, ArraySubject, ArraySemester },
+                    success: function() {
+                        sortArray = [];
+                        sortIDArray = [];
+                        ArraySemester = [];
+                        ArraySubject = [];
+                    }
                 });
             }
         });
@@ -259,8 +317,8 @@ $(document).ready(function() {
                         //html += '<div class ="flex-shrink-1">';
                         if (response[i].setpoint_option == '1') {
                             html +=
-                                '<center>' +
-                                '<div style="width:94px;height:94px" class="p-2 mb-2 f34r-bg-n-txt">' + response[i].setpoint_mininame + '<br>' +
+                                '<center class="ml-1 mr-1">' +
+                                '<div style="width:94px;height:94px" id="' + response[i].setpoint_setpoint_id + '" id2="' + response[i].setpoint_id + '" class="sortableItem p-2 mb-2 f34r-bg-n-txt" >' + response[i].setpoint_mininame + '<br>' +
                                 '<span style="font-size: 1.5em;"><a href="#" title="ดูคะแนน" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" title="เพิ่มคะแนน" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" title="สร้างใบคะแนน" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
@@ -268,11 +326,11 @@ $(document).ready(function() {
                                 '<span style="font-size: 1em;"><a href="#" title="แก้ไขช่องคะแนน" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
                                 '&nbsp;&nbsp;<span style="font-size: 1em;"><a title="ลบช่องคะแนน" id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
                                 '</div>' +
-                                '</center>&nbsp;';
+                                '</center>';
                         } else if (response[i].setpoint_option == '2') {
                             html +=
-                                '<center>' +
-                                '<div style="width:94px;height:94px" class="p-2 mb-2 f34r-bg-p-txt">' + response[i].setpoint_mininame + '<br>' +
+                                '<center class="ml-1 mr-1">' +
+                                '<div style="width:94px;height:94px" id="' + response[i].setpoint_setpoint_id + '" id2="' + response[i].setpoint_id + '" class="sortableItem p-2 mb-2 f34r-bg-p-txt" >' + response[i].setpoint_mininame + '<br>' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
@@ -280,11 +338,11 @@ $(document).ready(function() {
                                 '<span style="font-size: 1em;"><a href="#" title="แก้ไขช่องคะแนน" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
                                 '&nbsp;&nbsp;<span style="font-size: 1em;"><a title="ลบช่องคะแนน" id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
                                 '</div>' +
-                                '</center>&nbsp;';
+                                '</center>';
                         } else if (response[i].setpoint_option == '3') {
                             html +=
-                                '<center>' +
-                                '<div style="width:94px;height:94px" class="p-2 mb-2 f34r-bg-o-txt">' + response[i].setpoint_mininame + '<br>' +
+                                '<center class="ml-1 mr-1">' +
+                                '<div style="width:94px;height:94px" id="' + response[i].setpoint_setpoint_id + '" id2="' + response[i].setpoint_id + '" class="sortableItem p-2 mb-2 f34r-bg-o-txt" >' + response[i].setpoint_mininame + '<br>' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
@@ -292,7 +350,7 @@ $(document).ready(function() {
                                 '<span style="font-size: 1em;"><a href="#" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
                                 '&nbsp;&nbsp;<span style="font-size: 1em;"><a id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
                                 '</div>' +
-                                '</center>&nbsp;';
+                                '</center>';
                         }
                         //html += '</div>';
 
@@ -358,6 +416,7 @@ $(document).ready(function() {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
+        sort();
     }
     var parentTK = 0;
     var childTK = 0;
