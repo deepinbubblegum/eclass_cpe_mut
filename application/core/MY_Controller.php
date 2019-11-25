@@ -43,6 +43,9 @@ class MY_Controller extends CI_Controller
                         mkdir($dir . '/Uploads', 0700, true);
                         chmod($dir . '/Uploads', 0700);
 
+                        mkdir($dir . '/Img', 0700, true);
+                        chmod($dir . '/Img', 0700);
+
                         mkdir($dir . '/CSV', 0700, true);
                         chmod($dir . '/CSV', 0700);
                 }

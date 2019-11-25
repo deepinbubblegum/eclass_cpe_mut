@@ -18,7 +18,16 @@ class Teacher_add_subject extends MY_Controller
         );
         $this->Model_te_add_subject->Add_data_model_subject($data);
         $this->genDir($this->input->post('semester_id'),$this->input->post('subject_id'));
-        
+
+        $data_img = $this->input->post('img_data');
+        if($data_img != ''){
+            $img_array = explode(";", $data_img);
+            $img_array2 = explode(",", $img_array[1]);
+            $img_decode = base64_decode($img_array2[1]);
+            $path_full = '/Eclass/uploads/';
+            $image = $this->input->post('subject_id').'-'.$this->input->post('semester_id').'png';
+            file_put_contents($image, $img_decode);
+        }
     }
 
     public function Show_Data_ctl()
