@@ -136,12 +136,21 @@ class Model_te_add_subject extends CI_Model
         }
 
         // $dataUpload = array();
-        $queryDow = $this->db->query('SELECT * FROM menuUpload WHERE menuUpSemesterId = "'.$SemCopy.'" AND menuUpSubjectId = "'.$SubCopy.'"');
-        if ($queryDow->num_rows() > 0) {
-            foreach ($queryDow->result_array() as $row) {
+        $queryUp = $this->db->query('SELECT * FROM menuUpload WHERE menuUpSemesterId = "'.$SemCopy.'" AND menuUpSubjectId = "'.$SubCopy.'"');
+        if ($queryUp->num_rows() > 0) {
+            foreach ($queryUp->result_array() as $row) {
                 // $dataUpload[] = $row['menuUpId'];
                 $this->db->query('INSERT INTO menuUpload(menuUpSemesterId,menuUpSubjectId,menuUpId,menuUpName,menuUpDescripition, menuUpTimeStart, menuUpTimeEnd)
                 VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['menuUpId'] . '", "' . $row['menuUpName'] . '" , "' . $row['menuUpDescripition'] . '" ,  NOW() , "' . $row['menuUpTimeEnd'] . '" ) ');
+            }
+        }
+
+        $queryAnnouce = $this->db->query('SELECT * FROM subject_annouce WHERE annouce_semester = "'.$SemCopy.'" AND annouce_subject = "'.$SubCopy.'" ');
+        if ($queryAnnouce->num_rows() > 0) {
+            foreach ($queryAnnouce->result_array() as $row) {
+                // $dataUpload[] = $row['menuUpId'];
+                $this->db->query('INSERT INTO subject_annouce(annouce_semester,annouce_subject,annouce_id,annouce_name,annouce_discription, annouce_time_start, annouce_time_end, annouce_user_id)
+                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['annouce_id'] . '", "' . $row['annouce_name'] . '" , "' . $row['annouce_discription'] . '" ,  NOW() , "' . $row['annouce_time_end'] . '" , "'.$te_id.'" ) ');
             }
         }
     }

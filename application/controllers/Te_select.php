@@ -30,10 +30,9 @@ class Te_select extends MY_Controller
                         'subject_id' => $str_arr[0],
                         'semester' => $str_arr[1]
                 );
-                if ($this->Model_te_subject->check_subject_semester($data))
-                {
+                if ($this->Model_te_subject->check_subject_semester($data)) {
                         return $data;
-                }else{
+                } else {
                         show_404();
                 }
         }
@@ -167,18 +166,28 @@ class Te_select extends MY_Controller
         public function add_teacher_assist($sid)
         {
                 $data = $this->convertData($sid);
-                $this->load->view('teacher/template_te/select/header_view', $data);
-                $this->load->view('teacher/template_te/select/side_menu_view', $data);
-                $this->load->view('teacher/add_teacher_assist_view', $data);
-                $this->load->view('teacher/template_te/footer_te_view');
+                $bit = $this->session->ses_permission;
+                if ($bit == '0') {
+                        $this->load->view('teacher/template_te/select/header_view', $data);
+                        $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                        $this->load->view('teacher/add_teacher_assist_view', $data);
+                        $this->load->view('teacher/template_te/footer_te_view');
+                } else {
+                        show_404();
+                }
         }
 
         public function add_permission($sid)
         {
                 $data = $this->convertData($sid);
-                $this->load->view('teacher/template_te/select/header_view', $data);
-                $this->load->view('teacher/template_te/select/side_menu_view', $data);
-                $this->load->view('teacher/add_permission_view', $data);
-                $this->load->view('teacher/template_te/footer_te_view');
+                $bit = $this->session->ses_permission;
+                if ($bit == '0') {
+                        $this->load->view('teacher/template_te/select/header_view', $data);
+                        $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                        $this->load->view('teacher/add_permission_view', $data);
+                        $this->load->view('teacher/template_te/footer_te_view');
+                } else {
+                        show_404();
+                }
         }
 }

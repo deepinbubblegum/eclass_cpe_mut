@@ -98,7 +98,7 @@ class Model_te_subject_point extends CI_Model
         $this->db->query("insert into subject_setpoint values('" . $semester . "','" . $subject_id . "','" . $pointId . "','" . $newid . "','" . $maxindex . "','" . $ticket . "','" . $fullName . "','" . $miniName . "','" . $maxPoint . "','" . $option . "','" . $pointMulti . "');");
     }
 
-    public function updateField($semester, $subject_id, $pointId, $pointIdChild, $ticket, $fullName, $miniName, $maxPoint, $setOption)
+    public function updateField($semester, $subject_id, $pointId, $pointIdChild, $ticket, $fullName, $miniName, $maxPoint, $setOption, $pointMulti)
     {
         $data = [
             'setpoint_ticket' => $ticket,
@@ -106,6 +106,7 @@ class Model_te_subject_point extends CI_Model
             'setpoint_mininame' => $miniName,
             'setpoint_maxpoint' => $maxPoint,
             'setpoint_option' => $setOption,
+            'setpoint_multi' => $pointMulti,
         ];
 
         $this->db->where('setpoint_semester', $semester);
@@ -114,9 +115,14 @@ class Model_te_subject_point extends CI_Model
         $this->db->where('setpoint_setpoint_id', $pointIdChild);
 
         $this->db->update('subject_setpoint', $data);
+
+        // if ($pointMulti == 0) {
+        //     $this->db->query('DELETE FROM subject_point_student WHERE point_std_semester = "'.$semester.'" AND point_std_subject = "'.$subject_id.'" 
+        //     AND point_std_id = "'.$pointId.'" AND point_std_setpoint_id = "'.$pointIdChild.'" AND point_std_index LIKE "no_%" AND point_std_index != "no_001"');
+        // }
     }
 
-    public function insertMenu($semester, $subject, $Header, $Description)
+    public function insertMenu($semester, $subject, $Header, $Description, $StdView)
     {
         $maxid = $this->db->query("
             select IFNULL(max(point_id),0)+1 as newid
@@ -124,13 +130,14 @@ class Model_te_subject_point extends CI_Model
             where point_semester = '" . $semester . "' and point_subject='" . $subject . "';
         ");
         $newid = $maxid->row()->newid;
-        $this->db->query('insert into subject_point values("' . $semester . '","' . $subject . '","' . $newid . '","' . $Header . '","' . $Description . '");');
+        $this->db->query('insert into subject_point values("' . $semester . '","' . $subject . '","' . $newid . '","' . $Header . '","' . $Description . '" , "'.$StdView.'");');
     }
 
-    public function editMenu($semester, $subject, $Header, $Description, $editID)
+    public function editMenu($semester, $subject, $Header, $Description, $editID ,$StdView)
     {
         $this->db->set('point_name', $Header);
         $this->db->set('point_discription', $Description);
+        $this->db->set('point_StdView', $StdView);
         $this->db->where('point_semester', $semester);
         $this->db->where('point_subject', $subject);
         $this->db->where('point_id', $editID);
@@ -192,11 +199,10 @@ class Model_te_subject_point extends CI_Model
     public function Index($sortArray, $sortIDArray, $ArraySemester, $ArraySubject)
     {
         $num = count($sortArray);
-        for($i = 0 ; $i < $num ; $i++)
-        {
-            $newIndex = $i+1;
-            $this->db->query('UPDATE subject_setpoint SET setpoint_index = "'.$newIndex.'" WHERE setpoint_semester = "'. $ArraySemester[$i].'" 
-            AND setpoint_subject = "'. $ArraySubject[$i].'" AND setpoint_id = "'. $sortIDArray[$i].'" AND setpoint_setpoint_id = "'.$sortArray[$i].'"');
+        for ($i = 0; $i < $num; $i++) {
+            $newIndex = $i + 1;
+            $this->db->query('UPDATE subject_setpoint SET setpoint_index = "' . $newIndex . '" WHERE setpoint_semester = "' . $ArraySemester[$i] . '" 
+            AND setpoint_subject = "' . $ArraySubject[$i] . '" AND setpoint_id = "' . $sortIDArray[$i] . '" AND setpoint_setpoint_id = "' . $sortArray[$i] . '"');
             // echo $sortArray[$i];
         }
     }

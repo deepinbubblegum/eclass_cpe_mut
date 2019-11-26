@@ -125,8 +125,9 @@ class Te_subject_point extends MY_Controller
         $subject = $this->input->post('subject');
         $Header = $this->input->post('header');
         $Description = $this->input->post('description');
+        $StdView = $this->input->post('StdView');
         //$User = $this->input->post('dataUser');
-        $this->Model_te_subject_point->insertMenu($semester, $subject, $Header, $Description);
+        $this->Model_te_subject_point->insertMenu($semester, $subject, $Header, $Description, $StdView);
     }
 
     public function editMenuScore()
@@ -135,8 +136,9 @@ class Te_subject_point extends MY_Controller
         $subject = $this->input->post('subject');
         $Header = $this->input->post('header');
         $Description = $this->input->post('description');
+        $StdView = $this->input->post('StdView');
         $editID = $this->input->post('editID'); 
-        $this->Model_te_subject_point->editMenu($semester, $subject, $Header, $Description,$editID);
+        $this->Model_te_subject_point->editMenu($semester, $subject, $Header, $Description, $editID, $StdView);
     }
 
     public function insertFieldScore(/*$sid*/)
@@ -179,8 +181,9 @@ class Te_subject_point extends MY_Controller
             $fullName = $this->input->post('fullName');
             $miniName = $this->input->post('miniName');
             $maxPoint = $this->input->post('maxPoint'); 
+            $pointMulti = $this->input->post('pointMulti');
 
-            $this->Model_te_subject_point->updateField($semester, $subject_id, $pointId,$pointIdChild, $ticket, $fullName, $miniName, $maxPoint,$setoption);
+            $this->Model_te_subject_point->updateField($semester, $subject_id, $pointId,$pointIdChild, $ticket, $fullName, $miniName, $maxPoint,$setoption,$pointMulti);
         }
 
     public function insertInFieldPoint()

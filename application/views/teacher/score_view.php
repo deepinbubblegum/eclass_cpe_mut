@@ -61,7 +61,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 }
 
                 /* .sortableItem {cursor: pointer;} */
-
         </style>
 
 </head>
@@ -89,9 +88,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <textarea class="form-control" id="Textarea" rows="5"></textarea>
                                                 </div>
 
+                                                <div class="form-group">
+                                                        <label for="Textarea" class="mt-3">การแสดงคะแนนสำหรับนักศึกษา</label>
+                                                        <div class="custom-control custom-radio custom-control-inline mt-2 mb-2">
+                                                                <input type="radio" id="PointView" name="PointView" class="custom-control-input" value="0">
+                                                                <label class="custom-control-label" for="PointView">แสดงเฉพาะของตนเอง</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio custom-control-inline mt-2 mb-2">
+                                                                <input type="radio" id="PointView2" name="PointView" class="custom-control-input" value="1">
+                                                                <label class="custom-control-label" for="PointView2">แสดงทุกคน</label>
+                                                        </div>
+                                                </div>
+
                                         </div>
                                         <div class="modal-footer">
-                                                <button type="button" class="btn btn-dark" data-dismiss="modal">ปิด</button>
+                                                <button type="button" class="btn btn-dark" id="btnModalClose" data-dismiss="modal">ปิด</button>
                                                 <button type="button" class="btn btn-info" id="save">บันทึกข้อมูล</button>
                                         </div>
                                 </div>

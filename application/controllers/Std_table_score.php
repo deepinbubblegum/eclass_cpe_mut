@@ -44,8 +44,9 @@ class Std_table_score extends MY_Controller
     { 
         $semester = $this->input->post('semester');
         $subject_id = $this->input->post('subject_id');
-        //$point_id = $this->input->post('parent_id');
-        $result = $this->Model_te_table_score->getBody($subject_id, $semester/*, $point_id*/);
+        $point_id = $this->input->post('point_id');
+        $UserId = $this->session->ses_id;
+        $result = $this->Model_te_table_score->getBodyForStd($subject_id, $semester, $point_id, $UserId);
         echo json_encode($result);
     }
 

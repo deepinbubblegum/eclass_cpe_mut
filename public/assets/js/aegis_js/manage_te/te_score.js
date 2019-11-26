@@ -9,6 +9,7 @@ $(document).ready(function() {
         e.preventDefault();
         $('#Modal').modal('show');
         $('#ModalLabel').text('เพิ่มเมนูคะแนน');
+        $("#PointView").prop("checked", true);
         //todayDate = new Date().toISOString();
         // $('#StartDatePicker').val(todayDate);
         $('#save').text('บันทึกข้อมูล');
@@ -18,11 +19,12 @@ $(document).ready(function() {
     $('#save').click(function(e) {
         header = $('#Headtext').val();
         description = $('#Textarea').val();
+        PointMulti = $("input[name='PointView']:checked").val();
 
         $.ajax({
             type: "POST",
             url: iurl,
-            data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&editID=' + editMenuId,
+            data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&StdView=' + PointMulti + '&editID=' + editMenuId,
             success: function() {
                 $('#Headtext').val("");
                 $('#Textarea').val("");
@@ -30,6 +32,11 @@ $(document).ready(function() {
                 showMenuPoint();
             }
         });
+    });
+
+    $('#btnModalClose').click(function(e) {
+        $('#Headtext').val('');
+        $('#Textarea').val('');
     });
 
     function showMenuPoint() {
@@ -115,7 +122,7 @@ $(document).ready(function() {
                         $('#addField').modal('show');
                         $("#PointMulti").prop("checked", true);
                         $('#addFieldLabel').text('Create in menu : ' + getMenu[i].point_name);
-                        $("input[name=PointMulti]").attr('disabled', false);
+                        // $("input[name=PointMulti]").attr('disabled', false);
                     });
                     //$('#showInMenu-' + getMenu[i].point_id).click(function(e) {}); use da href
                     // $('#impInMenu-' + getMenu[i].point_id).click(function(e) {});
@@ -134,6 +141,8 @@ $(document).ready(function() {
                         e.preventDefault();
                         $('#Headtext').val(getMenu[i].point_name);
                         $('#Textarea').val(getMenu[i].point_discription);
+                        $("input[name='PointView'][value='" + response[i].point_StdView + "']").prop('checked', true);
+
                         $('#ModalLabel').text('แก้ไขเมนูคะแนน');
                         $('#save').text('ยืนยันการแก้ไข');
 
@@ -378,6 +387,7 @@ $(document).ready(function() {
                         $('#addFieldFN').val(response[i].setpoint_fullname);
                         $('#addFieldMN').val(response[i].setpoint_mininame);
 
+                        $('#addFieldLabel').text('Edit Field : ' + response[i].setpoint_fullname);
                         //$('#addFieldTK').val(response[i].setpoint_ticket);
                         if (response[i].setpoint_ticket == '1') {
                             $('#addFieldTK')[0].checked = true;
@@ -387,8 +397,10 @@ $(document).ready(function() {
                         $("#optionSet").val(response[i].setpoint_option);
 
                         $('#addFieldMP').val(response[i].setpoint_maxpoint);
-                        $("input[name=PointMulti][value=" + response[i].setpoint_multi + "]").attr('checked', 'checked');
-                        $("input[name=PointMulti]").attr('disabled', true);
+
+                        // $("input[name=PointMulti][value=" + response[i].setpoint_multi + "]").attr('checked', 'checked');
+                        $("input[name='PointMulti'][value='" + response[i].setpoint_multi + "']").prop('checked', true);
+                        // $("input[name=PointMulti]").attr('disabled', true);
                         $('#addField').modal('show');
                         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_point/updateFieldScore';
