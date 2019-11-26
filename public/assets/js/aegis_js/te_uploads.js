@@ -380,7 +380,6 @@ $(document).ready(function() {
         }
         $('#progress_modal').modal('show');
         $.ajax({
-            // processbar ยังไม่เสร็จ
             xhr: function() {
                 var xhr = new window.XMLHttpRequest();
                 html = '';

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
     var a;
     var datatable_semester;
@@ -7,7 +7,7 @@ $(document).ready(function() {
     var Sel_Sub;
     var SubCoop;
     var SubAssCoop;
-
+    var semester_data;
     showSemester();
     hideSubJoin();
 
@@ -24,7 +24,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Teacher_add_subject/getSemester",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
@@ -39,13 +39,13 @@ $(document).ready(function() {
 
     function SubjectCoop() {
         var url = $(location).attr('href').split("/");
-        semesterSelected = $("#yearterm :selected").val();
+        semester_data = semesterSelected = $("#yearterm :selected").val();
         $.ajax({
             type: "POST",
             url: "../" + url[3] + "/Teacher_subject/getSubject_Coop",
             data: "data=" + semesterSelected,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 SubCoop = response;
                 console.log(response);
                 showSubject();
@@ -62,7 +62,7 @@ $(document).ready(function() {
             url: "../" + url[3] + "/Teacher_subject/getSubject",
             data: "data=" + semesterSelected,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 var txtSub = '';
                 var html = '';
@@ -75,10 +75,10 @@ $(document).ready(function() {
                             }
                         }
                         html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
-                            '<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../' + url[3] + '/te_select/annouce/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
-                            '<img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZXAH2gX3tc7LJpgr0GaPOYnys6MkCpPi6VRmN6We88Uaq8wi" alt="Card image cap">' +
+                            '<a class="card" style="min-width: 310px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../' + url[3] + '/te_select/annouce/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
+                            '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/'+response[i].subsem_semester+response[i].subsem_subject+'.png" alt="Card image cap">' +
                             '<div class="card-body">' +
-                            '<h5 class="card-title">' + txtSub + '</h5>' +
+                            '<h5 class="card-title" value="' + response[i].subsem_subject + '" >' + txtSub + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
                             '</div>' +
                             '</a>';
@@ -93,7 +93,7 @@ $(document).ready(function() {
             url: "../" + url[3] + "/Teacher_subject/getSubject_Assist",
             data: "data=" + semesterSelected,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 var html = '';
                 var txtSubAssist = '';
@@ -105,22 +105,58 @@ $(document).ready(function() {
                                 txtSubAssist += " / " + SubCoop[a].subcoop_supsub;
                             }
                         }
-                        html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
-                            '<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subject_id + '" href="../' + url[3] + '/te_select/annouce/' + response[i].subject_id + '-' + response[i].teaassist_semester + '" >' +
-                            '<img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZXAH2gX3tc7LJpgr0GaPOYnys6MkCpPi6VRmN6We88Uaq8wi" alt="Card image cap">' +
+                        html +=
+                            '<a class="card" style="min-width: 310px; max-width : 310px;" id="' + response[i].subject_id + '" href="../' + url[3] + '/te_select/annouce/' + response[i].subject_id + '-' + response[i].teaassist_semester + '" >' +
+                            '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/'+response[i].teaassist_semester+response[i].subject_id+'.png" alt="Card image cap">' +
                             '<div class="card-body">' +
-                            '<h5 class="card-title">' + txtSubAssist + '</h5>' +
+                            '<h5 class="card-title" value="' + response[i].subject_id + '">' + txtSubAssist + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
                             '</div>' +
                             '</a>';
                     }
                 }
                 $('#showSubject_assist').html(html);
+                sortui();
             }
         });
     }
 
-    $('#yearterm').change(function(e) {
+    function sortui() {
+        $("#showSubject").sortable({
+            tolerance: 'pointer',
+            revert: 'invalid',
+            placeholder: 'placeholder',
+            forceHelperSize: true,
+            connectWith: ".card-deck",
+            stop: function (event, div) {
+                $('.card-deck').each(function () {
+                    result = "";
+                    $(this).find("h5").each(function () {
+                        result += $(this).attr('value') + ",";
+                    });
+                    console.log(result);
+                });
+            }
+        });
+        $("#showSubject_assist").sortable({
+            tolerance: 'pointer',
+            revert: 'invalid',
+            placeholder: 'placeholder',
+            forceHelperSize: true,
+            connectWith: ".card-deck",
+            stop: function (event, div) {
+                $('.card-deck').each(function () {
+                    resultass = "";
+                    $(this).find("h5").each(function () {
+                        resultass += $(this).attr('value') + ",";
+                    });
+                    console.log(resultass);
+                });
+            }
+        });
+    }
+
+    $('#yearterm').change(function (e) {
         e.preventDefault();
         showSubject();
     });
@@ -138,7 +174,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Teacher_add_subject/getSemester",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -152,7 +188,7 @@ $(document).ready(function() {
         $.ajax({
             url: "/" + url[3] + "/Teacher_add_subject/Subject_Add_data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 var html = '';
                 var i;
@@ -167,13 +203,13 @@ $(document).ready(function() {
         });
     }
 
-    $('#Subject_Form_add_option').change(function(e) {
+    $('#Subject_Form_add_option').change(function (e) {
         e.preventDefault();
         Sel_Sub = $('#Subject_Form_add_option').val();
         Select_SubChange();
     });
 
-    $('#customSwitch').change(function(e) {
+    $('#customSwitch').change(function (e) {
         e.preventDefault();
         var Swck;
         if ($(this).prop("checked") == true) {
@@ -183,7 +219,7 @@ $(document).ready(function() {
             $.ajax({
                 url: "/" + url[3] + "/Teacher_add_subject/Subject_Add_data_ctl",
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     var html = '';
                     var i;
                     if (response != null) {
@@ -291,7 +327,7 @@ $(document).ready(function() {
             $.ajax({
                 url: "/" + url[3] + "/Teacher_add_subject/Subject_Add_data_ctl",
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     var html = '';
                     var i;
                     if (response != null) {
@@ -307,13 +343,13 @@ $(document).ready(function() {
         }
     }
 
-    $('#add_Subjoin').click(function(e) {
+    $('#add_Subjoin').click(function (e) {
         e.preventDefault();
         idSub = $('#SubjectJoin_add_option').val();
         nameSub = $("#SubjectJoin_add_option :selected").text();
         chk = 0;
         if ($('#SubjectJoin').has('option').length > 0) {
-            $("#SubjectJoin > option").each(function() {
+            $("#SubjectJoin > option").each(function () {
                 if (this.value == idSub) {
                     Snackbar.show({
                         actionText: 'close',
@@ -334,7 +370,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#btnSave').click(function(e) {
+    $('#btnSave').click(function (e) {
         e.preventDefault();
 
         data = $("#Semester_Form_add_option :selected").val();
@@ -353,8 +389,12 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             url: iurl,
-            data: '&semester_id=' + data + '&subject_id=' + data2,
-            success: function() {
+            data: {
+                "semester_id": data,
+                "subject_id": data2,
+                "img_data": img_data
+            },
+            success: function () {
                 //$('#Modal_add').modal('hide');
                 Snackbar.show({
                     actionText: 'close',
@@ -367,7 +407,7 @@ $(document).ready(function() {
                 add_subjoin();
                 Copy_Subject();
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -442,5 +482,74 @@ $(document).ready(function() {
         $('#Modal_Add_subject').modal('hide');
     }
 
+
+    // =========================== ADD IMG ========================
+    $('#start_crop').click(function (e) {
+        e.preventDefault();
+        $('#cropper_img').modal('show');
+    });
+
+    var result = document.querySelector('.result');
+    var img_result = document.querySelector('.img-result');
+    var img_w = document.querySelector('.img-w');
+    var img_h = document.querySelector('.img-h');
+    var save = document.querySelector('.save');
+    var cropped = document.querySelector('.cropped');
+    var upload = document.querySelector('#file-input');
+    var label_view = document.querySelector('.text_lable');
+    var cropper = '';
+    var img_data = null;
+    // on change show image with crop options
+    upload.addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            // start file reader
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (e.target.result) {
+                    // create new image
+                    let img = document.createElement('img');
+                    img.id = 'image';
+                    img.src = e.target.result
+                    // clean result before
+                    result.innerHTML = '';
+                    // append new image
+                    result.appendChild(img);
+                    // show save btn and options
+                    save.classList.remove('hide');
+                    label_view.remove('hide');
+                    // init cropper
+                    cropper = new Cropper(img);
+                }
+            };
+            reader.readAsDataURL(e.target.files[0]);
+            $('#file-input_label').text(e.target.files[0]['name']);
+        }
+    });
+
+    // save on click
+    save.addEventListener('click', (e) => {
+        e.preventDefault();
+        // get result to data uri
+        let imgSrc = cropper.getCroppedCanvas({
+            width: img_w.value // input value
+        }).toDataURL();
+        // remove hide class of img
+        cropped.classList.remove('hide');
+        img_result.classList.remove('hide');
+        // show image cropped
+        img_data = imgSrc;
+        $('#cropper_img').modal('hide');
+    });
+
+    $('#display_crop').on('mousemove', function () {
+        let imgSrc = cropper.getCroppedCanvas({
+            width: img_w.value // input value
+        }).toDataURL();
+        // remove hide class of img
+        cropped.classList.remove('hide');
+        img_result.classList.remove('hide');
+        // show image cropped
+        cropped.src = imgSrc;
+    });
 
 });

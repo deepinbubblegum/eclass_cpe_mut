@@ -119,7 +119,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                         </div>
                 </div>
-                <!-- End Modal Delete -->
+                <!-- End Modal upload -->
 
                 <div class="container-fluid mx-auto text-left">
                         <ul class="nav nav-justified nav-tabs mt-3" id="justifiedTab" role="tablist">

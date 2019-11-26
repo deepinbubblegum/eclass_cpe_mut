@@ -11,6 +11,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </head>
 
 <body>
+        
         <div class="container-fluid">
                 <div class="row">
                         <div class="col su-sidebar">
@@ -21,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="far fa-address-card"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เพิ่มวิชาสอนประจำเทอม      
+                                                                        &nbsp;&nbsp;เพิ่มวิชาสอนประจำเทอม
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('teacher'); ?>">
@@ -38,6 +39,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         &nbsp;&nbsp;นาฬิกาจับเวลา
                                                                 </span>
                                                         </a>
+
                                                         <div class="navdrawer-divider"></div>
                                                         <a href="">
                                                                 <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>
@@ -50,7 +52,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                 </div>
                         </div>
-
 </body>
 
 </html>

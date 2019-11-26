@@ -31,9 +31,10 @@ class Std_upload extends MY_Controller
                         //"filePath" => $this->input->post('data3'),
                         "fileType" => $this->input->post('data4'),
                         "fileMenuUpId" => $this->input->post('data5'),
+                        "fileUserId" => $this->session->ses_id,
                         "fileSubjectId" => $this->input->post('data6'),
                         "fileSemesterId" => $this->input->post('data7'),
-                        "fileUserId" => $this->session->ses_id,
+                        "fileTimestamp" => date("Y-m-d H:i:s")
                 );    
                 // fileSubjectId char(10) NOT NULL,
                 // fileSemesterId char(5) NOT NULL, 

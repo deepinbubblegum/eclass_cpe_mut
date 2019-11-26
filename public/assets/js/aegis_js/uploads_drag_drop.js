@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     //$('#btnUpload').hide();
     //$('#btnClearAll').hide();
     var getFile = [];
@@ -72,7 +72,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Std_upload/showMenuUpload/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 getMenu = response;
                 console.log(response);
                 var html = '';
@@ -116,15 +116,15 @@ $(document).ready(function() {
                 }
                 $('.showMenuUpload').html(html);
 
-                $.each(response, function(i, v) {
+                $.each(response, function (i, v) {
                     gen(document.getElementById('dropzone' + i), document.getElementById('FileInput' + i + '[]'), 'FileInput' + i + '[]', i);
-                    $('#btnClearAll' + i).click(function(e) {
+                    $('#btnClearAll' + i).click(function (e) {
                         //upload(0,pos);
                         //$('#btnUpload').hide();
                         //$('#btnClearAll').hide();
                     });
 
-                    $('#btnUpload' + i).click(function(e) {
+                    $('#btnUpload' + i).click(function (e) {
                         e.preventDefault();
                         uploadBtn(i)
                     });
@@ -139,7 +139,7 @@ $(document).ready(function() {
 
     function gen(dropzone, dropzone_click, fileInput, pos) {
 
-        dropzone_click.onchange = function(e) {
+        dropzone_click.onchange = function (e) {
             console.log($(this)[0].files.length);
             if ($(this)[0].files.length > 0) {
                 console.log('a');
@@ -150,32 +150,32 @@ $(document).ready(function() {
             }
         }
 
-        dropzone.onclick = function() {
+        dropzone.onclick = function () {
             document.getElementById(fileInput).click();
         }
 
-        dropzone.onmouseover = function() {
+        dropzone.onmouseover = function () {
             this.className = 'dropzone dragover';
             return false;
         }
 
-        dropzone.onmouseleave = function() {
+        dropzone.onmouseleave = function () {
             this.className = 'dropzone';
             return false;
         }
 
-        dropzone.ondrop = function(e) {
+        dropzone.ondrop = function (e) {
             e.preventDefault();
             this.className = 'dropzone';
             upload(e.dataTransfer.files, pos)
         }
 
-        dropzone.ondragover = function() {
+        dropzone.ondragover = function () {
             this.className = 'dropzone dragover dropover';
             return false;
         }
 
-        dropzone.ondragleave = function() {
+        dropzone.ondragleave = function () {
             this.className = 'dropzone';
             return false;
         }
@@ -214,7 +214,7 @@ $(document).ready(function() {
         if (_files.length > 0) {
             console.log('if');
             var _fileName = [];
-            $.each(_files, function(k, v) {
+            $.each(_files, function (k, v) {
                 _fileName[k] = v.name;
                 html +=
                     '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + k + pos + '">' +
@@ -240,10 +240,10 @@ $(document).ready(function() {
             //console.log(pos + '<- this is pos in html'); 
             checker[pos] = 0;
             if (!nameCollector[pos]) nameCollector[pos] = []
-            $.each(_files, function(k, v) {
+            $.each(_files, function (k, v) {
                 //console.log(pos + '<- this is pos in rbtn'); 
                 nameCollector[pos][k] = v.name;
-                $('#btnRemove' + k + pos).click(function(e) {
+                $('#btnRemove' + k + pos).click(function (e) {
                     //console.log(pos + '<- this is pos when click rbtn'); 
                     nameCollector[pos][k] = null;
                     console.log(nameCollector);
@@ -297,20 +297,41 @@ $(document).ready(function() {
                 data: data,
                 //data: "&data1=" + getFile,
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     alert("Success!");
                 }
             });
         }
-
+        $('#progress_modal').modal('show');
         $.ajax({
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                html = '';
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        console.log(percentComplete);
+                        html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%"></div>' + percentComplete + '%';
+                        if (percentComplete === 100) {
+                            html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%"></div>Complete';
+                            setTimeout(function () {
+                                $('#progress_modal').modal('hide');
+                            }, 1200);
+                        }
+                        $('#progressupload').html(html);
+                    }
+                }, false);
+
+                return xhr;
+            },
             type: "POST",
             url: '/' + url[3] + '/Std_upload/UploadFile/' + subject_id + '-' + semester + '-' + getMenu[pos].menuUpId,
             data: form_data,
             contentType: false,
             cache: false,
             processData: false,
-            success: function(response) {
+            success: function (response) {
                 if (response == '<p>upload_invalid_filetype</p>') {
                     snacktxt = 'ไม่สามารถอ่านไฟล์ได้ ' + response;
                 } else if (response == '<p>upload_invalid_filesize</p>') {
@@ -327,7 +348,7 @@ $(document).ready(function() {
                     text: snacktxt
                 });
             },
-            error: function(response) {
+            error: function (response) {
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
