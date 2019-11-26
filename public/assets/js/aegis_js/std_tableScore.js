@@ -110,7 +110,7 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             url: takeThisUrl,
-            data: '&semester=' + semester + '&subject_id=' + subject_id,
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&point_id=' + point_id,
             dataType: "json",
             success: function(response) {
                 console.log('showTableBody');
@@ -286,7 +286,7 @@ $(document).ready(function() {
     }
     dataPoint = [];
 
-    
+
     var ajaxCount = 0;
     keeper = [];
 

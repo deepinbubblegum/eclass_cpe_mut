@@ -23,7 +23,7 @@ class Model_te_add_subject extends CI_Model
             ON subsem_semester = semester.semester_id
             INNER JOIN user_data
             ON subject_teacher = user_code_id
-            WHERE semester_id = ' . $semester . ' AND user_code_id = '.$te_id);
+            WHERE semester_id = ' . $semester . ' AND user_code_id = ' . $te_id);
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {
@@ -37,7 +37,7 @@ class Model_te_add_subject extends CI_Model
             FROM teacher_subject
             LEFT JOIN subject
             ON teasub_subjectid = subject_id
-            WHERE teasub_teacherid = "'.$te_id.'"');
+            WHERE teasub_teacherid = "' . $te_id . '"');
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {
@@ -47,16 +47,16 @@ class Model_te_add_subject extends CI_Model
 
     public function selectSemester()
     {
-        
-            $this->db->select('semester_id, semester_year, semester_part, semester_name');
-            $this->db->from('semester');
-            $this->db->order_by("semester_id", "DESC");
-            $query = $this->db->get();
-            if ($query->num_rows() > 0) {
-                        return $query->result();
-            } else {
-                    return 0;
-            }
+
+        $this->db->select('semester_id, semester_year, semester_part, semester_name');
+        $this->db->from('semester');
+        $this->db->order_by("semester_id", "DESC");
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
     }
 
     public function Add_data_model_subject($data)
@@ -64,11 +64,96 @@ class Model_te_add_subject extends CI_Model
         $this->db->insert('subject_semester', $data);
     }
 
-    public function Add_Subject_Join($semes,$sub,$subjoin){
+    public function Add_Subject_Join($semes, $sub, $subjoin)
+    {
         //print_r($semes);
         $arrayLength = count($semes);
-        for ($i = 0; $i < $arrayLength; $i++)  {
-            $this->db->query('INSERT INTO subject_coop(subcoop_semester,subcoop_mainsub,subcoop_supsub) VALUES("'.$semes[$i].'"  ,"'.$sub[$i].'" , "'.$subjoin[$i].'") ');
+        for ($i = 0; $i < $arrayLength; $i++) {
+            $this->db->query('INSERT INTO subject_coop(subcoop_semester,subcoop_mainsub,subcoop_supsub) VALUES("' . $semes[$i] . '"  ,"' . $sub[$i] . '" , "' . $subjoin[$i] . '") ');
         }
     }
+
+    public function SubjectCopy($semester, $te_id)
+    {
+        $query = $this->db->query('SELECT subsem_semester , subject_id , subject_name , subsem_teacher FROM subject_semester 
+        LEFT JOIN subject ON subsem_subject = subject_id
+        WHERE subsem_semester = "' . $semester . '"');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Add_Data_Subject_Copy($semester, $subject_id, $SemCopy, $SubCopy, $te_id)
+    {
+        $dataPoint_id = array();
+        $queryPoint = $this->db->query('SELECT * FROM subject_point WHERE point_semester = "' . $SemCopy . '" AND point_subject = "' . $SubCopy . '"');
+        if ($queryPoint->num_rows() > 0) {
+            foreach ($queryPoint->result_array() as $row) {
+                $dataPoint_id[] = $row['point_id'];
+                $this->db->query('INSERT INTO subject_point(point_semester,point_subject,point_id,point_name,point_discription)
+                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['point_id'] . '", "' . $row['point_name'] . '" , "' . $row['point_discription'] . '") ');
+            }
+            if (count($dataPoint_id) != 0) {
+                for ($i = 0; $i <  count($dataPoint_id); $i++) {
+                    $querySetPoint = $this->db->query('SELECT * FROM subject_setpoint WHERE setpoint_semester = "' . $SemCopy . '" AND setpoint_subject = "' . $SubCopy . '" AND setpoint_id = "' . $dataPoint_id[$i] . '"');
+                    if ($querySetPoint->num_rows() > 0) {
+                        foreach ($querySetPoint->result_array() as $row) {
+                            $this->db->query('INSERT INTO subject_setpoint(setpoint_semester, setpoint_subject, setpoint_id, setpoint_setpoint_id, setpoint_index, setpoint_ticket, setpoint_fullname, setpoint_mininame, setpoint_maxpoint, setpoint_option, setpoint_multi)
+                                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $dataPoint_id[$i] . '", "' . $row['setpoint_setpoint_id'] . '" , "' . $row['setpoint_index'] . '" , "' . $row['setpoint_ticket'] . '" 
+                                , "' . $row['setpoint_fullname'] . '" , "' . $row['setpoint_mininame'] . '" , "' . $row['setpoint_maxpoint'] . '" , "' . $row['setpoint_option'] . '" , "' . $row['setpoint_multi'] . '" ) ');
+                        }
+                    }
+                }
+            }
+        }
+
+        $dataDowload = array();
+        $queryDow = $this->db->query('SELECT * FROM menuDownload WHERE menuDowSemesterId = "'.$SemCopy.'" AND menuDowSubjectId = "'.$SubCopy.'"');
+        if ($queryDow->num_rows() > 0) {
+            foreach ($queryDow->result_array() as $row) {
+                $dataDowload[] = $row['menuDowId'];
+                $this->db->query('INSERT INTO menuDownload(menuDowSemesterId,menuDowSubjectId,menuDowId,menuDowName,menuDowDescrpition)
+                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['menuDowId'] . '", "' . $row['menuDowName'] . '" , "' . $row['menuDowDescrpition'] . '") ');
+            }
+            if (count($dataDowload) != 0) {
+                for ($i = 0; $i <  count($dataDowload); $i++) {
+                    $queryFileDow = $this->db->query('SELECT * FROM fileDownload WHERE fileSemesterId = "' . $SemCopy . '" AND fileSubjectId = "' . $SubCopy . '" AND fileMenuDowId = "' . $dataDowload[$i] . '"');
+                    if ($queryFileDow->num_rows() > 0) {
+                        foreach ($queryFileDow->result_array() as $row) {
+                            $this->db->query('INSERT INTO fileDownload(fileSemesterId, fileSubjectId, fileMenuDowId, fileUserId, fileName, fileSize, fileType, fileTimestamp) 
+                            VALUES("'.$semester.'", "'.$subject_id.'" , "'.$dataDowload[$i].'" , "'.$te_id.'" , 
+                            "'.$row['fileName'].'" , "'.$row['fileSize'].'" , "'.$row['fileType'].'" , NOW() ) ');
+                        }
+                    }
+                    // $getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
+                    $src = '/Eclass/uploads/file/' . $SemCopy . $SubCopy . '/' . 'Downloads' . '/' .$dataDowload[$i];
+                    $dest = '/Eclass/uploads/file/' . $semester . $subject_id . '/' . 'Downloads' . '/';
+                    shell_exec("cp -r $src $dest"); 
+                }
+            }
+        }
+
+        // $dataUpload = array();
+        $queryUp = $this->db->query('SELECT * FROM menuUpload WHERE menuUpSemesterId = "'.$SemCopy.'" AND menuUpSubjectId = "'.$SubCopy.'"');
+        if ($queryUp->num_rows() > 0) {
+            foreach ($queryUp->result_array() as $row) {
+                // $dataUpload[] = $row['menuUpId'];
+                $this->db->query('INSERT INTO menuUpload(menuUpSemesterId,menuUpSubjectId,menuUpId,menuUpName,menuUpDescripition, menuUpTimeStart, menuUpTimeEnd)
+                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['menuUpId'] . '", "' . $row['menuUpName'] . '" , "' . $row['menuUpDescripition'] . '" ,  NOW() , "' . $row['menuUpTimeEnd'] . '" ) ');
+            }
+        }
+
+        $queryAnnouce = $this->db->query('SELECT * FROM subject_annouce WHERE annouce_semester = "'.$SemCopy.'" AND annouce_subject = "'.$SubCopy.'" ');
+        if ($queryAnnouce->num_rows() > 0) {
+            foreach ($queryAnnouce->result_array() as $row) {
+                // $dataUpload[] = $row['menuUpId'];
+                $this->db->query('INSERT INTO subject_annouce(annouce_semester,annouce_subject,annouce_id,annouce_name,annouce_discription, annouce_time_start, annouce_time_end, annouce_user_id)
+                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['annouce_id'] . '", "' . $row['annouce_name'] . '" , "' . $row['annouce_discription'] . '" ,  NOW() , "' . $row['annouce_time_end'] . '" , "'.$te_id.'" ) ');
+            }
+        }
+    }
+
+
 }

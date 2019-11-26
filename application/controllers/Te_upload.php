@@ -46,6 +46,7 @@ class Te_upload extends MY_Controller
                         "fileMenuDowId" => $this->input->post('data5'),
                         "fileSubjectId" => $this->input->post('data6'),
                         "fileSemesterId" => $this->input->post('data7'),
+                        "fileUserId" => $this->session->ses_id,
                 );      
                 $this->Model_te_upload->insertUpload($data);
         }

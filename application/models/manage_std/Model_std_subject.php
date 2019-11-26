@@ -7,7 +7,7 @@ class Model_std_subject extends CI_Model
     {
         $this->db->select('semester_id, semester_year,  semester_part, semester_name');
         $this->db->from('semester');
-        //$this->db->order_by('semester_id', 'DESC');
+        $this->db->order_by('semester_id', 'DESC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();

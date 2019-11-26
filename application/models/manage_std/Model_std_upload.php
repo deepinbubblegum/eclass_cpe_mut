@@ -8,6 +8,7 @@ class Model_std_upload extends CI_Model
         $this->db->where('fileName', $data['fileName']);
         $this->db->delete('fileUpload');
 
+        $this->db->set('fileTimestamp', 'NOW()', FALSE);
         $this->db->insert('fileUpload', $data);
     }
 

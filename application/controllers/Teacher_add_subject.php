@@ -53,5 +53,23 @@ class Teacher_add_subject extends MY_Controller
         // }
         $this->Model_te_add_subject->Add_Subject_Join($semes,$sub,$subjoin);
     }
+
+    public function getSubjectCopy()
+    {
+        $semester = $this->input->post('semester');
+        $te_id = $this->session->userdata('ses_id');
+        $result = $this->Model_te_add_subject->SubjectCopy($semester,$te_id);
+        echo json_encode($result);
+    }
+
+    public function Add_SubCopy()
+    {
+        $semester = $this->input->post('semester');
+        $subject_id = $this->input->post('subject_id');
+        $SemCopy = $this->input->post('SemCopy');
+        $SubCopy = $this->input->post('SubCopy');
+        $te_id = $this->session->userdata('ses_id');
+        $this->Model_te_add_subject->Add_Data_Subject_Copy($semester, $subject_id, $SemCopy, $SubCopy, $te_id);
+    }
     
 }

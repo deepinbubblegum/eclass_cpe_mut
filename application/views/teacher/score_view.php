@@ -12,6 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 subject_id = '<?php echo $subject_id; ?>';
                 semester = '<?php echo $semester; ?>';
         </script>
+        <?php echo assets_js('jquery_js/jquery-ui.min.js'); ?>
         <?php echo assets_js('aegis_js/manage_te/te_score.js'); ?>
         <style>
                 .f34r-bg-n-txt {
@@ -40,7 +41,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 .f34r-txt-think {
                         color: rgba(0, 150, 136, 0.7)
                 }
+
+
+                .placeholder {
+                        border: 40px solid;
+                        background-color: white;
+                        -webkit-box-shadow: 0px 0px 10px #888;
+                        -moz-box-shadow: 0px 0px 10px #888;
+                        box-shadow: 0px 0px 10px #888;
+                }
+
+                .sortableItem {
+                        height: 94px;
+                        weight: 94px;
+                }
+
+                .drag {
+                        margin-top: 1em;
+                }
+
+                /* .sortableItem {cursor: pointer;} */
         </style>
+
 </head>
 
 <body>
@@ -66,9 +88,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <textarea class="form-control" id="Textarea" rows="5"></textarea>
                                                 </div>
 
+                                                <div class="form-group">
+                                                        <label for="Textarea" class="mt-3">การแสดงคะแนนสำหรับนักศึกษา</label>
+                                                        <div class="custom-control custom-radio custom-control-inline mt-2 mb-2">
+                                                                <input type="radio" id="PointView" name="PointView" class="custom-control-input" value="0">
+                                                                <label class="custom-control-label" for="PointView">แสดงเฉพาะของตนเอง</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio custom-control-inline mt-2 mb-2">
+                                                                <input type="radio" id="PointView2" name="PointView" class="custom-control-input" value="1">
+                                                                <label class="custom-control-label" for="PointView2">แสดงทุกคน</label>
+                                                        </div>
+                                                </div>
+
                                         </div>
                                         <div class="modal-footer">
-                                                <button type="button" class="btn btn-dark" data-dismiss="modal">ปิด</button>
+                                                <button type="button" class="btn btn-dark" id="btnModalClose" data-dismiss="modal">ปิด</button>
                                                 <button type="button" class="btn btn-info" id="save">บันทึกข้อมูล</button>
                                         </div>
                                 </div>
@@ -307,6 +341,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
+
                                         <div class="list-group mt-3 showMenuScore" id="accordionOne">
                                         </div>
                                 </div>
