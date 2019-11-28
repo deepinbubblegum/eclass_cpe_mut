@@ -9,7 +9,7 @@ class Model_te_uploaded extends CI_Model
         $this->db->from('menuDownload');
         $this->db->where('menuDowSubjectId', $subjectId);
         $this->db->where('menuDowSemesterId', $semesterId);
-        $this->db->order_by('menuDowIndex', 'ASC');
+        $this->db->order_by('CAST(menuDowIndex AS int)', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -31,11 +31,11 @@ class Model_te_uploaded extends CI_Model
     public function getData($subjectId, $semesterId, $menuId)
     {
         $this->db->select('*');
-        $this->db->from('fileDownload');
+        $this->db->from('fileDownloadT');
         $this->db->where('fileSubjectId', $subjectId);
         $this->db->where('fileSemesterId', $semesterId);
         $this->db->where('fileMenuDowId', $menuId);
-        $this->db->order_by('fileIndex', 'ASC ');
+        $this->db->order_by('CAST(fileIndex AS int)', 'ASC ');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
