@@ -130,35 +130,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 &nbsp;&nbsp;ประกาศถึงนักศึกษา
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('select/score/').$subject_id.'-'.$semester; ?>">
+                                <a class="nav-item nav-link" href="<?php echo base_url('select/score/') . $subject_id . '-' . $semester; ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-star-half-alt"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;คะแนน
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('select/downloads/').$subject_id.'-'.$semester; ?>">
+                                <a class="nav-item nav-link" href="<?php echo base_url('select/downloads/') . $subject_id . '-' . $semester; ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-download"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ดาวน์โหลด
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('select/uploads/').$subject_id.'-'.$semester; ?>">
+                                <a class="nav-item nav-link" href="<?php echo base_url('select/uploads/') . $subject_id . '-' . $semester; ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-upload"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;อับโหลด
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('select/videos/').$subject_id.'-'.$semester; ?>">
+                                <a class="nav-item nav-link" href="<?php echo base_url('select/videos/') . $subject_id . '-' . $semester; ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-play"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;วิดีโอ
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('select/quiz_vote/').$subject_id.'-'.$semester; ?>">
+                                <a class="nav-item nav-link" href="<?php echo base_url('select/quiz_vote/') . $subject_id . '-' . $semester; ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-poll"></i></span>
                                         <span style="font-size: 1.2em;">
@@ -238,6 +238,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </nav>
                         <div class="container">
                                 <div class="navdrawer-divider"></div>
+                                <?php
+                                if (isset($this->session->ses_tname)) {
+                                        echo '<a href="#">' .
+                                                '<p class="navdrawer-subheader fixed-bottom">ตั้งค่าบัญชี </p>' .
+                                                '</a>';
+                                }
+                                ?>
                         </div>
                 </div>
         </div>

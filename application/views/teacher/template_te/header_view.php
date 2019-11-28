@@ -199,6 +199,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </nav>
                         <div class="container">
                                 <div class="navdrawer-divider"></div>
+                                <?php
+                                if (isset($this->session->ses_tname)) {
+                                        echo '<a href="#">' .
+                                                '<p class="navdrawer-subheader fixed-bottom">ตั้งค่าบัญชี </p>' .
+                                                '</a>';
+                                }
+                                ?>
                         </div>
                 </div>
         </div>
