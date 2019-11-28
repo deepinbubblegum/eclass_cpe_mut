@@ -31,11 +31,11 @@ class Model_te_uploaded extends CI_Model
     public function getData($subjectId, $semesterId, $menuId)
     {
         $this->db->select('*');
-        $this->db->from('fileDownloadT');
+        $this->db->from('fileDownload');
         $this->db->where('fileSubjectId', $subjectId);
         $this->db->where('fileSemesterId', $semesterId);
         $this->db->where('fileMenuDowId', $menuId);
-        $this->db->order_by('CAST(fileIndex AS int)', 'ASC ');
+        $this->db->order_by('CAST(fileIndex AS int) ', 'ASC ');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
