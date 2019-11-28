@@ -268,9 +268,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </nav>
                         <div class="container">
                                 <div class="navdrawer-divider"></div>
-                                <a href="#">
-                                        <p class="navdrawer-subheader fixed-bottom">ลืมรหัสผ่าน</p>
-                                </a>
                         </div>
                 </div>
         </div>
