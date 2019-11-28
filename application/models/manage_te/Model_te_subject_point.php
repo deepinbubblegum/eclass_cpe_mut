@@ -20,7 +20,7 @@ class Model_te_subject_point extends CI_Model
         $this->db->from('subject_point');
         $this->db->where('point_subject', $subjectId);
         $this->db->where('point_semester', $semesterId);
-        $this->db->order_by('point_Index', 'ASC');
+        $this->db->order_by('cast(point_Index as int)', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
