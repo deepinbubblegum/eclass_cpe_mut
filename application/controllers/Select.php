@@ -32,6 +32,18 @@ class select extends MY_Controller
                 show_404();
         }
 
+        public function chkPermis($data)
+        {
+                $userID = $this->session->ses_id;
+                // $data['semester'];
+                $result = $this->Model_te_subject->Show_Permission_bit($data['semester'], $data['subject_id'], $userID);
+                echo $result[0]->per_bit;
+                if ($result !== 0) {
+                        return $result[0]->per_bit;
+                }
+                return 0;
+        }
+
         public function annouce($sid)
         {
                 $data = $this->convertData($sid);

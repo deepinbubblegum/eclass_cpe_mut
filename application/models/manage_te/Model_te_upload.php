@@ -3,12 +3,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Model_te_upload extends CI_Model
 {
-    public function insertUpload($data)
+    public function insertUpload($data, $semester, $subject, $DowId)
     { 
         $this->db->where('fileName', $data['fileName']);
         $this->db->delete('fileDownload');
-        
+
+        $maxIndex = $this->db->query('SELECT ifnull(max(fileIndex)+1,"1") AS newIndex FROM fileDownload WHERE fileSemesterId = "'.$semester.'" AND fileSubjectId = "'.$subject.'" AND fileMenuDowId = "'.$DowId.'" ');
+        $newIndex = $maxIndex->row()->newIndex;
+
         $this->db->set('fileTimestamp', 'NOW()', FALSE);
+        $this->db->set('fileIndex', $newIndex);
         $this->db->insert('fileDownload', $data);
     }
 
@@ -18,7 +22,7 @@ class Model_te_upload extends CI_Model
         $this->db->from('menuDownload');
         $this->db->where('menuDowSubjectId',$subjectId); 
         $this->db->where('menuDowSemesterId',$semesterId);
-        //$this->db->order_by('menuDowId', 'DESC');
+        $this->db->order_by('menuDowIndex', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -58,5 +62,17 @@ class Model_te_upload extends CI_Model
         $this->db->where_in('menuDowSubjectId', $subject); 
         $this->db->where_in('menuDowId', $menuID);
         $this->db->delete('menuDownload');
+    }
+
+    public function IndexMenu($sortMenuIDArray, $ArraySemester, $ArraySubject)
+    {
+        $num = count($sortMenuIDArray);
+        for ($i = 0; $i < $num; $i++) {
+            $newIndex = $i + 1;
+            $this->db->query('UPDATE menuDownload SET menuDowIndex = "' . $newIndex . '" WHERE menuDowSemesterId = "' . $ArraySemester[$i] . '" 
+            AND menuDowSubjectId = "' . $ArraySubject[$i] . '" AND menuDowId = "' . $sortMenuIDArray[$i] . '" ');
+            // echo $sortNameArray[$i];
+            // echo "<br>";
+        }
     }
 }

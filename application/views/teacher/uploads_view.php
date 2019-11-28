@@ -15,6 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <?php
         echo assets_css('aegis_css/uploads_drag_drop.css');
         echo assets_js('aegis_js/te_uploads.js');
+        echo assets_js('jquery_js/jquery-ui.min.js');
         ?>
         <style>
                 .f34r-bg-n-txt {
@@ -32,6 +33,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                 .f34r-txt-think {
                         color: rgba(0, 150, 136, 0.7)
+                }
+                
+
+                .placeholder {
+                        border: 40px solid;
+                        background-color: white;
+                        -webkit-box-shadow: 0px 0px 10px #888;
+                        -moz-box-shadow: 0px 0px 10px #888;
+                        box-shadow: 0px 0px 10px #888;
+                }
+
+                .sortableItem {
+                        height: 94px;
+                        weight: 94px;
+                }
+
+                .sortableMenu {
+                        height: 1px;
+                        weight: 1px;
+                }
+
+                .drag {
+                        margin-top: 1em;
                 }
         </style>
 </head>
@@ -119,7 +143,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                         </div>
                 </div>
-                <!-- End Modal upload -->
+                <!-- End Modal Delete -->
 
                 <div class="container-fluid mx-auto text-left">
                         <ul class="nav nav-justified nav-tabs mt-3" id="justifiedTab" role="tablist">
@@ -132,12 +156,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
-                                        <div class="list-group mt-3 showMenuUpload" id="accordionOne">
+                                        <div class="list-group mt-3 showMenuUpload DragMenu" id="accordionOne">
                                         </div>
                                 </div>
                                 <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
                                         <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
-                                                <div class="list-group mt-3 showUploaded" id="accordionTwo">
+                                                <div class="list-group mt-3 showUploaded DragMenu" id="accordionTwo">
                                                 </div>
                                         </div>
                                 </div>

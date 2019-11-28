@@ -49,12 +49,12 @@ $(document).ready(function() {
     ];
 
     var inModelPermis = [
-        ['video', 'video', 'video', 'video'],
-        ['upload', 'upload', 'upload', 'upload'],
-        ['download', 'download', 'download', 'download'],
-        ['point', 'point', 'point', 'point'],
-        ['vote', 'vote', 'vote', 'vote'],
-        ['quiz', 'quiz', 'quiz', 'quiz'],
+        ['video', 'video', 'video', 'วิดีโอ'],
+        ['upload', 'upload', 'upload', 'อัปโหลด'],
+        ['download', 'download', 'download', 'ดาวน์โหลด'],
+        ['point', 'point', 'point', 'คะแนน'],
+        ['vote', 'vote', 'vote', 'โหวต'],
+        ['quiz', 'quiz', 'quiz', 'แบบทดสอบ'],
     ];
 
     var popData = ["#popupName"];
@@ -114,8 +114,8 @@ $(document).ready(function() {
         html += '</div>';
         html += '<div class="form-row" >';
         for (a = 0; a < inModelPermis.length; a++) {
-            html += '<div class="col-md-2">' +
-                '<div class="custom-control custom-checkbox custom-control-inline mt-1 mb-1">' +
+            html += '<div class="col-md-3 mt-2">' +
+                '<div class="custom-control custom-checkbox custom-control-inline">' +
                 '<input type="checkbox" class="custom-control-input" name="checkper" id="' + inModelPermis[a][1] + '">' +
                 '<label class="custom-control-label float-left" for="' + inModelPermis[a][2] + '">' + inModelPermis[a][3] + '</label>' +
                 '</div>' +

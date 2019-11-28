@@ -113,7 +113,7 @@ $(document).ready(function() {
                         } else {
                             html += '<div class="expansion-panel list-group-item" >';
                         }
-                        html += '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
+                        html += '<a aria-controls="collapse' + i + '" aria-expanded="true" class="sortableMenu expansion-panel-toggler collapsed" data1="' + response[i].menuDowId + '" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
                             response[i].menuDowName +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
@@ -380,6 +380,7 @@ $(document).ready(function() {
         }
         $('#progress_modal').modal('show');
         $.ajax({
+            // processbar ยังไม่เสร็จ
             xhr: function() {
                 var xhr = new window.XMLHttpRequest();
                 html = '';
@@ -388,7 +389,7 @@ $(document).ready(function() {
                         var percentComplete = evt.loaded / evt.total;
                         percentComplete = parseInt(percentComplete * 100);
                         console.log(percentComplete);
-                        html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%"></div>'+ percentComplete +'%';
+                        html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%"></div>' + percentComplete + '%';
                         if (percentComplete === 100) {
                             html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%"></div>Complete';
                             setTimeout(function() {
@@ -462,7 +463,7 @@ $(document).ready(function() {
                     for (i = 0; i < response.length; i++) {
                         html +=
                             '<div class="expansion-panel list-group-item" >' +
-                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
+                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="sortableMenu expansion-panel-toggler collapsed" data1="' + response[i].menuDowId + '" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
                             response[i].menuDowName +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
@@ -481,7 +482,7 @@ $(document).ready(function() {
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].menuDowDescrpition +
-                            '<div id="menuDowId-' + response[i].menuDowId + '">' +
+                            '<div class="drag" id="menuDowId-' + response[i].menuDowId + '">' +
                             '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2">' +
                             '<span class="mr-2 mb-0" style="font-size: 28px;">' +
                             '<i class="fas fa-file-download"></i>' +
@@ -502,12 +503,13 @@ $(document).ready(function() {
                     }
                 }
                 $('.showUploaded').html(html);
+                console.log("Uploadded - 0");
                 if (getUploaded != null) {
                     for (i = 0; i < getUploaded.length; i++) {
                         showUploaded(i);
                     }
                 }
-
+                sortMenu();
             }
         });
     }
@@ -522,7 +524,7 @@ $(document).ready(function() {
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
                         html +=
-                            '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
+                            '<li href="#" class="sortableItem list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2" data1="' + getUploaded[popUp].menuDowId + '" data2="' + response[i].fileName + '" id="UploadedFile' + i + '">' +
                             '<span class="mr-2 mb-0" style="font-size: 28px;">' + file_ico(response[i].fileType) +
                             '<span class="mr-2 text-black" style="font-size: 18px;"> ' + response[i].fileName + '</span>' +
                             '<div class="mt-0">' +
@@ -542,10 +544,84 @@ $(document).ready(function() {
                     }
                 }
                 $('#menuDowId-' + getUploaded[popUp].menuDowId).html(html);
+                sort();
+                sortMenu();
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
     }
+
+
+    function sort() {
+        var sortIDArray = [];
+        var sortNameArray = [];
+        var ArraySemester = [];
+        var ArraySubject = [];
+        $(".drag").sortable({
+            tolerance: 'pointer',
+            revert: 'invalid',
+            placeholder: 'p-2 f34r-bg-n-txt sortableItem placeholder',
+            forceHelperSize: true,
+            stop: function() {
+                $.map($(this).find('li'), function(el) {
+                    var Dowid = $(el).attr('data1');
+                    var DowName = $(el).attr('data2');
+                    sortIDArray.push(Dowid);
+                    sortNameArray.push(DowName);
+                    ArraySubject.push(subject_id);
+                    ArraySemester.push(semester);
+                });
+                // console.log(sortNameArray);
+                $.ajax({
+                    type: "POST",
+                    url: '/' + url[3] + '/Te_uploaded/SortIndex',
+                    data: { sortIDArray, sortNameArray, ArraySubject, ArraySemester },
+                    success: function() {
+                        sortIDArray = [];
+                        sortNameArray = [];
+                        ArraySemester = [];
+                        ArraySubject = [];
+                    }
+                });
+            }
+        });
+    }
+
+    function sortMenu() {
+        var sortMenuIDArray = [];
+        var ArraySemester = [];
+        var ArraySubject = [];
+        $(".DragMenu").sortable({
+            tolerance: 'pointer',
+            revert: 'invalid',
+            placeholder: 'p-2 f34r-bg-n-txt sortableMenu placeholder',
+            forceHelperSize: true,
+            stop: function() {
+                $.map($(this).find('a.sortableMenu'), function(el) {
+                    var MenuDowid = $(el).attr('data1');
+                    sortMenuIDArray.push(MenuDowid);
+                    ArraySubject.push(subject_id);
+                    ArraySemester.push(semester);
+                });
+                console.log(sortMenuIDArray);
+                $.ajax({
+                    type: "POST",
+                    url: '/' + url[3] + '/Te_upload/SortMenu',
+                    data: { sortMenuIDArray, ArraySemester, ArraySubject },
+                    success: function() {
+                        sortMenuIDArray = [];
+                        ArraySemester = [];
+                        ArraySubject = [];
+                        showMenuUploaded();
+                        showMenuUpload();
+                    }
+                });
+            }
+        });
+    }
+
+
+
 });
