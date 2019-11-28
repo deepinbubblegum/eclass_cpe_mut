@@ -24,9 +24,6 @@ $(document).ready(function() {
         header = $('#Headtext').val();
         description = $('#Textarea').val();
         PointMulti = $("input[name='PointView']:checked").val();
-        $('#collapse0').collapse({
-            toggle: true
-        });
 
         $.ajax({
             type: "POST",
@@ -56,16 +53,17 @@ $(document).ready(function() {
                 var html = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        collap = i + 1;
                         html +=
                             '<div id="accM-' + i + '" class="sortMenu expansion-panel list-group-item success-color" data1="' + response[i].point_id + '" >' +
-                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="acc' + i + '">' +
+                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + collap + '" id="acc' + i + '">' +
                             response[i].point_name +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
                             '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
                             '</div>' +
                             '</a>' +
-                            '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
+                            '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + collap + '">' +
                             '<div class="expansion-panel-body" id="TEST' + i + '" >' +
                             /* --------BTN-------- */
                             '<span style="font-size: 1.7em;"><a href="/Te_select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].point_id + '" target="_blank" title="ดูคะแนนนักศึกษา" id="showInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
@@ -131,6 +129,7 @@ $(document).ready(function() {
                         $("#PointMulti").prop("checked", true);
                         $('#addFieldLabel').text('Create in menu : ' + getMenu[i].point_name);
                         // $("input[name=PointMulti]").attr('disabled', false);
+                        accordionI = i + 1;
                     });
                     //$('#showInMenu-' + getMenu[i].point_id).click(function(e) {}); use da href
                     // $('#impInMenu-' + getMenu[i].point_id).click(function(e) {});
@@ -158,11 +157,16 @@ $(document).ready(function() {
                         iurl = "/" + url[3] + "/Te_subject_point/editMenuScore";
                         editMenuId = getMenu[i].point_id;
                         // alert(getMenu[i].point_id);
-                        accordionI = i;
+                        accordionI = i + 1;
                     });
                 });
             }
         });
+        if (accordionI != '') {
+            $('#collapse' + accordionI).collapse({
+                toggle: true
+            });
+        }
     }
 
 
@@ -196,7 +200,7 @@ $(document).ready(function() {
             forceHelperSize: true,
 
             stop: function() {
-                $.map($(this).find('div.'), function(el) {
+                $.map($(this).find('div.sortableItem'), function(el) {
                     var Setid = $(el).attr('id');
                     var id = $(el).attr('id2');
                     // console.log('ID+' + id);
@@ -349,6 +353,9 @@ $(document).ready(function() {
                 showMenuPoint();
             }
         });
+        // $('#collapse' + accordionI).collapse({
+        //     toggle: true
+        // });
     }
 
     var setIdChild;
@@ -450,6 +457,10 @@ $(document).ready(function() {
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_point/updateFieldScore';
                         pointIdChild = response[i].setpoint_setpoint_id;
                         pointId = response[i].setpoint_id;
+                        accordionI = popUp;
+                        $('#collapse' + accordionI).collapse({
+                            toggle: true
+                        });
                     });
                     $('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
                         console.log('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
@@ -464,6 +475,10 @@ $(document).ready(function() {
                         takeThisDel = "delField";
                         delCid = response[i].setpoint_id;
                         delPid = response[i].setpoint_setpoint_id;
+                        accordionI = popUp;
+                        // $('#collapse' + accordionI).collapse({
+                        //     toggle: true
+                        // });
                         //delField(response[i].setpoint_id, response[i].setpoint_setpoint_id);
                     });
                 });
@@ -477,6 +492,11 @@ $(document).ready(function() {
         // })
 
         sort();
+        if (accordionI != '') {
+            $('#collapse' + accordionI).collapse({
+                toggle: true
+            });
+        }
     }
     var parentTK = 0;
     var childTK = 0;
@@ -525,6 +545,7 @@ $(document).ready(function() {
         delPid = '';
 
         $("#ModalDelete").modal('hide');
+
     });
 
     function delMenu(pid) {
@@ -548,6 +569,9 @@ $(document).ready(function() {
                 // console.log('Deleted Successfully');
                 showMenuPoint();
             }
+        });
+        $('#collapse' + accordionI).collapse({
+            toggle: true
         });
     }
 
@@ -730,4 +754,6 @@ $(document).ready(function() {
             }
         });
     });
+
+
 });
