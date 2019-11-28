@@ -31,15 +31,6 @@ class Model_std_subject extends CI_Model
 
     public function selectSubject($data,$userID)
     {
-        // $this->db->select('*');
-        // $this->db->from('subject_semester');
-        // $this->db->where('subsem_semester',$data);  
-        // $query = $this->db->get();
-
-        // if ($query->num_rows() > 0) {
-        //     return $query->result();
-        // }
-
         $query = $this->db->query('SELECT subject_name,subsem_subject, subsem_semester FROM subject_semester 
         LEFT JOIN subject ON subsem_subject = subject_id 
         LEFT JOIN subject_student ON subsem_subject = substd_subject 

@@ -3,7 +3,9 @@ $(document).ready(function() {
     var iurl = '';
     var getMenu;
     var editMenuId = '';
+    var accordionI = '';
     showMenuPoint();
+
 
     $('#btnAddScore').click(function(e) {
         e.preventDefault();
@@ -14,12 +16,17 @@ $(document).ready(function() {
         // $('#StartDatePicker').val(todayDate);
         $('#save').text('บันทึกข้อมูล');
         iurl = "/" + url[3] + "/Te_subject_point/insertMenuScore";
+
+        $('#accordionOne').activate('option', 'active', '#accM-1');
     });
 
     $('#save').click(function(e) {
         header = $('#Headtext').val();
         description = $('#Textarea').val();
         PointMulti = $("input[name='PointView']:checked").val();
+        $('#collapse0').collapse({
+            toggle: true
+        });
 
         $.ajax({
             type: "POST",
@@ -50,8 +57,8 @@ $(document).ready(function() {
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
                         html +=
-                            '<div class="expansion-panel list-group-item success-color" >' +
-                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
+                            '<div id="accM-' + i + '" class="sortMenu expansion-panel list-group-item success-color" data1="' + response[i].point_id + '" >' +
+                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="acc' + i + '">' +
                             response[i].point_name +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
@@ -59,9 +66,9 @@ $(document).ready(function() {
                             '</div>' +
                             '</a>' +
                             '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
-                            '<div class="expansion-panel-body">' +
+                            '<div class="expansion-panel-body" id="TEST' + i + '" >' +
                             /* --------BTN-------- */
-                            '<span style="font-size: 1.7em;"><a href="/Te_select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].point_id + '" title="ดูคะแนนนักศึกษา" id="showInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a href="/Te_select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].point_id + '" target="_blank" title="ดูคะแนนนักศึกษา" id="showInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="สร้างช่องคะแนน" id="addInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
                             //'<span style="font-size: 1.7em;"><a id="impInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-file-import"></a></i></span>&nbsp;' +
                             //'<span style="font-size: 1.7em;"><a id="expInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-file-export"></a></i></span>&nbsp;' +
@@ -114,6 +121,7 @@ $(document).ready(function() {
                     }
                 }
                 $('.showMenuScore').html(html);
+                sortMenu();
                 $.each(getMenu, function(i, p) {
                     showUnit(getMenu[i].point_id);
                     $('#addInMenu-' + getMenu[i].point_id).click(function(e) {
@@ -149,11 +157,14 @@ $(document).ready(function() {
                         $('#Modal').modal('show');
                         iurl = "/" + url[3] + "/Te_subject_point/editMenuScore";
                         editMenuId = getMenu[i].point_id;
+                        // alert(getMenu[i].point_id);
+                        accordionI = i;
                     });
                 });
             }
         });
     }
+
 
     // $('#sortable').sortable();
 
@@ -185,7 +196,7 @@ $(document).ready(function() {
             forceHelperSize: true,
 
             stop: function() {
-                $.map($(this).find('div'), function(el) {
+                $.map($(this).find('div.'), function(el) {
                     var Setid = $(el).attr('id');
                     var id = $(el).attr('id2');
                     // console.log('ID+' + id);
@@ -201,6 +212,39 @@ $(document).ready(function() {
                     data: { sortArray, sortIDArray, ArraySubject, ArraySemester },
                     success: function() {
                         sortArray = [];
+                        sortIDArray = [];
+                        ArraySemester = [];
+                        ArraySubject = [];
+                    }
+                });
+            }
+        });
+    }
+
+    function sortMenu() {
+        var sortIDArray = [];
+        var ArraySemester = [];
+        var ArraySubject = [];
+        $(".DragMenu").sortable({
+            tolerance: 'pointer',
+            revert: 'invalid',
+            placeholder: 'p-2 f34r-bg-n-txt sortableItem placeholder',
+            forceHelperSize: true,
+
+            stop: function() {
+                $.map($(this).find('div.sortMenu'), function(el) {
+                    var Menuid = $(el).attr('data1');
+                    // console.log('ID+' + id);
+                    sortIDArray.push(Menuid);
+                    ArraySubject.push(subject_id);
+                    ArraySemester.push(semester);
+                });
+                // console.log(sortIDArray);
+                $.ajax({
+                    type: "POST",
+                    url: '/' + url[3] + '/Te_subject_point/SortMenu',
+                    data: { sortIDArray, ArraySubject, ArraySemester },
+                    success: function() {
                         sortIDArray = [];
                         ArraySemester = [];
                         ArraySubject = [];
@@ -428,6 +472,10 @@ $(document).ready(function() {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
+        // $('#collapse0').collapse({
+        //     toggle: true
+        // })
+
         sort();
     }
     var parentTK = 0;
@@ -682,5 +730,4 @@ $(document).ready(function() {
             }
         });
     });
-
 });

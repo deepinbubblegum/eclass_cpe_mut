@@ -209,4 +209,13 @@ class Te_subject_point extends MY_Controller
         // print_r($sortArray);
         $this->Model_te_subject_point->Index($sortArray, $sortIDArray, $ArraySemester, $ArraySubject);
     }
+
+    public function SortMenu()
+    {
+        $sortIDArray = $this->input->post('sortIDArray[]');
+        $ArraySemester = $this->input->post('ArraySemester[]');
+        $ArraySubject = $this->input->post('ArraySubject[]');
+        // print_r($sortArray);
+        $this->Model_te_subject_point->IndexMenu($sortIDArray, $ArraySemester, $ArraySubject);
+    }
 }

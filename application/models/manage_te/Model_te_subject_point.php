@@ -20,7 +20,7 @@ class Model_te_subject_point extends CI_Model
         $this->db->from('subject_point');
         $this->db->where('point_subject', $subjectId);
         $this->db->where('point_semester', $semesterId);
-        //$this->db->order_by('menuDowId', 'DESC');
+        $this->db->order_by('point_Index', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -124,13 +124,16 @@ class Model_te_subject_point extends CI_Model
 
     public function insertMenu($semester, $subject, $Header, $Description, $StdView)
     {
+        $MaxIndex = $this->db->query('SELECT IFNULL(max(point_Index)+1,"1") AS newIndex FROM subject_point where point_semester = "'.$semester.'" and point_subject="'.$subject.'" ');
+        $newindex = $MaxIndex->row()->newIndex;
+
         $maxid = $this->db->query("
             select IFNULL(max(point_id),0)+1 as newid
             from subject_point
             where point_semester = '" . $semester . "' and point_subject='" . $subject . "';
         ");
         $newid = $maxid->row()->newid;
-        $this->db->query('insert into subject_point values("' . $semester . '","' . $subject . '","' . $newid . '","' . $Header . '","' . $Description . '" , "'.$StdView.'");');
+        $this->db->query('insert into subject_point values("' . $semester . '","' . $subject . '","' . $newid . '","' . $Header . '","' . $Description . '" , "'.$StdView.'" , "'.$newindex.'");');
     }
 
     public function editMenu($semester, $subject, $Header, $Description, $editID ,$StdView)
@@ -203,6 +206,17 @@ class Model_te_subject_point extends CI_Model
             $newIndex = $i + 1;
             $this->db->query('UPDATE subject_setpoint SET setpoint_index = "' . $newIndex . '" WHERE setpoint_semester = "' . $ArraySemester[$i] . '" 
             AND setpoint_subject = "' . $ArraySubject[$i] . '" AND setpoint_id = "' . $sortIDArray[$i] . '" AND setpoint_setpoint_id = "' . $sortArray[$i] . '"');
+            // echo $sortArray[$i];
+        }
+    }
+
+    public function IndexMenu($sortIDArray, $ArraySemester, $ArraySubject)
+    {
+        $num = count($sortIDArray);
+        for ($i = 0; $i < $num; $i++) {
+            $newIndex = $i + 1;
+            $this->db->query('UPDATE subject_point SET point_Index = "' . $newIndex . '" WHERE point_semester = "' . $ArraySemester[$i] . '" 
+            AND point_subject = "' . $ArraySubject[$i] . '" AND point_id = "' . $sortIDArray[$i] . '" ');
             // echo $sortArray[$i];
         }
     }

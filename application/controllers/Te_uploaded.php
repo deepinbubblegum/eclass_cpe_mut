@@ -39,8 +39,7 @@ class Te_uploaded extends MY_Controller
         $this->load->model('manage_te/Model_te_uploaded');
 
         $bit = $this->session->ses_status;
-        if($bit != 'teacher' || $bit != 'admin')
-        {
+        if ($bit != 'teacher' || $bit != 'admin') {
             return 0;
         }
     }
@@ -159,5 +158,15 @@ class Te_uploaded extends MY_Controller
         $this->Model_te_uploaded->deleteMenu($semester, $subject, $menuID);
         $filePath = '/Eclass/uploads/file/' . $semester . $subject . '/' . 'Downloads' . '/' . $menuID;
         rrmdir($filePath);
+    }
+
+    public function SortIndex()
+    {
+        $sortIDArray = $this->input->post('sortIDArray[]');
+        $sortNameArray = $this->input->post('sortNameArray[]');
+        $ArraySemester = $this->input->post('ArraySemester[]');
+        $ArraySubject = $this->input->post('ArraySubject[]');
+        // print_r($sortArray);
+        $this->Model_te_uploaded->IndexFile($sortIDArray, $sortNameArray, $ArraySemester, $ArraySubject);
     }
 }

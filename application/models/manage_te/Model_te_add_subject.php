@@ -92,8 +92,8 @@ class Model_te_add_subject extends CI_Model
         if ($queryPoint->num_rows() > 0) {
             foreach ($queryPoint->result_array() as $row) {
                 $dataPoint_id[] = $row['point_id'];
-                $this->db->query('INSERT INTO subject_point(point_semester,point_subject,point_id,point_name,point_discription)
-                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['point_id'] . '", "' . $row['point_name'] . '" , "' . $row['point_discription'] . '") ');
+                $this->db->query('INSERT INTO subject_point(point_semester, point_subject, point_id,point_name, point_discription, point_StdView)
+                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['point_id'] . '", "' . $row['point_name'] . '" , "' . $row['point_discription'] . '" , "' . $row['point_StdView'] . '") ');
             }
             if (count($dataPoint_id) != 0) {
                 for ($i = 0; $i <  count($dataPoint_id); $i++) {
