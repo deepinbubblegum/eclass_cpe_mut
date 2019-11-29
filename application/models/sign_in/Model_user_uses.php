@@ -126,4 +126,18 @@ class Model_user_uses extends CI_Model
         //                 return false;
         //         }
         // }
+
+        public function update_password($arg, $arg2, $arg3)
+        {
+                if($arg == 'student'){
+                        $this->db->where('std_code_id', $arg2);
+                        $this->db->update('student', array('std_password' => $arg3));
+                        return true;
+                }else{
+                        $this->db->where('teacher_code_id', $arg2);
+                        $this->db->update('teacher', array('teacher_password' => $arg3));
+                        return true;
+                }
+                return false;
+        }
 }

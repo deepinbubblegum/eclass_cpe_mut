@@ -23,7 +23,7 @@ class User_uses extends MY_Controller
                                         'ses_status' => 'student'
                                 );
                                 $this->session->set_userdata($newdata);
-                        } else if ($sign_status[0]['teacher_code_id'] != '' && $sign_status[0]['teacher_admin'] == '0' ) {
+                        } else if ($sign_status[0]['teacher_code_id'] != '' && $sign_status[0]['teacher_admin'] == '0') {
                                 $newdata = array(
                                         'ses_id' => $sign_status[0]['teacher_code_id'],
                                         'ses_tname' => $sign_status[0]['teacher_Tname'],
@@ -31,7 +31,7 @@ class User_uses extends MY_Controller
                                         'ses_status' => 'teacher'
                                 );
                                 $this->session->set_userdata($newdata);
-                        } else if ($sign_status[0]['teacher_code_id'] != '' && $sign_status[0]['teacher_admin'] == '1' ) {
+                        } else if ($sign_status[0]['teacher_code_id'] != '' && $sign_status[0]['teacher_admin'] == '1') {
                                 $newdata = array(
                                         'ses_id' => $sign_status[0]['teacher_code_id'],
                                         'ses_tname' => $sign_status[0]['teacher_Tname'],
@@ -41,7 +41,7 @@ class User_uses extends MY_Controller
                                 $this->session->set_userdata($newdata);
                         }
                         redirect();
-                }else{
+                } else {
                         show_404();
                 }
         }
@@ -52,7 +52,9 @@ class User_uses extends MY_Controller
                 redirect();
         }
 
-        public function password_change(){
-
+        public function password_change()
+        {
+                $passwd = $this->encryption_pass($this->input->post('passwd'));
+                $this->Model_user_uses->update_password($this->session->ses_status, $this->session->ses_id, $passwd);
         }
 }
