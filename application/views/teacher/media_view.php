@@ -52,6 +52,64 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                 <div class="container-fluid">
 
+                        <div class="list-group mt-3 showMenu_vd_Upload text-left" id="accordionOne">
+                                <div class="expansion-panel list-group-item show">
+                                        <a aria-controls="collapseOne" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseOne" id="headingOne">
+                                                วิดีโอ
+                                                <div class="expansion-panel-icon ml-3 text-black-secondary">
+                                                        <i class="collapsed-show material-icons">keyboard_arrow_down</i>
+                                                        <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
+                                                </div>
+                                        </a>
+                                        <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionOne" id="collapseOne">
+                                                <div class="expansion-panel-body">
+                                                        <video controls crossorigin playsinline poster="https://s3.eu-central-1.amazonaws.com/pipe.public.content/poster.png">
+                                                                <source src="<?php echo base_url('video/360/ac.mp4'); ?>" type="video/mp4" size="360">
+                                                                <source src="<?php echo base_url('video/480/ac.mp4'); ?>" type="video/mp4" size="480">
+                                                                <source src="<?php echo base_url('video/720/abc.mp4'); ?>" type="video/mp4" size="720">
+                                                                <source src="<?php echo base_url('video/1080/abc.mp4'); ?>" type="video/mp4" size="1080">
+
+                                                                <!-- Caption files -->
+                                                                <!-- <track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default>
+                                                                <track kind="captions" label="Thailand" srclang="th" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"> -->
+                                                                <!-- Fallback for browsers that don't support the <video> element -->
+                                                                <center class="mt-2" style="font-size: 18px">
+                                                                        <a href="<?php echo base_url('video/abc.mp4'); ?>" download><i class="far fa-arrow-alt-circle-down"></i> Download</a>
+                                                                </center>
+                                                        </video>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="expansion-panel list-group-item">
+                                        <a aria-controls="collapseTwo" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseTwo" id="headingTwo">
+                                                เสียง
+                                                <div class="expansion-panel-icon ml-3 text-black-secondary">
+                                                        <i class="collapsed-show material-icons">keyboard_arrow_down</i>
+                                                        <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
+                                                </div>
+                                        </a>
+                                        <div aria-labelledby="headingTwo" class="collapse" data-parent="#accordionOne" id="collapseTwo">
+                                                <div class="expansion-panel-body">
+
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="expansion-panel list-group-item">
+                                        <a aria-controls="collapseThree" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseThree" id="headingThree">
+                                                รูปภาพ
+                                                <div class="expansion-panel-icon ml-3 text-black-secondary">
+                                                        <i class="collapsed-show material-icons">keyboard_arrow_down</i>
+                                                        <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
+                                                </div>
+                                        </a>
+                                        <div aria-labelledby="headingThree" class="collapse" data-parent="#accordionOne" id="collapseThree">
+                                                <div class="expansion-panel-body">
+
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+
                 </div>
 
                 <!-- modal video -->
@@ -79,7 +137,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 </div>
                                                 <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                                <span class="input-group-text">ไฟล์วิดีโอ</span>
+                                                                <span class="input-group-text"> ไฟล์วิดีโอ</span>
                                                         </div>
                                                         <div class="custom-file">
                                                                 <input type="file" class="custom-file-input" id="video_file" accept="video/*">
@@ -121,7 +179,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 </div>
                                                 <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                                <span class="input-group-text">ไฟล์เสียง</span>
+                                                                <span class="input-group-text"> ไฟล์เสียง</span>
                                                         </div>
                                                         <div class="custom-file">
                                                                 <input type="file" class="custom-file-input" id="audio_file" accept="audio/*">
@@ -163,10 +221,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 </div>
                                                 <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                                <span class="input-group-text">ไฟล์รูปภาพ</span>
+                                                                <span class="input-group-text"> ไฟล์รูปภาพ</span>
                                                         </div>
                                                         <div class="custom-file">
-                                                                <input type="file" class="custom-file-input" id="image_file" accept="image/*" multiple>
+                                                                <input type="file" class="custom-file-input" id="image_file" accept="image/*">
                                                                 <label class="custom-file-label" for="image_file"></label>
                                                         </div>
                                                 </div>
