@@ -151,11 +151,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 &nbsp;&nbsp;อับโหลด
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('select/videos/') . $subject_id . '-' . $semester; ?>">
+                                <a class="nav-item nav-link" href="<?php echo base_url('select/media/') . $subject_id . '-' . $semester; ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-play"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;วิดีโอ
+                                                &nbsp;&nbsp;สื่อสารสนเทศ
                                         </span>
                                 </a>
                                 <a class="nav-item nav-link" href="<?php echo base_url('select/quiz_vote/') . $subject_id . '-' . $semester; ?>">

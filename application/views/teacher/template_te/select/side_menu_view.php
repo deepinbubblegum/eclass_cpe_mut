@@ -87,11 +87,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         
                                                         <?php
                                                         if (substr($bit, 0, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="videos" href="'; echo base_url("te_select/videos/") . $subject_id . '-' . $semester. '">
+                                                                echo '<a class="nav-item nav-link" id="media" href="'; echo base_url("te_select/media/") . $subject_id . '-' . $semester. '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-play"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;วิดีโอ
+                                                                        &nbsp;&nbsp;สื่อสารสนเทศ
                                                                 </span>
                                                                 </a>';
                                                         }

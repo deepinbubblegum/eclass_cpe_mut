@@ -106,14 +106,14 @@ class Te_select extends MY_Controller
                 }
         }
 
-        public function videos($sid)
+        public function media($sid)
         {
                 $data = $this->convertData($sid);
                 $bit = $this->session->ses_permission;
                 if (substr($bit, 0, 1) == '1' || $bit == '0') {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
-                        $this->load->view('teacher/videos_view', $data);
+                        $this->load->view('teacher/media_view', $data);
                         $this->load->view('teacher/template_te/footer_te_view');
                 } else {
                         show_404();
