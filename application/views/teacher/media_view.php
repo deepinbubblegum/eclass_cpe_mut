@@ -15,10 +15,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <?php
         echo assets_css('plyr_css/plyr.css');
         echo assets_css('aegis_css/video-mes.css');
-        echo assets_css('aegis_css/uploads_drag_drop.css');
         echo assets_js('plyr_js/plyr.js');
         echo assets_js('aegis_js/video_player.js');
-        echo assets_js('aegis_js/manage_te/te_video_upload.js');
         ?>
 
 </head>
@@ -53,15 +51,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="container-fluid">
 
                         <div class="list-group mt-3 showMenu_vd_Upload text-left" id="accordionOne">
-                                <div class="expansion-panel list-group-item show">
+                                <div class="expansion-panel list-group-item">
                                         <a aria-controls="collapseOne" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseOne" id="headingOne">
-                                                วิดีโอ
+                                                <i class="far fa-file-video"></i>วิดีโอ
                                                 <div class="expansion-panel-icon ml-3 text-black-secondary">
                                                         <i class="collapsed-show material-icons">keyboard_arrow_down</i>
                                                         <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
                                                 </div>
                                         </a>
-                                        <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionOne" id="collapseOne">
+                                        <div aria-labelledby="headingOne" class="collapse" data-parent="#accordionOne" id="collapseOne">
                                                 <div class="expansion-panel-body">
                                                         <video controls crossorigin playsinline poster="https://s3.eu-central-1.amazonaws.com/pipe.public.content/poster.png">
                                                                 <source src="<?php echo base_url('video/360/ac.mp4'); ?>" type="video/mp4" size="360">
@@ -82,7 +80,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                                 <div class="expansion-panel list-group-item">
                                         <a aria-controls="collapseTwo" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseTwo" id="headingTwo">
-                                                เสียง
+                                                <i class="far fa-file-audio"></i>เสียง
                                                 <div class="expansion-panel-icon ml-3 text-black-secondary">
                                                         <i class="collapsed-show material-icons">keyboard_arrow_down</i>
                                                         <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
@@ -90,13 +88,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </a>
                                         <div aria-labelledby="headingTwo" class="collapse" data-parent="#accordionOne" id="collapseTwo">
                                                 <div class="expansion-panel-body">
-
+                                                        <audio id="player" style="width: 100%;" controls>
+                                                                <source src="https://server19.workerserverbl.com/online/mp3.php?id=32706429&mp3=%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%9A%E0%B8%B1%E0%B8%87%E0%B9%80%E0%B8%AD%E0%B8%B4%E0%B8%8D%20-%20BASHER.mp3&quality=sd&token1=99d033d2c0aaaf1ac02a0802893f1918&token2=1575131338&isPhoto=false" type="audio/mp3" />
+                                                                <source src="/path/to/audio.ogg" type="audio/ogg" />
+                                                        </audio>
                                                 </div>
                                         </div>
                                 </div>
                                 <div class="expansion-panel list-group-item">
                                         <a aria-controls="collapseThree" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseThree" id="headingThree">
-                                                รูปภาพ
+                                                <i class="far fa-file-image"></i>รูปภาพ
                                                 <div class="expansion-panel-icon ml-3 text-black-secondary">
                                                         <i class="collapsed-show material-icons">keyboard_arrow_down</i>
                                                         <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
@@ -104,7 +105,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </a>
                                         <div aria-labelledby="headingThree" class="collapse" data-parent="#accordionOne" id="collapseThree">
                                                 <div class="expansion-panel-body">
-
+                                                <img src="https://pixabay.com/get/57e8d7414c51aa14f6d1867dda6d49214b6ac3e456567448762e7bd493/elephant-1822636_1920.jpg" class="img-fluid" alt="Responsive image">
                                                 </div>
                                         </div>
                                 </div>
