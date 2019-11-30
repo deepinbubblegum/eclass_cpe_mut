@@ -28,21 +28,157 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <nav class="navbar navbar-light " style="max-height: auto; min-width: 335px; background-color: #dadfe4;">
                         <div class="navbar-brand" href="#">
                                 <span style="font-size: 1.2em;">
-                                        <i class="fas fa-chalkboard"></i></span>
+                                        <i class="fas fa-photo-video"></i>
+                                </span>
                                 <span style="font-size: 0.8em;">
                                         &nbsp; สื่อสารสนเทศ
                                 </span>
                         </div>
-                        <button class="btn btn-secondary my-2 my-sm-0">
-                                <span style="font-size: 1.1em;">
-                                        <i class="fas fa-plus"></i></span>
-                                &nbsp;เพิ่ม
-                        </button>
+
+                        <!-- Default dropleft button -->
+                        <div class="btn-group my-2 my-sm-0">
+                                <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        เพิ่มสื่อสารสนเทศ
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                        <!-- Dropdown menu links -->
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#file_video"><i class="far fa-file-video"></i> เพิ่มวิดีโอ</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#file_audio"><i class="far fa-file-audio"></i> เพิ่มเสียง</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#file_img"><i class="far fa-file-image"></i> เพิ่มรูปภาพ</a>
+                                </div>
+                        </div>
                 </nav>
 
                 <div class="container-fluid">
-                       
+
                 </div>
+
+                <!-- modal video -->
+                <div class="modal fade bd-example-modal-lg" id="file_video" tabindex="-1" role="dialog" aria-labelledby="file_video_label" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 class="modal-title" id="file_video_label"><i class="far fa-file-video"></i> เพิ่มสื่อสารสนเทศวิดีโอ</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                </button>
+                                        </div>
+                                        <div class="modal-body">
+                                                <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="video_name"> ชื่อวิดีโอ</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="video_name">
+                                                </div>
+                                                <div class="input-group mb-3 mt-1">
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text"> รายละเอียด</span>
+                                                        </div>
+                                                        <textarea class="form-control" id="discription_video" aria-label=" รายละเอียด"></textarea>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text">ไฟล์วิดีโอ</span>
+                                                        </div>
+                                                        <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="video_file" accept="video/*">
+                                                                <label class="custom-file-label" for="video_file"></label>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                                <button type="button" id="save_file_video" class="btn btn-primary">บันทึก</button>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--end modal video -->
+
+                <!-- modal audio -->
+                <div class="modal fade bd-example-modal-lg" id="file_audio" tabindex="-1" role="dialog" aria-labelledby="file_audio_label" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 class="modal-title" id="file_audio_label"><i class="far fa-file-audio"></i> เพิ่มสื่อสารสนเทศเสียง</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                </button>
+                                        </div>
+                                        <div class="modal-body">
+                                                <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="audio_name"> ชื่อเสียง</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="audio_name">
+                                                </div>
+                                                <div class="input-group mb-3 mt-1">
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text"> รายละเอียด</span>
+                                                        </div>
+                                                        <textarea class="form-control" id="discription_audio" aria-label=" รายละเอียด"></textarea>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text">ไฟล์เสียง</span>
+                                                        </div>
+                                                        <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="audio_file" accept="audio/*">
+                                                                <label class="custom-file-label" for="audio_file"></label>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                                <button type="button" id="save_audio" class="btn btn-primary">บันทึก</button>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--end modal audio -->
+
+                <!-- modal img -->
+                <div class="modal fade bd-example-modal-lg" id="file_img" tabindex="-1" role="dialog" aria-labelledby="file_img_label" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 class="modal-title" id="file_img_label"><i class="far fa-file-image"></i> เพิ่มสื่อสารสนเทศรูปภาพ</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                </button>
+                                        </div>
+                                        <div class="modal-body">
+                                                <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="image_name"> ชื่อรูปภาพ</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="image_name">
+                                                </div>
+                                                <div class="input-group mb-3 mt-1">
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text"> รายละเอียด</span>
+                                                        </div>
+                                                        <textarea class="form-control" id="discription_image" aria-label=" รายละเอียด"></textarea>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text">ไฟล์รูปภาพ</span>
+                                                        </div>
+                                                        <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="image_file" accept="image/*" multiple>
+                                                                <label class="custom-file-label" for="image_file"></label>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                                <button type="button" id="save_image" class="btn btn-primary">บันทึก</button>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--end modal img -->
 </body>
 
 </html>
