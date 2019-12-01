@@ -17,6 +17,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         echo assets_css('aegis_css/video-mes.css');
         echo assets_js('plyr_js/plyr.js');
         echo assets_js('aegis_js/video_player.js');
+        echo assets_js('aegis_js/manage_te/te_media.js');
         ?>
 
 </head>
