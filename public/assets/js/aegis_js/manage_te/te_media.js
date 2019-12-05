@@ -119,7 +119,6 @@ $(document).ready(function () {
                                                 if (percentComplete === 100) {
                                                         html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
                                                         setTimeout(function () {
-                                                                $('#upload_process').modal('hide');
                                                         }, 1200);
                                                 }
                                                 $('#progressupload').html(html);
@@ -137,6 +136,7 @@ $(document).ready(function () {
                         dataType: "json",
                         success: function (response) {
                                 show_media();
+                                $('#upload_process').modal('hide');
                                 $('#video_name').val('');
                                 $('#discription_video').val('');
                                 $('#video_file').val('');

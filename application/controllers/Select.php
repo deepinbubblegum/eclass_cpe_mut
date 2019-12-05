@@ -81,12 +81,12 @@ class select extends MY_Controller
                 $this->load->view('template/footer_view');
         }
 
-        public function videos($sid)
+        public function media($sid)
         {
                 $data = $this->convertData($sid);
                 $this->load->view('template/select/header_view', $data);
                 $this->load->view('template/select/side_menu_view', $data);
-                $this->load->view('student/videos_view', $data);
+                $this->load->view('student/media_view', $data);
                 $this->load->view('template/footer_view');
         }
 
