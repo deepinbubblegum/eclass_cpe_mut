@@ -38,12 +38,13 @@ class Te_media extends MY_Controller
                 $type_file = $_FILES['file']['name'];
                 $typefile = explode(".",$type_file);
                 $typefile = end($typefile);
-                if($typefile != 'mp4'){
-                        $dir = 'media_uploads/video/tmp_video';
-                }else{
-                        $dir = 'media_uploads/video/souce_video';
-                }
-                $dir_video = 'media_uploads/video/souce_video/';
+                // if($typefile != 'mp4'){
+                //         $dir = 'media_uploads/video/tmp_video';
+                // }else{
+                //         $dir = 'media_uploads/video/souce_video';
+                // }
+                // $dir_video = 'media_uploads/video/souce_video/';
+                $dir = 'media_uploads/video/souce_video';
                 $config['upload_path'] = $dir;
                 $config['allowed_types'] = '*';
                 $config['file_name'] = $new_name;
@@ -61,10 +62,10 @@ class Te_media extends MY_Controller
                         // echo json_encode($data);
                 }
 
-                if($typefile != 'mp4'){
-                        shell_exec('ffmpeg -i  '.$dir.'/'.$new_name.'.'.$typefile.' '.$dir_video.$new_name.'.mp4 2>&1');
-                        unlink($dir.'/'.$new_name.'.'.$typefile);
-                }
+                // if($typefile != 'mp4'){
+                //         shell_exec('ffmpeg -i  '.$dir.'/'.$new_name.'.'.$typefile.' '.$dir_video.$new_name.'.mp4 2>&1');
+                //         unlink($dir.'/'.$new_name.'.'.$typefile);
+                // }
 
                 $data_media = array(
                         'media_id' => $this->auto_id($this->input->post('semester'), $this->input->post('subject_id')),
@@ -100,12 +101,13 @@ class Te_media extends MY_Controller
                 $type_file = $_FILES['file']['name'];
                 $typefile = explode(".",$type_file);
                 $typefile = end($typefile);
-                if($typefile != 'mp3'){
-                        $dir = 'media_uploads/audio/tmp_audio';
-                }else{
-                        $dir = 'media_uploads/audio/souce_audio';
-                }
-                $dir_audio = 'media_uploads/audio/souce_audio/';
+                // if($typefile != 'mp3'){
+                //         $dir = 'media_uploads/audio/tmp_audio';
+                // }else{
+                //         $dir = 'media_uploads/audio/souce_audio';
+                // }
+                // $dir_audio = 'media_uploads/audio/souce_audio/';
+                $dir = 'media_uploads/audio/souce_audio';
                 $config['upload_path'] = $dir;
                 $config['allowed_types'] = '*';
                 $config['file_name'] = $new_name;
@@ -123,10 +125,10 @@ class Te_media extends MY_Controller
                         // echo json_encode($data);
                 }
 
-                if($typefile != 'mp3'){
-                        shell_exec('ffmpeg -i  '.$dir.'/'.$new_name.'.'.$typefile.' '.$dir_audio.$new_name.'.mp3 2>&1');
-                        unlink($dir.'/'.$new_name.'.'.$typefile);
-                }
+                // if($typefile != 'mp3'){
+                //         shell_exec('ffmpeg -i  '.$dir.'/'.$new_name.'.'.$typefile.' '.$dir_audio.$new_name.'.mp3 2>&1');
+                //         unlink($dir.'/'.$new_name.'.'.$typefile);
+                // }
 
                 $data_media = array(
                         'media_id' => $this->auto_id($this->input->post('semester'), $this->input->post('subject_id')),
@@ -147,12 +149,13 @@ class Te_media extends MY_Controller
                 $type_file = $_FILES['file']['name'];
                 $typefile = explode(".",$type_file);
                 $typefile = end($typefile);
-                if($typefile != 'jpg'){
-                        $dir = 'media_uploads/image/tmp_image';
-                }else{
-                        $dir = 'media_uploads/image/souce_image';
-                }
-                $dir_image = 'media_uploads/image/souce_image/';
+                // if($typefile != 'jpg'){
+                //         $dir = 'media_uploads/image/tmp_image';
+                // }else{
+                //         $dir = 'media_uploads/image/souce_image';
+                // }
+                $dir = 'media_uploads/image/souce_image';
+                // $dir_image = 'media_uploads/image/souce_image/';
                 $config['upload_path'] = $dir;
                 $config['allowed_types'] = '*';
                 $config['file_name'] = $new_name;
@@ -170,10 +173,10 @@ class Te_media extends MY_Controller
                         // echo json_encode($data);
                 }
 
-                if($typefile != 'jpg'){
-                        shell_exec('ffmpeg -i  '.$dir.'/'.$new_name.'.'.$typefile.' '.$dir_image.$new_name.'.jpg 2>&1');
-                        unlink($dir.'/'.$new_name.'.'.$typefile);
-                }
+                // if($typefile != 'jpg'){
+                //         shell_exec('ffmpeg -i  '.$dir.'/'.$new_name.'.'.$typefile.' '.$dir_image.$new_name.'.jpg 2>&1');
+                //         unlink($dir.'/'.$new_name.'.'.$typefile);
+                // }
 
                 $data_media = array(
                         'media_id' => $this->auto_id($this->input->post('semester'), $this->input->post('subject_id')),

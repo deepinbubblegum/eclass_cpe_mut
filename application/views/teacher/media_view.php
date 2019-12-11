@@ -83,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span class="input-group-text"> ไฟล์วิดีโอ</span>
                                                         </div>
                                                         <div class="custom-file text-left">
-                                                                <input type="file" class="custom-file-input" id="video_file" accept="video/*">
+                                                                <input type="file" class="custom-file-input" id="video_file" accept="video/mp4">
                                                                 <label class="custom-file-label" for="video_file"></label>
                                                         </div>
                                                 </div>
@@ -125,7 +125,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span class="input-group-text"> ไฟล์เสียง</span>
                                                         </div>
                                                         <div class="custom-file text-left">
-                                                                <input type="file" class="custom-file-input" id="audio_file" accept="audio/*">
+                                                                <input type="file" class="custom-file-input" id="audio_file" accept="audio/mp3">
                                                                 <label class="custom-file-label" for="audio_file"></label>
                                                         </div>
                                                 </div>
@@ -167,7 +167,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span class="input-group-text"> ไฟล์รูปภาพ</span>
                                                         </div>
                                                         <div class="custom-file">
-                                                                <input type="file" class="custom-file-input" id="image_file" accept="image/*">
+                                                                <input type="file" class="custom-file-input" id="image_file" accept="image/jpeg, image/png">
                                                                 <label class="custom-file-label" for="image_file"></label>
                                                         </div>
                                                 </div>
