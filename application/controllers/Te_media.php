@@ -36,7 +36,7 @@ class Te_media extends MY_Controller
         {
                 $new_name = $this->generateRandomString(20) . time();
                 $type_file = $_FILES['file']['name'];
-                $typefile = explode(".",$type_file);
+                $typefile = explode(".", $type_file);
                 $typefile = end($typefile);
                 // if($typefile != 'mp4'){
                 //         $dir = 'media_uploads/video/tmp_video';
@@ -73,7 +73,7 @@ class Te_media extends MY_Controller
                         'media_subject' => $this->input->post('subject_id'),
                         'media_show_name' => $this->input->post('video_name'),
                         'media_detail_txt' => $this->input->post('discription_video'),
-                        'media_real_name' => $new_name.'.'.$typefile,
+                        'media_real_name' => $new_name . '.' . $typefile,
                         'media_type' => 'video'
                 );
                 $datareturn = $this->Model_media->media_add($data_media);
@@ -99,7 +99,7 @@ class Te_media extends MY_Controller
         {
                 $new_name = $this->generateRandomString(20) . time();
                 $type_file = $_FILES['file']['name'];
-                $typefile = explode(".",$type_file);
+                $typefile = explode(".", $type_file);
                 $typefile = end($typefile);
                 // if($typefile != 'mp3'){
                 //         $dir = 'media_uploads/audio/tmp_audio';
@@ -136,7 +136,7 @@ class Te_media extends MY_Controller
                         'media_subject' => $this->input->post('subject_id'),
                         'media_show_name' => $this->input->post('audio_name'),
                         'media_detail_txt' => $this->input->post('discription_audio'),
-                        'media_real_name' => $new_name.'.'.$typefile,
+                        'media_real_name' => $new_name . '.' . $typefile,
                         'media_type' => 'audio'
                 );
                 $datareturn = $this->Model_media->media_add($data_media);
@@ -147,7 +147,7 @@ class Te_media extends MY_Controller
         {
                 $new_name = $this->generateRandomString(20) . time();
                 $type_file = $_FILES['file']['name'];
-                $typefile = explode(".",$type_file);
+                $typefile = explode(".", $type_file);
                 $typefile = end($typefile);
                 // if($typefile != 'jpg'){
                 //         $dir = 'media_uploads/image/tmp_image';
@@ -179,15 +179,50 @@ class Te_media extends MY_Controller
                 // }
 
                 $data_media = array(
-                        'media_id' => $this->auto_id($this->input->post('semester'), $this->input->post('subject_id')),
+                        'media_id' => $this->auto_id(
+                                $this->input->post('semester'), 
+                                $this->input->post('subject_id')
+                        ),
                         'media_semester' => $this->input->post('semester'),
                         'media_subject' => $this->input->post('subject_id'),
                         'media_show_name' => $this->input->post('image_name'),
                         'media_detail_txt' => $this->input->post('discription_image'),
-                        'media_real_name' => $new_name.'.'.$typefile,
+                        'media_real_name' => $new_name . '.' . $typefile,
                         'media_type' => 'image'
                 );
                 $datareturn = $this->Model_media->media_add($data_media);
                 echo json_encode($datareturn);
+        }
+
+        public function del_media_ctl()
+        {
+                $datareturn = $this->Model_media->media_del($this->input->post('delete_id'));
+                echo json_encode($datareturn);
+        }
+
+
+        public function get_edit()
+        {
+                $return_media = $this->Model_media->get_data_edit(
+                        $this->input->post('edit_id'),
+                        $this->input->post('semester'),
+                        $this->input->post('subject_id')
+                );
+                echo json_encode($return_media);
+        }
+
+        public function edit_update_data()
+        {
+                $data_edit = array(
+                        'media_show_name' =>  $this->input->post('edit_name'),
+                        'media_detail_txt' =>  $this->input->post('discription'),
+                );
+                $return_media_edit = $this->Model_media->edit_update_md(
+                        $this->input->post('edit_id'),
+                        $this->input->post('semester'),
+                        $this->input->post('subject_id'),
+                        $data_edit
+                );
+                echo json_encode($return_media_edit);
         }
 }

@@ -24,9 +24,9 @@ class Model_media extends CI_Model
                 $this->db->where('media_semester', $semesterId);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
-                    return $query->result();
+                        return $query->result();
                 } else {
-                    return false;
+                        return false;
                 }
         }
 
@@ -34,7 +34,47 @@ class Model_media extends CI_Model
         {
                 if ($this->db->insert('media_data', $data_media)) {
                         return true;
-                }else{
+                } else {
+                        return false;
+                }
+        }
+
+        public function media_del($id)
+        {
+                $this->db->where('media_id', $id);
+                $this->db->delete('media_data');
+                if (!$this->db->affected_rows()) {
+                        return 'Error! ID [' . $id . '] not found';
+                } else {
+                        return true;
+                }
+        }
+
+        public function get_data_edit($id, $semesterId, $subjectId)
+        {
+                $this->db->select('*');
+                $this->db->from('media_data');
+                $this->db->where('media_semester', $semesterId);
+                $this->db->where('media_subject', $subjectId);
+                $this->db->where('media_id', $id);
+                $query = $this->db->get();
+                if ($query->num_rows() > 0) {
+                        return $query->result();
+                } else {
+                        return false;
+                }
+        }
+
+        public function edit_update_md($id, $semesterId, $subjectId, $data)
+        {
+                $this->db->where('media_semester', $semesterId);
+                $this->db->where('media_subject', $subjectId);
+                $this->db->where('media_id', $id);
+                $this->db->update('media_data', $data);
+                $this->db->trans_complete();
+                if ($this->db->trans_status()) {
+                        return true;
+                } else {
                         return false;
                 }
         }

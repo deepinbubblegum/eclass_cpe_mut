@@ -26,7 +26,7 @@ $(document).ready(function () {
                                                         '<i class="fas fa-tools mr-2 iconEdit" value="' + response[index]['media_id'] + '" title="แก้ไข"> </i>' +
                                                         '</span>' +
                                                         '<span style="font-size: 17px; color: red;"">' +
-                                                        '<i class="fas fa-trash-alt mr-2 iconDelete" value="' + response[index]['media_id'] + '" title="ลบ"> </i>' +
+                                                        '<i class="fas fa-trash-alt mr-2 iconDelete" value="' + response[index]['media_id'] + '" tittle_name="' + response[index]['media_show_name'] + '" title="ลบ"> </i>' +
                                                         '</span>' +
                                                         '<span class="text-left">' + response[index]['media_show_name'] + '</span>' +
                                                         '</div>' +
@@ -57,7 +57,7 @@ $(document).ready(function () {
                                                         '<i class="fas fa-tools mr-2 iconEdit" value="' + response[index]['media_id'] + '" title="แก้ไขประกาศ"> </i>' +
                                                         '</span>' +
                                                         '<span style="font-size: 17px; color: red;"">' +
-                                                        '<i class="fas fa-trash-alt mr-2 iconDelete" value="' + response[index]['media_id'] + '" title="ลบประกาศ"> </i>' +
+                                                        '<i class="fas fa-trash-alt mr-2 iconDelete" value="' + response[index]['media_id'] + '" tittle_name="' + response[index]['media_show_name'] + '" title="ลบประกาศ"> </i>' +
                                                         '</span>' +
                                                         '<span class="text-left">' + response[index]['media_show_name'] + '</span>' +
                                                         '</div>' +
@@ -85,7 +85,7 @@ $(document).ready(function () {
                                                         '<i class="fas fa-tools mr-2 iconEdit" value="' + response[index]['media_id'] + '" title="แก้ไขประกาศ"> </i>' +
                                                         '</span>' +
                                                         '<span style="font-size: 17px; color: red;"">' +
-                                                        '<i class="fas fa-trash-alt mr-2 iconDelete" value="' + response[index]['media_id'] + '" title="ลบประกาศ"> </i>' +
+                                                        '<i class="fas fa-trash-alt mr-2 iconDelete" value="' + response[index]['media_id'] + '" tittle_name="' + response[index]['media_show_name'] + '" title="ลบประกาศ"> </i>' +
                                                         '</span>' +
                                                         '<span class="text-left">' + response[index]['media_show_name'] + '</span>' +
                                                         '</div>' +
@@ -109,20 +109,81 @@ $(document).ready(function () {
                                 edit_del_init();
                         }
                 });
-                
+
         }
+
+        var edit_id = '';
+        var delete_id = '';
 
         function edit_del_init() {
                 $('.iconEdit').click(function (e) {
                         e.preventDefault();
                         console.log($(this).attr('value'));
+                        edit_id = $(this).attr('value');
+                        $.ajax({
+                                type: "POST",
+                                url: "/" + url[3] + "/Te_media/get_edit",
+                                data: {
+                                        edit_id: edit_id,
+                                        subject_id: subject_id,
+                                        semester: semester
+                                },
+                                dataType: "json",
+                                success: function (response) {
+                                        console.log(response);
+                                        $('#edit_name').val(response[0]['media_show_name']);
+                                        $('#discription').val(response[0]['media_detail_txt']);
+                                }
+                        });
+                        $('#edit_media').modal('show');
                 });
 
                 $('.iconDelete').click(function (e) {
                         e.preventDefault();
-                        console.log('del'+$(this).attr('value'));
+                        delete_id = $(this).attr('value');
+                        $('#delete_media').modal('show');
+                        $('#show_delete_tittle').text('ต้องการจะลบ ' + $(this).attr('tittle_name') + ' หรือไม่ ?');
+
                 });
         }
+
+        $('#btn_delete_media').click(function () {
+                $.ajax({
+                        type: "POST",
+                        url: "/" + url[3] + "/Te_media/del_media_ctl",
+                        data: {
+                                delete_id: delete_id
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                                if (response == true) {
+                                        show_media();
+                                        $('#delete_media').modal('hide');
+                                }
+                        }
+                });
+        });
+
+        $('#btn_edit_media').click(function () {
+                $.ajax({
+                        type: "POST",
+                        url: "/" + url[3] + "/Te_media/edit_update_data",
+                        data: {
+                                edit_id: edit_id,
+                                subject_id: subject_id,
+                                semester: semester,
+                                edit_name: $('#edit_name').val(),
+                                discription: $('#discription').val()
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                                console.log(response);
+                                show_media();
+                                $('#edit_media').modal('hide');
+                        }
+                });
+        });
+
 
         function player() {
                 Plyr.setup('video');

@@ -37,7 +37,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="btn-group my-2 my-sm-0">
                                 <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         เพิ่มสื่อสารสนเทศ
-                                </button> 
+                                </button>
                                 <div class="dropdown-menu dropdown-menu-right">
                                         <!-- Dropdown menu links -->
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#file_video"><i class="far fa-file-video"></i> เพิ่มวิดีโอ</a>
@@ -181,7 +181,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <!--end modal img -->
 
-                <!-- modal img -->
+                <!-- modal process -->
                 <div class="modal fade bd-example-modal-lg" id="upload_process" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby=upload_process_label" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -194,7 +194,57 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                         </div>
                 </div>
-                <!--end modal img -->
+                <!--end modal process -->
+
+                <!-- modal edit -->
+                <div class="modal fade bd-example-modal-lg" id="edit_media" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby=edit_media_label" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 class="modal-title" id=edit_media_label"> แก้ไขรายละเอียด</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                                <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text"> ชื่อ</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="edit_name" aria-label="Default" aria-describedby="edit_name">
+                                                </div>
+                                                <div class="input-group mb-3 mt-1">
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text"> รายละเอียด</span>
+                                                        </div>
+                                                        <textarea class="form-control" id="discription" aria-label=" รายละเอียด"></textarea>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                                <button type="button" id="btn_edit_media" class="btn btn-primary">บันทึก</button>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--end modal edit -->
+
+                <!-- modal delete -->
+                <div class="modal fade bd-example-modal-lg" id="delete_media" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby=delete_media_label" aria-hidden="true">
+                        <div class="modal-dialog">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 class="modal-title" id=delete_media_label"> ต้องการลบ หรือไม่?</h5>
+                                        </div>
+                                        <div class="modal-body text-left">
+                                                <h5 id="show_delete_tittle" value="">
+                                                </h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                                <button type="button" id="btn_delete_media" class="btn btn-primary">ลบ</button>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--end modal delete -->
 </body>
 
 </html>
