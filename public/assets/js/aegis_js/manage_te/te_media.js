@@ -20,7 +20,17 @@ $(document).ready(function () {
                                         if (response[index]['media_type'] == 'video') {
                                                 html += '<div class="expansion-panel list-group-item">' +
                                                         '<a aria-controls="' + response[index]['media_id'] + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#' + response[index]['media_id'] + '" id="headingOne">' +
-                                                        '<i class="far fa-file-video"></i>' + response[index]['media_show_name'] +
+                                                        // '<i class="far fa-file-video"></i>' + response[index]['media_show_name'] +
+                                                        '<div class="d-flex justify-content-start">' +
+                                                        '<span style="font-size: 17px; color: blue;"">' +
+                                                        '<i class="fas fa-tools mr-2 iconEdit" value="' + response[index]['media_id'] + '" title="แก้ไข"> </i>' +
+                                                        '</span>' +
+                                                        '<span style="font-size: 17px; color: red;"">' +
+                                                        '<i class="fas fa-trash-alt mr-2 iconDelete" value="' + response[index]['media_id'] + '" title="ลบ"> </i>' +
+                                                        '</span>' +
+                                                        '<span class="text-left">' + response[index]['media_show_name'] + '</span>' +
+                                                        '</div>' +
+
                                                         '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                                                         '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
                                                         '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
@@ -28,7 +38,7 @@ $(document).ready(function () {
                                                         '</a>' +
                                                         '<div aria-labelledby="' + response[index]['media_id'] + '" class="collapse" data-parent="#accordionOne" id="' + response[index]['media_id'] + '">' +
                                                         '<div class="expansion-panel-body">' +
-                                                        '<p>'+response[index]['media_detail_txt']+'</p>'+
+                                                        '<p>' + response[index]['media_detail_txt'] + '</p>' +
                                                         '<video controls crossorigin playsinline>"' +
                                                         '<source src="' + window.location.protocol + '//' + window.location.hostname + '/media_uploads/video/souce_video/' + response[index]['media_real_name'] + '" type="video/mp4">' +
                                                         '<center class="mt-2" style="font-size: 18px">' +
@@ -41,7 +51,17 @@ $(document).ready(function () {
                                         } else if (response[index]['media_type'] == 'audio') {
                                                 html += '<div class="expansion-panel list-group-item">' +
                                                         '<a aria-controls="' + response[index]['media_id'] + '" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#' + response[index]['media_id'] + '" id="headingTwo">' +
-                                                        '<i class="far fa-file-audio"></i>' + response[index]['media_show_name'] +
+                                                        // '<i class="far fa-file-audio"></i>' + response[index]['media_show_name'] +
+                                                        '<div class="d-flex justify-content-start">' +
+                                                        '<span style="font-size: 17px; color: blue;"">' +
+                                                        '<i class="fas fa-tools mr-2 iconEdit" value="' + response[index]['media_id'] + '" title="แก้ไขประกาศ"> </i>' +
+                                                        '</span>' +
+                                                        '<span style="font-size: 17px; color: red;"">' +
+                                                        '<i class="fas fa-trash-alt mr-2 iconDelete" value="' + response[index]['media_id'] + '" title="ลบประกาศ"> </i>' +
+                                                        '</span>' +
+                                                        '<span class="text-left">' + response[index]['media_show_name'] + '</span>' +
+                                                        '</div>' +
+
                                                         '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                                                         '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
                                                         '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
@@ -49,7 +69,7 @@ $(document).ready(function () {
                                                         '</a>' +
                                                         '<div aria-labelledby="headingTwo" class="collapse" data-parent="#accordionOne" id="' + response[index]['media_id'] + '">' +
                                                         '<div class="expansion-panel-body">' +
-                                                        '<p>'+response[index]['media_detail_txt']+'</p>'+
+                                                        '<p>' + response[index]['media_detail_txt'] + '</p>' +
                                                         '<audio id="player" style="width: 100%;" controls>' +
                                                         '<source src="' + window.location.protocol + '//' + window.location.hostname + '/media_uploads/audio/souce_audio/' + response[index]['media_real_name'] + '" type="audio/mp3" />' +
                                                         '</audio>' +
@@ -59,7 +79,17 @@ $(document).ready(function () {
                                         } else {
                                                 html += '<div class="expansion-panel list-group-item">' +
                                                         '<a aria-controls="' + response[index]['media_id'] + '" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#' + response[index]['media_id'] + '" id="headingThree">' +
-                                                        '<i class="far fa-file-image"></i>' + response[index]['media_show_name'] +
+                                                        // '<i class="far fa-file-image"></i>' + response[index]['media_show_name'] +
+                                                        '<div class="d-flex justify-content-start">' +
+                                                        '<span style="font-size: 17px; color: blue;"">' +
+                                                        '<i class="fas fa-tools mr-2 iconEdit" value="' + response[index]['media_id'] + '" title="แก้ไขประกาศ"> </i>' +
+                                                        '</span>' +
+                                                        '<span style="font-size: 17px; color: red;"">' +
+                                                        '<i class="fas fa-trash-alt mr-2 iconDelete" value="' + response[index]['media_id'] + '" title="ลบประกาศ"> </i>' +
+                                                        '</span>' +
+                                                        '<span class="text-left">' + response[index]['media_show_name'] + '</span>' +
+                                                        '</div>' +
+
                                                         '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                                                         '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
                                                         '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
@@ -67,17 +97,30 @@ $(document).ready(function () {
                                                         '</a>' +
                                                         '<div aria-labelledby="headingThree" class="collapse" data-parent="#accordionOne" id="' + response[index]['media_id'] + '">' +
                                                         '<div class="expansion-panel-body">' +
-                                                        '<p>'+response[index]['media_detail_txt']+'</p>'+
+                                                        '<p>' + response[index]['media_detail_txt'] + '</p>' +
                                                         '<img src="' + window.location.protocol + '//' + window.location.hostname + '/media_uploads/image/souce_image/' + response[index]['media_real_name'] + '" class="img-fluid" alt="Responsive image">' +
                                                         '</div>' +
                                                         '</div>' +
                                                         '</div>';
                                         }
-
                                 }
                                 $('#accordionOne').html(html);
                                 player();
+                                edit_del_init();
                         }
+                });
+                
+        }
+
+        function edit_del_init() {
+                $('.iconEdit').click(function (e) {
+                        e.preventDefault();
+                        console.log($(this).attr('value'));
+                });
+
+                $('.iconDelete').click(function (e) {
+                        e.preventDefault();
+                        console.log('del'+$(this).attr('value'));
                 });
         }
 
@@ -118,8 +161,7 @@ $(document).ready(function () {
                                                 html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">' + percentComplete + '%</div>';
                                                 if (percentComplete === 100) {
                                                         html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
-                                                        setTimeout(function () {
-                                                        }, 1200);
+                                                        setTimeout(function () {}, 1200);
                                                 }
                                                 $('#progressupload').html(html);
                                         }
