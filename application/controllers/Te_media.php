@@ -73,7 +73,7 @@ class Te_media extends MY_Controller
                         'media_subject' => $this->input->post('subject_id'),
                         'media_show_name' => $this->input->post('video_name'),
                         'media_detail_txt' => $this->input->post('discription_video'),
-                        'media_real_name' => $new_name.'.mp4',
+                        'media_real_name' => $new_name.'.'.$typefile,
                         'media_type' => 'video'
                 );
                 $datareturn = $this->Model_media->media_add($data_media);
@@ -136,7 +136,7 @@ class Te_media extends MY_Controller
                         'media_subject' => $this->input->post('subject_id'),
                         'media_show_name' => $this->input->post('audio_name'),
                         'media_detail_txt' => $this->input->post('discription_audio'),
-                        'media_real_name' => $new_name.'.mp3',
+                        'media_real_name' => $new_name.'.'.$typefile,
                         'media_type' => 'audio'
                 );
                 $datareturn = $this->Model_media->media_add($data_media);
@@ -184,7 +184,7 @@ class Te_media extends MY_Controller
                         'media_subject' => $this->input->post('subject_id'),
                         'media_show_name' => $this->input->post('image_name'),
                         'media_detail_txt' => $this->input->post('discription_image'),
-                        'media_real_name' => $new_name.'.jpg',
+                        'media_real_name' => $new_name.'.'.$typefile,
                         'media_type' => 'image'
                 );
                 $datareturn = $this->Model_media->media_add($data_media);
