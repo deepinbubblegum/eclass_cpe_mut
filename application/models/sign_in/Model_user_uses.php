@@ -127,16 +127,42 @@ class Model_user_uses extends CI_Model
         //         }
         // }
 
-        public function update_password($arg, $arg2, $arg3)
-        {
-                if($arg == 'student'){
-                        $this->db->where('std_code_id', $arg2);
-                        $this->db->update('student', array('std_password' => $arg3));
-                        return true;
+        private function check_old_password($ses_status, $ses_id, $old_password){
+                if($ses_status == 'student')
+                {
+                        $this->db->select('std_code_id, std_password');
+                        $this->db->from('student');
+                        $this->db->where('std_code_id', $ses_id);
+                        $this->db->where('std_password', $old_password);
+                        $query = $this->db->get();
+                        if ($query->num_rows() > 0) {
+                                return true;
+                        }
                 }else{
-                        $this->db->where('teacher_code_id', $arg2);
-                        $this->db->update('teacher', array('teacher_password' => $arg3));
-                        return true;
+                        $this->db->select('teacher_code_id, teacher_password');
+                        $this->db->from('teacher');
+                        $this->db->where('teacher_code_id', $ses_id);
+                        $this->db->where('teacher_password', $old_password);
+                        $query = $this->db->get();
+                        if ($query->num_rows() > 0) {
+                                return true;
+                        }
+                }
+                return false;
+        }
+
+        public function update_password($arg, $arg2, $arg3, $old_password)
+        {
+                if($this->check_old_password($arg, $arg2, $old_password)){
+                        if($arg == 'student'){
+                                $this->db->where('std_code_id', $arg2);
+                                $this->db->update('student', array('std_password' => $arg3));
+                                return true;
+                        }else{
+                                $this->db->where('teacher_code_id', $arg2);
+                                $this->db->update('teacher', array('teacher_password' => $arg3));
+                                return true;
+                        }
                 }
                 return false;
         }

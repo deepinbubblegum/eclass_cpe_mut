@@ -253,6 +253,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                                 <div class="modal-body">
                                         <div class="form-group">
+                                                <label for="label_old_passwd">Old Password</label>
+                                                <input type="password" class="form-control" id="old_passwd">
+                                        </div>
+
+                                        <div class="form-group">
                                                 <label for="label_passwd">Password</label>
                                                 <input type="password" class="form-control" id="Passwd">
                                         </div>

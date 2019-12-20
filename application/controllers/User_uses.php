@@ -46,15 +46,18 @@ class User_uses extends MY_Controller
                 }
         }
 
+        public function password_change()
+        {
+                $old_password = $this->encryption_pass($this->input->post('old_passwd'));
+
+                $passwd = $this->encryption_pass($this->input->post('passwd'));
+                $res = $this->Model_user_uses->update_password($this->session->ses_status, $this->session->ses_id, $passwd, $old_password);
+                echo $res;
+        }
+
         public function sign_out()
         {
                 $this->session->sess_destroy();
                 redirect();
-        }
-
-        public function password_change()
-        {
-                $passwd = $this->encryption_pass($this->input->post('passwd'));
-                $this->Model_user_uses->update_password($this->session->ses_status, $this->session->ses_id, $passwd);
         }
 }

@@ -27,18 +27,32 @@ $(document).ready(function () {
                                 type: "POST",
                                 url: "/" + url[3] + "/user_uses/password_change",
                                 data: {
+                                        old_passwd: $('#old_passwd').val(),
                                         passwd: $('#Passwd').val()
                                 },
-                                success: function () {
-                                        console.log('OK');
-                                        Snackbar.show({
-                                                pos: 'top-center',
-                                                text: 'เปลี่ยนรหัสผ่านเรียบร้อย',
-                                                showAction: false,
-                                        });
-                                        $("#user_setting").modal('hide');
-                                        $('#Passwd').val('');
-                                        $('#Passwd_ck').val('');
+                                success: function (res) {
+                                        console.log(res);
+                                        if(res){
+                                                Snackbar.show({
+                                                        pos: 'top-center',
+                                                        text: 'เปลี่ยนรหัสผ่านเรียบร้อย',
+                                                        showAction: false,
+                                                });
+                                                $("#user_setting").modal('hide');
+                                                $('#old_passwd').val('');
+                                                $('#Passwd').val('');
+                                                $('#Passwd_ck').val('');
+                                        }else{
+                                                Snackbar.show({
+                                                        pos: 'top-center',
+                                                        text: '! รหัสผ่านเดิมไม่ถูกต้อง หรือ ไม่เป็นไปตามข้อกำหนด',
+                                                        showAction: false,
+                                                });
+                                                // $("#user_setting").modal('hide');
+                                                // $('#old_passwd').val('');
+                                                $('#Passwd').val('');
+                                                $('#Passwd_ck').val('');
+                                        }
                                 }
                         });
                 }else{
@@ -47,6 +61,8 @@ $(document).ready(function () {
                                 text: 'รหัสผ่านไม่ตรงกัน หรือ ไม่เป็นไปตามข้อกำหนด',
                                 showAction: false,
                         });
+                        $('#Passwd').val('');
+                        $('#Passwd_ck').val('');
                 }
         });
 });
