@@ -241,7 +241,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php
                                 if (isset($this->session->ses_tname)) {
                                         echo '<a href="#" id="set_user">' .
-                                                '<p class="navdrawer-subheader fixed-bottom">ตั้งค่าบัญชี </p>' .
+                                                '<p class="navdrawer-subheader fixed-bottom">เปลี่ยนรหัสผ่าน</p>' .
                                                 '</a>';
                                 }
                                 ?>
