@@ -160,7 +160,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <span style="font-size: 1.5em;">
                                                                 <i class="fas fa-ticket-alt"></i></span>
                                                         <span style="font-size: 1.2em;">
-                                                                &nbsp;&nbsp;'.lang('Enter the score code').'
+                                                                &nbsp;&nbsp;กรอกรหัสคะแนน
                                                         </span>
                                                 </a>';
                                 }
