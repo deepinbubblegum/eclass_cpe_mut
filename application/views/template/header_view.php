@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>eclass : มหาวิทยาลัยเทคโนโลยีมหานคร</title>
+        <title><?php echo lang('title')?></title>
         <?php
         $multi_assets_css = array(
                 'bootstrap_css/material.css',

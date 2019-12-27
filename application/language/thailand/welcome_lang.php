@@ -1,5 +1,3 @@
 <?php
-$lang = array(
-        'content' => 'ประกาศ',
-);
+$lang['title'] = "eclass : มหาวิทยาลัยเทคโนโลยีมหานคร";
 ?>
