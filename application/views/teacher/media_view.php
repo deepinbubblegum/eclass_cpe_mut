@@ -110,7 +110,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <div class="modal-body">
                                                 <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                                <span class="input-group-text"> ชื่อเสียง</span>
+                                                                <span class="input-group-text"> ชื่อไฟล์เสียง</span>
                                                         </div>
                                                         <input type="text" class="form-control" id="audio_name" aria-label="Default" aria-describedby="audio_name">
                                                 </div>
