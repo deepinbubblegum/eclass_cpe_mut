@@ -112,7 +112,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="navdrawer-header">
                                 <div class="navbar-brand px-0">
                                         <span style="font-size: 1.1em;">
-                                                <i class="fas fa-th-list"></i></span>&nbsp;&nbsp;&nbsp;เมนู
+                                                <i class="fas fa-th-list"></i></span>&nbsp;&nbsp;&nbsp;<?php echo lang('menu')?>
                                 </div>
 
                         </div>
@@ -121,7 +121,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-home"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;หน้าแรก
+                                                &nbsp;&nbsp;<?php echo lang('home_page')?>
                                         </span>
                                 </a>
                                 <?php
@@ -130,8 +130,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-atlas"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;รายวิชา
-                                        </span>
+                                                &nbsp;&nbsp;' . lang('course') .
+                                        '</span>
                                         </a>';
                                 }
                                 ?>
@@ -141,7 +141,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <span style="font-size: 1.5em;">
                                                                 <i class="fas fa-tachometer-alt"></i></span>
                                                         <span style="font-size: 1.2em;">
-                                                                &nbsp;&nbsp;พิมพ์บาร์โค้ด
+                                                                &nbsp;&nbsp;'. lang('print_barcode') .'
                                                         </span>
                                                         </a>';
                                 }
@@ -150,7 +150,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-stopwatch"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;นาฬิกาจับเวลา
+                                                &nbsp;&nbsp;<?php echo lang('stopwatch')?>
                                         </span>
                                 </a>
                                 <?php
@@ -160,7 +160,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <span style="font-size: 1.5em;">
                                                                 <i class="fas fa-ticket-alt"></i></span>
                                                         <span style="font-size: 1.2em;">
-                                                                &nbsp;&nbsp;กรอกรหัสคะแนน
+                                                                &nbsp;&nbsp;'.lang('Enter the score code').'
                                                         </span>
                                                 </a>';
                                 }
