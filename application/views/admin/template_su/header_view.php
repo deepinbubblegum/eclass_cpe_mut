@@ -268,12 +268,53 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </nav>
                         <div class="container">
                                 <div class="navdrawer-divider"></div>
-                                <a href="#">
-                                        <p class="navdrawer-subheader fixed-bottom">ลืมรหัสผ่าน</p>
-                                </a>
+                                <?php
+                                if (isset($this->session->ses_tname)) {
+                                        echo '<a href="#" id="set_user">' .
+                                                '<p class="navdrawer-subheader fixed-bottom">เปลี่ยนรหัสผ่าน</p>' .
+                                                '</a>';
+                                }
+                                ?>
                         </div>
                 </div>
         </div>
+        <?php
+        if (isset($this->session->ses_tname)) {
+                echo assets_js('aegis_js/setting_user.js');
+                echo '<div class="modal fade bd-example-modal-lg" id="user_setting" tabindex="-1" role="dialog" aria-labelledby="user_setting" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h5 class="modal-title">ตั้งค่าบัญชีผู้ใช้งาน </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                        <div class="form-group">
+                                                <label for="label_old_passwd">Old Password</label>
+                                                <input type="password" class="form-control" id="old_passwd">
+                                        </div>
+
+                                        <div class="form-group">
+                                                <label for="label_passwd">Password</label>
+                                                <input type="password" class="form-control" id="Passwd">
+                                        </div>
+
+                                        <div class="form-group">
+                                                <label for="label_passwd_ck">Confirm Password</label>
+                                                <input type="password" class="form-control" id="Passwd_ck">
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" id="save_changes" class="btn btn-primary">Save changes</button>
+                                </div>
+                        </div>
+                </div>
+                </div>';
+        }
+        ?>
 </body>
 
 </html>

@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>eclass : มหาวิทยาลัยเทคโนโลยีมหานคร</title>
+        <title><?php echo lang('title')?></title>
         <?php
         $multi_assets_css = array(
                 'bootstrap_css/material.css',
@@ -112,7 +112,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="navdrawer-header">
                                 <div class="navbar-brand px-0">
                                         <span style="font-size: 1.1em;">
-                                                <i class="fas fa-th-list"></i></span>&nbsp;&nbsp;&nbsp;เมนู
+                                                <i class="fas fa-th-list"></i></span>&nbsp;&nbsp;&nbsp;<?php echo lang('menu')?>
                                 </div>
 
                         </div>
@@ -121,7 +121,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-home"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;หน้าแรก
+                                                &nbsp;&nbsp;<?php echo lang('home_page')?>
                                         </span>
                                 </a>
                                 <?php
@@ -130,8 +130,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-atlas"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;รายวิชา
-                                        </span>
+                                                &nbsp;&nbsp;' . lang('course') .
+                                        '</span>
                                         </a>';
                                 }
                                 ?>
@@ -141,7 +141,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <span style="font-size: 1.5em;">
                                                                 <i class="fas fa-tachometer-alt"></i></span>
                                                         <span style="font-size: 1.2em;">
-                                                                &nbsp;&nbsp;พิมพ์บาร์โค้ด
+                                                                &nbsp;&nbsp;'. lang('print_barcode') .'
                                                         </span>
                                                         </a>';
                                 }
@@ -150,7 +150,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-stopwatch"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;นาฬิกาจับเวลา
+                                                &nbsp;&nbsp;<?php echo lang('stopwatch')?>
                                         </span>
                                 </a>
                                 <?php
@@ -225,11 +225,57 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         ?>
                                 </div>
                         </nav>
+
                         <div class="container">
                                 <div class="navdrawer-divider"></div>
+                                <?php
+                                if (isset($this->session->ses_tname)) {
+                                        echo '<a href="#" id="set_user">' .
+                                                '<p class="navdrawer-subheader fixed-bottom">เปลี่ยนรหัสผ่าน</p>' .
+                                                '</a>';
+                                }
+                                ?>
                         </div>
                 </div>
         </div>
+
+        <?php
+        if (isset($this->session->ses_tname)) {
+                echo assets_js('aegis_js/setting_user.js');
+                echo '<div class="modal fade bd-example-modal-lg" id="user_setting" tabindex="-1" role="dialog" aria-labelledby="user_setting" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h5 class="modal-title">ตั้งค่าบัญชีผู้ใช้งาน </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                        <div class="form-group">
+                                                <label for="label_old_passwd">Old Password</label>
+                                                <input type="password" class="form-control" id="old_passwd">
+                                        </div>
+
+                                        <div class="form-group">
+                                                <label for="label_passwd">Password</label>
+                                                <input type="password" class="form-control" id="Passwd">
+                                        </div>
+
+                                        <div class="form-group">
+                                                <label for="label_passwd_ck">Confirm Password</label>
+                                                <input type="password" class="form-control" id="Passwd_ck">
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" id="save_changes" class="btn btn-primary">Save changes</button>
+                                </div>
+                        </div>
+                </div>
+                </div>';
+        }
+        ?>
 </body>
 
 

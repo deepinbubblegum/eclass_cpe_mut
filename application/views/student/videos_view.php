@@ -27,7 +27,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span style="font-size: 1.2em;">
                                         <i class="fas fa-chalkboard"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        &nbsp; วิดีโอ
+                                        &nbsp; สื่อสารสนเทศ
                                 </span>
                         </div>
                         <!-- <form class="form-inline">
@@ -149,7 +149,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <!-- Caption files -->
                                                         <!-- <track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default>
-                                                <track kind="captions" label="Thailand" srclang="th" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"> -->
+                                                        <track kind="captions" label="Thailand" srclang="th" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"> -->
                                                         <!-- Fallback for browsers that don't support the <video> element -->
                                                         <center class="mt-2" style="font-size: 18px">
                                                                 <a href="<?php echo base_url('video/abc.mp4'); ?>" download><i class="far fa-arrow-alt-circle-down"></i> Download</a>

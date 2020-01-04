@@ -49,7 +49,7 @@ $(document).ready(function() {
     ];
 
     var inModelPermis = [
-        ['video', 'video', 'video', 'วิดีโอ'],
+        ['video', 'video', 'video', 'สื่อสารสนเทศ'],
         ['upload', 'upload', 'upload', 'อัปโหลด'],
         ['download', 'download', 'download', 'ดาวน์โหลด'],
         ['point', 'point', 'point', 'คะแนน'],
