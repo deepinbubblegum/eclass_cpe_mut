@@ -185,12 +185,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         ?>
 
                                                         <?php
-                                                        if (substr($bitSide, 4, 1) == '1' || $bitSide == '0') {
-                                                                echo '<a class="nav-item nav-link" id="quiz_vote" href="'; echo base_url('te_select/quiz_vote/') . $subject_id . '-' . $semester. '">
+                                                        if (substr($bitSide, 5, 1) == '1' || $bitSide == '0') {
+                                                                echo '<a class="nav-item nav-link" id="quiz" href="'; echo base_url('te_select/quiz/') . $subject_id . '-' . $semester. '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;แบบทดสอบ & โหวต
+                                                                        &nbsp;&nbsp;ควิซ
+                                                                </span>
+                                                                </a>';
+                                                        }
+                                                        ?>
+                                                        <?php
+                                                        if (substr($bitSide, 4, 1) == '1' || $bitSide == '0') {
+                                                                echo '<a class="nav-item nav-link" id="vote" href="'; echo base_url('te_select/vote/') . $subject_id . '-' . $semester. '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-poll"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;โหวต
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -207,7 +218,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <?php
                                                         if (substr($bitSide, 6, 1) == '1' || $bitSide == '0') {
-                                                                echo '<a class="nav-item nav-link" id="point_request" href="'; echo base_url('te_select/point_request/') . $subject_id . '-' . $semester. '">
+                                                                echo '<a class="nav-item nav-link" id="pointRequest" href="'; echo base_url('te_select/point_request/') . $subject_id . '-' . $semester. '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star"></i></span>
                                                                 <span style="font-size: 1.2em;">

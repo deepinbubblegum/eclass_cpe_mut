@@ -100,7 +100,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         ?>
 
                                                         <?php
-                                                        if (substr($bit, 4, 1) == '1' || $bit == '0') {
+                                                        if (substr($bit, 5, 1) == '1' || $bit == '0') {
                                                                 echo '<a class="nav-item nav-link" id="quiz" href="'; echo base_url('te_select/quiz/') . $subject_id . '-' . $semester. '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
@@ -133,7 +133,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <?php
                                                         if (substr($bit, 6, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="point_request" href="'; echo base_url('te_select/point_request/') . $subject_id . '-' . $semester. '">
+                                                                echo '<a class="nav-item nav-link" id="pointRequest" href="'; echo base_url('te_select/point_request/') . $subject_id . '-' . $semester. '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star"></i></span>
                                                                 <span style="font-size: 1.2em;">
