@@ -437,6 +437,7 @@ $(document).ready(function() {
                     $('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
                         console.log('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         showPoint(getField[popUp][i].setpoint_setpoint_id, popUp);
+                        $('#show_txt_score').text(getField[popUp][i].setpoint_mininame);
                         $('#showPoint').modal('show');
                     });
                     $('#addTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
@@ -479,6 +480,7 @@ $(document).ready(function() {
                         console.log('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         parentTK = response[i].setpoint_setpoint_id;
                         childTK = response[i].setpoint_id;
+                        $("#mininame").text(getField[popUp][i].setpoint_mininame);
                         $('#genTicket').modal('show');
                     });
                     $('#delField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {

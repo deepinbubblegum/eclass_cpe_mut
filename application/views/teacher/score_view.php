@@ -192,7 +192,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <form id="genTicketField">
                                 <div class="modal-content">
                                         <div class="modal-header">
-                                                <h5 class="modal-title" id="genTicketLabel">Gen Ticket Modal</h5>
+                                                <h5 class="modal-title" id="genTicketLabel">Gen Ticket Modal <span id="mininame"></span></h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -254,7 +254,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <form>
                                 <div class="modal-content">
                                         <div class="modal-header">
-                                                <h5 class="modal-title" id="showPointLabel">Show Score</h5>
+                                                <h5 class="modal-title" id="showPointLabel">Show Score <span id="model_score_tittle"></span></h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                 </button>
