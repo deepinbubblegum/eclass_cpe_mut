@@ -27,6 +27,9 @@ $(document).ready(function() {
                     //console.log('IF -1');
                     $('#txtShowReturn').addClass('text-danger');
                     $('#txtShowReturn').text('*ช่องคะแนนถูกปิดแล้ว');
+                } else if (response == '-3') {
+                    $('#txtShowReturn').addClass('text-danger');
+                    $('#txtShowReturn').text('*นักศึกษากรอกคะแนนแล้ว');
                 } else {
                     //console.log('dafug?');
                     $('#txtShowReturn').addClass('text-secondary');

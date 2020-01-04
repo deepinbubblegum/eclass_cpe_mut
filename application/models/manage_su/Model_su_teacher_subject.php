@@ -55,16 +55,26 @@ class Model_su_teacher_subject extends CI_Model
         }
     }
 
-    public function Add_data_model($data)
+    public function Add_data_model($subject, $teacher)
     {
-        $this->db->insert('teacher_subject', $data);
+        // $this->db->insert('teacher_subject', $data);
+        $major = $this->db->query('SELECT subject_major FROM subject WHERE subject_id = "'.$subject.'" ');
+        $chkMajor = $major->row()->subject_major;
+        $this->db->query('INSERT INTO teacher_subject VALUES("'.$subject.'" , "'.$teacher.'", "'.$chkMajor.'")');
     }
 
 
-    public function Edit_data_model($org_subject, $user_data, $data)
+    public function Edit_data_model($org_subject, $org_teacher, $subject, $teacher)
     {
+        $major = $this->db->query('SELECT subject_major FROM subject WHERE subject_id = "'.$subject.'" ');
+        $chkMajor = $major->row()->subject_major;
+        $data = array(
+            'teasub_subjectid' => $subject,
+            'teasub_teacherid' => $teacher,
+            'teasub_major' => $chkMajor,
+        );
         $this->db->where('teasub_subjectid', $org_subject);
-        $this->db->where('teasub_teacherid', $user_data);
+        $this->db->where('teasub_teacherid', $org_teacher);
         $this->db->update('teacher_subject', $data);
     }
 

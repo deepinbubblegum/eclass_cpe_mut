@@ -32,17 +32,37 @@ class Model_std_ticket extends CI_Model
                     return '-2';
                 }else if($row2->setpoint_ticket == 1){
                     if($row->userId == null){
-                        $this->db->query("
-                        insert into subject_point_student 
-                        values(
-                        '" . $row->semester . "',
-                        '" . $row->subject . "',
-                        '" . $row->pointMenu . "',
-                        '" . $row->pointField . "',
-                        '" . $userId . "',
-                        '" . $ticket . "',
-                        '" . $row->point . 
-                        "')");
+
+                        $chkMulyi = $this->db->query('SELECT setpoint_multi AS multi FROM `subject_setpoint` WHERE setpoint_semester = "' . $row->semester . '" AND setpoint_subject = "' . $row->subject . '" 
+                        AND setpoint_id = "' . $row->pointMenu . '" AND setpoint_setpoint_id = "' . $row->pointField . '" ');
+                        $multi = $chkMulyi->row()->multi;
+
+                        if ($multi == 0) {
+                            $stdchk = $this->db->query('SELECT point_std_user_id AS std FROM subject_point_student WHERE point_std_semester = "' . $row->semester . '" AND point_std_subject = "' . $row->subject . '" 
+                            AND point_std_id = "' . $row->pointMenu . '" AND point_std_setpoint_id = "' . $row->pointField . '" AND point_std_user_id = "' . $userId . '" AND point_std_index NOT LIKE "no_%" ');
+                            // $std = $stdchk->row()->std;
+                            if ($stdchk->num_rows() > 0) {
+                                return '-3';
+                            } else {
+                                $this->db->query("insert into subject_point_student 
+                                values('" . $row->semester . "','" . $row->subject . "','" . $row->pointMenu . "','" . $row->pointField . "','" . $userId . "','" . $ticket . "','" . $row->point . "')");
+                            }
+                        } else {
+                            $this->db->query("insert into subject_point_student 
+                            values('" . $row->semester . "','" . $row->subject . "','" . $row->pointMenu . "','" . $row->pointField . "','" . $userId . "','" . $ticket . "','" . $row->point . "')");
+                        }
+
+                        // $this->db->query("
+                        // insert into subject_point_student 
+                        // values(
+                        // '" . $row->semester . "',
+                        // '" . $row->subject . "',
+                        // '" . $row->pointMenu . "',
+                        // '" . $row->pointField . "',
+                        // '" . $userId . "',
+                        // '" . $ticket . "',
+                        // '" . $row->point . 
+                        // "')");
              
                         $this->db->set('userId', $userId);
                         $this->db->where('token', $ticket);

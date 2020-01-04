@@ -47,10 +47,6 @@ class Model_te_subject_point extends CI_Model
 
     public function insertPoint($semester, $subject, $id, $setpoint_id, $user_id, $point)
     {
-        $chkMulyi = $this->db->query('SELECT setpoint_multi AS multi FROM `subject_setpoint` WHERE setpoint_semester = "' . $semester . '" AND setpoint_subject = "' . $subject . '" 
-        AND setpoint_id = "' . $id . '" AND setpoint_setpoint_id = "' . $setpoint_id . '" ');
-        $multi = $chkMulyi->row()->multi;
-
         $qIndex = $this->db->query("
         select IFNULL(lpad(lpad(max(substr(point_std_index,4,3))+1,3,'0'),6,'no_'),'no_001') as newIndex
         from subject_point_student
@@ -59,25 +55,35 @@ class Model_te_subject_point extends CI_Model
         ");
         $newIndex = $qIndex->row()->newIndex;
 
-        if ($multi == 0) {
-            $stdchk = $this->db->query('SELECT point_std_user_id AS std FROM subject_point_student WHERE point_std_semester = "' . $semester . '" AND point_std_subject = "' . $subject . '" 
-            AND point_std_id = "' . $id . '" AND point_std_setpoint_id = "' . $setpoint_id . '" AND point_std_user_id = "' . $user_id . '" AND point_std_index LIKE "no_%" ');
-            // $std = $stdchk->row()->std;
-            if ($stdchk->num_rows() > 0) {
-                return 'รหัสนักศึกษาซ้ำ';
-            } else {
-                $this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','" . $newIndex . "','" . $point . "')");
-                return 'เพิ่มคะแนนแล้ว';
-            }
-        } else {
-            $this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','" . $newIndex . "','" . $point . "')");
-            return 'เพิ่มคะแนนแล้ว';
-        }
+        $this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','" . $newIndex . "','" . $point . "')");
+        return 'เพิ่มคะแนนแล้ว';
 
-        //$this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','".$newIndex."','" . $point . "')");
+        // $chkMulyi = $this->db->query('SELECT setpoint_multi AS multi FROM `subject_setpoint` WHERE setpoint_semester = "' . $semester . '" AND setpoint_subject = "' . $subject . '" 
+        // AND setpoint_id = "' . $id . '" AND setpoint_setpoint_id = "' . $setpoint_id . '" ');
+        // $multi = $chkMulyi->row()->multi;
 
-        // return ($this->db->affected_rows() != 1) ? false : true; 
-        //$this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','" . $newIndex . "','" . $point . "')");
+        // $qIndex = $this->db->query("
+        // select IFNULL(lpad(lpad(max(substr(point_std_index,4,3))+1,3,'0'),6,'no_'),'no_001') as newIndex
+        // from subject_point_student
+        // where point_std_user_id='" . $user_id . "' and point_std_semester = '" . $semester . "' and point_std_subject='" . $subject . "' and point_std_setpoint_id = '" . $setpoint_id . "' 
+        // and point_std_id = '" . $id . "' AND point_std_index LIKE 'no_%' ;
+        // ");
+        // $newIndex = $qIndex->row()->newIndex;
+
+        // if ($multi == 0) {
+        //     $stdchk = $this->db->query('SELECT point_std_user_id AS std FROM subject_point_student WHERE point_std_semester = "' . $semester . '" AND point_std_subject = "' . $subject . '" 
+        //     AND point_std_id = "' . $id . '" AND point_std_setpoint_id = "' . $setpoint_id . '" AND point_std_user_id = "' . $user_id . '" AND point_std_index LIKE "no_%" ');
+        //     // $std = $stdchk->row()->std;
+        //     if ($stdchk->num_rows() > 0) {
+        //         return 'รหัสนักศึกษาซ้ำ';
+        //     } else {
+        //         $this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','" . $newIndex . "','" . $point . "')");
+        //         return 'เพิ่มคะแนนแล้ว';
+        //     }
+        // } else {
+        //     $this->db->query("insert into subject_point_student values('" . $semester . "','" . $subject . "','" . $id . "','" . $setpoint_id . "','" . $user_id . "','" . $newIndex . "','" . $point . "')");
+        //     return 'เพิ่มคะแนนแล้ว';
+        // }
     }
 
     public function insertField($semester, $subject_id, $pointId, $ticket, $fullName, $miniName, $maxPoint, $option, $pointMulti)
