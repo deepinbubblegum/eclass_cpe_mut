@@ -514,7 +514,11 @@ $(document).ready(function() {
         });
     }
 
+    var DelFile = '';
+    var DelUrl = '';
+
     function showUploaded(popUp) {
+        var txt;
         $.ajax({
             url: '/' + url[3] + '/Te_uploaded/showDownloadList/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId,
             dataType: "json",
@@ -523,10 +527,17 @@ $(document).ready(function() {
                 var html = "";
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        if (response[i].fileName.length > 87) {
+                            txt = response[i].fileName.substr(0, 87);
+                            txt += '..';
+                        } else {
+                            txt = response[i].fileName;
+                        }
+
                         html +=
-                            '<li href="#" class="sortableItem list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2" data1="' + getUploaded[popUp].menuDowId + '" data2="' + response[i].fileName + '" id="UploadedFile' + i + '">' +
+                            '<li href="#" class="sortableItem list-group-item d-flex flex-wrap justify-content-between align-items-center list-group-item-action mb-2 mt-2" data1="' + getUploaded[popUp].menuDowId + '" data2="' + response[i].fileName + '" id="UploadedFile' + i + '">' +
                             '<span class="mr-2 mb-0" style="font-size: 28px;">' + file_ico(response[i].fileType) +
-                            '<span class="mr-2 text-black" style="font-size: 18px;"> ' + response[i].fileName + '</span>' +
+                            '<span class="mr-2 text-black" style="font-size: 18px;"> ' + txt + '</span>' +
                             '<div class="mt-0">' +
                             '<small class="mr-2 text-black-50" style="font-size: 12px;"> Size : ' + fileSizeCal(response[i].fileSize) + '</small>' +
                             '<small class="mr-2 text-black-50" style="font-size: 12px;"> Type : ' + response[i].fileType + '</small>' +
@@ -537,8 +548,9 @@ $(document).ready(function() {
                             '<!-- <a class="btn btn-float btn-danger my-1"><i class="far fa-trash-alt"></i></a>' +
                             '<a class="btn btn-float btn-success my-1"><i class="fas fa-check"></i></a>' +
                             '<a class="btn btn-float btn-danger my-1"><i class="fas fa-undo-alt"></i></a>-->' +
-                            '<a class="btn btn-success mr-1" href="/Te_uploaded/download/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId + '-' + response[i].fileName + '">download</a>' +
-                            '<a class="btn btn-danger mr-1" href="/Te_uploaded/delete/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId + '-' + response[i].fileName + '">delete</a>' +
+                            '<a class="btn btn-block btn-success mr-1" href="/Te_uploaded/download/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId + '-' + response[i].fileName + '">download</a>' +
+                            //'<a class="btn btn-block btn-danger mr-1" href="/Te_uploaded/delete/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId + '-' + response[i].fileName + '">delete</a>' +
+                            '<a class="btn btn-block btn-danger mr-1" id="DelFile-' + getUploaded[popUp].menuDowId + '-' + i + '" href="#">delete</a>' +
                             '</span>' +
                             '</li>';
                     }
@@ -546,11 +558,59 @@ $(document).ready(function() {
                 $('#menuDowId-' + getUploaded[popUp].menuDowId).html(html);
                 sort();
                 sortMenu();
+
+                $.each(response, function(i, v) {
+                    $('#DelFile-' + getUploaded[popUp].menuDowId + '-' + i).click(function(e) {
+                        DelUrl = '/' + url[3] + '/Te_uploaded/delete/' + subject_id + '-' + semester + '-' + getUploaded[popUp].menuDowId + '-' + response[i].fileName;
+                        thisButton = '#DelFile-' + getUploaded[popUp].menuDowId + '-' + i;
+                        // delFile(DelUrl);
+                        $('#txtDelFile').text(response[i].fileName);
+                        $("#ModalDeleteFile").modal('show');
+                    });
+                });
+
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
+    }
+    thisButton = '';
+    $('#DeleteFile').click(function() {
+        delFile(DelUrl);
+    });
+
+    function delFile(DelUrl) {
+        $.ajax({
+            url: DelUrl,
+            dataType: "json",
+            success: function(response) {
+                console.log(DelUrl);
+                var RemoveFile = DelUrl.split('-')[3];
+                console.log(RemoveFile)
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: response
+                });
+                $(thisButton).parent().parent().remove();
+            },
+            error: function(response) {
+                if (response != 'ไม่สามารถลบไฟล์ได้') { returnTxt = 'ไม่พบไฟล์บนระบบ โปรดติดต่อผู้ดูแลระบบ' } else { returnTxt = response };
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: returnTxt
+                });
+            },
+        });
+        $("#ModalDeleteFile").modal('hide');
     }
 
 

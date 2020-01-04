@@ -92,8 +92,8 @@ class Model_te_add_subject extends CI_Model
         if ($queryPoint->num_rows() > 0) {
             foreach ($queryPoint->result_array() as $row) {
                 $dataPoint_id[] = $row['point_id'];
-                $this->db->query('INSERT INTO subject_point(point_semester, point_subject, point_id,point_name, point_discription, point_StdView)
-                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['point_id'] . '", "' . $row['point_name'] . '" , "' . $row['point_discription'] . '" , "' . $row['point_StdView'] . '") ');
+                $this->db->query('INSERT INTO subject_point(point_semester, point_subject, point_id,point_name, point_discription, point_StdView, point_Index)
+                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['point_id'] . '", "' . $row['point_name'] . '" , "' . $row['point_discription'] . '" , "' . $row['point_StdView'] . '" , "'.$row['point_Index'].'") ');
             }
             if (count($dataPoint_id) != 0) {
                 for ($i = 0; $i <  count($dataPoint_id); $i++) {
@@ -114,17 +114,17 @@ class Model_te_add_subject extends CI_Model
         if ($queryDow->num_rows() > 0) {
             foreach ($queryDow->result_array() as $row) {
                 $dataDowload[] = $row['menuDowId'];
-                $this->db->query('INSERT INTO menuDownload(menuDowSemesterId,menuDowSubjectId,menuDowId,menuDowName,menuDowDescrpition)
-                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['menuDowId'] . '", "' . $row['menuDowName'] . '" , "' . $row['menuDowDescrpition'] . '") ');
+                $this->db->query('INSERT INTO menuDownload(menuDowSemesterId,menuDowSubjectId,menuDowId,menuDowName,menuDowDescrpition,menuDowIndex)
+                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['menuDowId'] . '", "' . $row['menuDowName'] . '" , "' . $row['menuDowDescrpition'] . '" , "'.$row['menuDowIndex'].'") ');
             }
             if (count($dataDowload) != 0) {
                 for ($i = 0; $i <  count($dataDowload); $i++) {
                     $queryFileDow = $this->db->query('SELECT * FROM fileDownload WHERE fileSemesterId = "' . $SemCopy . '" AND fileSubjectId = "' . $SubCopy . '" AND fileMenuDowId = "' . $dataDowload[$i] . '"');
                     if ($queryFileDow->num_rows() > 0) {
                         foreach ($queryFileDow->result_array() as $row) {
-                            $this->db->query('INSERT INTO fileDownload(fileSemesterId, fileSubjectId, fileMenuDowId, fileUserId, fileName, fileSize, fileType, fileTimestamp) 
+                            $this->db->query('INSERT INTO fileDownload(fileSemesterId, fileSubjectId, fileMenuDowId, fileUserId, fileName, fileSize, fileType, fileTimestamp, fileIndex) 
                             VALUES("'.$semester.'", "'.$subject_id.'" , "'.$dataDowload[$i].'" , "'.$te_id.'" , 
-                            "'.$row['fileName'].'" , "'.$row['fileSize'].'" , "'.$row['fileType'].'" , NOW() ) ');
+                            "'.$row['fileName'].'" , "'.$row['fileSize'].'" , "'.$row['fileType'].'" , NOW() , "'.$row['fileIndex'].'") ');
                         }
                     }
                     // $getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);

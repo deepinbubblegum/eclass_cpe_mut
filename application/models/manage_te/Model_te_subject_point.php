@@ -90,7 +90,7 @@ class Model_te_subject_point extends CI_Model
         $newid = $maxid->row()->newid;
 
         $maxindex = $this->db->query("
-        select IFNULL(max(setpoint_index),0)+1 as newindex
+        select IFNULL(max(CAST(setpoint_index AS int)),0)+1 as newindex
         from subject_setpoint
         where setpoint_semester = '" . $semester . "' and setpoint_subject='" . $subject_id . "' and setpoint_id = '" . $pointId . "'; ");
         $maxindex = $maxindex->row()->newindex;
@@ -124,16 +124,34 @@ class Model_te_subject_point extends CI_Model
 
     public function insertMenu($semester, $subject, $Header, $Description, $StdView)
     {
-        $MaxIndex = $this->db->query('SELECT IFNULL(max(point_Index)+1,"1") AS newIndex FROM subject_point where point_semester = "'.$semester.'" and point_subject="'.$subject.'" ');
+        $MaxIndex = $this->db->query('SELECT IFNULL(max(CAST(point_Index AS int))+1,"1") AS newIndex FROM subject_point where point_semester = "'.$semester.'" and point_subject="'.$subject.'" ');
         $newindex = $MaxIndex->row()->newIndex;
 
         $maxid = $this->db->query("
-            select IFNULL(max(point_id),0)+1 as newid
+            select IFNULL(max(CAST(point_id AS int)),0)+1 as newid
             from subject_point
             where point_semester = '" . $semester . "' and point_subject='" . $subject . "';
         ");
         $newid = $maxid->row()->newid;
         $this->db->query('insert into subject_point values("' . $semester . '","' . $subject . '","' . $newid . '","' . $Header . '","' . $Description . '" , "'.$StdView.'" , "'.$newindex.'");');
+    }
+
+    public function insertMenuSpecial($semester, $subject, $Header, $Description, $StdView)
+    {
+        $chkMenu = $this->db->query('SELECT * FROM `subject_point` WHERE point_semester = "'.$semester.'" AND point_subject = "'.$subject.'" ');
+        if ($chkMenu->num_rows() > 0) {
+            return 0;
+        }else{
+            $MaxIndex = $this->db->query('SELECT IFNULL(max(CAST(point_Index AS int))+1,"1") AS newIndex FROM subject_point where point_semester = "'.$semester.'" and point_subject="'.$subject.'" ');
+            $newindex = $MaxIndex->row()->newIndex;
+
+            $maxid = $this->db->query(" select IFNULL(max(CAST(point_id AS int)),0)+1 as newid
+                from subject_point
+                where point_semester = '" . $semester . "' and point_subject='" . $subject . "' ");
+            $newid = $maxid->row()->newid;
+            $this->db->query('insert into subject_point values("' . $semester . '","' . $subject . '","' . $newid . '","' . $Header . '","' . $Description . '" , "'.$StdView.'" , "'.$newindex.'");');
+            return 1;
+        }
     }
 
     public function editMenu($semester, $subject, $Header, $Description, $editID ,$StdView)

@@ -26,7 +26,7 @@ $(document).ready(function() {
                             '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
                             '<div class="expansion-panel-body">' +
                             /* --------BTN-------- */
-                            '<span style="font-size: 1.7em;"><a href="/select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].point_id + '" target="_blank" id="showInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a href="/Select_Special/scoreTable/' + subject_id + '-' + semester + '-' + response[i].point_id + '" target="_blank" id="showInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].point_discription +

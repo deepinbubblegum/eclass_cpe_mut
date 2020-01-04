@@ -13,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         semester = '<?php echo $semester; ?>';
     </script>
     <?php
-    echo assets_js('aegis_js/manage_te/te_add_permission.js');
+    echo assets_js('aegis_js/manage_te/te_add_permission_special.js');
     ?>
 </head>
 
@@ -66,47 +66,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="modal-footer">
                         <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="button" id="btnSave" class="btn btn-primary">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Modal -->
-
-        <!-- Modal CSV-->
-        <div class="modal fade text-left" id="Modalcsv" tabindex="-1" role="dialog" aria-labelledby="Modalcsv" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="saveModalTxt">เพิ่มไฟล์ CSV</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="needs-validation" novalidate>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Upload</span>
-                                </div>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="inputFile" name="inputFile" enctype="multipart/form-data" accept=".csv, text/csv" />
-                                    <label class="custom-file-label" for="inputFile">Choose file</label>
-                                </div>
-                                <!-- <div class="col-md-4 mb-3">
-                                    <label>Permission</label>
-                                    <select id="permissionSelectAddcsv" class="form-control"></select>
-                                </div> -->
-                            </div>
-                        </form>
-
-                        <div class="progress mt-2" id="progressupload">
-                        </div>
-
-                        <ul class="list-group mt-2" id="filedetail">
-                        </ul>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" id="btnUpload" class="btn btn-primary">Upload</button>
                     </div>
                 </div>
             </div>

@@ -110,10 +110,10 @@ class Te_uploaded extends MY_Controller
         );
         $filePath = '/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Downloads' . '/' . $data['menu_id'] . '/' . $data['fileName'];
         if (unlink($filePath)) {
-            echo 'deleted successfully';
+            echo json_encode('ลบไฟล์สำเร็จ');
             $this->Model_te_uploaded->fileDelete($data['subject_id'], $data['semester'], $data['menu_id'], $data['fileName']);
         } else {
-            echo 'errors occured';
+            echo json_encode('ไม่สามารถลบไฟล์ได้');
         }
         //$getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
         //force_download($data['fileName'], $getFile);

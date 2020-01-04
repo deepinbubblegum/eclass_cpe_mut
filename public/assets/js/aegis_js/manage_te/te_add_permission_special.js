@@ -49,16 +49,10 @@ $(document).ready(function() {
     ];
 
     var inModelPermis = [
-        ['video', 'video', 'video', 'วิดีโอ'],
-        ['upload', 'upload', 'upload', 'อัปโหลด'],
-        ['download', 'download', 'download', 'ดาวน์โหลด'],
         ['point', 'point', 'point', 'คะแนน'],
-        ['vote', 'vote', 'vote', 'โหวต'],
-        ['quiz', 'quiz', 'quiz', 'แบบทดสอบ'],
-        ['pointRequest', 'pointRequest', 'pointRequest', 'นักศึกษาแลกคะแนน'],
+        ['point_request', 'point_request', 'point_request', 'แลกคะแนนคะแนน'],
         ['permission', 'permission', 'permission', 'เพิ่มระดับสิทธิ์อาจารย์ผู้ช่วย'],
-        ['assist', 'assist', 'assist', 'เพิ่มอาขารย์ผู้ช่วย'],
-        ['std', 'std', 'std', 'เพิ่มนักศึกษาในวิชา'],
+        ['assist', 'assist', 'assist', 'เพิ่มอาจารย์ผู้ช่วย'],
     ];
 
     var popData = ["#popupName"];

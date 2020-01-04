@@ -28,5 +28,12 @@ class Std_subject extends MY_Controller
             $result = $this->Model_std_subject->selectSubject($data,$userID);
             echo json_encode($result);
         }
+
+        public function getSubject_special()
+        {
+            $data = $this->input->post('data');
+            $result = $this->Model_std_subject->selectSubject_special($data);
+            echo json_encode($result);
+        }
          
 }

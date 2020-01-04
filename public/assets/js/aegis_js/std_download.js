@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var url = $(location).attr('href').split("/");
 
     function file_ico(type) {
@@ -95,7 +95,7 @@ $(document).ready(function () {
         $.ajax({
             url: '/' + url[3] + '/Std_download/showMenuDownload/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 getMenu = response;
                 console.log(response);
                 var html = '';
@@ -134,18 +134,27 @@ $(document).ready(function () {
     }
 
     function show_data(popUp) {
+        var txt = '';
         $.ajax({
             url: '/' + url[3] + '/Std_download/showDownloadList/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuDowId,
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 getData = response;
                 var html = "";
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+
+                        if (response[i].fileName.length > 90) {
+                            txt = response[i].fileName.substr(0, 90);
+                            txt += '..';
+                        } else {
+                            txt = response[i].fileName;
+                        }
+
                         html +=
                             '<li href="#" class="list-group-item d-flex flex-wrap justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
                             '<span class="mr-2 mb-0" style="font-size: 28px;">' + file_ico(response[i].fileType) +
-                            '<span class="mr-2 text-black" style="font-size: 18px;"> ' + response[i].fileName + '</span>' +
+                            '<span class="mr-2 text-black" style="font-size: 18px;">' + txt + '</span>' +
                             '<div class="mt-0">' +
                             '<small class="mr-2 text-black-50" style="font-size: 12px;"> Size : ' + fileSizeCal(response[i].fileSize) + '</small>' +
                             '<small class="mr-2 text-black-50" style="font-size: 12px;"> Type : ' + response[i].fileType + '</small>' +
@@ -163,7 +172,7 @@ $(document).ready(function () {
                 }
                 $('#menuDowId-' + getMenu[popUp].menuDowId).html(html);
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });

@@ -44,6 +44,12 @@ class Te_teacher_assist extends MY_Controller
         echo json_encode($result);
     }
 
+    public function Teacher__Special_Data_Add()
+    {
+        $result = $this->Model_te_assist->Teacher__Specail_Add();
+        echo json_encode($result);
+    }
+
     public function Permission_Data_Add()
     {
         $subject_id = $this->input->post('subject_id');

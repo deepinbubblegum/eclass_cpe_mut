@@ -17,14 +17,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </script>
 
         <?php
-                // print_r($this->session->userdata());
-                $bit = $this->session->userdata('ses_permission');
-                // echo substr($bit, 2, 1);
-                // echo "///";
-                // echo $bit;
+        // print_r($this->session->userdata());
+        $bit = $this->session->userdata('ses_permission');
+        // echo substr($bit, 2, 1);
+        // echo "///";
+        // echo $bit;
         ?>
-
-        <?php echo assets_js('aegis_js/manage_te/te_read_point_request.js'); ?>
 
 </head>
 
@@ -42,7 +40,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         &nbsp;&nbsp;เลือกรายวิชา
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('te_select/annouce/') . $subject_id . '-' . $semester; ?>">
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('Te_select_special/annouce/') . $subject_id . '-' . $semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-chalkboard"></i></span>
                                                                 <span style="font-size: 1.2em;">
@@ -51,8 +49,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         </a>
 
                                                         <?php
-                                                        if (substr($bit, 3, 1) == 1 || $bit == 0) {
-                                                                echo '<a class="nav-item nav-link" id="score" href="'; echo base_url('te_select/score/') . $subject_id . '-' . $semester .'">
+                                                        if (substr($bit, 0, 1) == 1 || $bit == 0) {
+                                                                echo '<a class="nav-item nav-link" id="score" href="';
+                                                                echo base_url('Te_select_special/score/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star-half-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
@@ -62,56 +61,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         }
                                                         ?>
 
+
                                                         <?php
                                                         if (substr($bit, 1, 1) == 1 || $bit == 0) {
-                                                                echo '<a class="nav-item nav-link" id="downloads" href=" '; echo base_url('te_select/downloads/') . $subject_id . '-' . $semester. '">
+                                                                echo '<a class="nav-item nav-link" id="special_point" href="';
+                                                                echo base_url('Te_select_special/special_point/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-download"></i></span>
+                                                                        <i class="fas fa-star-half-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;อับโหลด
+                                                                        &nbsp;&nbsp;แลกคะแนน
                                                                 </span>
                                                                 </a>';
                                                         }
                                                         ?>
 
-                                                        <?php
-                                                        if (substr($bit, 2, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="uploads" href=" ';  echo base_url('te_select/uploads/') . $subject_id . '-' . $semester. '">
-                                                                <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-upload"></i></span>
-                                                                <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ดาวน์โหลด
-                                                                </span>
-                                                                </a>';
-                                                        }
-                                                        ?>
-                                                        
-                                                        
-                                                        <?php
-                                                        if (substr($bit, 0, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="videos" href="'; echo base_url("te_select/videos/") . $subject_id . '-' . $semester. '">
-                                                                <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-play"></i></span>
-                                                                <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;วิดีโอ
-                                                                </span>
-                                                                </a>';
-                                                        }
-                                                        ?>
 
-                                                        <?php
-                                                        if (substr($bit, 4, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="quiz_vote" href="'; echo base_url('te_select/quiz_vote/') . $subject_id . '-' . $semester. '">
-                                                                <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-poll"></i></span>
-                                                                <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;แบบทดสอบ & โหวต
-                                                                </span>
-                                                                </a>';
-                                                        }
-                                                        ?>
-                                                                                            
-                                                        
                                                         <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-stopwatch"></i></span>
@@ -119,25 +83,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         &nbsp;&nbsp;นาฬิกาจับเวลา
                                                                 </span>
                                                         </a>
-
-                                                        <?php
-                                                        if (substr($bit, 6, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="point_request" href="'; echo base_url('te_select/point_request/') . $subject_id . '-' . $semester. '">
-                                                                <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-star"></i></span>
-                                                                <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;นักศึกษาขอแลกคะแนน
-                                                                </span>
-                                                                <span class="badge badge-primary badge-pill" id="txtReadSide"> </span>
-                                                                </a>';
-                                                        }
-                                                        ?>
-
                                                         <div class="navdrawer-divider" id="line"></div>
 
                                                         <?php
-                                                        if(substr($bit, 7, 1) == '1' || $bit == '0'){
-                                                                echo '<a class="nav-item nav-link" id="add_permission" href="'; echo base_url('te_select/add_permission/') . $subject_id . '-' . $semester .'">
+                                                        if (substr($bit, 2, 1) == 1 || $bit == '0') {
+                                                                echo '<a class="nav-item nav-link" id="add_permission" href="';
+                                                                echo base_url('Te_select_special/add_permission/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-user-shield"></i></span>
                                                                 <span style="font-size: 1.2em;">
@@ -148,24 +99,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         ?>
 
                                                         <?php
-                                                        if(substr($bit, 8, 1) == '1' || $bit == '0'){
-                                                                echo '<a class="nav-item nav-link" id="add_teacher_assist" href="'; echo base_url('te_select/add_teacher_assist/') . $subject_id . '-' . $semester. '">
+                                                        if (substr($bit, 3, 1) == 1 || $bit == '0') {
+                                                                echo '<a class="nav-item nav-link" id="add_teacher_assist" href="';
+                                                                echo base_url('Te_select_special/add_teacher_assist/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;เพิ่มอาจารย์ผู้ช่วย
-                                                                </span>
-                                                                </a>';
-                                                        }
-                                                        ?>
-
-                                                        <?php
-                                                        if(substr($bit, 9, 1) == '1' || $bit == '0'){
-                                                                echo '<a class="nav-item nav-link" id="add_student" href="'; echo base_url('te_select/add_student/') . $subject_id . '-' . $semester. '">
-                                                                <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-users"></i></span>
-                                                                <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เพิ่มนักศึกษาในวิชา
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -186,7 +126,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                         </a> -->
                                                         <div class="navdrawer-divider"></div>
-                                                        <!-- <a class="nav-item nav-link" href="<?php echo base_url('te_select/menu/') . $subject_id . '-' . $semester; ?>">
+                                                        <!-- <a class="nav-item nav-link" href="<?php echo base_url('Te_select_special/menu/') . $subject_id . '-' . $semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-plus-square"></i></span>
                                                                 <span style="font-size: 1.2em;">

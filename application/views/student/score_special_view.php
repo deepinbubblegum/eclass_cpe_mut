@@ -12,7 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 subject_id =  '<?php echo $subject_id; ?>';
                 semester =  '<?php echo $semester; ?>';
         </script>
-        <?php echo assets_js('aegis_js/std_score.js'); ?>
+        <?php echo assets_js('aegis_js/std_score_special.js'); ?>
         <style>
                 .f34r-bg-n-txt {
                         background-color: rgba(0, 150, 136, 0.7);
