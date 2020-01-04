@@ -60,11 +60,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         &nbsp;&nbsp;วิดีโอ
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('select/quiz_vote/').$subject_id.'-'.$semester; ?>">
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('select/quiz/').$subject_id.'-'.$semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;แบบทดสอบ & โหวต
+                                                                        &nbsp;&nbsp;แบบทดสอบ
+                                                                </span>
+                                                        </a>
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('select/vote/').$subject_id.'-'.$semester; ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-poll"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;โหวต
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">

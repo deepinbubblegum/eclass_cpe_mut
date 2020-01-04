@@ -9,10 +9,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <script>
-                subject_id = '<?php echo $subject_id; ?>';
-                semester = '<?php echo $semester; ?>';
+                subject_id =  '<?php echo $subject_id; ?>';
+                semester =  '<?php echo $semester; ?>';
         </script>
-        <?php echo assets_js('aegis_js/manage_te/te_quiz.js'); ?>
+        <?php echo assets_js('aegis_js/manage_te/te_vote.js'); ?>
         <style>
                 .f34r-bg-n-txt {
                         background-color: rgba(0, 150, 136, 0.7);
@@ -77,33 +77,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                         <div class="modal-body">
                                                 <div class="form-group">
-                                                        <label for="Textarea">หัวข้อควิซ</label>
+                                                        <label for="Textarea">หัวข้อโหวต</label>
                                                         <input class="form-control" id="Headtext">
                                                 </div>
 
                                                 <div class="form-group">
-                                                        <label for="Textarea">รายละเอียดช่องควิซ</label>
+                                                        <label for="Textarea">รายละเอียดช่องโหวต</label>
                                                         <textarea class="form-control" id="Textarea" rows="5"></textarea>
                                                 </div>
 
                                                 <div class="form-group">
-                                                        <label for="Textarea" class="mt-3 mb-3">menuQuizStatus</label>
-                                                        <div class="custom-control custom-checkbox">
+                                                        <label for="Textarea" class="mt-3 mb-3">menuVoteStatus</label>
+                                                        <!-- <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox00">
-                                                                <label class="custom-control-label" for="checkBox00">สุ่มสลับตัวเลือกควิซ</label>
-                                                        </div>
+                                                                <label class="custom-control-label" for="checkBox00">สุ่มสลับตัวเลือกโหวต</label>
+                                                        </div> -->
                                                         <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox01">
-                                                                <label class="custom-control-label" for="checkBox01">ปิดไม่ให้นักศึกษาทำควิซ</label>
+                                                                <label class="custom-control-label" for="checkBox01">ปิดไม่ให้นักศึกษาทำโหวต</label>
                                                         </div>
-                                                        <div class="custom-control custom-checkbox" hidden>
+                                                        <!-- <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox02">
-                                                                <label class="custom-control-label" for="checkBox02">ปิดไม่ให้นักศึกษาดูคะแนนควิซ</label>
+                                                                <label class="custom-control-label" for="checkBox02">ปิดไม่ให้นักศึกษาดูคะแนนโหวต</label>
                                                         </div>
-                                                        <div class="custom-control custom-checkbox" hidden>
+                                                        <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox03">
-                                                                <label class="custom-control-label" for="checkBox03">ปิดไม่ให้นักศึกษาดูควิซที่ทำไปแล้ว</label>
-                                                        </div>
+                                                                <label class="custom-control-label" for="checkBox03">ปิดไม่ให้นักศึกษาดูโหวตที่ทำไปแล้ว</label>
+                                                        </div> -->
                                                 </div>
 
                                         </div>
@@ -130,8 +130,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                         <div class="modal-body">
                                                 <div class="form-group">
-                                                        <label for="Textarea">headerQuizName</label>
-                                                        <input class="form-control" id="addFieldHQN">
+                                                        <label for="Textarea">headerVoteName</label>
+                                                        <input class="form-control" id="addFieldHQN"> 
                                                 </div>
 
                                         </div>
@@ -144,44 +144,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
         </div>
         <!-- End MODAL_ADD_FIELD -->
-
-        <!-- EXPORT -->
-        <div class="modal fade bd-example-modal-lg" id="exportData" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                        <form id="formExportData">
-                                <div class="modal-content">
-                                        <div class="modal-header">
-                                                <h5 class="modal-title" id="exportLabel">Modal title</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                </button>
-                                        </div>
-                                        <div class="modal-body">
-                                                <div class="form-group">
-                                                        <div class="col-md-4 mb-3"> 
-                                                        <label for="Textarea">ชื่อช่องคะแนน</label>
-                                                        <input class="form-control" id="menuExportTxt">
-                                                        <label id='exportSame' class='text-danger'></label>
-                                                        <br>
-                                                        <label for="Textarea">ชื่อช่องคะแนน</label>
-                                                        <input class="form-control" id="menuExportMax" value="10">
-                                                        <br>
-                                                                <label>ส่งออกคะแนนไปที่เมนูคะแนน</label>
-                                                                <select id="menuPoint" class="form-control">
-                                                                </select>
-                                                        </div>
-                                                </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                                <button type="button" class="btn btn-dark" id="exportClose" data-dismiss="modal">ปิด</button>
-                                                <button type="button" class="btn btn-info" id="exportSave">บันทึกข้อมูล</button>
-                                        </div>
-                                </div>
-                        </form>
-                </div>
-        </div>
-        <!-- End EXPORT -->
 
         <!-- MODAL_TICKET -->
         <div class="modal fade bd-example-modal-lg" id="addChoice" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
@@ -196,10 +158,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                         <div class="modal-body">
                                                 <div class="form-group">
-                                                        <label for="Textarea">choiceQuizText</label>
-                                                        <input class="form-control" id="choiceQuizText">
-                                                        <label for="Textarea">choiceQuizPoint</label>
-                                                        <input class="form-control" id="choiceQuizPoint">
+                                                        <label for="Textarea">choiceVoteText</label>
+                                                        <input class="form-control" id="choiceVoteText">
+                                                        <label for="Textarea">choiceVotePoint</label>
+                                                        <input class="form-control" id="choiceVotePoint">
                                                 </div>
 
                                         </div>
@@ -234,21 +196,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
         </div>
         <!-- End Modal Delete -->
-
+        
         <div class="col text-center mt-3">
                 <nav class="navbar navbar-light " style="max-height: auto; min-width: 335px; background-color: #dadfe4;">
                         <div class="navbar-brand" href="#">
                                 <span style="font-size: 1.2em;">
                                         <i class="fas fa-chalkboard"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        &nbsp; Quiz and Vote
+                                        &nbsp; Vote
                                 </span>
                         </div>
                         <form class="form-inline">
-                                <button class="btn btn btn-info my-2 my-sm-0" type="submit" id="btnAddQuiz">
+                                <button class="btn btn btn-info my-2 my-sm-0" type="submit" id="btnAddVote">
                                         <span style="font-size: 1.1em;">
                                                 <i class="fas fa-plus-circle"></i>
-                                                &nbsp;เพิ่มเมนูควิซ
+                                                &nbsp;เพิ่มเมนูโหวต
                                         </span>
                                 </button>
                         </form>
@@ -266,10 +228,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
-                                        <div class="list-group mt-3 showMenuQuiz" id="accordionOne">
+                                        <div class="list-group mt-3 showMenuVote" id="accordionOne">
                                                 <div class="expansion-panel list-group-item">
                                                         <a aria-controls="collapseOne" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseOne" id="headingOne">
-                                                                Quiz #1
+                                                                Vote #1
                                                                 <div class="expansion-panel-icon ml-3 text-black-secondary">
                                                                         <i class="collapsed-show material-icons">keyboard_arrow_down</i>
                                                                         <i class="collapsed-hide material-icons">keyboard_arrow_up</i>

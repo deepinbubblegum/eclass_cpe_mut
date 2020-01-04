@@ -100,7 +100,6 @@ class Te_upload extends MY_Controller
                         'tmp_name' => $_FILES['file']['tmp_name'][$i],
                         'error' => $_FILES['file']['error'][$i]
                     );
-
                     
                     if ( ! $this->upload->do_upload($pseudo_field_name) ) {
                         $this->upload->display_errors();

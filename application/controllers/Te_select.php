@@ -120,7 +120,7 @@ class Te_select extends MY_Controller
                 }
         }
 
-        public function quiz_vote($sid)
+        public function quiz($sid)
         {
                 $data = $this->convertData($sid);
                 $bit = $this->session->ses_permission;
@@ -128,6 +128,20 @@ class Te_select extends MY_Controller
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
                         $this->load->view('teacher/quiz_vote_view', $data);
+                        $this->load->view('teacher/template_te/footer_te_view');
+                } else {
+                        show_404();
+                }
+        }
+
+        public function vote($sid)
+        {
+                $data = $this->convertData($sid);
+                $bit = $this->session->ses_permission;
+                if (substr($bit, 4, 1) == '1' || $bit == '0') {
+                        $this->load->view('teacher/template_te/select/header_view', $data);
+                        $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                        $this->load->view('teacher/vote_view', $data);
                         $this->load->view('teacher/template_te/footer_te_view');
                 } else {
                         show_404();
