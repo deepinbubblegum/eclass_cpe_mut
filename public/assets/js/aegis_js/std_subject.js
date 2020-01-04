@@ -59,7 +59,7 @@ $(document).ready(function() {
                         }
                         html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<a class="card" style="min-width: 310px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/annouce/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
-                            '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/' + response[i].subsem_semester + response[i].subsem_subject + '.png" alt="Card image cap">' +
+                            '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/' + response[i].subsem_semester + response[i].subsem_subject + '.png" onerror="this.src=\'/Img_sem/img_not_found.png\'" alt="Card image cap">' +
                             '<div class="card-body">' +
                             '<h5 class="card-title">' + txtSubAssist + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
@@ -113,7 +113,7 @@ $(document).ready(function() {
                         }
                         html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<a class="card" style="min-width: 310px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../Select_Special/annouce/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
-                            '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/' + response[i].subsem_semester + response[i].subsem_subject + '.png" alt="Card image cap">' +
+                            '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/' + response[i].subsem_semester + response[i].subsem_subject + '.png" onerror="this.src=\'/Img_sem/img_not_found.png\'" alt="Card image cap">' +
                             '<div class="card-body">' +
                             '<h5 class="card-title">' + txtSubAssist + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
