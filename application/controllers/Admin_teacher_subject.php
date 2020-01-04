@@ -40,22 +40,27 @@ class Admin_teacher_subject extends MY_Controller
 
     public function Add_Data_ctl()
     {
-        $data = array(
-            'teasub_subjectid' => $this->input->post('subject'),
-            'teasub_teacherid' => $this->input->post('teacher')
-        );
-        $this->Model_su_teacher_subject->Add_data_model($data);
+        // $data = array(
+        //     'teasub_subjectid' => $this->input->post('subject'),
+        //     'teasub_teacherid' => $this->input->post('teacher')
+        // );
+        // $this->Model_su_teacher_subject->Add_data_model($data);
+        $subject = $this->input->post('subject');
+        $teacher = $this->input->post('teacher');
+        $this->Model_su_teacher_subject->Add_data_model($subject, $teacher);
     }
 
     public function Edit_Data_ctl()
     {
         $org_subject = $this->input->post('org_subject');
         $org_teacher = $this->input->post('org_teacher');
-        $data = array(
-            'teasub_subjectid' => $this->input->post('subject'),
-            'teasub_teacherid' => $this->input->post('teacher')
-        );
-        $this->Model_su_teacher_subject->Edit_data_model($org_subject, $org_teacher, $data);
+        $subject = $this->input->post('subject');
+        $teacher = $this->input->post('teacher');
+        // $data = array(
+        //     'teasub_subjectid' => $this->input->post('subject'),
+        //     'teasub_teacherid' => $this->input->post('teacher')
+        // );
+        $this->Model_su_teacher_subject->Edit_data_model($org_subject, $org_teacher, $subject, $teacher);
     }
 
     public function Delete_Data_ctl()
