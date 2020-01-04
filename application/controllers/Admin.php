@@ -15,10 +15,11 @@ class Admin extends MY_Controller
     public function index()
     {
         // $this->input->ip_address();
-        $this->load->view('admin/template_su/header_view');
-        $this->load->view('admin/template_su/side_menu_su_view');
-        $this->load->view('admin/dashboard_su_view');
-        $this->load->view('admin/template_su/footer_su_view');
+        // $this->load->view('admin/template_su/header_view');
+        // $this->load->view('admin/template_su/side_menu_su_view');
+        // $this->load->view('admin/dashboard_su_view');
+        // $this->load->view('admin/template_su/footer_su_view');
+        redirect('admin/announce');
     }
 
     public function faculty()

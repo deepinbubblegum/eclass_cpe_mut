@@ -17,13 +17,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div aria-hidden="true" class="navdrawer navdrawer-permanent navdrawer-permanent-clipped mt-3" id="navdrawerPermanentClipped" tabindex="-1">
                                         <div class="navdrawer-content">
                                                 <nav class="navdrawer-nav">
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('admin'); ?>">
+                                                        <!-- <a class="nav-item nav-link" href="<?php echo base_url('admin'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-tachometer-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;แผงควบคุม
                                                                 </span>
-                                                        </a>
+                                                        </a> -->
                                                         <a class="nav-item nav-link" href="<?php echo base_url('admin/announce'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-bullhorn"></i></span>
