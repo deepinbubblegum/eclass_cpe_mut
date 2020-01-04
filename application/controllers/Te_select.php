@@ -134,6 +134,20 @@ class Te_select extends MY_Controller
                 }
         }
 
+        public function point_request($sid)
+        {
+                $data = $this->convertData($sid);
+                $bit = $this->session->ses_permission;
+                if (substr($bit, 6, 1) == '1' || $bit == '0') {
+                        $this->load->view('teacher/template_te/select/header_view', $data);
+                        $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                        $this->load->view('teacher/point_request_view', $data);
+                        $this->load->view('teacher/template_te/footer_te_view');
+                } else {
+                        show_404();
+                }
+        }
+
         public function menu($sid)
         {
                 $data = $this->convertData($sid);
@@ -157,17 +171,22 @@ class Te_select extends MY_Controller
         public function add_student($sid)
         {
                 $data = $this->convertData($sid);
-                $this->load->view('teacher/template_te/select/header_view', $data);
-                $this->load->view('teacher/template_te/select/side_menu_view', $data);
-                $this->load->view('teacher/add_student_view', $data);
-                $this->load->view('teacher/template_te/footer_te_view');
+                $bit = $this->session->ses_permission;
+                if (substr($bit, 9, 1) == '1' || $bit == '0') {
+                        $this->load->view('teacher/template_te/select/header_view', $data);
+                        $this->load->view('teacher/template_te/select/side_menu_view', $data);
+                        $this->load->view('teacher/add_student_view', $data);
+                        $this->load->view('teacher/template_te/footer_te_view');
+                } else {
+                        show_404();
+                }
         }
 
         public function add_teacher_assist($sid)
         {
                 $data = $this->convertData($sid);
                 $bit = $this->session->ses_permission;
-                if ($bit == '0') {
+                if (substr($bit, 8, 1) == '1' || $bit == '0') {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
                         $this->load->view('teacher/add_teacher_assist_view', $data);
@@ -181,7 +200,7 @@ class Te_select extends MY_Controller
         {
                 $data = $this->convertData($sid);
                 $bit = $this->session->ses_permission;
-                if ($bit == '0') {
+                if (substr($bit, 7, 1) == '1' || $bit == '0') {
                         $this->load->view('teacher/template_te/select/header_view', $data);
                         $this->load->view('teacher/template_te/select/side_menu_view', $data);
                         $this->load->view('teacher/add_permission_view', $data);

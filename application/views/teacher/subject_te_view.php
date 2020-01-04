@@ -224,6 +224,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         วิชาช่วยสอน
                         <div class="card-deck mt-3" id="showSubject_assist">
                         </div>
+
+                        <div class="navdrawer-divider"></div>
+                        วิชาพิเศษ
+                        <div class="card-deck mt-3" id="showSubject_Special">
+                        </div>
                 </div>
 
 </body>

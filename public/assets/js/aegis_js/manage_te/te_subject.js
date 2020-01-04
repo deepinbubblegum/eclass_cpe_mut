@@ -116,6 +116,38 @@ $(document).ready(function() {
                     }
                 }
                 $('#showSubject_assist').html(html);
+                // sortui();
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../" + url[3] + "/Teacher_subject/getSubject_Special",
+            data: "data=" + semesterSelected,
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                var txtSub = '';
+                var html = '';
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        txtSub = response[i].subsem_subject;
+                        for (a = 0; a < SubCoop.length; a++) {
+                            if (SubCoop[a].subcoop_mainsub == response[i].subsem_subject) {
+                                txtSub += " / " + SubCoop[a].subcoop_supsub;
+                            }
+                        }
+                        html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
+                            '<a class="card" style="min-width: 310px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../' + url[3] + '/te_select_special/annouce/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
+                            '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/' + response[i].subsem_semester + response[i].subsem_subject + '.png" alt="Card image cap">' +
+                            '<div class="card-body">' +
+                            '<h5 class="card-title" value="' + response[i].subsem_subject + '" >' + txtSub + '</h5>' +
+                            '<p class="card-text">' + response[i].subject_name + '</p>' +
+                            '</div>' +
+                            '</a>';
+                    }
+                }
+                $('#showSubject_Special').html(html);
                 sortui();
             }
         });

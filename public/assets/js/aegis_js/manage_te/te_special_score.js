@@ -15,7 +15,7 @@ $(document).ready(function() {
         //todayDate = new Date().toISOString();
         // $('#StartDatePicker').val(todayDate);
         $('#save').text('บันทึกข้อมูล');
-        iurl = "/" + url[3] + "/Te_subject_point/insertMenuScore";
+        iurl = "/" + url[3] + "/Te_subject_point/insertMenuScoreSpecial";
 
         $('#accordionOne').activate('option', 'active', '#accM-1');
     });
@@ -24,15 +24,28 @@ $(document).ready(function() {
         header = $('#Headtext').val();
         description = $('#Textarea').val();
         PointMulti = $("input[name='PointView']:checked").val();
-
+        var txt = '';
         $.ajax({
             type: "POST",
             url: iurl,
             data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&StdView=' + PointMulti + '&editID=' + editMenuId,
-            success: function() {
+            success: function(response) {
                 $('#Headtext').val("");
                 $('#Textarea').val("");
                 $('#Modal').modal('hide');
+                if (response == 0) {
+                    txt = 'มีข้อมูลเมนูคะแนนแล้ว ไม่สามารถสร้างเมนูคะแนนได้';
+                } else {
+                    txt = 'เพิ่มข้อมูลเมนูคะแนนแล้ว';
+                }
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: txt
+                });
                 showMenuPoint();
             }
         });
@@ -66,7 +79,7 @@ $(document).ready(function() {
                             '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + response[i].point_id + '">' +
                             '<div class="expansion-panel-body" id="TEST' + i + '" >' +
                             /* --------BTN-------- */
-                            '<span style="font-size: 1.7em;"><a href="/Te_select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].point_id + '" target="_blank" title="ดูคะแนนนักศึกษา" id="showInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a href="/Te_select_special/scoreTable/' + subject_id + '-' + semester + '-' + response[i].point_id + '" target="_blank" title="ดูคะแนนนักศึกษา" id="showInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="สร้างช่องคะแนน" id="addInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
                             //'<span style="font-size: 1.7em;"><a id="impInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-file-import"></a></i></span>&nbsp;' +
                             //'<span style="font-size: 1.7em;"><a id="expInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-file-export"></a></i></span>&nbsp;' +

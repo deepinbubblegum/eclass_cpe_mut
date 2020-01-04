@@ -92,6 +92,21 @@ class Model_te_assist extends CI_Model
         }
     }
 
+    public function Teacher__Specail_Add()
+    {
+        $ssn = $this->session->ses_id;
+
+        $this->db->select('teacher_code_id, teacher_Tname, teacher_Ename');
+        $this->db->from('teacher');
+        $this->db->where('teacher_code_id !=', $ssn);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
     public function Permission_Add($subject_id, $semester)
     {
         $this->db->select('per_name , per_id');

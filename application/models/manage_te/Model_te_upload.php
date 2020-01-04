@@ -8,7 +8,7 @@ class Model_te_upload extends CI_Model
         $this->db->where('fileName', $data['fileName']);
         $this->db->delete('fileDownload');
 
-        $maxIndex = $this->db->query('SELECT ifnull(max(fileIndex)+1,"1") AS newIndex FROM fileDownload WHERE fileSemesterId = "'.$semester.'" AND fileSubjectId = "'.$subject.'" AND fileMenuDowId = "'.$DowId.'" ');
+        $maxIndex = $this->db->query('SELECT ifnull(max(CAST(fileIndex AS int))+1,"1") AS newIndex FROM fileDownload WHERE fileSemesterId = "'.$semester.'" AND fileSubjectId = "'.$subject.'" AND fileMenuDowId = "'.$DowId.'" ');
         $newIndex = $maxIndex->row()->newIndex;
 
         $this->db->set('fileTimestamp', 'NOW()', FALSE);

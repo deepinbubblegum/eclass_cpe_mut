@@ -38,7 +38,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </nav>
 
                 <div class="container-fluid mx-auto">
+                        วิชาหลัก
                         <div class="card-deck mt-3" id="showSubject">
+                        </div>
+
+                        <div class="navdrawer-divider"></div>
+                        วิชาพิเศษ
+                        <div class="card-deck mt-3" id="showSubject_Special">
                         </div>
                 </div>
 </body>

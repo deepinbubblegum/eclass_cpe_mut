@@ -41,9 +41,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <li class="nav-item">
                                         <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">ประกาศ</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                         <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">เพื่อนในชั้นเรียน</a>
-                                </li>
+                                </li> -->
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">

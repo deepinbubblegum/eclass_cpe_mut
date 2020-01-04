@@ -41,4 +41,17 @@ class Model_std_subject extends CI_Model
             return 0;
         }
     }
+
+    public function selectSubject_special($data)
+    {
+        $query = $this->db->query('SELECT * FROM subject_semester 
+        LEFT JOIN subject ON subject_id = subsem_subject 
+        WHERE subsem_semester = "'.$data.'" AND subject_major = "MUT" ');
+         if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
 }

@@ -18,6 +18,7 @@ class Std_table_score extends MY_Controller
     {
         parent::__construct();
         $this->load->model('manage_te/Model_te_table_score');
+        $this->load->model('manage_te/Model_te_table_score_special');
     }
 
     public function showTableHeader()
@@ -64,6 +65,16 @@ class Std_table_score extends MY_Controller
     public function takeFormula(){
         $formula = $this->input->post('formula');
         $result = $this->Model_te_table_score->getSum($formula);
+        echo json_encode($result);
+    }
+
+    public function showTableBodySpecial()
+    {
+        $semester = $this->input->post('semester');
+        $subject_id = $this->input->post('subject_id');
+        $point_id = $this->input->post('point_id');
+        $UserId = $this->session->ses_id;
+        $result = $this->Model_te_table_score_special->getBodyForStd_Special($subject_id, $semester, $point_id, $UserId);
         echo json_encode($result);
     }
 }

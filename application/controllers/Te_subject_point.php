@@ -130,6 +130,18 @@ class Te_subject_point extends MY_Controller
         $this->Model_te_subject_point->insertMenu($semester, $subject, $Header, $Description, $StdView);
     }
 
+    public function insertMenuScoreSpecial()
+    {
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject');
+        $Header = $this->input->post('header');
+        $Description = $this->input->post('description');
+        $StdView = $this->input->post('StdView');
+        //$User = $this->input->post('dataUser');
+        $result = $this->Model_te_subject_point->insertMenuSpecial($semester, $subject, $Header, $Description, $StdView);
+        echo json_encode($result);
+    }
+
     public function editMenuScore()
     {
         $semester = $this->input->post('semester');

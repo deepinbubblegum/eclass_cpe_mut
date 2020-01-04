@@ -8,64 +8,57 @@ $(document).ready(function() {
     var limit = 10;
     var start = 0;
     var currentPage = 1;
+    var teacherdata;
+    var permissiondata;
 
     // 1.showAllData
     // 2.formAdd
     // 3.modaldel
 
-    $('#titleNameTxt').text("จัดการข้อมูลระดับสิทธิ์อาจารย์ผู้ช่วย");
+    $('#titleNameTxt').text("จัดการข้อมูลอาจารย์ผู้ช่วย");
     $('#findByTxt').text("ค้นหาด้วย");
     $('#btnFindTxt').text("ค้นหา");
     $('#saveModalTxt').text("SAVE_MODAL");
     $('#delModalTxt').text("ยืนยันการลบข้อมูล");
-    $('#tableTitleTxt').text("จัดการข้อมูลระดับสิทธิ์อาจารย์ผู้ช่วย");
+    $('#tableTitleTxt').text("จัดการข้อมูลอาจารย์ผู้ช่วย");
     $('#rowPerPageTxt').text("Rows per page:");
 
-    var btnAddText = 'เพิ่มข้อมูลระดับสิทธิ์อาจารย์ผู้ช่วย';
-    var btnEditText = 'แก้ไขข้อมูลระดับสิทธิ์อาจารย์ผู้ช่วย';
+    var btnAddText = 'เพิ่มข้อมูลอาจารย์ผู้ช่วย';
+    var btnEditText = 'แก้ไขข้อมูลอาจารย์ผู้ช่วย';
 
     var pagingSize = [10, 25, 50, 100];
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['per_name', 'NAME'],
-        ['per_bit', 'BIT'],
+        ['teacher_code_id', 'ID'],
+        ['teacher_Tname', 'TNAME'],
+        ['teacher_Ename', 'ENAME'],
+        ['per_name', 'PERMISSION']
         // ['user_email', 'EMAIL'],
         // ['user_major', 'MAJOR'],
         // ['user_permission', 'PERMISSION']
     ];
 
     //head of table
-    var theadGenValue = ['per_id', 'per_name', 'per_bit', 'Option'];
+    var theadGenValue = ['Teacher_code_id', 'user_Tname', 'user_Ename', 'per_name', 'per_bit', 'Option'];
 
-    var formData = ["#per_name"];
+    var formData = ["#Teacher_code_id", "#per_name"];
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['per_name', 'per_name', 'per_name', 'per_name'],
+        // ['substd_stdid', 'substd_stdid', 'substd_stdid', 'substd_stdid'],
+        // ['substd_sec', 'substd_sec', 'substd_sec', 'substd_sec'],
         // ['user_Tname', 'user_Tname', 'user_Tname', 'user_Tname'],
         // ['user_Ename', 'user_Ename', 'user_Ename', 'user_Ename'],
         // ['user_email', 'user_email', 'user_email', 'user_email']
     ];
 
-    var inModelPermis = [
-        ['video', 'video', 'video', 'วิดีโอ'],
-        ['upload', 'upload', 'upload', 'อัปโหลด'],
-        ['download', 'download', 'download', 'ดาวน์โหลด'],
-        ['point', 'point', 'point', 'คะแนน'],
-        ['vote', 'vote', 'vote', 'โหวต'],
-        ['quiz', 'quiz', 'quiz', 'แบบทดสอบ'],
-        ['pointRequest', 'pointRequest', 'pointRequest', 'นักศึกษาแลกคะแนน'],
-        ['permission', 'permission', 'permission', 'เพิ่มระดับสิทธิ์อาจารย์ผู้ช่วย'],
-        ['assist', 'assist', 'assist', 'เพิ่มอาขารย์ผู้ช่วย'],
-        ['std', 'std', 'std', 'เพิ่มนักศึกษาในวิชา'],
-    ];
-
-    var popData = ["#popupName"];
+    var popData = ["#popupID", "#popupTname", "#popupEname", "#popupSec"];
 
     var popValue = [
         //[POP_ID,POP_TEXT]
-        ['popupName', 'กรุณาระบุชื่อระดับสิทธิ์'],
+        ['popupTeacher', 'กรุณาระบุอาจารย์'],
+        ['popupPermission', 'กรุณาระบุระดับสิทธิ์'],
         // ['popupEmail', 'กรุณาระบุชื่อสาขา']
     ];
 
@@ -109,22 +102,16 @@ $(document).ready(function() {
     function inModelGen() {
         var html = '';
         html += '<div class="form-row" >';
-        for (i = 0; i < inModelValue.length; i++) {
-            html += '<div class="col-md-5 mb-3" >' +
-                '<label>' + inModelValue[i][0] + '</label>' +
-                '<input type="text" type="text" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
-                '</div>';
-        }
-        html += '</div>';
-        html += '<div class="form-row" >';
-        for (a = 0; a < inModelPermis.length; a++) {
-            html += '<div class="col-md-3 mt-2">' +
-                '<div class="custom-control custom-checkbox custom-control-inline">' +
-                '<input type="checkbox" class="custom-control-input" name="checkper" id="' + inModelPermis[a][1] + '">' +
-                '<label class="custom-control-label float-left" for="' + inModelPermis[a][2] + '">' + inModelPermis[a][3] + '</label>' +
-                '</div>' +
-                '</div>';
-        }
+        html += '<div class="col-md-4 mb-3" >' +
+            '<label>Permission</label>' +
+            '<select id="selectAddPermission" class="form-control">' +
+            '</select>' +
+            '</div>';
+        html += '<div class="col-md-4 mb-3" >' +
+            '<label>Teacher</label>' +
+            '<select id="selectAddTeacher" class="form-control">' +
+            '</select>' +
+            '</div>';
         html += '</div>';
         $('#inModelBody').html(html);
     }
@@ -144,6 +131,48 @@ $(document).ready(function() {
         $('#tableHead').html(html);
     }
 
+    function gen_teacher() {
+        $.ajax({
+            // type: "POST",
+            // data: '&subject_id=' + subject_id,
+            url: "/" + url[3] + "/Te_teacher_assist/Teacher__Special_Data_Add",
+            dataType: "json",
+            success: function(response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Tname + '</option>';
+                    }
+                }
+                $('#selectAddTeacher').html(html);
+                // $('#selectAddTeacher').change(function(e) {
+                //     thisSubject = $("#selectAddTeacher :selected").val();
+                //     console.log('selectAddTeacher', thisSubject);
+                // });
+            }
+        });
+    }
+
+    function gen_permission() {
+        $.ajax({
+            type: "POST",
+            data: '&subject_id=' + subject_id + '&semester=' + semester,
+            url: "/" + url[3] + "/Te_teacher_assist/Permission_Data_Add",
+            dataType: "json",
+            success: function(response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].per_id + '">' + response[i].per_name + '</option>';
+                    }
+                }
+                $('#selectAddPermission').html(html);
+            }
+        });
+    }
+
     //---------------------------------------------END_FUNCTION_GEN---------------------------------------------//
 
     inModelGen();
@@ -155,6 +184,9 @@ $(document).ready(function() {
 
     popGen();
     hideAllPop();
+
+    gen_teacher();
+    gen_permission();
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
@@ -204,7 +236,7 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             data: '&subject_id=' + subject_id + '&semester=' + semester,
-            url: "/" + url[3] + "/Teacher_add_permission/Show_Max_Data_ctl",
+            url: "/" + url[3] + "/Te_teacher_assist/Show_Max_Data_ctl",
             dataType: "json",
             success: function(maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
@@ -226,7 +258,7 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             data: "&start=" + start + "&limit=" + limit + "&subject_id=" + subject_id + '&semester=' + semester,
-            url: "/" + url[3] + "/Teacher_add_permission/Show_Data_ctl",
+            url: "/" + url[3] + "/Te_teacher_assist/Show_Data_ctl",
             dataType: "json",
             success: function(response) {
                 console.log(response);
@@ -239,13 +271,15 @@ $(document).ready(function() {
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].per_semester + '" data2="' + response[i].per_subject + '" value="' + response[i].per_id + '" id="' + response[i].per_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].per_id + i + '">' + response[i].per_id + '</label>' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].teacher_code_id + '" value="' + response[i].per_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
+                            '<td>' + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].per_name + '</td>' +
                             '<td>' + response[i].per_bit + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].per_bit + '" class="item-edit">Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
@@ -260,8 +294,8 @@ $(document).ready(function() {
         data2 = $('#select_search').val();
         $.ajax({
             type: "POST",
-            url: "/" + url[3] + "/Teacher_add_permission/Search_Show_Data_ctl",
-            data: "&data=" + data + "&search=" + data2,
+            url: "/" + url[3] + "/Te_teacher_assist/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&subject_id=" + subject_id + '&semester=' + semester,
             dataType: "json",
             success: function(response) {
                 console.log(response);
@@ -274,13 +308,15 @@ $(document).ready(function() {
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].per_semester + '" data2="' + response[i].per_subject + '" value="' + response[i].per_id + '" id="' + response[i].per_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].per_id + i + '">' + response[i].per_id + '</label>' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].teacher_code_id + '" value="' + response[i].per_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
+                            '<td>' + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].per_name + '</td>' +
                             '<td>' + response[i].per_bit + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].per_bit + '" class="item-edit">Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
                 }
@@ -290,121 +326,91 @@ $(document).ready(function() {
     });
 
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
-    $('#Modal').on('hidden.bs.modal', function() {
-        $(formData[0]).val("");
-        $('input[name^=checkper]').each(function() {
-            $(this).prop('checked', false);
-        });
-    });
-
 
     $('#btnAdd').click(function(e) {
         e.preventDefault();
-        iurl = '/' + url[3] + '/Teacher_add_permission/Add_Data_ctl';
-        $('#Modal').find('.modal-title').text('เพิ่มข้อมูลระดับสิทธิ์อาจารย์ผู้ช่วย');
-        $('#Modal').find('#btnSave').text('เพิ่มข้อมูลระดับสิทธิ์');
+        iurl = '/' + url[3] + '/Te_teacher_assist/Add_Data_ctl';
+        $('#Modal').find('.modal-title').text('เพิ่มข้อมูลอาจารย์ผู้ช่วย');
+        $('#Modal').find('#btnSave').text('เพิ่มข้อมูลอาจารย์ผู้ช่วย');
         $('#Modal').modal('show');
 
-    });
-
-    $('#showAllData').on('click', '.item-edit', function() {
-        iddata = $(this).attr('data');
-        bit = $(this).attr('data2');
-        ivalue = $(this).attr('value');
-
-        $(formData[0]).val(datatable[ivalue].per_name);
-        var per = bit;
-        $('input[name^=checkper]').each(function(index) {
-            var a = per.substr(index, 1)
-            if (a == '1') {
-                $(this).prop('checked', true);
-            }
-        });
-
-        $('#Modal').modal('show');
-        $('#Modal').find('.modal-title').text(btnEditText);
-        $('#Modal').find('#btnSave').text('แก้ไข้อมูลระดับสิทธิ์');
-
-        iurl = '/' + url[3] + '/Teacher_add_permission/Edit_Data_ctl';
     });
 
     $('#btnSave').click(function(e) {
         e.preventDefault();
-        var permis = '';
-        var result = '';
-        var check = '';
+        if (iurl == '/' + url[3] + '/Te_teacher_assist/Add_Data_ctl') {
+            txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
+            txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
+        } else {
+            txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
+            txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
+        }
 
-        $('input[name^=checkper]').each(function() {
-            if ($(this).prop("checked") == true) {
-                permis += '1'
-            } else if ($(this).prop("checked") == false) {
-                permis += '0'
+        data = $("#selectAddTeacher :selected").val();
+        data2 = $("#selectAddPermission :selected").val();
+        $.ajax({
+            type: "POST",
+            url: iurl,
+            data: "&subject_id=" + subject_id + '&semester=' + semester + '&teacher=' + data + '&permission=' + data2 + '&teacher_org=' + teacherdata + '&permission_org=' + permissiondata,
+            success: function() {
+                if (iurl == '/' + url[3] + '/Te_teacher_assist/Edit_Data_ctl') {
+                    $('#Modal').modal('hide');
+                }
+                show_data();
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: txtsnack
+                });
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: txtsnackerr + errorThrown + ' )'
+                });
             }
         });
+    });
 
-        for (i = 0; i < $(formData).length; i++) {
-            if ($(formData[i]).val() == '') {
-                $(popData[i]).show();
+    $('#showAllData').on('click', '.item-edit', function() {
+        iddata = $(this).attr('data');
+        ivalue = $(this).attr('value');
 
-            } else {
-                $(popData[i]).hide();
-                result += i;
-            }
-            check += i;
-        }
-        if (check == result) {
-            data = $('#per_name').val();
-            if (iurl == '/' + url[3] + '/Teacher_add_permission/Add_Data_ctl') {
-                txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
-                txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
-            } else {
-                txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
-                txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
-            }
-            $.ajax({
-                type: "POST",
-                url: iurl,
-                data: '&namepermis=' + data + '&bit=' + permis + '&subject_id=' + subject_id + '&semester=' + semester + '&id=' + iddata,
-                success: function(response) {
-                    formDataValClr();
-                    show_data();
-                    if (iurl != '/' + url[3] + '/Teacher_add_permission/Add_Data_ctl') {
-                        $('#Modal').modal('hide');
-                    };
-                    Snackbar.show({
-                        actionText: 'close',
-                        pos: 'top-center',
-                        actionTextColor: '#4CAF50',
-                        backgroundColor: '#323232',
-                        width: 'auto',
-                        text: txtsnack
-                    });
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    Snackbar.show({
-                        actionText: 'close',
-                        pos: 'top-center',
-                        actionTextColor: '#4CAF50',
-                        backgroundColor: '#323232',
-                        width: 'auto',
-                        text: txtsnackerr + errorThrown + ' )'
-                    });
-                }
-            });
-        }
+        teacherdata = datatable[ivalue].teacher_code_id;
+        $('#selectAddTeacher').val(datatable[ivalue].teacher_code_id);
+
+        permissiondata = datatable[ivalue].per_id;
+        $('#selectAddPermission').val(datatable[ivalue].per_id);
+
+        $('#Modal').find('.modal-title').text(btnEditText);
+        $('#Modal').find('#btnSave').text('Save');
+        $('#Modal').modal('show');
+        iurl = '/' + url[3] + '/Te_teacher_assist/Edit_Data_ctl';
     });
 
     $('#btnDel').click(function(e) {
         e.preventDefault();
-        $data = selectchb();
-        //$semester = selectchb_semes();
-        //$subject_id = selectchb_sub();
-        if ($data.length > 0) {
+        data_per = select();
+        data_teacher = select_teacher();
+        // alert(data3);
+        if (data_teacher.length > 0) {
             $.ajax({
                 type: "POST",
-                url: '/' + url[3] + '/Teacher_add_permission/Delete_Data_ctl',
-                data: { $data, subject_id, semester },
-                success: function(response) {
+                url: '/' + url[3] + '/Te_teacher_assist/Delete_Data_ctl',
+                data: {
+                    data_per,
+                    data_teacher,
+                    subject_id,
+                    semester,
+                },
+                success: function(dataSub) {
                     $('#modaldel').modal('hide');
                     show_data();
                     Snackbar.show({
@@ -415,6 +421,7 @@ $(document).ready(function() {
                         width: 'auto',
                         text: 'ลบข้อมูล ( Success: ลบข้อมูลเรียบร้อย )'
                     });
+                    $('#SearchName').val('');
                 }
             });
         } else {
@@ -430,11 +437,12 @@ $(document).ready(function() {
         }
     });
 
+
     $('#selectall').change(function() {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
-    function selectchb() {
+    function select() {
         var item = [];
         $('input[name^=checkitem]:checked').each(function() {
             item.push($(this).val());
@@ -442,7 +450,7 @@ $(document).ready(function() {
         return item;
     }
 
-    function selectchb_semes() {
+    function select_teacher() {
         var item = [];
         $('input[name^=checkitem]:checked').each(function() {
             item.push($(this).attr('data'));
@@ -450,12 +458,5 @@ $(document).ready(function() {
         return item;
     }
 
-    function selectchb_sub() {
-        var item = [];
-        $('input[name^=checkitem]:checked').each(function() {
-            item.push($(this).attr('data2'));
-        });
-        return item;
-    }
 
 });
