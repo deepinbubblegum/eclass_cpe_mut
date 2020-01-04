@@ -53,7 +53,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                 .sortableItem {
                         height: 94px;
-                        width: 94px;
+                        /* width: 100%; */
                 }
 
                 .drag {
