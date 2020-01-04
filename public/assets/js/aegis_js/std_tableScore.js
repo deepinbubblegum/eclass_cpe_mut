@@ -279,6 +279,7 @@ $(document).ready(function() {
                         // console.log(getData);
                         // console.log(Math.max(...getData), 'max');
                         // console.log(Math.min(...getData), 'min');
+                        // -----Array As Parameter, Using Spread(…)-----
                     });
                 });
             },
