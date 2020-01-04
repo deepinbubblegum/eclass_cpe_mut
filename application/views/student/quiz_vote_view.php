@@ -12,6 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 subject_id =  '<?php echo $subject_id; ?>';
                 semester =  '<?php echo $semester; ?>';
         </script>
+        <?php echo assets_js('aegis_js/std_quiz.js'); ?>
 </head>
 
 <body>
@@ -21,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span style="font-size: 1.2em;">
                                         <i class="fas fa-chalkboard"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        &nbsp; Quiz and Vote
+                                        &nbsp; Quiz
                                 </span>
                         </div>
                         <!-- <form class="form-inline">
@@ -46,7 +47,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
-                                        <div class="list-group mt-3" id="accordionOne">
+                                        <div class="list-group mt-3 showMenuQuiz" id="accordionOne">
                                                 <div class="expansion-panel list-group-item">
                                                         <a aria-controls="collapseOne" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseOne" id="headingOne">
                                                                 Quiz #1
@@ -59,29 +60,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <div class="expansion-panel-body text-center">
                                                                         <h4>ข้อที่ 1 ไก่มีกี่ขา ?</h4>
                                                                         <label class="mt-2">
-                                                                                <input type="radio" name="test" class="card-input-element d-none">
+                                                                                <input type="radio" name="test" class="card-input-element d-none" value="1">
                                                                                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                                                         <h5>2 ขา</h5>
                                                                                 </div>
                                                                         </label>
                                                                         <label class="mt-2">
-                                                                                <input type="radio" name="test" class="card-input-element d-none">
+                                                                                <input type="radio" name="test" class="card-input-element d-none" value="2">
                                                                                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                                                         <h5>4 ขา</h5>
                                                                                 </div>
                                                                         </label>
                                                                         <label class="mt-2">
-                                                                                <input type="radio" name="test" class="card-input-element d-none">
+                                                                                <input type="radio" name="test" class="card-input-element d-none" value="3">
                                                                                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                                                         <h5>2 ขา</h5>
                                                                                 </div>
                                                                         </label>
                                                                         <label class="mt-2">
-                                                                                <input type="radio" name="test" class="card-input-element d-none">
+                                                                                <input type="radio" name="test" class="card-input-element d-none" value="4">
                                                                                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                                                         <h5>2 ขา</h5>
                                                                                 </div>
                                                                         </label>
+                                                                <button type="button" class="btn btn-info" id="btnModalSave">บันทึกข้อมูล</button>
                                                                 </div>
                                                         </div>
                                                 </div>

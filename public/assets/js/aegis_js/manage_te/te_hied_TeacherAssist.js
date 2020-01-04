@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
     var url = $(location).attr('href').split("/");
-    var hideMenu = ['videos', 'downloads', 'uploads', 'score', 'quiz_vote', '0'];
+    var hideMenu = ['videos', 'downloads', 'uploads', 'score', 'quiz', 'vote', '0'];
     Teacher_Assist();
 
     function Teacher_Assist() {

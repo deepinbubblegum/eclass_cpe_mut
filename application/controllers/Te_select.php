@@ -120,7 +120,7 @@ class Te_select extends MY_Controller
                 }
         }
 
-        public function quiz_vote($sid)
+        public function quiz($sid)
         {
                 $data = $this->convertData($sid);
                 $bit = $this->session->ses_permission;

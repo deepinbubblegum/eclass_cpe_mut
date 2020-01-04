@@ -256,7 +256,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         }
                                                         ?>
 
-                                                        
+                                <!-- <a class="nav-item nav-link" href="<?php //echo base_url('te_select/quiz/').$subject_id.'-'.$semester; ?>">
+                                        <span style="font-size: 1.5em;">
+                                                <i class="fas fa-poll"></i></span>
+                                        <span style="font-size: 1.2em;">
+                                                &nbsp;&nbsp;ควิซ
+                                        </span>
+                                </a>
+                                <a class="nav-item nav-link" href="<?php //echo base_url('te_select/vote/').$subject_id.'-'.$semester; ?>">
+                                        <span style="font-size: 1.5em;">
+                                                <i class="fas fa-poll"></i></span>
+                                        <span style="font-size: 1.2em;">
+                                                &nbsp;&nbsp;โหวต
+                                        </span>
+                                </a> -->
+                                
 
                                 <!-- <a class="nav-item nav-link" href="#">
                                         <span style="font-size: 1.5em;">

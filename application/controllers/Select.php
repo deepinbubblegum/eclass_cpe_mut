@@ -90,12 +90,21 @@ class select extends MY_Controller
                 $this->load->view('template/footer_view');
         }
 
-        public function quiz_vote($sid)
+        public function quiz($sid)
         {
                 $data = $this->convertData($sid);
                 $this->load->view('template/select/header_view', $data);
                 $this->load->view('template/select/side_menu_view', $data);
                 $this->load->view('student/quiz_vote_view', $data);
+                $this->load->view('template/footer_view');
+        }
+
+        public function vote($sid)
+        {
+                $data = $this->convertData($sid);
+                $this->load->view('template/select/header_view', $data);
+                $this->load->view('template/select/side_menu_view', $data);
+                $this->load->view('student/vote_view', $data);
                 $this->load->view('template/footer_view');
         }
 
