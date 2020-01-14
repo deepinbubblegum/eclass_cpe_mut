@@ -49,13 +49,26 @@ class Model_su_faculty extends CI_Model
 
     public function Edit_Data_model($org_id, $data)
     {
+        $this->db->db_debug = false;
         $this->db->where('faculty_id', $org_id);
-        $this->db->update('faculty', $data);
+        if (!$this->db->update('faculty', $data))
+        {
+            $error = $this->db->error();
+            return $error;
+        }else{
+            return true;
+        }
     }
 
     public function Delete_Data_model($data)
     {
+        $this->db->db_debug = false;
         $this->db->where_in('faculty_id', $data);
-        $this->db->delete('faculty');
+        if (!$this->db->delete('faculty')){
+            $error = $this->db->error();
+            return $error;
+        }else{
+            return true;
+        }
     }
 }

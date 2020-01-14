@@ -278,7 +278,9 @@ $(document).ready(function() {
                 data: {
                     $data
                 },
+                dataType: "json",
                 success: function(response) {
+                    console.log(response);
                     $('#modaldel').modal('hide');
                     show_data();
                     Snackbar.show({

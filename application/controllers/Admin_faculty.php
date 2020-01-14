@@ -36,11 +36,13 @@ class Admin_faculty extends MY_Controller {
             "faculty_id" => $this->input->post('faculty_ID'),
             "faculty_name" => $this->input->post('faculty_Name')
         );
-        $this->Model_su_faculty->Edit_Data_model($org_id,$data);
+        $resdata = $this->Model_su_faculty->Edit_Data_model($org_id,$data);
+        echo json_encode($resdata);
     }
 
     public function Delete_Data_ctl(){
         $data = $this->input->post('$data[]');
-        $this->Model_su_faculty->Delete_Data_model($data);
+        $resdata = $this->Model_su_faculty->Delete_Data_model($data);
+        echo json_encode($resdata);
     }
 }
