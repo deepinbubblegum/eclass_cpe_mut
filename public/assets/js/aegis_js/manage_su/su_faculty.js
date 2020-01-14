@@ -238,7 +238,9 @@ $(document).ready(function() {
                 type: "POST",
                 url: iurl,
                 data: data,
+                dataType: "json",
                 success: function(response) {
+                    console.log(response);
                     formDataValClr();
                     show_data();
                     Snackbar.show({
@@ -251,6 +253,7 @@ $(document).ready(function() {
                     });
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    // console.log(XMLHttpRequest);
                     Snackbar.show({
                         actionText: 'close',
                         pos: 'top-center',

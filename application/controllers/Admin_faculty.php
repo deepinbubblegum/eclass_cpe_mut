@@ -26,7 +26,8 @@ class Admin_faculty extends MY_Controller {
             "faculty_id" => $this->input->post('faculty_ID'),
             "faculty_name" => $this->input->post('faculty_Name')
         );
-        $this->Model_su_faculty->Add_Data_model($data);
+        $resdata = $this->Model_su_faculty->Add_Data_model($data);
+        echo json_encode($resdata);
     }
 
     public function Edit_Data_ctl(){
