@@ -38,7 +38,8 @@ class Admin_major extends MY_Controller
                         'major_name' => $this->input->post('major_Name'),
                         'major_faculty' => $this->input->post('faculty_id')
                 );
-                $this->Model_su_major->Add_data_model($data);
+                $err_code = $this->Model_su_major->Add_data_model($data);
+                echo json_encode($err_code);
         }
 
         public function Edit_Data_ctl()
@@ -49,13 +50,15 @@ class Admin_major extends MY_Controller
                         'major_name' => $this->input->post('major_Name'),
                         'major_faculty' => $this->input->post('faculty_id')
                 );
-                $this->Model_su_major->Edit_data_model($org_id, $data);
+                $err_code = $this->Model_su_major->Edit_data_model($org_id, $data);
+                echo json_encode($err_code);
         }
 
         public function Delete_Data_ctl()
         {
                 $data = $this->input->post('$data[]');
-                $this->Model_su_major->Delete_Data_model($data);
+                $err_code = $this->Model_su_major->Delete_Data_model($data);
+                echo json_encode($err_code);
         }
 
         public function Select_major()

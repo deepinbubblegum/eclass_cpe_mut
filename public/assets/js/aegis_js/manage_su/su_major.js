@@ -352,7 +352,9 @@ $(document).ready(function() {
                 type: "POST",
                 url: iurl,
                 data: data + '&faculty_id=' + data2 + '&org_id=' + iddata,
+                dataType:"json",
                 success: function(response) {
+                    console.log(response);
                     formDataValClr();
                     show_data();
                     Snackbar.show({
