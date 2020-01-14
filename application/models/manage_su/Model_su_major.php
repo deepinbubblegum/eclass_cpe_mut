@@ -74,6 +74,7 @@ class Model_su_major extends CI_Model
 
         public function Delete_Data_model($data)
         {
+                $this->db->db_debug = false;
                 $this->db->where_in('major_id', $data);
                 if (!$this->db->delete('major')) {
                         $error = $this->db->error();
