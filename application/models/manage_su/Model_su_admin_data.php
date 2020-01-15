@@ -17,7 +17,10 @@ class Model_su_admin_data extends CI_Model
         }
         $this->db->select('*');
         $this->db->from('teacher');
+        $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
         $this->db->where('teacher_admin', '1');
+        $this->db->order_by("de_grade", "asc");
+        $this->db->order_by("teacher_Ename", "asc");
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -50,7 +53,10 @@ class Model_su_admin_data extends CI_Model
             $this->db->or_like('teacher_email', $keyword); 
         }
         $this->db->group_end();
+        $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
         $this->db->where('teacher_admin', '1');
+        $this->db->order_by("de_grade", "asc");
+        $this->db->order_by("teacher_Ename", "asc");
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();

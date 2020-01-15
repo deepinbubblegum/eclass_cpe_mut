@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var iddata;
     var iurl;
     var datatable;
@@ -28,14 +28,14 @@ $(document).ready(function() {
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['teacher_code_id', 'ID'],
-        ['teacher_Tname', 'TNAME'],
-        ['teacher_Ename', 'ENAME'],
+        ['teacher_code_id', 'รหัสอาจารย์'],
+        ['teacher_Tname', 'ชื่ออาจารย์(TH)'],
+        ['teacher_Ename', 'ชื่ออาจารย์(EN)'],
         ['teacher_email', 'EMAIL'],
     ];
 
     //head of table
-    var theadGenValue = ['admin_id' /*, 'admin_Password'*/ , 'admin_Tname', 'admin_Ename', 'admin_email' /*, 'option'*/ ];
+    var theadGenValue = ['Admin ID' /*, 'admin_Password'*/ , 'Admin Name(TH)', 'Admin Name(EN)', 'Email' /*, 'option'*/ ];
 
     var formData = ["#admin_id", /*"#admin_password",*/ "#admin_Tname", "#admin_Ename", "#admin_email"];
 
@@ -130,7 +130,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_faculty/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -200,7 +200,7 @@ $(document).ready(function() {
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
-    $('.row_set').click(function() {
+    $('.row_set').click(function () {
         limit = $(this).attr('value');
         showBtnTxt = limit;
         if (limit == 0) {
@@ -212,14 +212,14 @@ $(document).ready(function() {
         show_data();
     });
 
-    $('#chevron_right').click(function() {
+    $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
         show_data();
     });
 
-    $('#chevron_left').click(function() {
+    $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
@@ -246,7 +246,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_admin_data/Show_Max_Data_ctl",
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 if (currentPage == pageMax) {
                     stop = maxdata;
@@ -268,7 +268,7 @@ $(document).ready(function() {
             data: "&start=" + start + "&limit=" + limit,
             url: "../Admin_admin_data/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 datatable = response;
                 var html = '';
                 var i;
@@ -283,8 +283,8 @@ $(document).ready(function() {
                             '</div>' +
                             '</th>' +
                             //'<td>' + response[i].admin_password + '</td>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].teacher_email + '</td>' +
                             // '<td><a value="' + i + '" data="' + response[i].admin_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
@@ -297,11 +297,11 @@ $(document).ready(function() {
 
 
 
-    $('#selectAddFaculty').change(function() {
+    $('#selectAddFaculty').change(function () {
         select_major_add();
     });
 
-    $('#selectAddMajor').change(function() {
+    $('#selectAddMajor').change(function () {
         select_teacher_add();
     });
 
@@ -313,7 +313,7 @@ $(document).ready(function() {
             url: "../Admin_major/Select_major",
             data: '&datamajor=' + $data,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -334,13 +334,13 @@ $(document).ready(function() {
             url: "../Admin_teacher_subject/Select_Teacher_Add_ctl",
             data: '&data=' + $data,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 var html = '';
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Ename + '</option>';
+                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].de_Tname + " " + response[i].teacher_Tname + '</option>';
                     }
                 }
                 $('#selectAddTeacher').html(html);
@@ -351,7 +351,7 @@ $(document).ready(function() {
 
     //--------------------------------------------START_BASIC_TOOLS--------------------------------------------//
 
-    $("#inputFile").on("change", function() {
+    $("#inputFile").on("change", function () {
         html = '';
         _files = $(this)[0].files;
         // var _listFileName = "";
@@ -385,16 +385,16 @@ $(document).ready(function() {
         $('#filedetail').html(html);
     });
 
-    $('#btnUpload').click(function(e) {
+    $('#btnUpload').click(function (e) {
         e.preventDefault();
         var snacktxt = '';
         var form_data = new FormData();
         form_data.append('file', _files[0]);
         $.ajax({
-            xhr: function() {
+            xhr: function () {
                 var xhr = new window.XMLHttpRequest();
                 html = '';
-                xhr.upload.addEventListener("progress", function(evt) {
+                xhr.upload.addEventListener("progress", function (evt) {
                     if (evt.lengthComputable) {
                         var percentComplete = evt.loaded / evt.total;
                         percentComplete = parseInt(percentComplete * 100);
@@ -402,7 +402,7 @@ $(document).ready(function() {
                         html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">' + percentComplete + '%</div>';
                         if (percentComplete === 100) {
                             html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $('#Modalcsv').modal('hide');
                             }, 1200);
                         }
@@ -418,7 +418,7 @@ $(document).ready(function() {
             contentType: false,
             cache: false,
             processData: false,
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 if (response == '<p>upload_invalid_filetype</p>') {
                     snacktxt = 'ไม่สามารถอ่านไฟล์ได้ ' + response;
@@ -438,7 +438,7 @@ $(document).ready(function() {
                 });
                 show_data();
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 if (XMLHttpRequest.statusText == 'Conflict') {
                     txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ข้อมูลซ้ำ ';
                     Snackbar.show({
@@ -463,7 +463,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#btnAdd').click(function(e) {
+    $('#btnAdd').click(function (e) {
         e.preventDefault();
         iurl = '../Admin_admin_data/Add_Data_ctl';
         $('#Modal').find('.modal-title').text('เพิ่มข้อมูลผู้ดูแลระบบ');
@@ -472,12 +472,12 @@ $(document).ready(function() {
 
     });
 
-    $('#btnAddcsv').click(function(e) {
+    $('#btnAddcsv').click(function (e) {
         e.preventDefault();
         $('#Modalcsv').modal('show');
     });
 
-    $('#btnSave').click(function(e) {
+    $('#btnSave').click(function (e) {
         e.preventDefault();
         var result = '';
         var check = '';
@@ -494,8 +494,8 @@ $(document).ready(function() {
         // }
         //if (check == result) {
         if (iurl == '../Admin_admin_data/Add_Data_ctl') {
-            txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
-            txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
+            txtsnack = 'อัปเดทข้อมูล ( Success: อัปเดทข้อมูลเรียบร้อย )';
+            txtsnackerr = 'ไม่สามารถอัปเดทข้อมูลได้ ( Error: ';
         } else {
             txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
             txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
@@ -505,7 +505,7 @@ $(document).ready(function() {
             type: "POST",
             url: iurl,
             data: '&data=' + data + '&org_id=' + iddata,
-            success: function(response) {
+            success: function (response) {
                 // document.getElementById('admin_id').value = "";
                 // formDataValClr();
                 show_data();
@@ -521,7 +521,7 @@ $(document).ready(function() {
                     text: txtsnack
                 });
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -535,7 +535,7 @@ $(document).ready(function() {
         //}
     });
 
-    $('#showAllData').on('click', '.item-edit', function() {
+    $('#showAllData').on('click', '.item-edit', function () {
         iddata = $(this).attr('data');
         ivalue = $(this).attr('value');
         $('#admin_id').val(datatable[ivalue].admin_id);
@@ -549,13 +549,13 @@ $(document).ready(function() {
         iurl = '../Admin_admin_data/Edit_Data_ctl';
     });
 
-    $('#btnClose').click(function(e) {
+    $('#btnClose').click(function (e) {
         e.preventDefault();
         formDataValClr();
         hideAllPop();
     });
 
-    $('#btnSearch').click(function(e) {
+    $('#btnSearch').click(function (e) {
         e.preventDefault();
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
@@ -564,7 +564,7 @@ $(document).ready(function() {
             url: "../Admin_admin_data/Search_Show_Data_ctl",
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 datatable = response;
                 var html = '';
                 var i;
@@ -579,8 +579,8 @@ $(document).ready(function() {
                             '</div>' +
                             '</th>' +
                             //'<td>' + response[i].admin_password + '</td>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].teacher_email + '</td>' +
                             // '<td><a value="' + i + '" data="' + response[i].admin_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
@@ -591,7 +591,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#btnDel').click(function(e) {
+    $('#btnDel').click(function (e) {
         e.preventDefault();
         $data = selectchb();
         if ($data.length > 0) {
@@ -601,7 +601,7 @@ $(document).ready(function() {
                 data: {
                     $data
                 },
-                success: function(response) {
+                success: function (response) {
                     $('#modaldel').modal('hide');
                     show_data();
                     Snackbar.show({
@@ -627,13 +627,13 @@ $(document).ready(function() {
         }
     });
 
-    $('#selectall').change(function() {
+    $('#selectall').change(function () {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
     function selectchb() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function() {
+        $('input[name^=checkitem]:checked').each(function () {
             item.push($(this).val());
         });
         return item;

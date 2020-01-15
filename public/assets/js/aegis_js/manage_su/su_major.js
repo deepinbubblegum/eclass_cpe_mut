@@ -34,7 +34,7 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['major ID', 'major Name', 'Faculty', 'Option'];
+    var theadGenValue = ['Major ID', 'Major Name', 'Faculty', 'Option'];
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
@@ -336,7 +336,9 @@ $(document).ready(function() {
         }
         if (check == result) {
 
-            data = $('#formAdd').serialize();
+            // data = $('#formAdd').serialize();
+            major_ID = $.trim($('#major_ID').val());
+            major_Name = $.trim($('#major_Name').val());
             data2 = $("#selectAdd :selected").val();
 
             if (iurl == '../Admin_major/Add_Data_ctl') {
@@ -351,7 +353,7 @@ $(document).ready(function() {
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: data + '&faculty_id=' + data2 + '&org_id=' + iddata,
+                data: '&major_ID='+ major_ID + '&major_Name=' + major_Name + '&faculty_id=' + data2 + '&org_id=' + iddata,
                 success: function(response) {
                     formDataValClr();
                     show_data();

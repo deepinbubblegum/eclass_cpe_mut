@@ -109,6 +109,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         &nbsp;&nbsp;ข้อมูลอาจารย์ประจำวิชา
                                                                 </span>
                                                         </a>
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_degree'); ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-chalkboard-teacher"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;ข้อมูลระดับอาจารย์
+                                                                </span>
+                                                        </a>
                                                         <div class="navdrawer-divider"></div>
                                                         <a href="">
                                                                 <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>

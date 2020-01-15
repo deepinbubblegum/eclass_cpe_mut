@@ -15,10 +15,14 @@ class Model_su_teacher_subject extends CI_Model
             $limit = null;
             $start = null;
         }
-        $this->db->select('subject_id, subject_name,teacher_code_id,teacher_Ename,subject_major');
+        $this->db->select('subject_id, subject_name,teacher_code_id,teacher_Ename,teacher_Tname,subject_major, de_Tname, de_Ename , de_id');
         $this->db->from('teacher_subject');
         $this->db->join('subject', 'teacher_subject.teasub_subjectid = subject.subject_id', 'left');
         $this->db->join('teacher', 'teacher_subject.teasub_teacherid = teacher.teacher_code_id', 'left');
+        $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
+        $this->db->order_by("subject_id", "asc");
+        $this->db->order_by("de_grade", "asc");
+        $this->db->order_by("teacher_Tname", "asc");
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -33,7 +37,10 @@ class Model_su_teacher_subject extends CI_Model
         $this->db->select('*');
         $this->db->from('teacher_major');
         $this->db->join('teacher', 'teacher_major.teamaj_teacherid = teacher.teacher_code_id', 'left');
+        $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
         $this->db->where('teamaj_majorid', $data);
+        $this->db->order_by("de_grade", "asc");
+        $this->db->order_by("teacher_Tname", "asc");
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -89,10 +96,11 @@ class Model_su_teacher_subject extends CI_Model
 
     public function Search_data_model($keyword, $type)
     {
-        $this->db->select('subject_id, subject_name,teacher_code_id,teacher_Ename,subject_major');
+        $this->db->select('subject_id, subject_name,teacher_code_id,teacher_Ename,teacher_Tname,subject_major, de_Tname, de_Ename , de_id');
         $this->db->from('teacher_subject');
         $this->db->join('subject', 'teacher_subject.teasub_subjectid = subject.subject_id', 'left');
         $this->db->join('teacher', 'teacher_subject.teasub_teacherid = teacher.teacher_code_id', 'left');
+        $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
         if ($type != null) {
 
             $this->db->like($type, $keyword);
@@ -101,6 +109,9 @@ class Model_su_teacher_subject extends CI_Model
             $this->db->or_like('subject_id', $keyword);
             $this->db->or_like('teacher_Ename', $keyword);
         }
+        $this->db->order_by("subject_id", "asc");
+        $this->db->order_by("de_grade", "asc");
+        $this->db->order_by("teacher_Tname", "asc");
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();

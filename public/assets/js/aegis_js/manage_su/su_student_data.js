@@ -32,8 +32,8 @@ $(document).ready(function() {
         ['std_Tname', 'ชื่อ ภาษาไทย'],
         ['std_Ename', 'ชื่อ ภาษาอังกฤษ'],
         ['std_email', 'อีเมล'],
-        ['faculty_name', 'คณะ'],
-        ['std_major', 'สาขา']
+        ['faculty_name', 'ชื่อคณะ'],
+        ['std_major', 'ชื่อสาขา']
     ];
 
     //head of table
@@ -430,6 +430,7 @@ $(document).ready(function() {
         e.preventDefault();
         var result = '';
         var check = '';
+        var FormData = '';
 
         for (i = 0; i < $(formData).length; i++) {
             if ($(formData[i]).val() == '') {
@@ -449,8 +450,14 @@ $(document).ready(function() {
                 txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
             }
-            data = $('#formAdd').serialize();
+
+            FormData = $('#formAdd').find('input:text').each(function(){
+                $(this).val($.trim($(this).val()));
+            });
+
+            data = FormData.serialize();
             data2 = $("#majorSelectAdd :selected").val();
+            
             $.ajax({
                 type: "POST",
                 url: iurl,

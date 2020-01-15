@@ -20,6 +20,8 @@ class Model_su_subject_semester extends CI_Model
         $this->db->join('semester', 'subject_semester.subsem_semester = semester.semester_id', 'inner');
         $this->db->join('subject', 'subject_semester.subsem_subject = subject.subject_id', 'left');
         $this->db->join('teacher', 'subject_semester.subsem_teacher = teacher.teacher_code_id', 'inner');
+        $this->db->order_by("semester_id", "DESC");
+        $this->db->order_by("subject_id", "ASC");
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -76,6 +78,8 @@ class Model_su_subject_semester extends CI_Model
             $this->db->or_like('teacher_code_id', $keyword);
             $this->db->or_like('teacher_Ename', $keyword);
         }
+        $this->db->order_by("semester_id", "DESC");
+        $this->db->order_by("subject_id", "ASC");
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();

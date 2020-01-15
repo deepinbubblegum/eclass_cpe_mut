@@ -40,7 +40,7 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['Teacher_code_id', 'user_Tname', 'user_Ename', 'per_name', 'per_bit', 'Option'];
+    var theadGenValue = ['รหัสอาจารย์ผู้ช่วย', 'ชื่อ-สกุล (TH)', 'ชื่อ-สกุล (EN)', 'ชื่อระดับสิทธิ์', 'เลขระดับสิทธิ์', 'Option'];
 
     var formData = ["#Teacher_code_id", "#per_name"];
 
