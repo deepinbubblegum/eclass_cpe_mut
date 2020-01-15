@@ -14,6 +14,18 @@ $(document).ready(function () {
                         $('#Titlename').removeClass('is-invalid');
                 }
 
+                if(content === ''){
+                        Snackbar.show({
+                                actionText: 'close',
+                                pos: 'top-center',
+                                actionTextColor: '#da0041',
+                                backgroundColor: '#323232',
+                                width: 'auto',
+                                text: 'กรุณากรอกข้อมูลเนื้อหาประกาศ'
+                        });
+                        return false;
+                }
+
                 $.ajax({
                         type: "POST",
                         url: "../admin_announce/add_data_ctl",
@@ -32,6 +44,7 @@ $(document).ready(function () {
                                                 width: 'auto',
                                                 text: 'บันทึกข้อมูลเรียบร้อย'
                                         });
+                                        showdata();
                                 }
                         }
                 });
@@ -140,6 +153,18 @@ $(document).ready(function () {
                         $('#Titlename_edit').removeClass('is-invalid');
                 }
 
+                if(content === ''){
+                        Snackbar.show({
+                                actionText: 'close',
+                                pos: 'top-center',
+                                actionTextColor: '#da0041',
+                                backgroundColor: '#323232',
+                                width: 'auto',
+                                text: 'กรุณากรอกข้อมูลเนื้อหาประกาศ'
+                        });
+                        return false;
+                }
+
                 $.ajax({
                         type: "post",
                         url: "../admin_announce/edit_data_ctl",
@@ -170,7 +195,7 @@ $(document).ready(function () {
                 closeOnCancel: true,
                 // containerHidden: 'body',
                 format: 'yyyy-mm-dd',
-                formatSubmit:'yyyy-mm-dd',
+                formatSubmit: 'yyyy-mm-dd',
                 selectMonths: true,
                 selectYears: true,
         });

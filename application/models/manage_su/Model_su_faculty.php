@@ -13,6 +13,7 @@ class Model_su_faculty extends CI_Model
     {
         $this->db->select('faculty_id, faculty_name');
         $this->db->from('faculty');
+        $this->db->order_by("faculty_name", "asc");
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -29,6 +30,7 @@ class Model_su_faculty extends CI_Model
             $this->db->like('faculty_id', $keyword);
             $this->db->or_like('faculty_name', $keyword);
         }
+        $this->db->order_by("faculty_name", "asc");
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();

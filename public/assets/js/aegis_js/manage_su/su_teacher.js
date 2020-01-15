@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var iddata;
     var iurl;
     var datatable;
@@ -21,7 +21,7 @@ $(document).ready(function() {
     var pagingSize = [10, 25, 50, 100];
     dropGen();
 
-    var theadGenValue = ['teacher_code_id', 'teacher_Ename', 'teacher_Tname', 'teacher_email', 'teacher_username', 'option'];
+    var theadGenValue = ['Teacher ID', 'Teacher Name(EN)', 'Teacher Name(TH)', 'E-mail', 'Username', 'option'];
 
     var formData = ["#teacher_code_id", "#teacher_Tname", "#teacher_Ename", "#teacher_email", "#teacher_username"];
 
@@ -38,18 +38,18 @@ $(document).ready(function() {
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['teacher_code_id', 'teacher_code_id', 'teacher_code_id', 'teacher_code_id'],
-        ['teacher_Ename', 'teacher_Ename', 'teacher_Ename', 'teacher_Ename'],
-        ['teacher_Tname', 'teacher_Tname', 'teacher_Tname', 'teacher_Tname'],
-        ['teacher_email', 'teacher_email', 'teacher_email', 'teacher_email'],
-        ['teacher_username', 'teacher_username', 'teacher_username', 'teacher_username']
+        ['Teacher ID', 'teacher_code_id', 'teacher_code_id', 'Teacher ID'],
+        ['Name(EN)', 'teacher_Ename', 'teacher_Ename', 'Name(EN)'],
+        ['Name(TH)', 'teacher_Tname', 'teacher_Tname', 'Name(TH)'],
+        ['Email', 'teacher_email', 'teacher_email', 'Email'],
+        ['Username', 'teacher_username', 'teacher_username', 'Username']
     ];
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['teacher_code_id', 'ID'],
-        ['teacher_Tname', 'TNAME'],
-        ['teacher_Ename', 'ENAME'],
+        ['teacher_code_id', 'รหัสอาจารย์'],
+        ['teacher_Tname', 'ชื่ออาจารย์(TH)'],
+        ['teacher_Ename', 'ชื่ออาจารย์(EN)'],
         ['teacher_email', 'EMAIL'],
         ['teacher_username', 'USERNAME'],
     ];
@@ -85,6 +85,10 @@ $(document).ready(function() {
         html += '<div class="col-md-4 mb-3" id="majorSelect">' +
             '<label>Major</label>' +
             '<select id="majorSelectAdd" class="form-control"></select>' +
+            '</div>';
+        html += '<div class="col-md-4 mb-3" id="degreeSelect">' +
+            '<label>Degree</label>' +
+            '<select id="degreeSelectAdd" class="form-control"></select>' +
             '</div>';
         // html += '<div class="col-md-4 mb-3" >' +
         //     '<label>Permission</label>' +
@@ -128,7 +132,7 @@ $(document).ready(function() {
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
-    $('.row_set').click(function() {
+    $('.row_set').click(function () {
         limit = $(this).attr('value');
         showBtnTxt = limit;
         if (limit == 0) {
@@ -140,14 +144,14 @@ $(document).ready(function() {
         show_data();
     });
 
-    $('#chevron_right').click(function() {
+    $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
         show_data();
     });
 
-    $('#chevron_left').click(function() {
+    $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
@@ -183,7 +187,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_teacher/Show_Max_Data_ctl",
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -205,7 +209,7 @@ $(document).ready(function() {
             url: "../Admin_teacher/Show_Data_ctl",
             data: "&start=" + start + "&limit=" + limit,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 datatable = response;
                 console.log(response);
                 var html = '';
@@ -220,8 +224,8 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
                             '<td>' + response[i].teacher_email + '</td>' +
                             '<td>' + response[i].teacher_username + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
@@ -234,7 +238,7 @@ $(document).ready(function() {
     }
 
 
-    $('#btnAdd').click(function(e) {
+    $('#btnAdd').click(function (e) {
         e.preventDefault();
         iurl = '../Admin_teacher/Add_Data_ctl';
         $('#majorSelect').show();
@@ -245,7 +249,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_faculty/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -257,23 +261,24 @@ $(document).ready(function() {
                 select_major_add();
             }
         });
-        // $.ajax({
-        //     url: "../Admin_major/Show_Data_ctl",
-        //     dataType: "json",
-        //     success: function(response) {
-        //         var html = '';
-        //         var i;
-        //         if (response != null) {
-        //             for (i = 0; i < response.length; i++) {
-        //                 html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
-        //             }
-        //         }
-        //         $('#majorSelectAdd').html(html);
-        //     }
-        // });
+
+        $.ajax({
+            url: "../Admin_degree/Show_Data_ctl",
+            dataType: "json",
+            success: function (response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].de_id + '">' + response[i].de_Tname + '</option>';
+                    }
+                }
+                $('#degreeSelectAdd').html(html);
+            }
+        });
     });
 
-    $('#btnClose').click(function(e) {
+    $('#btnClose').click(function (e) {
         e.preventDefault();
         document.getElementById('teacher_code_id').value = "";
         document.getElementById('teacher_Tname').value = "";
@@ -282,7 +287,7 @@ $(document).ready(function() {
         document.getElementById('teacher_username').value = "";
     });
 
-    $(document).on('keyup', function(e) {
+    $(document).on('keyup', function (e) {
         if (e.keyCode == 27) {
             document.getElementById('teacher_code_id').value = "";
             document.getElementById('teacher_Tname').value = "";
@@ -292,7 +297,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#facultySelectAdd').change(function() {
+    $('#facultySelectAdd').change(function () {
         //alert($('#facultySelectAdd').val());
         select_major_add();
     });
@@ -304,8 +309,8 @@ $(document).ready(function() {
             url: "../Admin_major/Select_major",
             data: '&datamajor=' + $data,
             dataType: "json",
-            success: function(response) {
-                console.log(response.length);
+            success: function (response) {
+                // console.log(response.length);
                 var html = '';
                 var i;
                 if (response != null) {
@@ -319,10 +324,11 @@ $(document).ready(function() {
     }
 
 
-    $('#btnSave').click(function(e) {
+    $('#btnSave').click(function (e) {
         e.preventDefault();
         var result = '';
         var check = '';
+        var FormData = '';
 
         for (i = 0; i < $(formData).length; i++) {
             if ($(formData[i]).val() == '') {
@@ -342,13 +348,20 @@ $(document).ready(function() {
                 txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
             }
-            data = $('#formAdd').serialize();
+
+            FormData = $('#formAdd').find('input:text').each(function(){
+                $(this).val($.trim($(this).val()));
+            });
+
+            data = FormData.serialize();
             data2 = $("#majorSelectAdd :selected").val();
+            data3 = $("#degreeSelectAdd :selected").val();
+
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: data + '&major_id=' + data2 + '&org_id=' + iddata,
-                success: function(response) {
+                data: data + '&major_id=' + data2 + '&degree=' + data3 + '&org_id=' + iddata,
+                success: function (response) {
                     document.getElementById('teacher_code_id').value = "";
                     document.getElementById('teacher_Tname').value = "";
                     document.getElementById('teacher_Ename').value = "";
@@ -368,7 +381,7 @@ $(document).ready(function() {
                         text: txtsnack
                     });
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     if (XMLHttpRequest.statusText == 'Conflict') {
                         txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ข้อมูลซ้ำ ';
                         Snackbar.show({
@@ -395,7 +408,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#showAllData').on('click', '.item-edit', function() {
+    $('#showAllData').on('click', '.item-edit', function () {
         iddata = $(this).attr('data');
         ivalue = $(this).attr('value');
         org = datatable[ivalue].teacher_code_id;
@@ -426,9 +439,24 @@ $(document).ready(function() {
         //         $('#Major_Form_add_option').val(datatable[ivalue].major_id);
         //     }
         // });
+        $.ajax({
+            url: "../Admin_degree/Show_Data_ctl",
+            dataType: "json",
+            success: function (response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].de_id + '">' + response[i].de_Tname + '</option>';
+                    }
+                }
+                $('#degreeSelectAdd').html(html);
+                $('#degreeSelectAdd').val(datatable[ivalue].de_id);
+            }
+        });
     });
 
-    $('#btnSearch').click(function(e) {
+    $('#btnSearch').click(function (e) {
         e.preventDefault();
         data1 = $('#select_search').val();
         data2 = $('#SearchName').val();
@@ -437,23 +465,22 @@ $(document).ready(function() {
             url: "../Admin_teacher/Search_Show_Data_ctl",
             data: "&data=" + data1 + "&search=" + data2,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 datatable = response;
                 console.log(response);
                 var html = '';
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html +=
-                            '<tr>' +
+                        html += '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
                             '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
                             '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
                             '<td>' + response[i].teacher_email + '</td>' +
                             '<td>' + response[i].teacher_username + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
@@ -465,7 +492,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#btnDel').click(function(e) {
+    $('#btnDel').click(function (e) {
         e.preventDefault();
         $data = selectchb();
         if ($data.length > 0) {
@@ -475,7 +502,7 @@ $(document).ready(function() {
                 data: {
                     $data
                 },
-                success: function(response) {
+                success: function (response) {
                     $('#modaldel').modal('hide');
                     show_data();
                     Snackbar.show({
@@ -501,13 +528,13 @@ $(document).ready(function() {
         }
     });
 
-    $('#selectall').change(function() {
+    $('#selectall').change(function () {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
     function selectchb() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function() {
+        $('input[name^=checkitem]:checked').each(function () {
             item.push($(this).val());
         });
         return item;

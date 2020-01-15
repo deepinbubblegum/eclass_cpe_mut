@@ -33,6 +33,9 @@ class Model_su_subject extends CI_Model
                 $this->db->select('subject_id, subject_name, major_name,major_id,major_faculty');
                 $this->db->from('subject');
                 $this->db->join('major', 'subject_major = major_id', 'left');
+                $this->db->order_by("subject_major", "asc");
+                $this->db->order_by("subject_id", "asc");
+                $this->db->order_by("subject_name", "asc");
                 $this->db->limit($limit, $start);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
@@ -58,6 +61,9 @@ class Model_su_subject extends CI_Model
                         $this->db->or_like('subject_name', $keyword);
                         $this->db->or_like('major_name', $keyword);
                 }
+                $this->db->order_by("subject_major", "asc");
+                $this->db->order_by("subject_id", "asc");
+                $this->db->order_by("subject_name", "asc");
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
                         return $query->result();

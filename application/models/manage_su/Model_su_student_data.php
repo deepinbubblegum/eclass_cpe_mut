@@ -19,6 +19,8 @@ class Model_su_student_data extends CI_Model
         $this->db->from('student');
         $this->db->join('major', 'std_major = major_id', 'left');
         $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
+        $this->db->order_by("major_id", "asc");
+        $this->db->order_by("std_code_id", "asc");
         $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -82,6 +84,8 @@ class Model_su_student_data extends CI_Model
             // $this->db->or_like('faculty_name', $keyword);
             $this->db->or_like('major_name', $keyword);
         }
+        $this->db->order_by("major_id", "asc");
+        $this->db->order_by("std_code_id", "asc");
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();

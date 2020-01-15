@@ -34,7 +34,7 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['Semester_year', 'Semester_part', 'Semester_name', 'Option'];
+    var theadGenValue = ['Semester Year', 'Semester Part', 'Semester Name', 'Option'];
 
     var formData = ["#semester_ID", "#semester_Year", "#semester_Part", "#semester_Name"];
 
@@ -315,7 +315,9 @@ $(document).ready(function() {
             if ($(formData[i]).val() == '') {
                 $(popData[i]).show();
 
-            } else {
+            } else if($.isNumeric($(formData[1]).val()) == false){
+                $(popData[1]).show();
+            }else {
                 $(popData[i]).hide();
                 result += i;
             }
@@ -324,7 +326,7 @@ $(document).ready(function() {
         console.log(check, result);
         if ('12' == result) {
 
-            dataYear = $('#semester_Year').val();
+            dataYear = $.trim($('#semester_Year').val());
             dataPart = $("#selectAdd :selected").val();
             dataID = dataYear + dataPart;
             dataName = dataYear + '/' + dataPart;

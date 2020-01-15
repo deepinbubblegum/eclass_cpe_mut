@@ -380,25 +380,27 @@ $(document).ready(function() {
         idSub = $('#SubjectJoin_add_option').val();
         nameSub = $("#SubjectJoin_add_option :selected").text();
         chk = 0;
-        if ($('#SubjectJoin').has('option').length > 0) {
-            $("#SubjectJoin > option").each(function() {
-                if (this.value == idSub) {
-                    Snackbar.show({
-                        actionText: 'close',
-                        pos: 'top-center',
-                        actionTextColor: '#FF0000',
-                        backgroundColor: '#323232',
-                        width: 'auto',
-                        text: 'วิชานี้ถูกเพิ่มแล้ว'
-                    });
-                    chk = 1;
+        if(nameSub !== ''){
+            if ($('#SubjectJoin').has('option').length > 0) {
+                $("#SubjectJoin > option").each(function() {
+                    if (this.value == idSub) {
+                        Snackbar.show({
+                            actionText: 'close',
+                            pos: 'top-center',
+                            actionTextColor: '#FF0000',
+                            backgroundColor: '#323232',
+                            width: 'auto',
+                            text: 'วิชานี้ถูกเพิ่มแล้ว'
+                        });
+                        chk = 1;
+                    }
+                });
+                if (chk != 1) {
+                    $('#SubjectJoin').append('<option value="' + idSub + '"> ' + nameSub + ' </option>');
                 }
-            });
-            if (chk != 1) {
+            } else {
                 $('#SubjectJoin').append('<option value="' + idSub + '"> ' + nameSub + ' </option>');
             }
-        } else {
-            $('#SubjectJoin').append('<option value="' + idSub + '"> ' + nameSub + ' </option>');
         }
     });
 

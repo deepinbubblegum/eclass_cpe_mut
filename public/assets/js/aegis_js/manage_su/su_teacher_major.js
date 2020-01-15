@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var iddata;
     var iurl;
     var datatable;
@@ -23,7 +23,7 @@ $(document).ready(function() {
     var pagingSize = [10, 25, 50, 100];
     dropGen();
 
-    var theadGenValue = ['teacher_code_id', 'teacher_Tname', 'teacher_Ename', 'major_name', 'option'];
+    var theadGenValue = ['Teacher ID', 'Name(TH)', 'Name(EN)', 'Major', 'option'];
 
     var formData = ["#teacher_code_id", "#major_id"];
 
@@ -47,10 +47,10 @@ $(document).ready(function() {
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['teacher_code_id', 'ID'],
-        ['teacher_Tname', 'TNAME'],
-        ['teacher_Ename', 'ENAME'],
-        ['major_name', 'MAJOR'],
+        ['teacher_code_id', 'รหัสอาจารย์'],
+        ['teacher_Tname', 'ชื่ออาจารย์(TH)'],
+        ['teacher_Ename', 'ชื่ออาจารย์(EN)'],
+        ['major_name', 'ชื่อคณะ'],
     ];
 
     function theadGen() {
@@ -127,7 +127,7 @@ $(document).ready(function() {
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
-    $('.row_set').click(function() {
+    $('.row_set').click(function () {
         limit = $(this).attr('value');
         showBtnTxt = limit;
         if (limit == 0) {
@@ -139,14 +139,14 @@ $(document).ready(function() {
         show_data();
     });
 
-    $('#chevron_right').click(function() {
+    $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
         show_data();
     });
 
-    $('#chevron_left').click(function() {
+    $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
@@ -182,7 +182,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_teacher_major/Show_Max_Data_ctl",
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -204,7 +204,7 @@ $(document).ready(function() {
             url: "../Admin_teacher_major/Show_Data_ctl",
             data: "&start=" + start + "&limit=" + limit,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 datatable = response;
                 console.log(response);
                 var html = '';
@@ -219,8 +219,8 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
@@ -232,7 +232,7 @@ $(document).ready(function() {
     }
 
 
-    $('#btnAdd').click(function(e) {
+    $('#btnAdd').click(function (e) {
         e.preventDefault();
         iurl = '../Admin_teacher_major/Add_Data_ctl';
         $('#majorSelect').show();
@@ -243,7 +243,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_faculty/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -258,13 +258,13 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_teacher/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 var html = '';
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Ename + '</option>';
+                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].de_Tname + " " +  response[i].teacher_Tname + '</option>';
                     }
                 }
                 $('#teacherSelectAdd').html(html);
@@ -272,7 +272,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#facultySelectAdd').change(function() {
+    $('#facultySelectAdd').change(function () {
         select_major_add();
     });
 
@@ -283,8 +283,8 @@ $(document).ready(function() {
             url: "../Admin_major/Select_major",
             data: '&datamajor=' + $data,
             dataType: "json",
-            success: function(response) {
-                console.log(response.length);
+            success: function (response) {
+                // console.log(response.length);
                 var html = '';
                 var i;
                 if (response != null) {
@@ -298,8 +298,7 @@ $(document).ready(function() {
     }
 
 
-
-    $('#btnSave').click(function(e) {
+    $('#btnSave').click(function (e) {
         e.preventDefault();
         var result = '';
         var check = '';
@@ -328,7 +327,7 @@ $(document).ready(function() {
                 type: "POST",
                 url: iurl,
                 data: '&teacher_id=' + data1 + '&major_id=' + data2 + '&org_teacher=' + iddata + '&org_major=' + iddata2,
-                success: function(response) {
+                success: function (response) {
                     show_data();
                     if (iurl != '../Admin_teacher_major/Add_Data_ctl') {
                         $('#Modal').modal('hide');
@@ -342,7 +341,7 @@ $(document).ready(function() {
                         text: txtsnack
                     });
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     Snackbar.show({
                         actionText: 'close',
                         pos: 'top-center',
@@ -356,7 +355,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#showAllData').on('click', '.item-edit', function() {
+    $('#showAllData').on('click', '.item-edit', function () {
         iddata = $(this).attr('data');
         iddata2 = $(this).attr('data2');
         iddata3 = $(this).attr('data3');
@@ -369,7 +368,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_faculty/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -386,7 +385,7 @@ $(document).ready(function() {
             url: "../Admin_major/Select_major",
             data: '&datamajor=' + iddata3,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -401,13 +400,13 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_teacher/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 var html = '';
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Ename + '</option>';
+                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].de_Tname + " " + response[i].teacher_Tname + '</option>';
                     }
                 }
                 $('#teacherSelectAdd').html(html);
@@ -417,7 +416,7 @@ $(document).ready(function() {
     });
 
 
-    $('#btnSearch').click(function(e) {
+    $('#btnSearch').click(function (e) {
         e.preventDefault();
         data1 = $('#select_search').val();
         data2 = $('#SearchName').val();
@@ -426,7 +425,7 @@ $(document).ready(function() {
             url: "../Admin_teacher_major/Search_Show_Data_ctl",
             data: "&data=" + data1 + "&search=" + data2,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 datatable = response;
                 console.log(response);
                 var html = '';
@@ -441,8 +440,8 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
@@ -453,7 +452,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#btnDel').click(function(e) {
+    $('#btnDel').click(function (e) {
         e.preventDefault();
         $data = selectchb();
         $data2 = selectchb_major();
@@ -465,7 +464,7 @@ $(document).ready(function() {
                     $data,
                     $data2
                 },
-                success: function(response) {
+                success: function (response) {
                     $('#modaldel').modal('hide');
                     show_data();
                     Snackbar.show({
@@ -491,13 +490,13 @@ $(document).ready(function() {
         }
     });
 
-    $('#selectall').change(function() {
+    $('#selectall').change(function () {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
     function selectchb() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function() {
+        $('input[name^=checkitem]:checked').each(function () {
             item.push($(this).val());
         });
         return item;
@@ -505,7 +504,7 @@ $(document).ready(function() {
 
     function selectchb_major() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function() {
+        $('input[name^=checkitem]:checked').each(function () {
             item.push($(this).attr('data'));
         });
         return item;

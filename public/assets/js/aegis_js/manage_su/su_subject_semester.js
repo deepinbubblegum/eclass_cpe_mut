@@ -37,7 +37,7 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['Semester', 'Subject_id', 'Subject_name', 'Teacher_id', 'Teacher_name'];
+    var theadGenValue = ['Semester', 'Subject ID', 'Subject Name', 'Teacher ID', 'Teacher Name'];
 
     function dropPag() {
         var html = '';

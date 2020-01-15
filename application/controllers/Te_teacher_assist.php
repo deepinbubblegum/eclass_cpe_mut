@@ -88,8 +88,8 @@ class Te_teacher_assist extends MY_Controller
 
     public function Delete_Data_ctl()
     {
-        $datatea = $this->input->post('$data[]');
-        $dataper = $this->input->post('$data[]');
+        $datatea = $this->input->post('data_teacher[]');
+        $dataper = $this->input->post('data_per[]');
         $subject = $this->input->post('subject_id');
         $semester = $this->input->post('semester');
         $this->Model_te_assist->Delete_Data_model($datatea,$dataper,$subject,$semester);

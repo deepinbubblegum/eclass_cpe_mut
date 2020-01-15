@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var url = $(location).attr('href').split("/");
 
     subjectMain();
@@ -16,7 +16,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Std_point_request/showSubjectMain",
             data: '&semester=' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
                         subIdOption.push(response[i].subject_id);
@@ -35,12 +35,12 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Std_point_request/showMenu",
             data: '&semester=' + semester + '&subject_id=' + subject_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 var x = 0;
                 if (response != null) {
-                    console.log(response);
+                    // console.log(response);
                     dataMenu = response;
                     for (i = 0; i < response.length; i++) {
                         html += '<div class="expansion-panel list-group-item">' +
@@ -75,13 +75,13 @@ $(document).ready(function() {
                             '</div>' +
                             '</div>' +
                             '</div>';
-                        showTableHead(response[i].menuPS_pointID, response[i].menuPS_setpointID);
+                        showTableHead(response[i].menuPS_pointID, response[i].menuPS_setpointID, i);
                     }
                 }
                 $('#accordionMenu').html(html);
                 SubjectOption();
-                $.each(dataMenu, function(i) {
-                    $('#RequestSave' + i).click(function() {
+                $.each(dataMenu, function (i) {
+                    $('#RequestSave' + i).click(function () {
                         chk = 0;
                         menu_id = '';
                         std_sub = [];
@@ -155,7 +155,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Std_point_request/showSubjectAdd",
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&menuId=' + idmenu,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
                         $('#selctSub' + idmenu + y).append('<option value="' + response[i].subject_id + '"> (' + response[i].subject_id + ') ' + response[i].subject_name + ' </option>');
@@ -171,9 +171,15 @@ $(document).ready(function() {
         $.ajax({
             type: 'POST',
             url: "/" + url[3] + "/Std_point_request/AddSubStd",
-            data: { subject_id, semester, std_sub, std_point, menu_id },
+            data: {
+                subject_id,
+                semester,
+                std_sub,
+                std_point,
+                menu_id
+            },
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 // alert(response);
                 if (response == 1) {
                     Snackbar.show({
@@ -220,14 +226,14 @@ $(document).ready(function() {
     getMaxPointData = [];
 
     function showTableHead(point_id, setpointID) { //tableScoreZone
-        //alert(setpointID);
+        // alert(setpointID);
         takeThisUrl = '/' + url[3] + '/Std_point_request/showTableHeader';
         $.ajax({
             type: "POST",
             url: takeThisUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&parent_id=' + point_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log('showTableHead');
                 //console.log(response);
                 getFieldPoint = response;
@@ -301,7 +307,7 @@ $(document).ready(function() {
             url: takeThisUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&point_id=' + point_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log('showTableBody');
                 console.log(response);
                 html = '';
@@ -338,7 +344,7 @@ $(document).ready(function() {
             url: takeThisUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&parent_id=' + point_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log('showPoint');
                 dataPoint = response;
                 //console.log(response);
@@ -392,7 +398,7 @@ $(document).ready(function() {
         return textInPut;
     }
 
-    $(document).ajaxStop(function() {
+    $(document).ajaxStop(function () {
         ajaxCount++;
         //console.log('ajaxComplete', ajaxCount, formulaField); 
         if (ajaxCount >= 1 && formulaField > 0) {
@@ -478,7 +484,7 @@ $(document).ready(function() {
             url: '/' + url[3] + '/Std_table_score/takeFormula',
             data: '&formula=' + '(' + takeFormula + ')',
             dataType: "json",
-            success: function(getSum) {
+            success: function (getSum) {
                 //console.log(stdId, colId);
                 console.log('takeFormula->' + getSum[0].sum + '<-');
                 //if (getSum[0].sum > formulaMaxPoint) getSum[0].sum = formulaMaxPoint;

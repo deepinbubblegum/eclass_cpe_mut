@@ -34,7 +34,8 @@ class Admin_teacher extends MY_Controller
                 'teacher_email' => $this->input->post('teacher_email'),
                 'teacher_username' => $this->input->post('teacher_username'),
                 'teacher_password' => $this->encryption_pass($this->input->post('teacher_username')),
-                'teacher_admin' => '0'
+                'teacher_admin' => '0',
+                'teacher_degree' => $this->input->post('degree'),
                 //'teacher_major' => $this->input->post('major_id'),
             );
             $this->Model_su_teacher->Add_data_model($data);
@@ -61,7 +62,8 @@ class Admin_teacher extends MY_Controller
             'teacher_Tname' => $this->input->post('teacher_Tname'),
             'teacher_Ename' => $this->input->post('teacher_Ename'),
             'teacher_email' => $this->input->post('teacher_email'),
-            'teacher_username' => $this->input->post('teacher_username')
+            'teacher_username' => $this->input->post('teacher_username'),
+            'teacher_degree' => $this->input->post('degree'),
         );
         $this->Model_su_teacher->Edit_data_model($org_id, $data);
     }

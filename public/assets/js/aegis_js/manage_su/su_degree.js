@@ -9,39 +9,42 @@ $(document).ready(function () {
     var currentPage = 1;
 
     //--------------------------------------------START_FUNCTION_GEN--------------------------------------------//
-    $('#titleNameTxt').text("จัดการข้อมูลคณะ");
+    $('#titleNameTxt').text("จัดการข้อมูลระดับอาจารย์");
     $('#findByTxt').text("ค้นหาด้วย");
     $('#btnFindTxt').text("ค้นหา");
     $('#saveModalTxt').text("SAVE_MODAL");
     $('#delModalTxt').text("ยืนยันการลบข้อมูล");
-    $('#tableTitleTxt').text("จัดการข้อมูลคณะ");
+    $('#tableTitleTxt').text("จัดการข้อมูลระดับอาจารย์");
     $('#rowPerPageTxt').text("Rows per page:");
 
-    var btnAddText = 'เพิ่มข้อมูลคณะ';
-    var btnEditText = 'แก้ไขข้อมูลคณะ';
+    var btnAddText = 'เพิ่มข้อมูลระดับอาจารย์';
+    var btnEditText = 'แก้ไขข้อมูลระดับอาจารย์';
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['faculty_id', 'รหัสคณะ'],
-        ['faculty_name', 'ชื่อคณะ']
+        ['de_grade', 'ระดับอาจารย์'],
+        ['de_Tname', 'ชื่อระดับอาจารย์ภาษาไทย'],
+        ['de_Ename', 'ชื่อระดับอาจารย์ภาษาอังกฤษ']
     ];
 
-    var theadGenValue = ['Faculty ID', 'Faculty Name', 'Option'];
+    var theadGenValue = ['Grade', 'Degree TName', 'Degree EName', 'Option'];
 
     inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['faculty ID', 'faculty_ID', 'faculty_ID', 'ID'],
-        ['faculty Name', 'faculty_Name', 'faculty_Name', 'NAME']
+        ['Grade', 'Grade', 'Grade', 'Grade'],
+        ['Degree TName', 'Degree_TName', 'Degree_TName', 'Thai NAME'],
+        ['Degree EName', 'Degree_EName', 'Degree_EName', 'English NAME']
     ];
 
-    var formData = ["#faculty_ID", "#faculty_Name"];
+    var formData = ["#Grade", "#Degree_TName", "#Degree_EName"];
 
-    var popData = ["#popupID", "#popupName"];
+    var popData = ["#popupID", "#popupTName", "#popupEName"];
 
     var popValue = [
         //[POP_ID,POP_TEXT]
-        ['popupID', 'กรุณาระบุรหัสคณะ'],
-        ['popupName', 'กรุณาระบุชื่อคณะ']
+        ['popupID', 'กรุณาระบุระดับอาจารย์ให้ถูกต้อง'],
+        ['popupTName', 'กรุณาระบุชื่อระดับอาจารย์(TH)'],
+        ['popupEName', 'กรุณาระบุชื่อระดับอาจารย์(EN)']
     ];
 
     function formDataValClr() {
@@ -111,9 +114,10 @@ $(document).ready(function () {
     hideAllPop();
 
     //--------------------------------------------START_CANT_TOUCH_THIS--------------------------------------------//
+
     function show_data() {
         $.ajax({
-            url: "../Admin_faculty/Show_Data_ctl",
+            url: "../Admin_degree/Show_Data_ctl",
             dataType: "json",
             success: function (response) {
                 datatable = response;
@@ -125,12 +129,13 @@ $(document).ready(function () {
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].faculty_id + '" id="' + response[i].faculty_name + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].faculty_name + i + '"> ' + response[i].faculty_id + ' </label>' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].de_id + '" id="' + response[i].de_Ename + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].de_Ename + i + '"> ' + response[i].de_grade + ' </label>' +
                             '</div>' +
                             '</th>' +
-                            '<td> ' + response[i].faculty_name + ' </td>' +
-                            '<td><a value="' + i + '" data="' + response[i].faculty_id + '" class="item-edit" >Edit</a></td>' +
+                            '<td> ' + response[i].de_Tname + ' </td>' +
+                            '<td> ' + response[i].de_Ename + ' </td>' +
+                            '<td><a value="' + i + '" data="' + response[i].de_id + '" class="item-edit" >Edit</a></td>' +
                             '</tr>';
                     }
                 }
@@ -145,7 +150,7 @@ $(document).ready(function () {
         data2 = $('#select_search').val();
         $.ajax({
             type: "POST",
-            url: "../Admin_faculty/Search_Show_Data_ctl",
+            url: "../Admin_degree/Search_Show_Data_ctl",
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
             success: function (response) {
@@ -157,12 +162,13 @@ $(document).ready(function () {
                             '<tr>' +
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].faculty_id + '" id="' + response[i].faculty_name + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].faculty_name + i + '"> ' + response[i].faculty_id + ' </label>' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].de_id + '" id="' + response[i].de_Ename + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].de_Ename + i + '"> ' + response[i].de_grade + ' </label>' +
                             '</div>' +
                             '</th>' +
-                            '<td> ' + response[i].faculty_name + ' </td>' +
-                            '<td><a value="' + i + '" data="' + response[i].faculty_id + '" class="item-edit" >Edit</a></td>' +
+                            '<td> ' + response[i].de_Tname + ' </td>' +
+                            '<td> ' + response[i].de_Ename + ' </td>' +
+                            '<td><a value="' + i + '" data="' + response[i].de_id + '" class="item-edit" >Edit</a></td>' +
                             '</tr>';
                     }
                 }
@@ -172,6 +178,7 @@ $(document).ready(function () {
     });
 
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
+
     $(document).keyup(function (e) {
         if ($('#Modal').is(':visible') == true) {
             if (e.keyCode === 13) $('#btnSave').click(); // enter
@@ -182,7 +189,7 @@ $(document).ready(function () {
 
     $('#btnAdd').click(function (e) {
         e.preventDefault();
-        iurl = '../Admin_faculty/Add_Data_ctl';
+        iurl = '../Admin_degree/Add_Data_ctl';
         $('#Modal').find('.modal-title').text(btnAddText);
         $('#Modal').modal('show');
     });
@@ -196,53 +203,57 @@ $(document).ready(function () {
         iddata = $(this).attr('data');
         ivalue = $(this).attr('value');
 
-        $(formData[0]).val(datatable[ivalue].faculty_id);
-        $(formData[1]).val(datatable[ivalue].faculty_name);
+        $(formData[0]).val(datatable[ivalue].de_grade);
+        $(formData[1]).val(datatable[ivalue].de_Tname);
+        $(formData[2]).val(datatable[ivalue].de_Ename);
+
 
         $('#Modal').modal('show');
         $('#Modal').find('.modal-title').text(btnEditText);
 
-        iurl = '../Admin_faculty/Edit_Data_ctl';
+        iurl = '../Admin_degree/Edit_Data_ctl';
     });
 
     $('#btnSave').click(function (e) {
         var result = '';
         var check = '';
-        var data = '';
+        var FormData = '';
 
         for (i = 0; i < $(formData).length; i++) {
             if ($(formData[i]).val() == '') {
                 $(popData[i]).show();
-
+            } else if (i == 0 && $.isNumeric($(formData[0]).val()) == false) {
+                $(popData[0]).show();
             } else {
                 $(popData[i]).hide();
                 result += i;
             }
             check += i;
         }
+
         console.log(result, check);
         if (check == result) {
             e.preventDefault();
-            // data = $('#formAdd').serialize();
-            faculty_ID = $.trim($('#faculty_ID').val());
-            faculty_Name = $.trim($('#faculty_Name').val());
-
-            if (iurl == '../Admin_faculty/Add_Data_ctl') {
+            FormData = $('#formAdd').find('input:text').each(function(){
+                $(this).val($.trim($(this).val()));
+            });
+            data = FormData.serialize();
+            
+            if (iurl == '../Admin_degree/Add_Data_ctl') {
                 txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
 
             } else {
                 txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
-                // data += '&org_id=' + iddata;
-                data = '&org_id=' + iddata;
+                data += '&org_id=' + iddata;
                 $('#Modal').modal('hide');
             }
 
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: '&faculty_ID=' + faculty_ID + '&faculty_Name=' + faculty_Name + '&org_id=' + data,
+                data: data,
                 success: function (response) {
                     formDataValClr();
                     show_data();
@@ -253,16 +264,6 @@ $(document).ready(function () {
                         backgroundColor: '#323232',
                         width: 'auto',
                         text: txtsnack
-                    });
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    Snackbar.show({
-                        actionText: 'close',
-                        pos: 'top-center',
-                        actionTextColor: '#4CAF50',
-                        backgroundColor: '#323232',
-                        width: 'auto',
-                        text: txtsnackerr + errorThrown + ' )'
                     });
                 }
             });
@@ -276,7 +277,7 @@ $(document).ready(function () {
         if ($data.length > 0) {
             $.ajax({
                 type: "POST",
-                url: "../Admin_faculty/Delete_Data_ctl",
+                url: "../Admin_degree/Delete_Data_ctl",
                 data: {
                     $data
                 },
@@ -317,4 +318,5 @@ $(document).ready(function () {
         });
         return item;
     }
+
 });
