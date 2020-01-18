@@ -29,19 +29,37 @@ class Model_su_semester extends CI_Model
 
         public function Add_data_model($dataInsert)
         {
-                $this->db->insert('semester', $dataInsert);
+                $this->db->db_debug = false;
+                if (!$this->db->insert('semester', $dataInsert)) {
+                        $error = $this->db->error();
+                        return $error;
+                } else {
+                        return true;
+                }
         }
 
         public function Delete_Data_model($data)
         {
+                $this->db->db_debug = false;
                 $this->db->where_in('semester_id', $data);
-                $this->db->delete('semester');
+                if (!$this->db->delete('semester')){
+                        $error = $this->db->error();
+                        return $error;
+                } else {
+                        return true;
+                }
         }
 
         public function Edit_data_model($org_semester_id, $data)
         {
+                $this->db->db_debug = false;
                 $this->db->where('semester_id', $org_semester_id);
-                $this->db->update('semester', $data);
+                if (!$this->db->update('semester', $data)){
+                        $error = $this->db->error();
+                        return $error;
+                } else {
+                        return true;
+                }
         }
 
         public function Search_data_model($keyword, $type)

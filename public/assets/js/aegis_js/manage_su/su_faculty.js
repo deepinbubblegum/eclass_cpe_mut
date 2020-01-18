@@ -242,8 +242,10 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: '&faculty_ID=' + faculty_ID + '&faculty_Name=' + faculty_Name + '&org_id=' + data,
-                success: function (response) {
+                data: data,
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
                     formDataValClr();
                     show_data();
                     Snackbar.show({
@@ -255,7 +257,8 @@ $(document).ready(function () {
                         text: txtsnack
                     });
                 },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    // console.log(XMLHttpRequest);
                     Snackbar.show({
                         actionText: 'close',
                         pos: 'top-center',
@@ -280,7 +283,9 @@ $(document).ready(function () {
                 data: {
                     $data
                 },
-                success: function (response) {
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
                     $('#modaldel').modal('hide');
                     show_data();
                     Snackbar.show({

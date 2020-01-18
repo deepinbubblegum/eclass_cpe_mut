@@ -51,24 +51,42 @@ class Model_su_major extends CI_Model
 
         public function Add_data_model($data)
         {
-                $this->db->insert('major', $data);
+                $this->db->db_debug = false;
+                if (!$this->db->insert('major', $data)) {
+                        $error = $this->db->error();
+                        return $error;
+                } else {
+                        return true;
+                }
         }
 
         public function Edit_data_model($org_id, $data)
         {
+                $this->db->db_debug = false;
                 $this->db->where('major_id', $org_id);
-                $this->db->update('major', $data);
+                if (!$this->db->update('major', $data)) {
+                        $error = $this->db->error();
+                        return $error;
+                } else {
+                        return true;
+                }
         }
 
         public function Delete_Data_model($data)
         {
+                $this->db->db_debug = false;
                 $this->db->where_in('major_id', $data);
-                $this->db->delete('major');
+                if (!$this->db->delete('major')) {
+                        $error = $this->db->error();
+                        return $error;
+                } else {
+                        return true;
+                }
         }
 
         public function Select_major_medel($major)
         {
-                $query = $this->db->query('SELECT * FROM major WHERE major_faculty="'.$major.'" ');
+                $query = $this->db->query('SELECT * FROM major WHERE major_faculty="' . $major . '" ');
                 if ($query->num_rows() > 0) {
                         return $query->result();
                 }

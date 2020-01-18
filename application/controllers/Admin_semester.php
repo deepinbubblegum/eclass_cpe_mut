@@ -32,13 +32,15 @@ class Admin_semester extends MY_Controller
             'semester_name' => $this->input->post('semester_name'),
             'semester_id' => $this->input->post('semester_id')
         );
-        $this->Model_su_semester->Add_data_model($dataInsert);
+        $err_code = $this->Model_su_semester->Add_data_model($dataInsert);
+        echo json_encode($err_code);
     }
 
     public function Delete_Data_ctl()
     {
         $data = $this->input->post('$data[]');
-        $this->Model_su_semester->Delete_Data_model($data);
+        $err_code = $this->Model_su_semester->Delete_Data_model($data);
+        echo json_encode($err_code);
     }
 
     public function Edit_Data_ctl()
@@ -50,7 +52,8 @@ class Admin_semester extends MY_Controller
             'semester_name' => $this->input->post('semester_name'),
             'semester_id' => $this->input->post('semester_id')
         );
-        $this->Model_su_semester->Edit_data_model($org_semester_id, $data);
+        $err_code = $this->Model_su_semester->Edit_data_model($org_semester_id, $data);
+        echo json_encode($err_code);
     }
 
     public function Search_Show_Data_ctl()
