@@ -339,6 +339,21 @@ $(document).ready(function() {
         showMenuUploaded();
     }
 
+    var indexmax;
+    // function getMaxIndex(_data_max)
+    // {
+    //     $.ajax({
+    //         type: "POST",
+    //         url: '/' + url[3] + '/Te_upload/check_fileindex',
+    //         data: _data_max,
+    //         dataType: "json",
+    //         success: function (response) {
+    //             console.log('aaaa'+response['newIndex']);
+    //             _indexmax = response['newIndex'];
+    //         }
+    //     });
+    // }
+
     function uploadBtn(pos) {
         var checked = [];
         for (i = 0, c = 0; i < getFile[pos].length; i++) {
@@ -363,9 +378,21 @@ $(document).ready(function() {
                 console.log('ifParameter');
                 type = "Unknow";
             }
-
-            data = "&data1=" + str /*getFile[checked[i]].name.replace(" ", "-")*/ + "&data2=" + getFile[pos][checked[i]].size + "&data3=../uploads/file/" + subject_id + semester + "&data4=" + type + "&data5=" + getMenu[pos].menuDowId + "&data6=" + subject_id + "&data7=" + semester /*+ "&getFile=" + arr*/ ;
-
+            _dataget = "&data7=" + semester + "&data6=" + subject_id + "&data5=" + getMenu[pos].menuDowId;
+            
+            $.ajax({
+                type: "POST",
+                url: '/' + url[3] + '/Te_upload/check_fileindex',
+                async : false,
+                data: _dataget,
+                dataType: "json",
+                success: function (responsemax) {
+                    console.log('aaaa'+responsemax['newIndex']);
+                    indexmax = responsemax['newIndex'];
+                }
+            });
+            console.log('max '+indexmax);
+            data = "&data1=" + str /*getFile[checked[i]].name.replace(" |#", "-")*/ + "&data2=" + getFile[pos][checked[i]].size + "&data3=../uploads/file/" + subject_id + semester + "&data4=" + type + "&data5=" + getMenu[pos].menuDowId + "&data6=" + subject_id + "&data7=" + semester /*+ "&getFile=" + arr*/ + "&data8=" + indexmax;
             form_data.append('file[]', getFile[pos][checked[i]]);
             $.ajax({
                 type: "POST",
@@ -374,13 +401,12 @@ $(document).ready(function() {
                 //data: "&data1=" + getFile,
                 dataType: "json",
                 success: function(response) {
-                    alert("Success!");
+                    // alert("Success!");
                 }
             });
         }
         $('#progress_modal').modal('show');
         $.ajax({
-            // processbar ยังไม่เสร็จ
             xhr: function() {
                 var xhr = new window.XMLHttpRequest();
                 html = '';
