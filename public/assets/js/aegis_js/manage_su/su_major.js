@@ -353,7 +353,13 @@ $(document).ready(function() {
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: '&major_ID='+ major_ID + '&major_Name=' + major_Name + '&faculty_id=' + data2 + '&org_id=' + iddata,
+                // data: '&major_ID='+ major_ID + '&major_Name=' + major_Name + '&faculty_id=' + data2 + '&org_id=' + iddata,
+                data: {
+                    major_ID: major_ID,
+                    major_Name: major_Name,
+                    faculty_id: data2,
+                    org_id: iddata
+                },
                 success: function(response) {
                     console.log(response);
                     formDataValClr();
