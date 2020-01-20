@@ -69,6 +69,21 @@ class Teacher_add_subject extends MY_Controller
         $this->Model_te_add_subject->Add_Subject_Join($semes,$sub,$subjoin);
     }
 
+    public function Edit_SubJoin_Data_ctl_te()
+    {
+        $semester_edit = $this->input->post('semester_edit');
+        $subject_edit = $this->input->post('subject_edit');
+        $subjoin = $this->input->post('subjoin[]');
+        $this->Model_te_add_subject->Edit_Subject_Join($semester_edit, $subject_edit, $subjoin);
+    }
+
+    public function Edit_NoSubJoin_Data_ctl_te()
+    {
+        $semester_edit = $this->input->post('semester_edit');
+        $subject_edit = $this->input->post('subject_edit');
+        $this->Model_te_add_subject->Edit_NoSubject_Join($semester_edit, $subject_edit);
+    }
+
     public function getSubjectCopy()
     {
         $semester = $this->input->post('semester');

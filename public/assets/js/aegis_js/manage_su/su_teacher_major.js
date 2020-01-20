@@ -53,6 +53,17 @@ $(document).ready(function () {
         ['major_name', 'ชื่อคณะ'],
     ];
 
+    var Sort = [
+        ['teacher_code_id', 'ASC', 'รหัสอาจารย์ น้อย > มาก'],
+        ['teacher_code_id', 'DESC', 'รหัสอาจารย์ มาก > น้อย'],
+        ['teacher_Tname', 'ASC', 'ชื่ออาจารย์(TH) ก > ฮ'],
+        ['teacher_Tname', 'DESC', 'ชื่ออาจารย์(TH) ฮ > ก'],
+        ['teacher_Ename', 'ASC', 'ชื่ออาจารย์(EN) A > Z'],
+        ['teacher_Ename', 'DESC', 'ชื่ออาจารย์(EN) Z > A'],
+        ['major_name', 'ASC', 'คณะ A > Z'],
+        ['major_name', 'DESC', 'คณะ Z > A']
+    ];
+
     function theadGen() {
         var html = '';
         html += '<tr>' +
@@ -114,6 +125,14 @@ $(document).ready(function () {
         $('#select_search').html(html);
     }
 
+    function ShowSort() {
+        var html = '';
+        for (i = 0; i < Sort.length; i++) {
+            html += ' <a class="dropdown-item" id="sortDrop" href="#" data-1="' + Sort[i][0] + '" data-2="' + Sort[i][1] + '">' + Sort[i][2] + '</a>';
+        }
+        $('#TableSort').html(html);
+    }
+
     //---------------------------------------------END_FUNCTION_GEN---------------------------------------------//
 
     inModelGen();
@@ -121,6 +140,7 @@ $(document).ready(function () {
     dropSearch();
     theadGen();
     show_data();
+    ShowSort();
 
     popGen();
     hideAllPop();
@@ -509,5 +529,41 @@ $(document).ready(function () {
         });
         return item;
     }
+
+    $(".dropdown-menu.sort a ").click(function () {
+        data = $(this).attr('data-1');
+        sort = $(this).attr('data-2');
+        // alert(limit);
+        $.ajax({
+            type: 'POST',
+            url: "../Admin_teacher_major/Show_Sort_ctl",
+            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit, 
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" data="' + response[i].major_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].major_name + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" class="item-edit">Edit</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
 
 });

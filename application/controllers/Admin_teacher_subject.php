@@ -74,7 +74,7 @@ class Admin_teacher_subject extends MY_Controller
     {
         $keyword = $this->input->post('data');
         $type = $this->input->post('search');
-        $result = $this->Model_su_teacher_subject->Search_data_model($keyword,$type);
+        $result = $this->Model_su_teacher_subject->Search_data_model($keyword, $type);
         echo json_encode($result);
     }
 
@@ -95,6 +95,16 @@ class Admin_teacher_subject extends MY_Controller
     {
         $data = $this->input->post('datamajor');
         $result = $this->Model_su_teacher_subject->Select_Faculty($data);
+        echo json_encode($result);
+    }
+
+    public function Show_Sort_ctl()
+    {
+        $data = $this->input->post('data');
+        $sort = $this->input->post('sort');
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_teacher_subject->Show_Sort_model($data, $sort, $start, $limit);
         echo json_encode($result);
     }
 }

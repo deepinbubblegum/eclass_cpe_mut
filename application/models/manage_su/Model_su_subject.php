@@ -108,4 +108,23 @@ class Model_su_subject extends CI_Model
                         return 0;
                 }
         }
+
+        public function Show_Sort_model($data, $sort, $start, $limit)
+        {
+                if ($limit == 0 and $start == 0) {
+                        $limit = null;
+                        $start = null;
+                }
+                $this->db->select('subject_id, subject_name, major_name,major_id,major_faculty');
+                $this->db->from('subject');
+                $this->db->join('major', 'subject_major = major_id', 'left');
+                $this->db->order_by($data, $sort);
+                $this->db->limit($limit, $start);
+                $query = $this->db->get();
+                if ($query->num_rows() > 0) {
+                        return $query->result();
+                } else {
+                        return 0;
+                }
+        }
 }

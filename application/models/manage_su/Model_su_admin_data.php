@@ -96,4 +96,24 @@ class Model_su_admin_data extends CI_Model
             $this->db->update('teacher', $arg);
         }
     }
+
+    public function Show_Sort_model($data, $sort, $start, $limit)
+    {
+        if ($limit == 0 and $start == 0) {
+            $limit = null;
+            $start = null;
+        }
+        $this->db->select('*');
+        $this->db->from('teacher');
+        $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
+        $this->db->where('teacher_admin', '1');
+        $this->db->order_by($data, $sort);
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
 }

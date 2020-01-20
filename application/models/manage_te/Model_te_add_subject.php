@@ -73,6 +73,20 @@ class Model_te_add_subject extends CI_Model
         }
     }
 
+    public function Edit_Subject_Join($semester_edit, $subject_edit, $subjoin)
+    {
+        $this->db->query('DELETE FROM subject_coop WHERE subcoop_semester = "'.$semester_edit.'" AND subcoop_mainsub = "'.$subject_edit.'" ');
+        $arrayLength = count($subjoin);
+        for ($i = 0; $i < $arrayLength; $i++) {
+            $this->db->query('INSERT INTO subject_coop(subcoop_semester,subcoop_mainsub,subcoop_supsub) VALUES("' . $semester_edit . '"  ,"' . $subject_edit . '" , "' . $subjoin[$i] . '") ');
+        }
+    }
+
+    public function Edit_NoSubject_Join($semester_edit, $subject_edit)
+    {
+        $this->db->query('DELETE FROM subject_coop WHERE subcoop_semester = "'.$semester_edit.'" AND subcoop_mainsub = "'.$subject_edit.'" ');
+    }
+
     public function SubjectCopy($semester, $te_id)
     {
         $query = $this->db->query('SELECT subsem_semester , subject_id , subject_name , subsem_teacher FROM subject_semester 

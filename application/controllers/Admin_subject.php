@@ -67,4 +67,14 @@ class Admin_subject extends MY_Controller
                 $result = $this->Model_su_subject->getMajor($faculty_id);
                 echo json_encode($result);
         }
+
+        public function Show_Sort_ctl()
+        {
+                $data = $this->input->post('data');
+                $sort = $this->input->post('sort');
+                $start = $this->input->post('start');
+                $limit = $this->input->post('limit');
+                $result = $this->Model_su_subject->Show_Sort_model($data, $sort, $start, $limit);
+                echo json_encode($result);
+        }
 }

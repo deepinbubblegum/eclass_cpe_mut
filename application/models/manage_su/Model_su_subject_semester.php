@@ -133,4 +133,38 @@ class Model_su_subject_semester extends CI_Model
         $this->db->join('teacher_subject');
         $this->db->where('teasub_subjectid', $selectAddSemester);
     }
+
+    public function Show_SubJoin_model()
+    {
+        $this->db->select('*');
+        $this->db->from('subject_coop');
+        $this->db->join('subject', 'subject_coop.subcoop_supsub = subject.subject_id', 'left');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Show_Sort_model($data, $sort, $start, $limit)
+    {
+        if ($limit == 0 and $start == 0) {
+            $limit = null;
+            $start = null;
+        }
+        $this->db->select('*');
+        $this->db->from('subject_semester');
+        $this->db->join('semester', 'subject_semester.subsem_semester = semester.semester_id', 'inner');
+        $this->db->join('subject', 'subject_semester.subsem_subject = subject.subject_id', 'left');
+        $this->db->join('teacher', 'subject_semester.subsem_teacher = teacher.teacher_code_id', 'inner');
+        $this->db->order_by($data, $sort);
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
 }

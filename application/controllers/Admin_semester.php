@@ -63,4 +63,12 @@ class Admin_semester extends MY_Controller
         $result = $this->Model_su_semester->Search_data_model($keyword,$type);
         echo json_encode($result);
     }
+
+    public function Show_Sort_ctl()
+    {
+        $data = $this->input->post('data');
+        $sort = $this->input->post('sort');
+        $result = $this->Model_su_semester->Show_Sort_model($data, $sort);
+        echo json_encode($result);
+    }
 }

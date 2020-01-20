@@ -69,10 +69,11 @@ class Medel_std_point_request extends CI_Model
     {
         $now = $this->db->query('SELECT menuPS_date FROM menuPointSpecial WHERE menuPS_date >= DATE(NOW()) AND menuPS_semester = "' . $semester . '" AND menuPS_subject = "' . $subject_id . '" AND menuPS_id = "' . $menu_id . '" ');
         if ($now->num_rows() > 0) {
-            $chk = $this->db->query('SELECT * FROM ps_student WHERE ps_std_semester = "' . $semester . '" AND ps_std_subject = "' . $subject_id . '" AND ps_std_psID = "' . $menu_id . '" AND ps_std_stdID = "' . $User . '" ');
+            $chk = $this->db->query('SELECT * FROM ps_student WHERE ps_std_semester = "' . $semester . '" AND ps_std_subject = "' . $subject_id . '" AND ps_std_psID = "' . $menu_id . '" AND ps_std_stdID = "' . $User . '" AND ps_std_status !="0" ');
             if ($chk->num_rows() > 0) {
                 return 0;
             } else {
+                $this->db->query('DELETE FROM ps_student WHERE ps_std_semester = "' . $semester . '" AND ps_std_subject = "' . $subject_id . '" AND ps_std_psID = "' . $menu_id . '" AND ps_std_stdID = "' . $User . '"');
                 $count = count($std_sub);
                 for ($i = 0; $i < $count; $i++) {
                     $this->db->query('INSERT INTO ps_student VALUES("' . $semester . '", "' . $subject_id . '" , "' . $menu_id . '", "' . $std_sub[$i] . '", "' . $User . '", "' . $std_point[$i] . '", "0") ');

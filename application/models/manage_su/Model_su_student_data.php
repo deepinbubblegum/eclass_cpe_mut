@@ -75,7 +75,7 @@ class Model_su_student_data extends CI_Model
             } else if ($type == 'std_code_id') {
                 $searchData = 'std_code_id';
             }
-                $this->db->like($searchData, $keyword);
+            $this->db->like($searchData, $keyword);
         } else {
             $this->db->like('std_code_id', $keyword);
             $this->db->or_like('std_Tname', $keyword);
@@ -117,5 +117,25 @@ class Model_su_student_data extends CI_Model
     {
         $this->db->where_in('std_code_id', $data);
         $this->db->delete('student');
+    }
+
+    public function Show_Sort_model($data, $sort, $start, $limit)
+    {
+        if ($limit == 0 and $start == 0) {
+            $limit = null;
+            $start = null;
+        }
+        $this->db->select('std_code_id, std_Tname, std_Ename, std_email, faculty_name, faculty_id, major_name,major_id');
+        $this->db->from('student');
+        $this->db->join('major', 'std_major = major_id', 'left');
+        $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
+        $this->db->order_by($data, $sort);
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
     }
 }

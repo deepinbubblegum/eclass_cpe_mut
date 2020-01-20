@@ -91,6 +91,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
           <h5 class="card-title mb-0"><span id="tableTitleTxt">TABLE_TITLE</span></h5>
           <div class="card-actions ml-auto py-0">
             <div class="dropdown">
+              <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardTableDrop1" type="button"><i class="material-icons">filter_list</i></button>
+              <div aria-labelledby="cardTableDrop1" id="TableSort" class="dropdown-menu sort dropdown-menu-right menu">
+                <!-- <a class="dropdown-item" href="#">Filter 1</a>
+                <a class="dropdown-item" href="#">Filter 2</a>
+                <a class="dropdown-item" href="#">Filter 3</a> -->
+              </div>
+            </div>
+            <div class="dropdown">
               <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardTableDrop2" type="button"><i class="material-icons">more_vert</i></button>
               <div aria-labelledby="cardTableDrop2" class="dropdown-menu dropdown-menu-right menu">
                 <a class="dropdown-item" id="btnAdd">Add</a>
