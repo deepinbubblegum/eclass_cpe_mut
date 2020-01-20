@@ -5,10 +5,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <?php echo assets_js('aegis_js/manage_su/su_major.js'); ?>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <?php echo assets_js('aegis_js/manage_su/su_major.js'); ?>
 </head>
 
 <body>
@@ -18,7 +18,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <span style="font-size: 1.2em;">
                     <i class="fas fa-tachometer-alt"></i></span>
                 <span style="font-size: 0.8em;">
-                &nbsp;<span class="title-name" id="titleNameTxt">TITLE_NAME</span>
+                    &nbsp;<span class="title-name" id="titleNameTxt">TITLE_NAME</span>
                 </span>
             </div>
             <div class="form-inline">
@@ -27,7 +27,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </span>
                 <select class="custom-select mr-sm-2" id="select_search">
                     <!-- dropSearch(); -->
-                    <option >SELECT_SEARCH_TEXT</option>
+                    <option>SELECT_SEARCH_TEXT</option>
                 </select>
                 <input class="form-control mr-sm-2" id="SearchName" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn btn-secondary my-2 my-sm-0" id="btnSearch">
@@ -89,6 +89,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="card-header d-flex pr-0" id="table-title">
                     <h5 class="card-title mb-0"><span id="tableTitleTxt">TABLE_TITLE</span></h5>
                     <div class="card-actions ml-auto py-0">
+                        <div class="dropdown">
+                            <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardTableDrop1" type="button"><i class="material-icons">filter_list</i></button>
+                            <div aria-labelledby="cardTableDrop1" id="TableSort" class="dropdown-menu sort dropdown-menu-right menu">
+                                <!-- <a class="dropdown-item" href="#">Filter 1</a>
+                                <a class="dropdown-item" href="#">Filter 2</a>
+                                <a class="dropdown-item" href="#">Filter 3</a> -->
+                            </div>
+                        </div>
                         <div class="dropdown">
                             <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardTableDrop2" type="button"><i class="material-icons">more_vert</i></button>
                             <div aria-labelledby="cardTableDrop2" class="dropdown-menu dropdown-menu-right menu">

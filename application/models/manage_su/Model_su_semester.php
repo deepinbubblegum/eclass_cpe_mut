@@ -63,4 +63,18 @@ class Model_su_semester extends CI_Model
                         return 0;
                 }
         }
+
+        public function Show_Sort_model($data, $sort)
+        {
+                $this->db->select('semester_id, semester_year, semester_part, semester_name');
+                $this->db->from('semester');
+                $this->db->order_by($data, $sort);
+                $this->db->order_by("semester_part", "ASC");
+                $query = $this->db->get();
+                if ($query->num_rows() > 0) {
+                        return $query->result();
+                } else {
+                        return 0;
+                }
+        }
 }

@@ -53,6 +53,11 @@ $(document).ready(function() {
         ['popupYear', 'กรุณาระบุปี']
     ];
 
+    var Sort = [
+        ['semester_year', 'ASC', 'ปีการศึกษา น้อย > มาก'],
+        ['semester_year', 'DESC', 'ปีการศึกษา มาก > น้อย']
+    ];
+
     function formDataValClr() {
         for (i = 0; i < $(formData).length; i++) {
             $(formData[i]).val("");
@@ -126,6 +131,14 @@ $(document).ready(function() {
         $('#tableHead').html(html);
     }
 
+    function ShowSort() {
+        var html = '';
+        for (i = 0; i < Sort.length; i++) {
+            html += ' <a class="dropdown-item" id="sortDrop" href="#" data-1="' + Sort[i][0] + '" data-2="' + Sort[i][1] + '">' + Sort[i][2] + '</a>';
+        }
+        $('#TableSort').html(html);
+    }
+
     //---------------------------------------------END_FUNCTION_GEN---------------------------------------------//
 
     inModelGen();
@@ -134,6 +147,7 @@ $(document).ready(function() {
     dropSearch();
     theadGen();
     show_data();
+    ShowSort();
 
     popGen();
     hideAllPop();
@@ -426,5 +440,39 @@ $(document).ready(function() {
         });
         return item;
     }
+
+    $(".dropdown-menu.sort a ").click(function () {
+        data = $(this).attr('data-1');
+        sort = $(this).attr('data-2');
+
+        $.ajax({
+            type: 'POST',
+            url: "../Admin_semester/Show_Sort_ctl",
+            data: '&data=' + data + '&sort=' + sort,
+            dataType: "json",
+            success: function (datatableear) {
+                datatable = datatableear;
+                var html = '';
+                var i;
+                if (datatableear != null) {
+                    for (i = 0; i < datatableear.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox" >' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + datatableear[i].semester_id + '" id="' + datatableear[i].semester_id + '">' +
+                            '<label class="custom-control-label" for="' + datatableear[i].semester_id + '"> ' + datatableear[i].semester_year + ' </label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td id="">' + datatableear[i].semester_part + '</td>' +
+                            '<td id="">' + datatableear[i].semester_name + '</td>' +
+                            '<td><a data="' + datatableear[i].semester_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
     //--------------------------------------------END_BASIC_TOOLS--------------------------------------------//
 });

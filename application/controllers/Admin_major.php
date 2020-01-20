@@ -60,8 +60,16 @@ class Admin_major extends MY_Controller
 
         public function Select_major()
         {
-            $major = $this->input->post('datamajor');
-            $result = $this->Model_su_major->Select_major_medel($major);
-            echo json_encode($result);
+                $major = $this->input->post('datamajor');
+                $result = $this->Model_su_major->Select_major_medel($major);
+                echo json_encode($result);
+        }
+
+        public function Show_Sort_ctl()
+        {
+                $data = $this->input->post('data');
+                $sort = $this->input->post('sort');
+                $result = $this->Model_su_major->Show_Sort_ctl_medel($data, $sort);
+                echo json_encode($result);
         }
 }

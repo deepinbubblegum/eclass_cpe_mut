@@ -37,6 +37,15 @@ $(document).ready(function () {
     //head of table
     var theadGenValue = ['Subject ID', 'Subject Name', 'Teacher', 'Option'];
 
+    var Sort = [
+        ['subject_id', 'ASC', 'รหัสวิชา A > Z'],
+        ['subject_id', 'DESC', 'รหัสวิชา Z > A'],
+        ['subject_name', 'ASC', 'ชื่อวิชา A > Z'],
+        ['subject_name', 'DESC', 'ชื่อวิชา Z > A'],
+        ['teacher_Tname', 'ASC', 'อาจารย์ ก > ฮ'],
+        ['teacher_Tname', 'DESC', 'อาจารย์ ฮ > ก']
+    ];
+
     function dropPag() {
         var html = '';
         for (i = 0; i < pagingSize.length; i++) {
@@ -113,6 +122,14 @@ $(document).ready(function () {
         $('#tableHead').html(html);
     }
 
+    function ShowSort() {
+        var html = '';
+        for (i = 0; i < Sort.length; i++) {
+            html += ' <a class="dropdown-item" id="sortDrop" href="#" data-1="' + Sort[i][0] + '" data-2="' + Sort[i][1] + '">' + Sort[i][2] + '</a>';
+        }
+        $('#TableSort').html(html);
+    }
+
     //---------------------------------------------END_FUNCTION_GEN---------------------------------------------//
 
     inModelGen();
@@ -121,6 +138,7 @@ $(document).ready(function () {
     dropSearch();
     theadGen();
     show_data();
+    ShowSort();
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
@@ -570,4 +588,40 @@ $(document).ready(function () {
         });
         return item;
     }
+
+    $(".dropdown-menu.sort a ").click(function () {
+        data = $(this).attr('data-1');
+        sort = $(this).attr('data-2');
+        // alert(limit);
+        $.ajax({
+            type: 'POST',
+            url: "../Admin_teacher_subject/Show_Sort_ctl",
+            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit, 
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].teacher_code_id + '" value="' + response[i].subject_id + '"  id="' + response[i].subject_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].subject_id + i + '">' + response[i].subject_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].subject_name + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">Edit</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
+
 });

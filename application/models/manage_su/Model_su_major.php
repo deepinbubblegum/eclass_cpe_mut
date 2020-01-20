@@ -73,4 +73,18 @@ class Model_su_major extends CI_Model
                         return $query->result();
                 }
         }
+
+        public function Show_Sort_ctl_medel($data, $sort)
+        {
+                $this->db->select('major_id, major_name, faculty_name ,faculty_id');
+                $this->db->from('major');
+                $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
+                $this->db->order_by($data, $sort);
+                $query = $this->db->get();
+                if ($query->num_rows() > 0) {
+                        return $query->result();
+                } else {
+                        return 0;
+                }
+        }
 }

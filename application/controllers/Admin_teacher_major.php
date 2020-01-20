@@ -18,7 +18,7 @@ class Admin_teacher_major extends MY_Controller
     {
         $start = $this->input->post('start');
         $limit = $this->input->post('limit');
-        $result = $this->Model_su_teacher_major->Show_Data_Teacher_model($limit,$start);
+        $result = $this->Model_su_teacher_major->Show_Data_Teacher_model($limit, $start);
         echo json_encode($result);
     }
 
@@ -39,7 +39,7 @@ class Admin_teacher_major extends MY_Controller
             'teamaj_teacherid' => $this->input->post('teacher_id'),
             'teamaj_majorid' => $this->input->post('major_id'),
         );
-        $this->Model_su_teacher_major->Edit_data_model($org_teacher,$org_major, $data);
+        $this->Model_su_teacher_major->Edit_data_model($org_teacher, $org_major, $data);
     }
 
     public function Delete_Data_ctl()
@@ -48,15 +48,24 @@ class Admin_teacher_major extends MY_Controller
         $data_major = $this->input->post('$data2[]');
         // print_r($data_teacher);
         // print_r($data_major);
-        $this->Model_su_teacher_major->Delete_Data_model($data_teacher,$data_major);
+        $this->Model_su_teacher_major->Delete_Data_model($data_teacher, $data_major);
     }
 
     public function Search_Show_Data_ctl()
     {
         $data = $this->input->post('data');
         $keyword = $this->input->post('search');
-        $result = $this->Model_su_teacher_major->Search_data_model($data,$keyword);
+        $result = $this->Model_su_teacher_major->Search_data_model($data, $keyword);
         echo json_encode($result);
     }
 
+    public function Show_Sort_ctl()
+    {
+        $data = $this->input->post('data');
+        $sort = $this->input->post('sort');
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_teacher_major->Show_Sort_model($data, $sort, $start, $limit);
+        echo json_encode($result);
+    }
 }

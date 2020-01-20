@@ -53,4 +53,15 @@ class Model_su_faculty extends CI_Model
         $this->db->where_in('faculty_id', $data);
         $this->db->delete('faculty');
     }
+
+    public function Show_Sort_model($data, $sort)
+    {
+        $this->db->select('faculty_id, faculty_name');
+        $this->db->from('faculty');
+        $this->db->order_by($data, $sort);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+    }
 }

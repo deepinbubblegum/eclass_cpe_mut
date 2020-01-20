@@ -1,8 +1,8 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
     var a;
     var datatable_semester;
-    var datatable_subject;
+    var datasubject;
     var data_semester;
     var Sel_Sub;
     var SubCoop;
@@ -10,6 +10,9 @@ $(document).ready(function() {
     var semester_data;
     showSemester();
     hideSubJoin();
+
+    // var subjectEdit = '';
+    // var semesterEdit = '';
 
 
     function hideSubJoin() {
@@ -24,7 +27,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Teacher_add_subject/getSemester",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
@@ -45,7 +48,7 @@ $(document).ready(function() {
             url: "../" + url[3] + "/Teacher_subject/getSubject_Coop",
             data: "data=" + semesterSelected,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 SubCoop = response;
                 console.log(response);
                 showSubject();
@@ -62,8 +65,9 @@ $(document).ready(function() {
             url: "../" + url[3] + "/Teacher_subject/getSubject",
             data: "data=" + semesterSelected,
             dataType: "json",
-            success: function(response) {
-                console.log(response);
+            success: function (response) {
+                // console.log(response);
+                datasubject = response;
                 var txtSub = '';
                 var html = '';
                 if (response != null) {
@@ -81,10 +85,59 @@ $(document).ready(function() {
                             '<h5 class="card-title" value="' + response[i].subsem_subject + '" >' + txtSub + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
                             '</div>' +
+                            '<div class="card-footer text-muted">' +
+                            '<span style="font-size: 1.7em;" id="EditSubJoin' + i + '" value="' + response[i].subsem_subject + '" data-1="' + response[i].subsem_semester + '">' +
+                            '<i class="fas fa-edit float-sm-right ml-1 mr-1" title="แก้ไขวิชาร่วม"></i>' +
+                            '</span>' +
+                            '<span style="font-size: 1.7em;" id="EditImage' + i + '" value="' + response[i].subsem_subject + '" data-1="' + response[i].subsem_semester + '">' +
+                            '<i class="far fa-images float-sm-right ml-1 mr-1" title="แก้ไขรูปภาพ"></i>' +
+                            '</span>' +
+                            '</div>' +
                             '</a>';
                     }
                 }
                 $('#showSubject').html(html);
+                $.each(datasubject, function (x) {
+                    $('#EditSubJoin' + x).click(function () {
+                        // alert(datasubject[x].subsem_subject);
+                        $("#SubjectJoin_Edit").empty();
+                        subjectEdit = $(this).attr('value');
+                        semesterEdit = $(this).attr('data-1');
+                        $('#ShowSemester_Edit').text(semesterEdit);
+                        $('#ShowSubject_Edit').text(subjectEdit);
+                        $.ajax({
+                            url: "/" + url[3] + "/Teacher_add_subject/Subject_Add_data_ctl",
+                            dataType: "json",
+                            success: function (response) {
+                                var html = '';
+                                var y;
+                                if (response != null) {
+                                    for (y = 0; y < response.length; y++) {
+                                        if (response[y].subject_id != subjectEdit) {
+                                            html += '<option value="' + response[y].subject_id + '" data-2="' + response[y].subject_teacher + '">' + response[y].subject_name + ' (' + response[y].subject_id + ') </option>';
+                                        }
+                                    }
+                                }
+                                $('#SubjectJoin_Edit_option').html(html);
+                            }
+                        });
+                        for (a = 0; a < SubCoop.length; a++) {
+                            if (SubCoop[a].subcoop_mainsub == subjectEdit) {
+                                $('#SubjectJoin_Edit').append('<option value="' + SubCoop[a].subcoop_supsub + '"> ' + SubCoop[a].subject_name + ' (' + SubCoop[a].subcoop_supsub + ') </option>');
+                            }
+                        }
+                        $('#Modal_Edit_subject_join').modal('show');
+                        return false;
+                    });
+
+                    $('#EditImage' + x).click(function () {
+                        subjectEdit = $(this).attr('value');
+                        semesterEdit = $(this).attr('data-1');
+                        alert(subjectEdit);
+                        return false;
+                    });
+
+                });
             }
         });
 
@@ -93,7 +146,7 @@ $(document).ready(function() {
             url: "../" + url[3] + "/Teacher_subject/getSubject_Assist",
             data: "data=" + semesterSelected,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 var html = '';
                 var txtSubAssist = '';
@@ -125,7 +178,7 @@ $(document).ready(function() {
             url: "../" + url[3] + "/Teacher_subject/getSubject_Special",
             data: "data=" + semesterSelected,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 var txtSub = '';
                 var html = '';
@@ -153,6 +206,110 @@ $(document).ready(function() {
         });
     }
 
+    $('#Edit_Subjoin').click(function (e) {
+        e.preventDefault();
+        idSub = $('#SubjectJoin_Edit_option').val();
+        nameSub = $("#SubjectJoin_Edit_option :selected").text();
+        Editchk = 0;
+        if (nameSub !== '') {
+            if ($('#SubjectJoin_Edit').has('option').length > 0) {
+                $("#SubjectJoin_Edit > option").each(function () {
+                    if (this.value == idSub) {
+                        Snackbar.show({
+                            actionText: 'close',
+                            pos: 'top-center',
+                            actionTextColor: '#FF0000',
+                            backgroundColor: '#323232',
+                            width: 'auto',
+                            text: 'วิชานี้ถูกเพิ่มแล้ว'
+                        });
+                        Editchk = 1;
+                    }
+                });
+                if (Editchk != 1) {
+                    $('#SubjectJoin_Edit').append('<option value="' + idSub + '"> ' + nameSub + '</option>');
+                }
+            } else {
+                $('#SubjectJoin_Edit').append('<option value="' + idSub + '"> ' + nameSub + '</option>');
+            }
+        }
+    });
+
+    $('#Edit_DelSubjoin').click(function (e) {
+        e.preventDefault();
+        if (typeof $('#SubjectJoin_Edit :selected').val() != "undefined") {
+            // alert($('#SubjectJoin_Edit :selected').val());
+            subid = $('#SubjectJoin_Edit :selected').val();
+            // $('#SubjectJoin_Edit option[value="' + subid + '"]').remove();
+            $('#SubjectJoin_Edit').find('option[value=' + subid + ']').remove();
+        } else {
+            Snackbar.show({
+                actionText: 'close',
+                pos: 'top-center',
+                actionTextColor: '#FF0000',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'กรุณาเลือกวิชาที่ต้องการลบ'
+            });
+        }
+    });
+
+    $('#btnSave_EditSubJoin').click(function (e) {
+        arr_subsjoin_edit = [];
+        semester_edit = $('#ShowSemester_Edit').text();
+        subject_edit = $('#ShowSubject_Edit').text();
+        // alert(subject_edit);
+        arr_subsjoin_edit = [];
+        $("#SubjectJoin_Edit option").each(function () {
+            arr_subsjoin_edit.push(this.value);
+        });
+
+        if(arr_subsjoin_edit != ''){
+            // console.log(arr_subsjoin_edit);
+            $.ajax({
+                type: "POST",
+                url: "/" + url[3] + '/Teacher_add_subject/Edit_SubJoin_Data_ctl_te',
+                data: {
+                    semester_edit: semester_edit,
+                    subject_edit: subject_edit,
+                    subjoin: arr_subsjoin_edit
+                },
+                success: function () {
+                    Snackbar.show({
+                        actionText: 'close',
+                        pos: 'top-center',
+                        actionTextColor: '#4CAF50',
+                        backgroundColor: '#323232',
+                        width: 'auto',
+                        text: 'แก้ไขข้อมูลสำเร็จ'
+                    });
+                    showSemester();
+                }
+            });
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "/" + url[3] + '/Teacher_add_subject/Edit_NoSubJoin_Data_ctl_te',
+                data: {
+                    semester_edit: semester_edit,
+                    subject_edit: subject_edit,
+                },
+                success: function () {
+                    Snackbar.show({
+                        actionText: 'close',
+                        pos: 'top-center',
+                        actionTextColor: '#4CAF50',
+                        backgroundColor: '#323232',
+                        width: 'auto',
+                        text: 'แก้ไขข้อมูลสำเร็จ'
+                    });
+                    showSemester();
+                }
+            });
+        }
+        $('#Modal_Edit_subject_join').modal('hide');
+    });
+
     function sortui() {
         $("#showSubject").sortable({
             tolerance: 'pointer',
@@ -160,13 +317,13 @@ $(document).ready(function() {
             placeholder: 'placeholder',
             forceHelperSize: true,
             connectWith: ".card-deck",
-            stop: function(event, div) {
-                $('.card-deck').each(function() {
+            stop: function (event, div) {
+                $('.card-deck').each(function () {
                     result = "";
-                    $(this).find("h5").each(function() {
+                    $(this).find("h5").each(function () {
                         result += $(this).attr('value') + ",";
                     });
-                    console.log(result);
+                    // console.log(result);
                 });
             }
         });
@@ -176,10 +333,10 @@ $(document).ready(function() {
             placeholder: 'placeholder',
             forceHelperSize: true,
             connectWith: ".card-deck",
-            stop: function(event, div) {
-                $('.card-deck').each(function() {
+            stop: function (event, div) {
+                $('.card-deck').each(function () {
                     resultass = "";
-                    $(this).find("h5").each(function() {
+                    $(this).find("h5").each(function () {
                         resultass += $(this).attr('value') + ",";
                     });
                     console.log(resultass);
@@ -188,7 +345,7 @@ $(document).ready(function() {
         });
     }
 
-    $('#yearterm').change(function(e) {
+    $('#yearterm').change(function (e) {
         e.preventDefault();
         showSubject();
     });
@@ -206,7 +363,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Teacher_add_subject/getSemester",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -220,7 +377,7 @@ $(document).ready(function() {
         $.ajax({
             url: "/" + url[3] + "/Teacher_add_subject/Subject_Add_data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 var html = '';
                 var i;
@@ -235,13 +392,13 @@ $(document).ready(function() {
         });
     }
 
-    $('#Subject_Form_add_option').change(function(e) {
+    $('#Subject_Form_add_option').change(function (e) {
         e.preventDefault();
         Sel_Sub = $('#Subject_Form_add_option').val();
         Select_SubChange();
     });
 
-    $('#customSwitch').change(function(e) {
+    $('#customSwitch').change(function (e) {
         e.preventDefault();
         var Swck;
         if ($(this).prop("checked") == true) {
@@ -251,7 +408,7 @@ $(document).ready(function() {
             $.ajax({
                 url: "/" + url[3] + "/Teacher_add_subject/Subject_Add_data_ctl",
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     var html = '';
                     var i;
                     if (response != null) {
@@ -275,7 +432,7 @@ $(document).ready(function() {
 
     var semesterCopy;
 
-    $('#customSwitchCopy').change(function(e) {
+    $('#customSwitchCopy').change(function (e) {
         e.preventDefault();
         var Swck;
         if ($(this).prop("checked") == true) {
@@ -284,7 +441,7 @@ $(document).ready(function() {
             $.ajax({
                 url: "/" + url[3] + "/Teacher_add_subject/getSemester",
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     var html = '';
                     var i;
                     if (response != null) {
@@ -305,7 +462,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#SemesterCopy_add_option').change(function(e) {
+    $('#SemesterCopy_add_option').change(function (e) {
         e.preventDefault();
         semesterCopy = $("#SemesterCopy_add_option :selected").val();
         Subject_Copy();
@@ -318,7 +475,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Teacher_add_subject/getSubjectCopy",
             data: '&semester=' + semesterCopy,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -332,7 +489,7 @@ $(document).ready(function() {
     }
 
 
-    $('#btnCloseAdd').click(function(e) {
+    $('#btnCloseAdd').click(function (e) {
         e.preventDefault();
         $("#SubjectJoin").empty();
         $('#customSwitchCopy').prop('checked', false);;
@@ -341,7 +498,7 @@ $(document).ready(function() {
         $('#Class_Join').hide();
     });
 
-    $('#IconClose').click(function(e) {
+    $('#IconClose').click(function (e) {
         e.preventDefault();
         $("#SubjectJoin").empty();
         $('#customSwitchCopy').prop('checked', false);;
@@ -359,7 +516,7 @@ $(document).ready(function() {
             $.ajax({
                 url: "/" + url[3] + "/Teacher_add_subject/Subject_Add_data_ctl",
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     var html = '';
                     var i;
                     if (response != null) {
@@ -375,14 +532,14 @@ $(document).ready(function() {
         }
     }
 
-    $('#add_Subjoin').click(function(e) {
+    $('#add_Subjoin').click(function (e) {
         e.preventDefault();
         idSub = $('#SubjectJoin_add_option').val();
         nameSub = $("#SubjectJoin_add_option :selected").text();
         chk = 0;
-        if(nameSub !== ''){
+        if (nameSub !== '') {
             if ($('#SubjectJoin').has('option').length > 0) {
-                $("#SubjectJoin > option").each(function() {
+                $("#SubjectJoin > option").each(function () {
                     if (this.value == idSub) {
                         Snackbar.show({
                             actionText: 'close',
@@ -404,8 +561,27 @@ $(document).ready(function() {
         }
     });
 
+    $('#add_DelSubjoin').click(function (e) {
+        e.preventDefault();
+        if (typeof $('#SubjectJoin :selected').val() != "undefined") {
+            // alert($('#SubjectJoin_Edit :selected').val());
+            subid = $('#SubjectJoin :selected').val();
+            // $('#SubjectJoin_Edit option[value="' + subid + '"]').remove();
+            $('#SubjectJoin').find('option[value=' + subid + ']').remove();
+        } else {
+            Snackbar.show({
+                actionText: 'close',
+                pos: 'top-center',
+                actionTextColor: '#FF0000',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'กรุณาเลือกวิชาที่ต้องการลบ'
+            });
+        }
+    });
 
-    $('#btnSave').click(function(e) {
+
+    $('#btnSave').click(function (e) {
         e.preventDefault();
         ChkCopy();
     });
@@ -474,7 +650,7 @@ $(document).ready(function() {
                 "subject_id": data2,
                 "img_data": img_data
             },
-            success: function() {
+            success: function () {
                 //$('#Modal_add').modal('hide');
                 Snackbar.show({
                     actionText: 'close',
@@ -487,7 +663,7 @@ $(document).ready(function() {
                 add_subjoin();
                 Copy_Subject();
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -506,7 +682,7 @@ $(document).ready(function() {
         arr_subsjoin = [];
         arr_semes = [];
         arr_sub = [];
-        $("#SubjectJoin option").each(function() {
+        $("#SubjectJoin option").each(function () {
             arr_subsjoin.push(this.value);
             arr_semes.push(data);
             arr_sub.push(data2);
@@ -515,8 +691,12 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             url: "/" + url[3] + '/Teacher_add_subject/Add_SubJoin_Data_ctl_te',
-            data: { $semes: arr_semes, $sub: arr_sub, $subjoin: arr_subsjoin },
-            success: function() {
+            data: {
+                $semes: arr_semes,
+                $sub: arr_sub,
+                $subjoin: arr_subsjoin
+            },
+            success: function () {
                 $("#SubjectJoin").empty();
                 // $('#Modal_Add_subject').modal('hide');
                 Snackbar.show({
@@ -528,7 +708,7 @@ $(document).ready(function() {
                     text: txtsnack
                 });
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -549,7 +729,7 @@ $(document).ready(function() {
             type: "POST",
             url: "/" + url[3] + '/Teacher_add_subject/Add_SubCopy',
             data: '&semester=' + data + '&subject_id=' + data2 + '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy,
-            success: function() {
+            success: function () {
                 $('#Modal_Add_subject').modal('hide');
             }
         });
@@ -558,7 +738,7 @@ $(document).ready(function() {
 
 
     // =========================== ADD IMG ========================
-    $('#start_crop').click(function(e) {
+    $('#start_crop').click(function (e) {
         e.preventDefault();
         $('#cropper_img').modal('show');
     });
@@ -584,7 +764,7 @@ $(document).ready(function() {
                     let img = document.createElement('img');
                     img.id = 'image';
                     img.src = e.target.result
-                        // clean result before
+                    // clean result before
                     result.innerHTML = '';
                     // append new image
                     result.appendChild(img);
@@ -615,7 +795,7 @@ $(document).ready(function() {
         $('#cropper_img').modal('hide');
     });
 
-    $('#display_crop').on('mousemove', function() {
+    $('#display_crop').on('mousemove', function () {
         let imgSrc = cropper.getCroppedCanvas({
             width: img_w.value // input value
         }).toDataURL();

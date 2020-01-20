@@ -40,7 +40,7 @@ class Admin_teacher extends MY_Controller
             );
             $this->Model_su_teacher->Add_data_model($data);
             $this->Add_Data_TeacherMajor();
-        }else{
+        } else {
             show_error('Duplicate', 409, 'An Error Was Encountered Value is Duplicate');
         }
     }
@@ -79,6 +79,16 @@ class Admin_teacher extends MY_Controller
         $data = $this->input->post('data');
         $keyword = $this->input->post('search');
         $result = $this->Model_su_teacher->Search_data_model($data, $keyword);
+        echo json_encode($result);
+    }
+
+    public function Show_Sort_ctl()
+    {
+        $data = $this->input->post('data');
+        $sort = $this->input->post('sort');
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_teacher->Show_Sort_model($data, $sort, $start, $limit);
         echo json_encode($result);
     }
 }

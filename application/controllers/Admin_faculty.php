@@ -42,4 +42,12 @@ class Admin_faculty extends MY_Controller {
         $data = $this->input->post('$data[]');
         $this->Model_su_faculty->Delete_Data_model($data);
     }
+
+    public function Show_Sort_ctl()
+    {
+        $data = $this->input->post('data');
+        $sort = $this->input->post('sort');
+        $result = $this->Model_su_faculty->Show_Sort_model($data, $sort);
+	    echo json_encode($result);
+    }
 }

@@ -70,4 +70,23 @@ class Model_su_teacher extends CI_Model
         $this->db->where_in('teacher_code_id', $data);
         $this->db->delete('teacher');
     }
+
+    public function Show_Sort_model($data, $sort, $start, $limit)
+    {
+        if ($limit == 0 and $start == 0) {
+            $limit = null;
+            $start = null;
+        }
+        $this->db->select('teacher_code_id, teacher_Tname, teacher_Ename, teacher_email, teacher_username, de_Tname, de_Ename , de_id');
+        $this->db->from('teacher');
+        $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
+        $this->db->order_by($data, $sort);
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
 }

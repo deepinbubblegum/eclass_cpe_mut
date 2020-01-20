@@ -112,4 +112,20 @@ class Admin_subject_semester extends MY_Controller
         $selectAddSemester = $this->input->post('selectAddSemester');
         $this->Model_su_subject_semester->get_sub_teacher($selectAddSemester);
     }
+
+    public function Show_Subjoin_ctl()
+    {
+        $result = $this->Model_su_subject_semester->Show_SubJoin_model();
+        echo json_encode($result);
+    }
+
+    public function Show_Sort_ctl()
+    {
+        $data = $this->input->post('data');
+        $sort = $this->input->post('sort');
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_subject_semester->Show_Sort_model($data, $sort, $start, $limit);
+        echo json_encode($result);
+    }
 }

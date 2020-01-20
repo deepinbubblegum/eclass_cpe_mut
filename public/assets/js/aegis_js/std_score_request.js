@@ -9,7 +9,6 @@ $(document).ready(function () {
     var std_sub = [];
     var std_point = [];
 
-
     function subjectMain() {
         $.ajax({
             type: 'POST',
@@ -55,7 +54,7 @@ $(document).ready(function () {
                             '</a>' +
                             '<div aria-labelledby="' + response[i].menuPS_id + '" class="collapse" data-parent="#accordionMenu" id="collapse' + i + '">' +
                             '<div class="expansion-panel-body text-left">' +
-                            'เลือกวิชาขอแลกคะแนน (จำนวน : ' + response[i].menuPS_num_subject + ' วิชา) <span id=PointStd> </span>';
+                            'เลือกวิชาขอแลกคะแนน (จำนวน : ' + response[i].menuPS_num_subject + ' วิชา) คะแนนต่อวิชา : <span id=PointStd> AAA </span>';
                         for (a = 0; a < response[i].menuPS_num_subject; a++) {
                             x = a;
                             html += '<div class="form-row" >' +
@@ -81,6 +80,12 @@ $(document).ready(function () {
                 $('#accordionMenu').html(html);
                 SubjectOption();
                 $.each(dataMenu, function (i) {
+                    $('#' + dataMenu[i].menuPS_id).click(function () {
+                        id = dataMenu[i].menuPS_setpointID;
+                        point = $('#point-' + ID_STD + '-' + id).text();
+                        $("div").find(".expansion-panel-body > span").text(point);
+                    });
+                    // alert($('#point-' + ID_STD + '-' + dataMenu[i].menuPS_setpointID).text());
                     $('#RequestSave' + i).click(function () {
                         chk = 0;
                         menu_id = '';
@@ -197,7 +202,7 @@ $(document).ready(function () {
                         actionTextColor: '#FF0000',
                         backgroundColor: '#323232',
                         width: 'auto',
-                        text: 'ท่านได้ทำการแลกคะแนนแล้ว'
+                        text: 'ไม่สามารถแลกคะแนนได้ รายชื่อถูกส่งแล้ว'
                     });
                 } else {
                     Snackbar.show({
@@ -217,7 +222,6 @@ $(document).ready(function () {
     /* --------------------------------------------------------CALCULATOR SOCRE-------------------------------------------------------------------------------- */
 
     var url = $(location).attr('href').split("/");
-
 
     htmlTbody = '';
     pointData = [];

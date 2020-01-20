@@ -44,14 +44,21 @@ $(document).ready(function() {
 
     var formData = ["#major_ID", "#major_Name"];
 
-
-
     var popData = ["#popupID", "#popupName"];
 
     var popValue = [
         //[POP_ID,POP_TEXT]
         ['popupID', 'กรุณาระบุรหัสสาขา'],
         ['popupName', 'กรุณาระบุชื่อสาขา']
+    ];
+
+    var Sort = [
+        ['major_id', 'ASC', 'รหัสสาขา A > Z'],
+        ['major_id', 'DESC', 'รหัสสาขา Z > A'],
+        ['major_name', 'ASC', 'ชื่อสาขา A > Z'],
+        ['major_name', 'DESC', 'ชื่อสาขา Z > A'],
+        ['faculty_name', 'ASC', 'ชื่อคณะ A > Z'],
+        ['faculty_name', 'DESC', 'ชื่อคณะ Z > A']
     ];
 
     function formDataValClr() {
@@ -139,6 +146,14 @@ $(document).ready(function() {
         $('#tableHead').html(html);
     }
 
+    function ShowSort() {
+        var html = '';
+        for (i = 0; i < Sort.length; i++) {
+            html += ' <a class="dropdown-item" id="sortDrop" href="#" data-1="' + Sort[i][0] + '" data-2="' + Sort[i][1] + '">' + Sort[i][2] + '</a>';
+        }
+        $('#TableSort').html(html);
+    }
+
     //---------------------------------------------END_FUNCTION_GEN---------------------------------------------//
 
     inModelGen();
@@ -147,6 +162,7 @@ $(document).ready(function() {
     dropSearch();
     theadGen();
     show_data();
+    ShowSort();
 
     popGen();
     hideAllPop();
@@ -306,7 +322,8 @@ $(document).ready(function() {
     });
 
     $('#showAllData').on('click', '.item-edit', function() {
-        iddata = $(this).attr('data');
+        iddataEncode = $(this).attr('data');
+        iddata = encodeURIComponent(iddataEncode);
         ivalue = $(this).attr('value');
         console.log('1' + iddata);
         $('#major_ID').val(datatable[ivalue].major_id);
@@ -337,10 +354,12 @@ $(document).ready(function() {
         if (check == result) {
 
             // data = $('#formAdd').serialize();
-            major_ID = $.trim($('#major_ID').val());
-            major_Name = $.trim($('#major_Name').val());
+            major_IDPlus = $.trim($('#major_ID').val());
+            major_ID = encodeURIComponent(major_IDPlus);
+            major_NamePlus = $.trim($('#major_Name').val());
+            major_Name = encodeURIComponent(major_NamePlus);
             data2 = $("#selectAdd :selected").val();
-
+            // alert(major_ID);
             if (iurl == '../Admin_major/Add_Data_ctl') {
                 txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
@@ -427,5 +446,39 @@ $(document).ready(function() {
         });
         return item;
     }
+
+    $(".dropdown-menu.sort a ").click(function () {
+        data = $(this).attr('data-1');
+        sort = $(this).attr('data-2');
+        // alert(limit);
+        $.ajax({
+            type: 'POST',
+            url: "../Admin_major/Show_Sort_ctl",
+            data: '&data=' + data + '&sort=' + sort,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].major_id + '" id="' + response[i].faculty_name + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].faculty_name + i + '">' + response[i].major_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].major_name + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
+                            '<td><a data="' + response[i].major_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    })
     //--------------------------------------------END_BASIC_TOOLS--------------------------------------------//
 });

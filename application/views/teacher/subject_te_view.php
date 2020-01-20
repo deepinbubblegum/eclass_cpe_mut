@@ -169,6 +169,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                                                         <a><i class="fas fa-plus-circle"></i></a>
                                                                                                 </span>
                                                                                         </span>
+                                                                                        <span style="font-size: 1.5rem;" id="add_DelSubjoin">
+                                                                                                <span style="color: #ff4081;">
+                                                                                                        <a><i class="fas fa-minus-circle"></i></a>
+                                                                                                </span>
+                                                                                        </span>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                         <label for="SubjectJoin">รายวิชาเรียนร่วมที่เพิ่ม</label>
@@ -185,6 +190,74 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="modal-footer">
                                         <button type="button" id="btnCloseAdd" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                         <button type="button" id="btnSave" class="btn btn-primary">เพิ่มวิชา</button>
+                                </div>
+                        </div>
+                </div>
+        </div>
+        <!-- End Modal -->
+
+        <!-- Modal Edit Subject Join -->
+        <div class="modal fade" id="Modal_Edit_subject_join" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="Modal_Edit_subject_join" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h4 class="modal-title">แก้ไขข้อมูลวิชาเรียนร่วม</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="IconClose"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                                <form id="Subject_semester_Form_edit">
+                                        <div class="modal-body">
+                                                <form class="needs-validation" novalidate>
+                                                        <div class="form-row">
+                                                                <div class="col-sm-3 mb-2">
+                                                                        <label>Semester</label>
+                                                                        <p id="ShowSemester_Edit"></p>
+                                                                </div>
+                                                                <div class="col-sm mb-2">
+                                                                        <label>Subject</label>
+                                                                        <p id="ShowSubject_Edit"></p>
+                                                                </div>
+                                                        </div>
+
+                                                        <div class="form-row" id="Class_Join">
+                                                                <!-- <div class="col-sm mb-1">
+                                                                        <label>Subject</label>
+                                                                        <select class="form-control" id="SubjectJoin_add_option">
+
+                                                                        </select>
+                                                                </div> -->
+                                                                <div class="col-sm mb-1">
+                                                                        <form>
+                                                                                <div class="form-group">
+                                                                                        <label for="SubjectJoin_Edit_option">เพิ่มรายวิชาเรียนร่วม</label>
+                                                                                        <select class="form-control" id="SubjectJoin_Edit_option">
+
+                                                                                        </select>
+                                                                                        <span style="font-size: 1.5rem;" id="Edit_Subjoin">
+                                                                                                <span style="color: #ff4081;">
+                                                                                                        <a><i class="fas fa-plus-circle"></i></a>
+                                                                                                </span>
+                                                                                        </span>
+                                                                                        <span style="font-size: 1.5rem;" id="Edit_DelSubjoin">
+                                                                                                <span style="color: #ff4081;">
+                                                                                                        <a><i class="fas fa-minus-circle"></i></a>
+                                                                                                </span>
+                                                                                        </span>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                        <label for="SubjectJoin_Edit">รายวิชาเรียนร่วมที่เพิ่ม</label>
+                                                                                        <select multiple class="form-control" id="SubjectJoin_Edit">
+
+                                                                                        </select>
+                                                                                </div>
+                                                                        </form>
+                                                                </div>
+                                                        </div>
+                                                </form>
+                                        </div>
+                                </form>
+                                <div class="modal-footer">
+                                        <button type="button" id="btnCloseAdd" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                        <button type="button" id="btnSave_EditSubJoin" class="btn btn-primary">แก้ไขวิชาเรียนร่วม</button>
                                 </div>
                         </div>
                 </div>

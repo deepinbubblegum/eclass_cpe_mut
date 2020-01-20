@@ -161,4 +161,26 @@ class Model_su_teacher_subject extends CI_Model
             return 0;
         }
     }
+
+    public function Show_Sort_model($data, $sort, $start, $limit)
+    {
+        if ($limit == 0 and $start == 0) {
+            $limit = null;
+            $start = null;
+        }
+        $this->db->select('subject_id, subject_name,teacher_code_id,teacher_Ename,teacher_Tname,subject_major, de_Tname, de_Ename , de_id');
+        $this->db->from('teacher_subject');
+        $this->db->join('subject', 'teacher_subject.teasub_subjectid = subject.subject_id', 'left');
+        $this->db->join('teacher', 'teacher_subject.teasub_teacherid = teacher.teacher_code_id', 'left');
+        $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
+        $this->db->order_by($data, $sort);
+        $this->db->limit($limit, $start);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
 }

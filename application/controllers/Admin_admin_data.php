@@ -42,7 +42,7 @@ class Admin_admin_data extends MY_Controller
         $arg = array(
             'teacher_admin' => '1',
         );
-        $this->Model_su_admin_data->Add_data_model($data,$arg);
+        $this->Model_su_admin_data->Add_data_model($data, $arg);
     }
 
     public function Edit_Data_ctl()
@@ -64,7 +64,7 @@ class Admin_admin_data extends MY_Controller
             'teacher_admin' => '0',
         );
         $data = $this->input->post('$data[]');
-        $this->Model_su_admin_data->Delete_Data_model($data,$arg);
+        $this->Model_su_admin_data->Delete_Data_model($data, $arg);
     }
 
     public function Search_Show_Data_ctl()
@@ -72,6 +72,16 @@ class Admin_admin_data extends MY_Controller
         $keyword = $this->input->post('data');
         $type = $this->input->post('search');
         $result = $this->Model_su_admin_data->Search_data_model($keyword, $type);
+        echo json_encode($result);
+    }
+
+    public function Show_Sort_ctl()
+    {
+        $data = $this->input->post('data');
+        $sort = $this->input->post('sort');
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_admin_data->Show_Sort_model($data, $sort, $start, $limit);
         echo json_encode($result);
     }
 }

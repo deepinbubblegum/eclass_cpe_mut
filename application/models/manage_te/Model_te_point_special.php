@@ -95,6 +95,7 @@ class Model_te_point_special extends CI_Model
     {
         $query = $this->db->query('SELECT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, ps_std_point, ps_std_status, subject_name FROM ps_student 
         LEFT JOIN subject ON subject_id = ps_std_subAdd
+        LEFT JOIN ps_teacher ON ps_std_semester = ps_tea_semester AND ps_std_subject = ps_tea_subject AND ps_std_psID = ps_tea_menu AND ps_std_subAdd = ps_tea_subAdd
         WHERE ps_std_semester = "'.$semester.'" AND ps_std_subject = "'.$subject.'" AND ps_std_psID = "'.$menuID.'" order by ps_std_stdID  ');
         return $query->result();
     }
@@ -132,7 +133,7 @@ class Model_te_point_special extends CI_Model
 
     public function ConfirmStdRequest($semester, $subject, $memuId, $std, $subAdd, $point_std)
     {
-        $this->db->query('INSERT INTO ps_teacher VALUES("'.$semester.'", "'.$subject.'", "'.$subAdd.'", "'.$std.'" , "'.$point_std.'", "0" )');
+        $this->db->query('INSERT INTO ps_teacher VALUES("'.$semester.'", "'.$subject.'", "'.$subAdd.'", "'.$memuId.'" ,  "'.$std.'" , "'.$point_std.'", "0" , "0" )');
 
         $this->db->query('UPDATE ps_student SET ps_std_status = "1" 
         WHERE ps_std_semester = "'.$semester.'" AND ps_std_subject = "'.$subject.'" AND ps_std_psID = "'.$memuId.'" AND ps_std_subAdd = "'.$subAdd.'" AND ps_std_stdID = "'.$std.'"  ');
@@ -142,7 +143,7 @@ class Model_te_point_special extends CI_Model
     {
         $count = count($StdAll);
         for ($i = 0; $i < $count; $i++) {
-            $this->db->query('INSERT IGNORE INTO ps_teacher VALUES("'.$semester.'", "'.$subject.'", "'.$subAddAll[$i].'", "'.$StdAll[$i].'" , "'.$PointAll[$i].'" , "0" )');
+            $this->db->query('INSERT IGNORE INTO ps_teacher VALUES("'.$semester.'", "'.$subject.'", "'.$subAddAll[$i].'" , "'.$idMenu.'" , "'.$StdAll[$i].'" , "'.$PointAll[$i].'" , "0" , "0" )');
 
             $this->db->query('UPDATE ps_student SET ps_std_status = "1" 
             WHERE ps_std_semester = "'.$semester.'" AND ps_std_subject = "'.$subject.'" AND ps_std_psID = "'.$idMenu.'" AND ps_std_subAdd = "'.$subAddAll[$i].'" 

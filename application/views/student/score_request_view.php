@@ -65,9 +65,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <li class="nav-item">
                     <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">เมนูแลกคะแนนพิเศษ</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">เพื่อนในชั้นเรียน</a>
-                </li> -->
+                <li class="nav-item">
+                    <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">ผลการขอแลกคะแนน</a>
+                </li>
             </ul>
             <div class="tab-content" id="justifiedTabContent">
                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
@@ -98,6 +98,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     </div>
                 </div>
+
+                <div aria-labelledby="profile-tab" class="tab-pane fade show" id="profile" role="tabpanel">
+                    <div class="list-group mt-3" id="accordionStdRequest">
+
+                        <div class="expansion-panel list-group-item show">
+                            <a aria-controls="collapse0" aria-expanded="true" class="expansion-panel-toggler text-left" data-toggle="collapse" href="#collapse0" id="PS001">
+                                <div class="d-flex justify-content-start">
+                                    <span class="text-left"> TEST </span>
+                                </div>
+                                <div class="expansion-panel-icon ml-3 text-black-secondary"><i class="collapsed material-icons">keyboard_arrow_down</i><i class="collapsed-hide material-icons">keyboard_arrow_up</i></div>
+                            </a>
+
+                            <div aria-labelledby="PS001" class="collapse show" data-parent="#accordionStdRequest" id="collapse0">
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
             </div>
         </div>
 

@@ -12,7 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         subject_id = '<?php echo $subject_id; ?>';
         semester = '<?php echo $semester; ?>';
     </script>
-    
+
     <?php echo assets_js('aegis_js/manage_te/te_point_request.js'); ?>
 
 </head>
@@ -48,24 +48,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">เพื่อนในชั้นเรียน</a>
                 </li> -->
             </ul>
+
             <div class="tab-content" id="justifiedTabContent">
                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
                     <div class="list-group mt-3" id="accordionOne">
+                        <div class="text-left mt-2 mb-2">
+                            <button type="button" class="btn btn-primary"><i class="far fa-check-circle"></i> รับทราบทั้งหมด </button>
+                        </div><br>
+                        <div class="table-responsive">
+                            <table class="table table-striped text-left">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">รหัสนักศึกษา</th>
+                                        <th scope="col">ชื่อ - สกุล</th>
+                                        <th scope="col">คะแนนที่ขอแลก</th>
+                                        <th scope="col">การรับทราบ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="TbodyPoint">
 
-                    <div class="table-responsive">
-                    <table class="table table-striped text-left">
-                    <thead>
-                        <tr>
-                        <th scope="col">รหัสนักศึกษา</th>
-                        <th scope="col">ชื่อ - สกุล</th>
-                        <th scope="col">คะแนนที่ขอแลก</th>
-                        </tr>
-                    </thead>
-                    <tbody id="TbodyPoint">
-                        
-                    </tbody>
-                    </table>
-                    </div>
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                 </div>

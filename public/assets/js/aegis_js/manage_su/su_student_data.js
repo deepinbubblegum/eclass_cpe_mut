@@ -59,6 +59,19 @@ $(document).ready(function() {
         ['popupEmail', 'กรุณาระบุชื่อสาขา']
     ];
 
+    var Sort = [
+        ['std_code_id', 'ASC', 'รหัสนักศึกษา มาก > น้อย'],
+        ['std_code_id', 'DESC', 'รหัสนักศึกษา น้อย > มาก'],
+        ['std_Tname', 'ASC', 'ชื่อ(TH) ก > ฮ'],
+        ['std_Tname', 'DESC', 'ชื่อ(TH) ฮ > ก'],
+        ['std_Ename', 'ASC', 'ชื่อ(EN) A > Z'],
+        ['std_Ename', 'DESC', 'ชื่อ(EN) Z > A'],
+        ['faculty_name', 'ASC', 'คณะ A > Z'],
+        ['faculty_name', 'DESC', 'คณะ Z > A'],
+        ['major_name', 'ASC', 'สาขา A > Z'],
+        ['major_name', 'DESC', 'สาขา Z > A'],
+    ];
+
     function formDataValClr() {
         for (i = 0; i < $(formData).length; i++) {
             $(formData[i]).val("");
@@ -160,6 +173,14 @@ $(document).ready(function() {
         return fileSizeReturn;
     }
 
+    function ShowSort() {
+        var html = '';
+        for (i = 0; i < Sort.length; i++) {
+            html += ' <a class="dropdown-item" id="sortDrop" href="#" data-1="' + Sort[i][0] + '" data-2="' + Sort[i][1] + '">' + Sort[i][2] + '</a>';
+        }
+        $('#TableSort').html(html);
+    }
+
     //---------------------------------------------END_FUNCTION_GEN---------------------------------------------//
 
     inModelGen();
@@ -170,6 +191,7 @@ $(document).ready(function() {
     dropSearch();
     theadGen();
     show_data();
+    ShowSort();
 
     popGen();
     hideAllPop();
@@ -622,5 +644,42 @@ $(document).ready(function() {
         });
         return item;
     }
+
+    $(".dropdown-menu.sort a ").click(function () {
+        data = $(this).attr('data-1');
+        sort = $(this).attr('data-2');
+        // alert(limit);
+        $.ajax({
+            type: 'POST',
+            url: "../Admin_student_data/Show_Sort_ctl",
+            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit, 
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].std_code_id + '" id="' + response[i].std_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].std_code_id + i + '">' + response[i].std_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].std_Tname + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
+                            '<td>' + response[i].std_email + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
+                            '<td>' + response[i].major_name + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
     //--------------------------------------------END_BASIC_TOOLS--------------------------------------------//
 });
