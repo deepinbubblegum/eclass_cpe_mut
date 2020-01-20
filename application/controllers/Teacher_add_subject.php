@@ -36,6 +36,24 @@ class Teacher_add_subject extends MY_Controller
 
     }
 
+    public function Change_image_ctl_te()
+    {
+        if($this->input->post('img_data') == ''){
+            $data_img = 'iVBORw0KGgoAAAANSUhEUgAAAPoAAAC0CAMAAACKYMETAAAAA1BMVEWu1ee2vQsxAAAAQ0lEQVR4nO3BgQAAAADDoPlT3+AEVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzwCwfAAB3a7udgAAAABJRU5ErkJggg==';
+            $img_decode = base64_decode($data_img);
+            $path_full = FCPATH.'Img_sem/'.$this->input->post('semester_id').$this->input->post('subject_id');
+            $image = $path_full.'.png';
+            file_put_contents($image, $img_decode);
+        }else{
+            $data_img = $this->input->post('img_data');
+            $img_array = explode("[removed]", $data_img);
+            $img_decode = base64_decode($img_array[1]);
+            $path_full =  FCPATH.'Img_sem/'.$this->input->post('semester_id').$this->input->post('subject_id');
+            $image = $path_full.'.png';
+            file_put_contents($image, $img_decode);
+        }
+    }
+
     public function Show_Data_ctl()
     {
         $semester = $this->input->post('semester');

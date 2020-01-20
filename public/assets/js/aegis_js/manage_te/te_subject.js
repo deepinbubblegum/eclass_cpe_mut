@@ -11,8 +11,9 @@ $(document).ready(function () {
     showSemester();
     hideSubJoin();
 
-    // var subjectEdit = '';
-    // var semesterEdit = '';
+    var setflag = false;
+    var subjectEdit = '';
+    var semesterEdit = '';
 
 
     function hideSubJoin() {
@@ -133,7 +134,10 @@ $(document).ready(function () {
                     $('#EditImage' + x).click(function () {
                         subjectEdit = $(this).attr('value');
                         semesterEdit = $(this).attr('data-1');
-                        alert(subjectEdit);
+                        // alert(semesterEdit+subjectEdit);
+                        setflag = true;
+                        console.log(setflag);
+                        $('#cropper_img').modal('show');
                         return false;
                     });
 
@@ -264,7 +268,7 @@ $(document).ready(function () {
             arr_subsjoin_edit.push(this.value);
         });
 
-        if(arr_subsjoin_edit != ''){
+        if (arr_subsjoin_edit != '') {
             // console.log(arr_subsjoin_edit);
             $.ajax({
                 type: "POST",
@@ -286,7 +290,7 @@ $(document).ready(function () {
                     showSemester();
                 }
             });
-        }else{
+        } else {
             $.ajax({
                 type: "POST",
                 url: "/" + url[3] + '/Teacher_add_subject/Edit_NoSubJoin_Data_ctl_te',
@@ -631,7 +635,8 @@ $(document).ready(function () {
     function AddSubject() {
         data = $("#Semester_Form_add_option :selected").val();
         data2 = $("#Subject_Form_add_option :selected").val();
-
+        $('#Modal_Add_subject').modal('hide');
+        $('#progress_wait_img').modal('show');
         if (iurl == "/" + url[3] + '/Teacher_add_subject/Add_Data_ctl_te') {
             txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
             txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
@@ -651,6 +656,7 @@ $(document).ready(function () {
                 "img_data": img_data
             },
             success: function () {
+                $('#progress_wait_img').modal('hide');
                 //$('#Modal_add').modal('hide');
                 Snackbar.show({
                     actionText: 'close',
@@ -662,8 +668,10 @@ $(document).ready(function () {
                 });
                 add_subjoin();
                 Copy_Subject();
+                location.reload(true);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $('#progress_wait_img').modal('hide');
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -736,11 +744,34 @@ $(document).ready(function () {
         $('#Modal_Add_subject').modal('hide');
     }
 
+    function change_image() {
+        if (setflag) {
+            $('#progress_wait_img').modal('show');
+            $.ajax({
+                type: "POST",
+                url: "/" + url[3] + "/Teacher_add_subject/Change_image_ctl_te",
+                data: {
+                    "semester_id": semesterEdit,
+                    "subject_id": subjectEdit,
+                    "img_data": img_data
+                },
+                success: function (response) {
+                    console.log(response);
+                    showSubject();
+                    // showSubject();
+                    $('#progress_wait_img').modal('hide');
+                    location.reload(true);
+                }
+            });
+        }
+    }
 
     // =========================== ADD IMG ========================
     $('#start_crop').click(function (e) {
         e.preventDefault();
+        setflag = false;
         $('#cropper_img').modal('show');
+        console.log(setflag);
     });
 
     var result = document.querySelector('.result');
@@ -793,6 +824,7 @@ $(document).ready(function () {
         // show image cropped
         img_data = imgSrc;
         $('#cropper_img').modal('hide');
+        change_image();
     });
 
     $('#display_crop').on('mousemove', function () {
