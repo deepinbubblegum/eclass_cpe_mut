@@ -3,18 +3,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Model_te_upload extends CI_Model
 {
-    public function insertUpload($data, $semester, $subject, $DowId)
+
+    public function maxIndex($semester, $subject, $DowId)
+    {
+        $maxIndex = $this->db->query('SELECT ifnull(max(CAST(fileIndex AS int))+1,"1") AS newIndex FROM fileDownload WHERE fileSemesterId = "'.$semester.'" AND fileSubjectId = "'.$subject.'" AND fileMenuDowId = "'.$DowId.'" ');
+        return $maxIndex->row_array();
+    }
+
+    public function insertUpload($data)
     { 
         $this->db->where('fileName', $data['fileName']);
         $this->db->delete('fileDownload');
 
-        $maxIndex = $this->db->query('SELECT ifnull(max(CAST(fileIndex AS int))+1,"1") AS newIndex FROM fileDownload WHERE fileSemesterId = "'.$semester.'" AND fileSubjectId = "'.$subject.'" AND fileMenuDowId = "'.$DowId.'" ');
-        $newIndex = $maxIndex->row()->newIndex;
-
         $this->db->set('fileTimestamp', 'NOW()', FALSE);
-        $this->db->set('fileIndex', $newIndex);
+        // $this->db->set('fileIndex', $newIndex);
         $this->db->insert('fileDownload', $data);
     }
+
 
     public function getMenuUpload($subjectId,$semesterId)
     {

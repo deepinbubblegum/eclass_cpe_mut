@@ -37,13 +37,20 @@ class Te_upload extends MY_Controller
                 $this->load->model('manage_te/Model_te_upload');
         }
 
+        public function check_fileindex(){
+                $semester = $this->input->post('data7');
+                $subject = $this->input->post('data6');
+                $DowId = $this->input->post('data5');
+                $_maxIndex = $this->Model_te_upload->maxIndex($semester, $subject, $DowId);
+                echo json_encode($_maxIndex);
+        }
+
         public function Upload(/*$sid*/)
         {
                 //$data2 = convertData($sid);
                 $semester = $this->input->post('data7');
                 $subject = $this->input->post('data6');
                 $DowId = $this->input->post('data5');
-
                 $data = array(
                         "fileName" => $this->input->post('data1'),
                         "fileSize" => $this->input->post('data2'),
@@ -53,8 +60,9 @@ class Te_upload extends MY_Controller
                         "fileSubjectId" => $this->input->post('data6'),
                         "fileSemesterId" => $this->input->post('data7'),
                         "fileUserId" => $this->session->ses_id,
+                        "fileIndex" => $this->input->post('data8')
                 );
-                $this->Model_te_upload->insertUpload($data, $semester, $subject, $DowId);
+                $this->Model_te_upload->insertUpload($data);
         }
 
         public function showMenuUpload($sid)
