@@ -202,9 +202,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="modal-content">
                                 <div class="modal-header">
                                         <h5 class="modal-title" id="progress_wait_imgLabel">Wait a moment!</h5>
-                                        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
-                                        </button> -->
+                                        </button>
                                 </div>
                                 <div class="modal-body">
                                         <div class="progress">

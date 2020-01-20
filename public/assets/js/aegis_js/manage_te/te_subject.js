@@ -671,15 +671,18 @@ $(document).ready(function () {
                 location.reload(true);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                $('#progress_wait_img').modal('hide');
-                Snackbar.show({
-                    actionText: 'close',
-                    pos: 'top-center',
-                    actionTextColor: '#4CAF50',
-                    backgroundColor: '#323232',
-                    width: 'auto',
-                    text: txtsnackerr + errorThrown + ' )'
-                });
+                setTimeout(function () {
+                    $('#progress_wait_img').modal('hide');
+                    // $('#progress_wait_img').modal('hide');
+                    Snackbar.show({
+                        actionText: 'close',
+                        pos: 'top-center',
+                        actionTextColor: '#4CAF50',
+                        backgroundColor: '#323232',
+                        width: 'auto',
+                        text: txtsnackerr + errorThrown + ' )'
+                    });
+                }, 1000);
             }
         });
         showSemester();
@@ -717,6 +720,7 @@ $(document).ready(function () {
                 });
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $('#progress_wait_img').modal('hide');
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
