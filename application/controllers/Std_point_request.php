@@ -64,4 +64,13 @@ class Std_point_request extends MY_Controller
         echo json_encode($result);
     }
 
+    public function showConfirm()
+    {
+        $semester = $this->input->post('semester');
+        $subject_id = $this->input->post('subject_id');
+        $User = $this->session->ses_id;
+        $result = $this->Medel_std_point_request->getTeacherConfirm($subject_id, $semester, $User);
+        echo json_encode($result);
+    }
+
 }

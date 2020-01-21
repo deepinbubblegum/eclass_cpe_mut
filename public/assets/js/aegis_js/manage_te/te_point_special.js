@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
     var url = $(location).attr('href').split("/");
     var iurl = '';
@@ -8,7 +8,7 @@ $(document).ready(function() {
 
     $('.datepicker').on(
         'dp.show',
-        function(e) {
+        function (e) {
             $(".bootstrap-datetimepicker-widget").css(
                 "background-color", "#3c3e43");
         });
@@ -29,10 +29,10 @@ $(document).ready(function() {
         labelMonthSelect: 'Choose a month from the dropdown menu',
         labelYearSelect: 'Choose a year from the dropdown menu',
         ok: 'Ok',
-        onClose: function() {
+        onClose: function () {
             console.log('Datepicker closes')
         },
-        onOpen: function() {
+        onOpen: function () {
             console.log('Datepicker opens')
         },
         selectMonths: true,
@@ -54,7 +54,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_special_point/ShowMenu",
             data: '&semester=' + semester + '&subject=' + subject_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -97,7 +97,7 @@ $(document).ready(function() {
     var menuID;
     var DelPSid;
 
-    $('#accordionMenu').on('click', '#iconEdit', function(e) {
+    $('#accordionMenu').on('click', '#iconEdit', function (e) {
         e.preventDefault();
         todayDate = new Date().toISOString();
         ival = $(this).attr('value');
@@ -111,7 +111,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_special_point/ShowSetpoint",
             data: '&semester=' + semester + '&subject=' + subject_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -129,7 +129,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_special_point/ShowSubjectAdd",
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&menuId=' + menuID,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -148,7 +148,7 @@ $(document).ready(function() {
     });
 
 
-    $('#accordionMenu').on('click', '#iconDelete', function(e) {
+    $('#accordionMenu').on('click', '#iconDelete', function (e) {
         e.preventDefault();
         ival = $(this).attr('value');
         DelPSid = $(this).attr('data1');
@@ -158,7 +158,7 @@ $(document).ready(function() {
     });
 
 
-    $('#Modaladd').click(function() {
+    $('#Modaladd').click(function () {
         $('#ModaladdMenuSPoint').modal('show');
         $('#addMenuSPointModal').text('เพิ่มข้อมูลเมนูแลกคะแนน');
         $('#btnsave').text('บันทึกข้อมูล');
@@ -168,7 +168,7 @@ $(document).ready(function() {
     });
 
 
-    $('#btnclose').click(function() {
+    $('#btnclose').click(function () {
         $('#Headtext').val('');
         $('#NumSubject').val('');
         $('#EndDatePicker').val('');
@@ -189,7 +189,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_special_point/ShowSetpoint",
             data: '&semester=' + semester + '&subject=' + subject_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -209,7 +209,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_special_point/ShowSubjectSemester",
             data: '&semester=' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 SubSem = response;
                 for (i = 0; i < response.length; i++) {
                     DataSubSem.push(response[i].subsem_subject);
@@ -225,7 +225,7 @@ $(document).ready(function() {
         $.ajax({
             url: "/" + url[3] + "/Te_special_point/ShowFaculty",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -239,13 +239,13 @@ $(document).ready(function() {
         });
     }
 
-    $('#SelectFacultyAdd').change(function() {
+    $('#SelectFacultyAdd').change(function () {
         subjectoption = [];
         subjectoptiontxt = [];
         select_major_add();
     });
 
-    $('#SelectMajorAdd').change(function() {
+    $('#SelectMajorAdd').change(function () {
         subjectoption = [];
         subjectoptiontxt = [];
         select_subject_add();
@@ -259,7 +259,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_special_point/ShowMajor",
             data: '&faculty=' + $data,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 // console.log(response);
                 var html = '';
                 var i;
@@ -287,7 +287,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_special_point/ShowSubject",
             data: '&major=' + $data,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -304,13 +304,13 @@ $(document).ready(function() {
         });
     }
 
-    $('#AddSub').click(function() {
+    $('#AddSub').click(function () {
         $data = $('#SelectSubjectAdd :selected').val();
         $data2 = $('#SelectSubjectAdd :selected').text();
         chk = 0;
         if ($data2 != '') {
             if ($('#SubjectAdd').has('option').length > 0) {
-                $("#SubjectAdd > option").each(function() {
+                $("#SubjectAdd > option").each(function () {
                     if (this.value == $data) {
                         Snackbar.show({
                             actionText: 'close',
@@ -341,13 +341,13 @@ $(document).ready(function() {
         }
     });
 
-    $('#AddsubAll').click(function() {
+    $('#AddsubAll').click(function () {
         $data2 = $('#SelectSubjectAdd :selected').text();
         var chksub = 0;
         // alert(subjectoption);
         if ($data2 != '') {
             for (i = 0; i < subjectoption.length; i++) {
-                $("#SubjectAdd > option").each(function() {
+                $("#SubjectAdd > option").each(function () {
                     if (this.value == subjectoption[i]) {
                         chksub = 1;
                     }
@@ -369,16 +369,16 @@ $(document).ready(function() {
         }
     });
 
-    $('#DelSub').click(function() {
+    $('#DelSub').click(function () {
         $data = $('#SubjectAdd :selected').val();
         $("#SubjectAdd option[value='" + $data + "']").remove();
     });
 
-    $('#DelsubAll').click(function() {
+    $('#DelsubAll').click(function () {
         $('#SubjectAdd').empty();
     });
 
-    $('#btnsave').click(function() {
+    $('#btnsave').click(function () {
 
         pointID = $('#SelectSetpoint :selected').attr('data-1');
         SetpointID = $('#SelectSetpoint :selected').val();
@@ -392,7 +392,7 @@ $(document).ready(function() {
                 url: iurl,
                 data: '&semester=' + semester + '&subject=' + subject_id + '&pointID=' + pointID + '&SetpointID=' + SetpointID + '&header=' + header + '&num=' + num + '&date=' + dateEnd + '&menuID=' + menuID,
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     // console.log(response);
                     // if (iurl != "/" + url[3] + "/Te_special_point/AddMenuPointSpecial") {
                     //     $('#Headtext').val('');
@@ -423,7 +423,7 @@ $(document).ready(function() {
 
     function AddSub(PSid) {
         if ($('#SubjectAdd').has('option').length > 0) {
-            $("#SubjectAdd > option").each(function() {
+            $("#SubjectAdd > option").each(function () {
                 subjectAdd.push(this.value);
             });
         }
@@ -438,7 +438,7 @@ $(document).ready(function() {
                 PSid
             },
             dataType: "json",
-            success: function() {
+            success: function () {
 
             }
         });
@@ -480,13 +480,13 @@ $(document).ready(function() {
         ShowMenu();
     }
 
-    $('#DeleteMenu').click(function() {
+    $('#DeleteMenu').click(function () {
         // alert(DelPSid);
         $.ajax({
             type: 'POST',
             url: "/" + url[3] + "/Te_special_point/DeleteMenu",
             data: '&semester=' + semester + '&subject=' + subject_id + '&memuId=' + DelPSid,
-            success: function() {
+            success: function () {
                 $('#ModalDelete').modal('hide');
                 ShowMenu();
             }
@@ -516,7 +516,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_special_point/ShowMenuStdRequest",
             data: '&semester=' + semester + '&subject=' + subject_id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -568,13 +568,13 @@ $(document).ready(function() {
                 GetSelectSearch();
                 genThead();
 
-                $.each(dataStdRequest, function(i) {
-                    $('#confirmAll' + i).click(function() {
+                $.each(dataStdRequest, function (i) {
+                    $('#confirmAll' + i).click(function () {
                         idMenu = $(this).attr('data1');
                         subAddAll = [];
                         StdAll = [];
                         PointAll = [];
-                        $('#Tbody' + i).find('tr').each(function(i, el) {
+                        $('#Tbody' + i).find('tr').each(function (i, el) {
                             var $tds = $(this).find('td'),
                                 std_id = $tds.eq(0).text(),
                                 subjectRequest = $tds.eq(1).text(),
@@ -590,22 +590,42 @@ $(document).ready(function() {
                             PointAll.push(point);
                         });
                         // alert(idMenu);
-                        $.ajax({
-                            type: 'POST',
-                            url: "/" + url[3] + "/Te_special_point/ConfirmStdAll",
-                            data: { semester, subject_id, idMenu, StdAll, subAddAll, PointAll, idMenu },
-                            success: function() {
-                                Snackbar.show({
-                                    actionText: 'close',
-                                    pos: 'top-center',
-                                    actionTextColor: '#37FF33',
-                                    backgroundColor: '#323232',
-                                    width: 'auto',
-                                    text: 'ยืนยันข้อมูลแล้ว'
-                                });
-                                ShowStdRequest();
-                            }
-                        });
+                        if(PointAll != ''){
+                            $.ajax({
+                                type: 'POST',
+                                url: "/" + url[3] + "/Te_special_point/ConfirmStdAll",
+                                data: {
+                                    semester,
+                                    subject_id,
+                                    idMenu,
+                                    StdAll,
+                                    subAddAll,
+                                    PointAll,
+                                    idMenu
+                                },
+                                success: function () {
+                                    Snackbar.show({
+                                        actionText: 'close',
+                                        pos: 'top-center',
+                                        actionTextColor: '#37FF33',
+                                        backgroundColor: '#323232',
+                                        width: 'auto',
+                                        text: 'ยืนยันข้อมูลแล้ว'
+                                    });
+                                    ShowStdRequest();
+                                }
+                            });
+                        }else{
+                            Snackbar.show({
+                                actionText: 'close',
+                                pos: 'top-center',
+                                actionTextColor: '#37FF33',
+                                backgroundColor: '#323232',
+                                width: 'auto',
+                                text: 'ไม่มีข้อมูลที่จะยืนยัน'
+                            });
+                        }
+                        
                     });
                 });
                 if (idMenu != '') {
@@ -631,7 +651,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_special_point/ShowSubjectOption",
             data: '&semester=' + semester + '&subject=' + subject_id + '&menuID=' + menuID,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 // console.log(response);
                 dataselect = response;
                 var html = '';
@@ -646,8 +666,8 @@ $(document).ready(function() {
                 $('#SelectSubjectRequest' + z).html(html);
                 // $('#SelectSubjectRequest' + z).val('all');
                 // $('#SelectSubjectRequest' + z + ' option[value="all"]').attr('selected', 'selected');
-                $.each(dataselect, function(z) {
-                    $('#SelectSubjectRequest' + z).change(function() {
+                $.each(dataselect, function (z) {
+                    $('#SelectSubjectRequest' + z).change(function () {
                         selectOption = $('#SelectSubjectRequest' + z).val();
                         selecter = selectOption;
                         // alert(selectOption);
@@ -669,6 +689,7 @@ $(document).ready(function() {
             '<th scope="col">สถานะ</th>' +
             '<th scope="col">ยืนยันข้อมูล</th>' +
             '<th scope="col">ลบข้อมูล</th>' +
+            '<th scope="col">อาจารย์รับทราบ</th>' +
             '</tr>';
         for (i = 0; i < dataStdRequest.length; i++) {
             $('#Thead' + i).html(html);
@@ -690,7 +711,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_special_point/ShowStdRequest",
             data: '&semester=' + semester + '&subject=' + subject_id + '&menuID=' + val,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var a;
                 if (response != null) {
@@ -700,6 +721,12 @@ $(document).ready(function() {
                         var stateConfirm = '';
                         var btndel = '';
                         var btnConfirm = '';
+                        var tea_confirm = '';
+                        if (response[a].ps_tea_confirm == 1) {
+                            tea_confirm = '<span style="color:#2196f3;" class="chip"><i class="far fa-check-circle mr-2"></i>รับทราบแล้ว</span>';
+                        } else {
+                            tea_confirm = '<span style="color:#f44336;" class="chip"><i class="far fa-times-circle mr-2"></i>ยังไม่รับทราบ</span>';
+                        }
                         if (response[a].ps_std_status == 0) {
                             stateConfirm = 'ยังไม่ยืนยัน';
                             btndel = '<button type="button" class="btn btn-danger btn-sm" id="btlDel' + val + a + '" data="' + response[a].ps_std_stdID + '" data2="' + response[a].ps_std_subAdd + '" data3="' + response[a].ps_std_psID + '"  >ลบ</button>';
@@ -717,13 +744,14 @@ $(document).ready(function() {
                             '<td>' + stateConfirm + '</td>' +
                             '<td>' + btnConfirm + '</td>' +
                             '<td>' + btndel + '</td>' +
+                            '<td>' + tea_confirm + '</td>' +
                             '</tr>';
                     }
                 }
                 $('#Tbody' + i).html(html);
 
-                $.each(dataStdPoint, function(a) {
-                    $('#btlDel' + val + a).click(function() {
+                $.each(dataStdPoint, function (a) {
+                    $('#btlDel' + val + a).click(function () {
                         std = $(this).attr('data');
                         sub = $(this).attr('data2');
                         idMenu = $(this).attr('data3');
@@ -731,7 +759,7 @@ $(document).ready(function() {
                         $('#ModalDeletePS').modal('show');
                     });
 
-                    $('#btlConfirm' + val + a).click(function() {
+                    $('#btlConfirm' + val + a).click(function () {
                         stdCon = $(this).attr('data');
                         subCon = $(this).attr('data2');
                         idMenuCon = $(this).attr('data3');
@@ -740,7 +768,7 @@ $(document).ready(function() {
                             type: 'POST',
                             url: "/" + url[3] + "/Te_special_point/ConfirmStd",
                             data: '&semester=' + semester + '&subject=' + subject_id + '&memuId=' + idMenuCon + '&std=' + stdCon + '&subAdd=' + subCon + '&point_std=' + point_std,
-                            success: function() {
+                            success: function () {
                                 Snackbar.show({
                                     actionText: 'close',
                                     pos: 'top-center',
@@ -768,7 +796,7 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_special_point/ShowStdRequestSelect",
             data: '&semester=' + semester + '&subject=' + subject_id + '&menuID=' + menuID + '&option=' + selectOption,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var a;
                 if (response != null) {
@@ -800,8 +828,8 @@ $(document).ready(function() {
                 }
                 $('#Tbody' + z).html(html);
 
-                $.each(dataStdPoint, function(a) {
-                    $('#btlDel' + menuID + a).click(function() {
+                $.each(dataStdPoint, function (a) {
+                    $('#btlDel' + menuID + a).click(function () {
                         std = $(this).attr('data');
                         sub = $(this).attr('data2');
                         idMenu = $(this).attr('data3');
@@ -809,7 +837,7 @@ $(document).ready(function() {
                         $('#ModalDeletePS').modal('show');
                     });
 
-                    $('#btlConfirm' + menuID + a).click(function() {
+                    $('#btlConfirm' + menuID + a).click(function () {
                         stdCon = $(this).attr('data');
                         subCon = $(this).attr('data2');
                         idMenuCon = $(this).attr('data3');
@@ -818,7 +846,7 @@ $(document).ready(function() {
                             type: 'POST',
                             url: "/" + url[3] + "/Te_special_point/ConfirmStd",
                             data: '&semester=' + semester + '&subject=' + subject_id + '&memuId=' + idMenuCon + '&std=' + stdCon + '&subAdd=' + subCon + '&point_std=' + point_std,
-                            success: function() {
+                            success: function () {
                                 Snackbar.show({
                                     actionText: 'close',
                                     pos: 'top-center',
@@ -838,13 +866,13 @@ $(document).ready(function() {
     }
 
 
-    $('#DeletePS').click(function() {
+    $('#DeletePS').click(function () {
         // alert(std + sub + '|' + idMenu);
         $.ajax({
             type: 'POST',
             url: "/" + url[3] + "/Te_special_point/DeletePointStd",
             data: '&semester=' + semester + '&subject=' + subject_id + '&memuId=' + idMenu + '&std=' + std + '&subAdd=' + sub,
-            success: function() {
+            success: function () {
                 $('#ModalDeletePS').modal('hide');
                 Snackbar.show({
                     actionText: 'close',

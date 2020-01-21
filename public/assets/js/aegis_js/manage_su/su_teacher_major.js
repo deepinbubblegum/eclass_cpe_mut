@@ -241,7 +241,7 @@ $(document).ready(function () {
                             '</th>' +
                             '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].major_name + '</td>' +
+                            '<td>(' + response[i].major_id + ') ' + response[i].major_name + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -309,7 +309,7 @@ $(document).ready(function () {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                        html += '<option value="' + response[i].major_id + '">(' + response[i].major_id + ') ' + response[i].major_name + '</option>';
                     }
                 }
                 $('#majorSelectAdd').html(html);
@@ -410,7 +410,7 @@ $(document).ready(function () {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                        html += '<option value="' + response[i].major_id + '">(' + response[i].major_id + ') ' + response[i].major_name + '</option>';
                     }
                 }
                 $('#majorSelectAdd').html(html);
@@ -462,7 +462,7 @@ $(document).ready(function () {
                             '</th>' +
                             '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].major_name + '</td>' +
+                            '<td>(' + response[i].major_id + ') ' + response[i].major_name + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -556,7 +556,7 @@ $(document).ready(function () {
                             '</th>' +
                             '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].major_name + '</td>' +
+                            '<td>(' + response[i].major_id + ') ' + response[i].major_name + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }

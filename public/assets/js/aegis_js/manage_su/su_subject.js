@@ -246,7 +246,7 @@ $(document).ready(function () {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
-                            '<td>' + response[i].major_name + '</td>' +
+                            '<td>(' + response[i].major_id + ') ' + response[i].major_name + '</td>' +
                             '<td><a data="' + response[i].subject_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -280,7 +280,7 @@ $(document).ready(function () {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
-                            '<td>' + response[i].major_name + '</td>' +
+                            '<td>(' + response[i].major_id + ') ' + response[i].major_name + '</td>' +
                             '<td><a data="' + response[i].subject_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -347,7 +347,7 @@ $(document).ready(function () {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                        html += '<option value="' + response[i].major_id + '">(' + response[i].major_id + ') ' + response[i].major_name + '</option>';
                     }
                 }
                 $('#selectAddMajor').html(html);
@@ -439,7 +439,7 @@ $(document).ready(function () {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                        html += '<option value="' + response[i].major_id + '">(' + response[i].major_id + ') ' + response[i].major_name + '</option>';
                     }
                 }
                 $('#selectAddMajor').html(html);
@@ -519,7 +519,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: "../Admin_subject/Show_Sort_ctl",
-            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit, 
+            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit,
             dataType: "json",
             success: function (response) {
                 datatable = response;
@@ -536,7 +536,7 @@ $(document).ready(function () {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
-                            '<td>' + response[i].major_name + '</td>' +
+                            '<td>(' + response[i].major_id + ') ' + response[i].major_name + '</td>' +
                             '<td><a data="' + response[i].subject_id + '" data2="' + response[i].major_id + '" data3="' + response[i].major_faculty + '" value="' + i + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }

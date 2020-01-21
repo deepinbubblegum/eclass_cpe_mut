@@ -19,4 +19,20 @@ class Model_te_point_request extends CI_Model
         return $query->result();
     }
 
+    public function Confirm_model($semester, $subject, $subAdd, $menu, $std)
+    {
+        $this->db->query('UPDATE ps_teacher SET ps_tea_confirm = "1" WHERE ps_tea_semester = "'.$semester.'" AND ps_tea_subject = "'.$subject.'" AND ps_tea_subAdd = "'.$subAdd.'" 
+        AND ps_tea_menu = "'.$menu.'" AND ps_tea_std = "'.$std.'" ');
+    }
+
+    public function Confirm_All_model($semester, $subject, $subAdd, $menu, $std)
+    {
+        $count = count($std);
+        for($i = 0 ; $i < $count ; $i++)
+        {
+            $this->db->query('UPDATE ps_teacher SET ps_tea_confirm = "1" WHERE ps_tea_semester = "'.$semester.'" AND ps_tea_subject = "'.$subject[$i].'" 
+            AND ps_tea_subAdd = "'.$subAdd.'" AND ps_tea_menu = "'.$menu[$i].'" AND ps_tea_std = "'.$std[$i].'" ');
+        }
+    }
+
 }

@@ -53,7 +53,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
                     <div class="list-group mt-3" id="accordionOne">
                         <div class="text-left mt-2 mb-2">
-                            <button type="button" class="btn btn-primary"><i class="far fa-check-circle"></i> รับทราบทั้งหมด </button>
+                            <button type="button" id="confirmAll" class="btn btn-primary"><i class="far fa-check-circle"></i> รับทราบทั้งหมด </button>
                         </div><br>
                         <div class="table-responsive">
                             <table class="table table-striped text-left">
