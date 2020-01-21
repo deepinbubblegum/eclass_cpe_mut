@@ -56,7 +56,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <span class="input-group-text">เลือกรูป</span>
                                                 </div>
                                                 <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="file-input" accept="image/*" >
+                                                        <input type="file" class="custom-file-input" id="file-input" accept="image/*">
                                                         <label class="custom-file-label" id="file-input_label" for="file-input">เลือกไฟล์</label>
                                                 </div>
                                         </div>
@@ -122,7 +122,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                                 <label class="custom-control-label" for="customSwitchCopy">คัดลอกข้อมูลจากวิชาเทอมก่อนหน้า</label>
                                                                         </div>
 
-                                                                        
+
                                                                 </div>
 
                                                                 <div class="col-sm-3 mb-2">
@@ -195,6 +195,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
         </div>
         <!-- End Modal -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="progress_wait_img" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="progress_wait_imgLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h5 class="modal-title" id="progress_wait_imgLabel">Wait a moment!</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                        <div class="progress">
+                                                <div class="progress-bar progress-bar-indeterminate" role="progressbar"></div>
+                                        </div>
+                                </div>
+                                <!-- <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                </div> -->
+                        </div>
+                </div>
+        </div>
 
         <!-- Modal Edit Subject Join -->
         <div class="modal fade" id="Modal_Edit_subject_join" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="Modal_Edit_subject_join" aria-hidden="true">
