@@ -8,6 +8,7 @@ $(document).ready(function() {
     var getUnit = [];
     var getMenuPoint = [];
     var exportMenuQuiz = '';
+    var idMenu = 0;
 
     var clearPoint = '0';
     $('#choiceQuizPoint').val(clearPoint);
@@ -67,6 +68,7 @@ $(document).ready(function() {
                         if (exportText == response[i].setpoint_mininame) {
                             $('#exportSame').text('*ชื่อนี้ถูกใช้ไปแล้ว');
                             exportCheck = false;
+                            break;
                         } else {
                             exportCheck = true;
                         }
@@ -74,20 +76,22 @@ $(document).ready(function() {
                 } else {
                     exportCheck = true;
                 }
-
-                if (exportCheck) {
+                
+                if (exportCheck == true) {
                     $.ajax({
                         type: "POST",
                         url: '/' + url[3] + '/Te_subject_quiz/exportPoint/',
                         data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
                         dataType: "json",
                         success: function(response) {
-                            console.log('EXPORT SUCCESS');
+                            alert('EXPORT SUCCESS');
                             $('#exportSame').text('');
+                            $('#exportData').modal('hide');
                             console.log(response);
                         }
                     });
                 }
+                
             }
         });
     });
@@ -170,6 +174,11 @@ $(document).ready(function() {
                     }
                 }
                 $('.showMenuQuiz').html(html);
+
+                $('#collapse' + idMenu).collapse({
+                    toggle: true
+                });
+
                 $.each(getMenu, function(i, p) {
                     showHeader(getMenu[i].menuQuizId);
                     $('#addInMenu-' + getMenu[i].menuQuizId).click(function(e) {
@@ -177,6 +186,7 @@ $(document).ready(function() {
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_quiz/insertFieldQuiz';
                         $('#addField').modal('show');
                         $('#addFieldLabel').text('Create in menu : ' + getMenu[i].menuQuizName);
+                        idMenu = i;
                         // $("input[name=PointMulti]").attr('disabled', false);
                     });
                     $('#exportMenu-' + getMenu[i].menuQuizId).click(function(e) {
@@ -184,6 +194,7 @@ $(document).ready(function() {
                         $('#exportLabel').text('Export menu : ' + getMenu[i].menuQuizName);
                         $('#exportData').modal('show');
                         $('#menuExportTxt').val(getMenu[i].menuQuizName);
+                        idMenu = i;
                     });
                     // $('#showInMenu-' + getMenu[i].menuQuizId).click(function(e) {}); use da href
                     // $('#impInMenu-' + getMenu[i].menuQuizId).click(function(e) {});
@@ -201,6 +212,7 @@ $(document).ready(function() {
                         e.preventDefault();
                         $('#Headtext').val(getMenu[i].menuQuizName);
                         $('#Textarea').val(getMenu[i].menuQuizDescription);
+                        idMenu = i;
                         //$("input[name='PointView'][value='" + response[i].point_StdView + "']").prop('checked', true);
                         // if ($('#checkBox01').prop("checked")) { menuStatus += 1 } else { menuStatus += 0 }
                         // if ($('#checkBox02').prop("checked")) { menuStatus += 1 } else { menuStatus += 0 }
@@ -231,6 +243,7 @@ $(document).ready(function() {
             success: function() {
                 $('#addFieldHQN').val("");
                 showMenuQuiz();
+                $('#addField').modal('hide');
             }
         });
     });
@@ -246,7 +259,7 @@ $(document).ready(function() {
                 getField[mQuizId] = response;
                 if (response.length != undefined) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<h4><li class="">' + response[i].headerQuizName + '</li></h4>' +
+                        html += '<li class=""><h4>' + response[i].headerQuizName + '</h4></li>' +
                             '<span style="font-size: 1.5em;"><a href="#" title="เพิ่มตัวเลือกควิซ" id="addChoiceQuiz-' + mQuizId + '-' + response[i].headerQuizId + '"class="f34r-txt-black"><i class="fas fa-plus-square"></i></a></span>&nbsp;' +
                             '<span style="font-size: 1.5em;"><a href="#" title="ลบตัวเลือกควิซ" id="delChoiceQuiz-' + mQuizId + '-' + response[i].headerQuizId + '"class="f34r-txt-black"><i class="fas fa-minus-square"></i></a></span>&nbsp;' +
                             '<span style="font-size: 1.5em;"><a href="#" title="แก้ไขตัวเลือกควิซ" id="editChoiceQuiz-' + mQuizId + '-' + response[i].headerQuizId + '"class="f34r-txt-black"><i class="fas fa-pen"></i></a></span>&nbsp;' +
@@ -261,6 +274,7 @@ $(document).ready(function() {
                     showChoice(mQuizId, getField[mQuizId][i].headerQuizId);
                     //console.log(mQuizId, getField[mQuizId][i].headerQuizId);
                     $('#addChoiceQuiz-' + mQuizId + '-' + getField[mQuizId][i].headerQuizId).click(function(e) {
+                        idMenu = mQuizId-1;
                         //console.log('#addChoiceQuiz-' + mQuizId + '-' + getField[mQuizId][i].headerQuizId);
                         $('#addChoice').modal('show');
                         $('#addChoiceLabel').text('เพิ่มตัวเลือกควิซ ' + getField[mQuizId][i].headerQuizName);
@@ -272,6 +286,7 @@ $(document).ready(function() {
                         //console.log('#delField-' + mQuizId + '-' + getField[mQuizId][i].headerQuizId);
                         $("#txtDel").text('Field:' + getField[mQuizId][i].headerQuizName);
                         $("#ModalDelete").modal('show');
+                        idMenu = mQuizId-1;
                         takeThisDel = "delField";
                         delCid = getField[mQuizId][i].headerQuizId;
                         delPid = mQuizId;
@@ -281,6 +296,7 @@ $(document).ready(function() {
                         $('#addFieldHQN').val(getField[mQuizId][i].headerQuizName);
                         $('#addFieldLabel').text('Edit Header : ' + getField[mQuizId][i].headerQuizName);
                         $('#addField').modal('show');
+                        idMenu = mQuizId-1;
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_quiz/updateFieldQuiz';
                         SHeadID = getField[mQuizId][i].headerQuizId;
                         SMenuID = mQuizId;
@@ -299,6 +315,7 @@ $(document).ready(function() {
         qText = $('#choiceQuizText').val();
         qPoint = $('#choiceQuizPoint').val();
         saveHeader();
+        $('#addChoice').modal('hide');
     });
 
     function saveHeader() {
@@ -375,6 +392,7 @@ $(document).ready(function() {
                         editChoice = response[i].choiceQuizId;
                         getMId = CMenuID;
                         getHId = CHeaderID;
+                        idMenu = CMenuID -1;
                         // console.log('#addChoiceQuiz-' + mQuizId + '-' + getField[mQuizId][i].headerQuizId);
                         // $('#addChoice').modal('show');
                         // $('#addChoiceLabel').text('เพิ่มตัวเลือกควิซ ' + getField[mQuizId][i].headerQuizName);
@@ -388,6 +406,7 @@ $(document).ready(function() {
                         delPid = CMenuID;
                         delCid = CHeaderID;
                         delKid = response[i].choiceQuizId;
+                        idMenu = CMenuID -1;
                     });
                 });
             },

@@ -206,14 +206,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         &nbsp; Vote
                                 </span>
                         </div>
-                        <form class="form-inline">
-                                <button class="btn btn btn-info my-2 my-sm-0" type="submit" id="btnAddVote">
-                                        <span style="font-size: 1.1em;">
-                                                <i class="fas fa-plus-circle"></i>
-                                                &nbsp;เพิ่มเมนูโหวต
-                                        </span>
-                                </button>
-                        </form>
                 </nav>
 
                 <div class="container-fluid mx-auto text-left">

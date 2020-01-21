@@ -59,6 +59,7 @@ $(document).ready(function() {
                             data: '&semester=' + semester + '&subject=' + subject_id + '&menuId=' + getMenu[i].menuVoteId + '&choiceId=' + choiceId,
                             success: function() {
                                 alert('บันทึกสำเร็จ');
+                                selectPoint(getMenu[i].menuVoteId);
                             },
                             error: function() {
                                 alert('บันทึกไม่สำเร็จ');

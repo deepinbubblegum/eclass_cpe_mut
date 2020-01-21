@@ -6,6 +6,7 @@ $(document).ready(function() {
     var getUnit = [];
     var SHeadID = '';
     var studentCount = 0;
+    var idMenu = 0;
     selectStudent();
     showMenuVote();
     var clearPoint = '0';
@@ -61,7 +62,7 @@ $(document).ready(function() {
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
                         html +=
-                            '<div class="expansion-panel list-group-item success-color" >' +
+                            '<div class="expansion-panel list-group-item success-color">' +
                             '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
                             response[i].menuVoteName +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
@@ -91,6 +92,11 @@ $(document).ready(function() {
                     }
                 }
                 $('.showMenuVote').html(html);
+                
+                $('#collapse' + idMenu).collapse({
+                    toggle: true
+                });
+
                 $.each(getMenu, function(i, p) {
                     showChoice(getMenu[i].menuVoteId);
                     $('#addInMenu-' + getMenu[i].menuVoteId).click(function(e) {
@@ -98,6 +104,7 @@ $(document).ready(function() {
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_vote/insertFieldVote';
                         $('#addField').modal('show');
                         $('#addFieldLabel').text('Create in menu : ' + getMenu[i].menuVoteName);
+                        idMenu = i;
                         // $("input[name=PointMulti]").attr('disabled', false);
                     });
                     // $('#showInMenu-' + getMenu[i].menuVoteId).click(function(e) {}); use da href
@@ -116,6 +123,7 @@ $(document).ready(function() {
                         e.preventDefault();
                         $('#Headtext').val(getMenu[i].menuVoteName);
                         $('#Textarea').val(getMenu[i].menuVoteDescription);
+                        idMenu = i;
                         //$("input[name='PointView'][value='" + response[i].point_StdView + "']").prop('checked', true);
                         // if ($('#checkBox01').prop("checked")) { menuStatus += 1 } else { menuStatus += 0 }
                         // if ($('#checkBox02').prop("checked")) { menuStatus += 1 } else { menuStatus += 0 }
@@ -147,11 +155,11 @@ $(document).ready(function() {
                 getField[mVoteId] = response;
                 if (response.length != undefined) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<h4><li class="">' + response[i].choiceVoteText +
+                        html += '<li class=""><h4>' + response[i].choiceVoteText +
                             '<span id="fieldOlTagChild-' + mVoteId + '-' + response[i].choiceVoteId + '">' +
                             '</span>' +
-                            '</li>' +
                             '</h4>' +
+                            '</li>' +
 
                             //'<span style="font-size: 1.5em;"><a href="#" title="เพิ่มตัวเลือกโหวต" id="addChoiceVote-' + mVoteId + '-' + response[i].choiceVoteId + '"class="f34r-txt-black"><i class="fas fa-plus-square"></i></a></span>&nbsp;' +
                             '<span style="font-size: 1.5em;"><a href="#" title="ลบตัวเลือกโหวต" id="delChoiceVote-' + mVoteId + '-' + response[i].choiceVoteId + '"class="f34r-txt-black"><i class="fas fa-minus-square"></i></a></span>&nbsp;' +
@@ -172,6 +180,7 @@ $(document).ready(function() {
                         takeThisDel = "delField";
                         delCid = getField[mVoteId][i].choiceVoteId;
                         delPid = mVoteId;
+                        idMenu = mVoteId - 1;
                         //delField(response[i].setpoint_id, response[i].choiceVoteId);
                     });
                     $('#editChoiceVote-' + mVoteId + '-' + getField[mVoteId][i].choiceVoteId).click(function(e) {
@@ -181,6 +190,7 @@ $(document).ready(function() {
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_vote/updateFieldVote';
                         SHeadID = getField[mVoteId][i].choiceVoteId;
                         SMenuID = mVoteId;
+                        idMenu = mVoteId - 1;
                     });
                 });
             },
@@ -235,6 +245,7 @@ $(document).ready(function() {
             data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&choiceTxt=' + choiceTxt + '&menuId=' + SMenuID + '&headId=' + SHeadID,
             success: function() {
                 $('#addFieldHQN').val("");
+                $('#addField').modal('hide');
                 showMenuVote();
             }
         });
