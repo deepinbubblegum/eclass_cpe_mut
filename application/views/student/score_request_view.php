@@ -100,7 +100,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
 
                 <div aria-labelledby="profile-tab" class="tab-pane fade show" id="profile" role="tabpanel">
-                    <div class="list-group mt-3" id="accordionStdRequest">
+                    <div class="list-group mt-3" id="accordionTeacherConfirm">
 
                         <div class="expansion-panel list-group-item show">
                             <a aria-controls="collapse0" aria-expanded="true" class="expansion-panel-toggler text-left" data-toggle="collapse" href="#collapse0" id="PS001">
@@ -110,11 +110,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="expansion-panel-icon ml-3 text-black-secondary"><i class="collapsed material-icons">keyboard_arrow_down</i><i class="collapsed-hide material-icons">keyboard_arrow_up</i></div>
                             </a>
 
-                            <div aria-labelledby="PS001" class="collapse show" data-parent="#accordionStdRequest" id="collapse0">
-
+                            <div aria-labelledby="PS001" class="collapse show" data-parent="#accordionTeacherConfirm" id="collapse0">
+                                   
                             </div>
                         </div>
-
 
                     </div>
                 </div>

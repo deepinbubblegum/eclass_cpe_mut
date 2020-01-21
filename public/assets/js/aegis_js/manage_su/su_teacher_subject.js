@@ -231,7 +231,7 @@ $(document).ready(function () {
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
                             '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].teacher_code_id + '" value="' + response[i].subject_id + '"  id="' + response[i].subject_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].subject_id + i + '">' + response[i].subject_id + '</label>' +
+                            '<label class="custom-control-label" for="' + response[i].subject_id + i + '">(' + response[i].subject_major + ') ' + response[i].subject_id + '</label>' +
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
@@ -269,7 +269,7 @@ $(document).ready(function () {
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
                             '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].teacher_code_id + '" value="' + response[i].subject_id + '"  id="' + response[i].subject_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].subject_id + i + '">' + response[i].subject_id + '</label>' +
+                            '<label class="custom-control-label" for="' + response[i].subject_id + i + '">(' + response[i].subject_major + ') ' + response[i].subject_id + '</label>' +
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
@@ -349,7 +349,7 @@ $(document).ready(function () {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                        html += '<option value="' + response[i].major_id + '">(' + response[i].major_id + ') ' + response[i].major_name + '</option>';
                     }
                 }
                 $('#selectAddMajor').html(html);
@@ -486,7 +486,7 @@ $(document).ready(function () {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                        html += '<option value="' + response[i].major_id + '">(' + response[i].major_id + ') ' + response[i].major_name + '</option>';
                     }
                 }
                 $('#selectAddMajor').html(html);
@@ -610,7 +610,7 @@ $(document).ready(function () {
                             '<th>' +
                             '<div class="custom-control custom-checkbox">' +
                             '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].teacher_code_id + '" value="' + response[i].subject_id + '"  id="' + response[i].subject_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].subject_id + i + '">' + response[i].subject_id + '</label>' +
+                            '<label class="custom-control-label" for="' + response[i].subject_id + i + '">(' + response[i].subject_major + ') ' + response[i].subject_id + '</label>' +
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +

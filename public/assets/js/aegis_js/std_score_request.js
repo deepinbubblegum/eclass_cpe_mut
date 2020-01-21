@@ -2,7 +2,9 @@ $(document).ready(function () {
     var url = $(location).attr('href').split("/");
 
     subjectMain();
+    ShowConfirm();
     var dataMenu;
+    var dataConfirm = '';
     var subIdOption = [];
     var subNameOption = [];
 
@@ -213,6 +215,101 @@ $(document).ready(function () {
                         width: 'auto',
                         text: 'หมดเวลาในการขอแลกคะแนนแล้ว'
                     });
+                }
+                ShowConfirm();
+            }
+        });
+    }
+
+
+    function ShowConfirm() {
+        $.ajax({
+            type: 'POST',
+            url: "/" + url[3] + "/Std_point_request/showMenu",
+            data: '&semester=' + semester + '&subject_id=' + subject_id,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                dataConfirm = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<div class="expansion-panel list-group-item">' +
+                            '<a aria-controls="collapse2' + response[i].menuPS_id + '" aria-expanded="true" class="expansion-panel-toggler text-left" data-toggle="collapse" href="#collapse2' + response[i].menuPS_id + '" id="Con' + response[i].menuPS_id + '">' +
+                            '<div class="d-flex justify-content-start">' +
+                            '<span class="text-left"> ' + response[i].menuPS_header + '</span>' +
+                            '</div>' +
+                            '<div class="expansion-panel-icon ml-3 text-black-secondary"><i class="collapsed material-icons">keyboard_arrow_down</i><i class="collapsed-hide material-icons">keyboard_arrow_up</i></div>' +
+                            '</a>' +
+
+                            '<div aria-labelledby="Con' + response[i].menuPS_id + '" class="collapse" data-parent="#accordionTeacherConfirm" id="collapse2' + response[i].menuPS_id + '">' +
+
+                            '<div class="table-responsive">' +
+                            '<table class="table text-left">' +
+                            '<thead id="Thead">' +
+                            '<tr>' +
+                            '<th scope="col">รหัสนักศึกษา</th>' +
+                            '<th scope="col">วิชาที่ขอแลกคะแนน</th>' +
+                            '<th scope="col">คะแนนที่ได้</th>' +
+                            '<th scope="col">อาจารย์กิจกรรม</th>' +
+                            '<th scope="col">อาจารย์ประจำวิชา</th>' +
+                            '</tr>' +
+                            '</thead>' +
+                            '<tbody id="Tbody' + response[i].menuPS_id + '">' +
+                            '</tbody>' +
+                            '</table>' +
+
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    }
+                }
+                $('#accordionTeacherConfirm').html(html);
+                ShowListConfirm();
+            }
+        });
+    }
+
+    function ShowListConfirm() {
+        $.ajax({
+            type: 'POST',
+            url: "/" + url[3] + "/Std_point_request/showConfirm",
+            data: '&semester=' + semester + '&subject_id=' + subject_id,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response != null) {
+                    for (a = 0; a < dataConfirm.length; a++) {
+                        var tea_submit = '';
+                        var tea_confirm = '';
+                        var html = '';
+                        var i;
+                        for (i = 0; i < response.length; i++) {
+                            if (dataConfirm[a].menuPS_id == response[i].ps_std_psID) {
+                                if(response[i].ps_std_status == 1){
+                                    tea_submit = '<span style="color:#2196f3;" class="chip"><i class="far fa-check-circle mr-2"></i>ส่งรายชื่อแล้ว</span>';
+                                }else{
+                                    tea_submit = '<span style="color:#f44336;" class="chip"><i class="far fa-times-circle mr-2"></i>ยังไม่ส่งรายชื่อ</span>';
+                                }
+
+                                if(response[i].ps_tea_confirm == 1){
+                                    tea_confirm = '<span style="color:#2196f3;" class="chip"><i class="far fa-check-circle mr-2"></i>รับทราบแล้ว</span>';
+                                }else{
+                                    tea_confirm = '<span style="color:#f44336;" class="chip"><i class="far fa-times-circle mr-2"></i>ยังไม่รับทราบ</span>';
+                                }
+
+                                html += '<tr>' +
+                                    '<td scope="row">' + response[i].ps_std_stdID + '</td>' +
+                                    '<td>(' + response[i].subject_id + ') ' + response[i].subject_name + '</td>' +
+                                    '<td>' + response[i].ps_std_point + '</td>' +
+                                    '<td>' + tea_submit + '</td>' +
+                                    '<td>' + tea_confirm + '</td>' +
+                                    '</tr>';
+                            }
+                        }
+                        $('#Tbody' + dataConfirm[a].menuPS_id).html(html);
+                    }
                 }
             }
         });

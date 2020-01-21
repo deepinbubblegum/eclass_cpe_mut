@@ -80,8 +80,21 @@ class Medel_std_point_request extends CI_Model
                 }
                 return 1;
             }
-        }else{
+        } else {
             return 'now';
+        }
+    }
+
+    public function getTeacherConfirm($subject_id, $semester, $User)
+    {
+        $query = $this->db->query('SELECT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, ps_std_point, ps_std_status, subject_name, ps_tea_confirm, subject_id FROM ps_student 
+        LEFT JOIN subject ON subject_id = ps_std_subAdd
+        LEFT JOIN ps_teacher ON ps_std_semester = ps_tea_semester AND ps_std_subject = ps_tea_subject AND ps_std_psID = ps_tea_menu AND ps_std_subAdd = ps_tea_subAdd
+        WHERE ps_std_semester = "'.$semester.'" AND ps_std_subject = "'.$subject_id.'" AND ps_std_stdID = "'.$User.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
         }
     }
 }
