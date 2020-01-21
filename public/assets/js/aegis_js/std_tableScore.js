@@ -264,6 +264,7 @@ $(document).ready(function() {
                                 }
                             }
                         });
+                        
                         console.log(sumData);
                         html = '<table class="table table-striped mt-2"><tbody>';
                         html += '<tr><td>Student</td> <td>' + getData.length + '</td> <td>People</td> </tr>';
