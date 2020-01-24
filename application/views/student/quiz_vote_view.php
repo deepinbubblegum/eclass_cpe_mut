@@ -22,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span style="font-size: 1.2em;">
                                         <i class="fas fa-chalkboard"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        &nbsp; Quiz
+                                        &nbsp; ควิซ
                                 </span>
                         </div>
                         <!-- <form class="form-inline">
