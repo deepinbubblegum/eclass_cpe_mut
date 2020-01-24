@@ -95,13 +95,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <form class="needs-validation" novalidate>
                                                         <div class="form-row">
                                                                 <div class="col-sm-3 mb-2">
-                                                                        <label>Semester</label>
+                                                                        <label>ปีการศึกษา</label>
                                                                         <select class="form-control" id="Semester_Form_add_option">
 
                                                                         </select>
                                                                 </div>
                                                                 <div class="col-sm mb-2">
-                                                                        <label>Subject</label>
+                                                                        <label>วิชา</label>
                                                                         <select class="form-control" id="Subject_Form_add_option">
                                                                         </select>
                                                                 </div>
@@ -201,7 +201,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="modal-dialog" role="document">
                         <div class="modal-content">
                                 <div class="modal-header">
-                                        <h5 class="modal-title" id="progress_wait_imgLabel">Wait a moment!</h5>
+                                        <h5 class="modal-title" id="progress_wait_imgLabel">กรุณารอสักครู่!</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                         </button>
@@ -232,11 +232,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <form class="needs-validation" novalidate>
                                                         <div class="form-row">
                                                                 <div class="col-sm-3 mb-2">
-                                                                        <label>Semester</label>
+                                                                        <label>ปีการศึกษา</label>
                                                                         <p id="ShowSemester_Edit"></p>
                                                                 </div>
                                                                 <div class="col-sm mb-2">
-                                                                        <label>Subject</label>
+                                                                        <label>วิชา</label>
                                                                         <p id="ShowSubject_Edit"></p>
                                                                 </div>
                                                         </div>

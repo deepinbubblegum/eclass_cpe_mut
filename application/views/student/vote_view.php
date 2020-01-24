@@ -52,7 +52,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                 .sortableItem {
                         height: 94px;
-                        weight: 94px;
+                        /* weight: 94px; */
                 }
 
                 .drag {
@@ -203,7 +203,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span style="font-size: 1.2em;">
                                         <i class="fas fa-chalkboard"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        &nbsp; Vote
+                                        &nbsp; โหวต
                                 </span>
                         </div>
                 </nav>
