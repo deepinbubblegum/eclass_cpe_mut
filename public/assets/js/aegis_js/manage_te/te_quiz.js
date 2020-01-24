@@ -158,6 +158,7 @@ $(document).ready(function() {
                             '<span style="font-size: 1.7em;"><a title="ลบเมนูควิซ" id="delMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="แก้ไขเมนูควิซ" id="editMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="่ส่งออกคะแนน" id="exportMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-share-square"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="ดูคะแนนควิซ" id="showScoreMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].menuQuizDescription +
@@ -228,6 +229,10 @@ $(document).ready(function() {
                         $('#Modal').modal('show');
                         iurl = "/" + url[3] + "/Te_subject_quiz/editMenuQuiz";
                         editMenuId = getMenu[i].menuQuizId;
+                    });
+                    $('#showScoreMenu-' + getMenu[i].menuQuizId).click(function(e) {
+                        console.log('showScoreMenu-'+getMenu[i].menuQuizId); 
+                        $("#showScoreModal").modal('show'); 
                     });
                 });
             }

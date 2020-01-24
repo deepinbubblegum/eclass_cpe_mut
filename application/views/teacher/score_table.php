@@ -86,7 +86,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <br>
                                                 <div id="f34r-here">
                                                         Tables here
-
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
@@ -97,6 +96,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                 </div>
         </div>
+        
         </div>
         <!--  -->
 </body>
