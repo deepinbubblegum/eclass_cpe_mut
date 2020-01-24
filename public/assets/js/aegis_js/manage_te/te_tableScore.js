@@ -240,6 +240,7 @@ $(document).ready(function () {
                         console.log(findSd1, findSd2);
                         console.log(checkPow);
                         console.log(headData);
+                        
                         char = new Chart(document.getElementById("score_show"), {
                             "type": "horizontalBar",
                             "data": {
