@@ -44,15 +44,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         box-shadow: 0px 0px 10px #888;
                 }
 
-                .sortableItem {
-                        /* height: 94px;
-                        weight: 94px; */
-                }
+                /* .sortableItem {
+                        height: 94px;
+                        weight: 94px;
+                } */
 
-                .sortableMenu {
-                        /* height: 1px;
-                        weight: 1px; */
-                }
+                /* .sortableMenu {
+                        height: 1px;
+                        weight: 1px;
+                } */
 
                 .drag {
                         margin-top: 1em;
