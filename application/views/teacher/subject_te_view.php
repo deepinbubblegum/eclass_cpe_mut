@@ -95,13 +95,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <form class="needs-validation" novalidate>
                                                         <div class="form-row">
                                                                 <div class="col-sm-3 mb-2">
-                                                                        <label>Semester</label>
+                                                                        <label>ปีการศึกษา</label>
                                                                         <select class="form-control" id="Semester_Form_add_option">
 
                                                                         </select>
                                                                 </div>
                                                                 <div class="col-sm mb-2">
-                                                                        <label>Subject</label>
+                                                                        <label>วิชา</label>
                                                                         <select class="form-control" id="Subject_Form_add_option">
                                                                         </select>
                                                                 </div>
