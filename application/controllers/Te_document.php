@@ -34,7 +34,7 @@ class Te_document extends MY_Controller
         }
         return $rgb;
     }
-    
+
     public function index()
     {
         // กำหนดตัวแปรค่าคงที่สำหรับการจัดค่าหน้ากระดาษ
@@ -47,7 +47,7 @@ class Te_document extends MY_Controller
 
         // กำหนดข้อความส่วนแสดง header
         define('MYPDF_HEADER_LOGO', 'MII_icon.png');
-        define('MYPDF_HEADER_LOGO_WIDTH', 28);
+        define('MYPDF_HEADER_LOGO_WIDTH', 29);
         define('MYPDF_HEADER_TITLE', "MAHANAKORN Institute of Innovation Club                                       MII-01");
         define('MYPDF_HEADER_STRING', "Mahanakorn University of Technology (MUT)\n140 ChueamSamphan Rd., NongChok, BKK 10530 Tel 02-988-3666 ext 1230");
 
@@ -90,8 +90,24 @@ class Te_document extends MY_Controller
         $pdf->SetFont('THSarabunnew', '', 14, '', true);
 
         // เพิ่มหน้า pdf
-        $pdf->AddPage();
+        $pdf->AddPage('P', 'A4');
+        $pdf->SetFont('THSarabunnew', '', 14, '', true);
+        $pdf->Cell(0, 0, 'ที่ชมรม สนก. 62/8001', 0, 1, 'L', 0, '', 0);
+        $pdf->Ln(2);
+        $pdf->Cell(0, 0, '26 กันยายน 2562', 0, 1, 'C', 0, '', 0);
+        $pdf->Ln(2);
+        $pdf->Cell(0, 0, 'เรื่อง  ขอความอนุเคราะห์แลกคะแนนกิจกรรมประจำเทอมศึกษาที่ 1/2562', 0, 1, 'L', 0, '', 0);
+        $pdf->Ln(2);
+        $pdf->Cell(0, 0, 'เรียน  อาจารย์ยศธร ภูมิสุทธิ์ อาจารย์ประจำวิชา CPEN1111 Computer Programming II', 0, 1, 'L', 0, '', 0);
+        $pdf->Ln(2);
 
+
+        $txt = '            เนื่องด้วย สถาบันนวัฒกรรมมหานคร ได้มีนโยบายการจัดโครงการแลกคะแนนกิจกรรมเพื่อเป็นแรงจูงใจให้ นักศึกษาเข้าร่วมทำกิจกรรมของสถาบันฯ บัดนี้คณะกรรมการกิจการนักศึกษาของสถาบันนวัตกรรมมหานครได้ดำเนินการ ประกอบกิจกรรมและตรวจสอบการเข้าร่วมกิจกรรมของนักศึกษาประจำเทอม 1/2562 เสร็จสิ้นแล้ว';
+        $txt2 = '           โดยทางคณะกรรมการกิจการนักศึกษาสถาบันนวัฒกรรมมหานคร จึงใคร่ขอความอนุเคราะห์ อาจารย์ยศธร ภูมิสุทธิ์ อาจารย์ประจำวิชา CPEN1111 Computer Programming II ในการให้นักศึกษาแลกคะแนนกิจกรรม และขอขอบคุณเป็นอย่างสูงสำหรับความร่วมมือในการสนับสนุนการพัฒนาด้านศักยภาพทางด้านสังคมการเรียนรู้และการทำงานของนักศึกษา โดยมีรายชื่อนักศึกษาดังนี้';
+        $pdf->MultiCell(0, 5, $txt, 0, 'L', 0, 1, '', '', true);
+        $pdf->Ln(2);
+        $pdf->MultiCell(0, 5, $txt2, 0, 'L', 0, 1, '', '', true);
+        $pdf->Ln(2);
 
         // จบการทำงานและแสดงไฟล์ pdf
         // การกำหนดในส่วนนี้ สามารถปรับรูปแบบต่างๆ ได้ เช่นให้บันทึกเป้นไฟล์ หรือให้แสดง pdf เลย ดูวิธีใช้งานที่คู่มือของ tcpdf เพิ่มเติม
