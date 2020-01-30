@@ -128,7 +128,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 &nbsp;&nbsp;เลือกรายวิชา
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('te_select/annouce/').$subject_id.'-'.$semester; ?>">
+                                <a class="nav-item nav-link" href="<?php echo base_url('te_select/annouce/') . $subject_id . '-' . $semester; ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-chalkboard"></i></span>
                                         <span style="font-size: 1.2em;">
@@ -136,89 +136,95 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </span>
                                 </a>
                                 <?php
-                                                        if (substr($bitSide, 3, 1) == 1 || $bitSide == 0) {
-                                                                echo '<a class="nav-item nav-link" id="score" href="'; echo base_url('te_select/score/') . $subject_id . '-' . $semester .'">
+                                if (substr($bitSide, 3, 1) == 1 || $bitSide == 0) {
+                                        echo '<a class="nav-item nav-link" id="score" href="';
+                                        echo base_url('te_select/score/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star-half-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;คะแนน
                                                                 </span>
                                                                 </a>';
-                                                        }
-                                                        ?>
+                                }
+                                ?>
 
-                                                        <?php
-                                                        if (substr($bitSide, 1, 1) == 1 || $bitSide == 0) {
-                                                                echo '<a class="nav-item nav-link" id="downloads" href=" '; echo base_url('te_select/downloads/') . $subject_id . '-' . $semester. '">
-                                                                <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-download"></i></span>
-                                                                <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;อับโหลด
-                                                                </span>
-                                                                </a>';
-                                                        }
-                                                        ?>
-
-                                                        <?php
-                                                        if (substr($bitSide, 2, 1) == '1' || $bitSide == '0') {
-                                                                echo '<a class="nav-item nav-link" id="uploads" href=" ';  echo base_url('te_select/uploads/') . $subject_id . '-' . $semester. '">
+                                <?php
+                                if (substr($bitSide, 2, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="uploads" href=" ';
+                                        echo base_url('te_select/uploads/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-upload"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ดาวน์โหลด
+                                                                        &nbsp;&nbsp;ไฟล์ประกอบการสอน
                                                                 </span>
                                                                 </a>';
-                                                        }
-                                                        ?>
-                                                        
-                                                        
-                                                        <?php
-                                                        if (substr($bitSide, 0, 1) == '1' || $bitSide == '0') {
-                                                                echo '<a class="nav-item nav-link" id="media" href="'; echo base_url("te_select/media/") . $subject_id . '-' . $semester. '">
+                                }
+                                ?>
+
+                                <?php
+                                if (substr($bitSide, 1, 1) == 1 || $bitSide == 0) {
+                                        echo '<a class="nav-item nav-link" id="downloads" href=" ';
+                                        echo base_url('te_select/downloads/') . $subject_id . '-' . $semester . '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-download"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;งานที่มอบหมาย
+                                                                </span>
+                                                                </a>';
+                                }
+                                ?>
+
+                                <?php
+                                if (substr($bitSide, 0, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="media" href="';
+                                        echo base_url("te_select/media/") . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-play"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;สื่อสารสนเทศ
                                                                 </span>
                                                                 </a>';
-                                                        }
-                                                        ?>
+                                }
+                                ?>
 
-                                                        <?php
-                                                        if (substr($bitSide, 5, 1) == '1' || $bitSide == '0') {
-                                                                echo '<a class="nav-item nav-link" id="quiz" href="'; echo base_url('te_select/quiz/') . $subject_id . '-' . $semester. '">
+                                <?php
+                                if (substr($bitSide, 5, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="quiz" href="';
+                                        echo base_url('te_select/quiz/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;ควิซ
                                                                 </span>
                                                                 </a>';
-                                                        }
-                                                        ?>
-                                                        <?php
-                                                        if (substr($bitSide, 4, 1) == '1' || $bitSide == '0') {
-                                                                echo '<a class="nav-item nav-link" id="vote" href="'; echo base_url('te_select/vote/') . $subject_id . '-' . $semester. '">
+                                }
+                                ?>
+                                <?php
+                                if (substr($bitSide, 4, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="vote" href="';
+                                        echo base_url('te_select/vote/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;โหวต
                                                                 </span>
                                                                 </a>';
-                                                        }
-                                                        ?>
-                                                                                            
-                                                        
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
-                                                                <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-stopwatch"></i></span>
-                                                                <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;นาฬิกาจับเวลา
-                                                                </span>
-                                                        </a>
+                                }
+                                ?>
 
-                                                        <?php
-                                                        if (substr($bitSide, 6, 1) == '1' || $bitSide == '0') {
-                                                                echo '<a class="nav-item nav-link" id="pointRequest" href="'; echo base_url('te_select/point_request/') . $subject_id . '-' . $semester. '">
+
+                                <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
+                                        <span style="font-size: 1.5em;">
+                                                <i class="fas fa-stopwatch"></i></span>
+                                        <span style="font-size: 1.2em;">
+                                                &nbsp;&nbsp;นาฬิกาจับเวลา
+                                        </span>
+                                </a>
+
+                                <?php
+                                if (substr($bitSide, 6, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="pointRequest" href="';
+                                        echo base_url('te_select/point_request/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star"></i></span>
                                                                 <span style="font-size: 1.2em;">
@@ -226,62 +232,67 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                                 <span class="badge badge-primary badge-pill" id="txtRead"> </span>
                                                                 </a>';
-                                                        }
-                                                        ?>
+                                }
+                                ?>
 
-                                                        <div class="navdrawer-divider" id="line"></div>
+                                <div class="navdrawer-divider" id="line"></div>
 
-                                                        <?php
-                                                        if(substr($bitSide, 7, 1) == '1' || $bitSide == '0'){
-                                                                echo '<a class="nav-item nav-link" id="add_permission" href="'; echo base_url('te_select/add_permission/') . $subject_id . '-' . $semester .'">
+                                <?php
+                                if (substr($bitSide, 7, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="add_permission" href="';
+                                        echo base_url('te_select/add_permission/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-user-shield"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;เพิ่มระดับสิทธิ์อาจารย์ผู้ช่วย
                                                                 </span>
                                                                 </a>';
-                                                        }
-                                                        ?>
+                                }
+                                ?>
 
-                                                        <?php
-                                                        if(substr($bitSide, 8, 1) == '1' || $bitSide == '0'){
-                                                                echo '<a class="nav-item nav-link" id="add_teacher_assist" href="'; echo base_url('te_select/add_teacher_assist/') . $subject_id . '-' . $semester. '">
+                                <?php
+                                if (substr($bitSide, 8, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="add_teacher_assist" href="';
+                                        echo base_url('te_select/add_teacher_assist/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;เพิ่มอาจารย์ผู้ช่วย
                                                                 </span>
                                                                 </a>';
-                                                        }
-                                                        ?>
+                                }
+                                ?>
 
-                                                        <?php
-                                                        if(substr($bitSide, 9, 1) == '1' || $bitSide == '0'){
-                                                                echo '<a class="nav-item nav-link" id="add_student" href="';echo base_url('te_select/add_student/') . $subject_id . '-' . $semester. '">
+                                <?php
+                                if (substr($bitSide, 9, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="add_student" href="';
+                                        echo base_url('te_select/add_student/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;เพิ่มนักศึกษาในวิชา
                                                                 </span>
                                                                 </a>';
-                                                        }
-                                                        ?>
+                                }
+                                ?>
 
-                                <!-- <a class="nav-item nav-link" href="<?php //echo base_url('te_select/quiz/').$subject_id.'-'.$semester; ?>">
+                                <!-- <a class="nav-item nav-link" href="<?php //echo base_url('te_select/quiz/').$subject_id.'-'.$semester; 
+                                                                        ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-poll"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ควิซ
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php //echo base_url('te_select/vote/').$subject_id.'-'.$semester; ?>">
+                                <a class="nav-item nav-link" href="<?php //echo base_url('te_select/vote/').$subject_id.'-'.$semester; 
+                                                                        ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-poll"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;โหวต
                                         </span>
                                 </a> -->
-                                
+
 
                                 <!-- <a class="nav-item nav-link" href="#">
                                         <span style="font-size: 1.5em;">
@@ -327,8 +338,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="container">
                                         <?php
                                         if (isset($this->session->ses_tname)) {
-                                                        echo '<a href="' . base_url('teacher') . '"><button type="button" id="" class="btn btn-info btn-lg btn-block">หน้าจัดการอาจารย์</button></a>';
-                                                        echo '<div class="navdrawer-divider mt-3"></div>';
+                                                echo '<a href="' . base_url('teacher') . '"><button type="button" id="" class="btn btn-info btn-lg btn-block">หน้าจัดการอาจารย์</button></a>';
+                                                echo '<div class="navdrawer-divider mt-3"></div>';
                                                 echo '<a href="' . base_url('user_uses/sign_out') . '"><button type="button" class="btn btn-danger btn-lg btn-block">ออกจากระบบ</button></a>';
                                         } else {
                                                 echo '<div class="form-group">
