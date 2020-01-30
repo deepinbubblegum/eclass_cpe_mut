@@ -14,6 +14,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         echo assets_js('cropper_js/cropper.js');
         echo assets_css('cropper_css/cropper.css');
         echo assets_js('jquery_js/jquery-cropper.js');
+
+        echo assets_css('../fontawesome/css/font-awesome-animation.min.css');
         ?>
 
         <style>

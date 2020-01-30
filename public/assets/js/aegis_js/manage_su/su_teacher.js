@@ -21,7 +21,7 @@ $(document).ready(function () {
     var pagingSize = [10, 25, 50, 100];
     dropGen();
 
-    var theadGenValue = ['Teacher ID', 'Teacher Name(EN)', 'Teacher Name(TH)', 'E-mail', 'Username', 'option'];
+    var theadGenValue = ['รหัสอาจารย์', 'ชื่ออาจารย์(EN)', 'ชื่ออาจารย์(TH)', 'E-mail', 'Username', 'ตัวเลือก'];
 
     var formData = ["#teacher_code_id", "#teacher_Tname", "#teacher_Ename", "#teacher_email", "#teacher_username"];
 
@@ -38,9 +38,9 @@ $(document).ready(function () {
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['Teacher ID', 'teacher_code_id', 'teacher_code_id', 'Teacher ID'],
-        ['Name(EN)', 'teacher_Ename', 'teacher_Ename', 'Name(EN)'],
-        ['Name(TH)', 'teacher_Tname', 'teacher_Tname', 'Name(TH)'],
+        ['รหัสอาจารย์', 'teacher_code_id', 'teacher_code_id', 'รหัสอาจารย์'],
+        ['ชื่ออาจารย์(EN)', 'teacher_Ename', 'teacher_Ename', 'ชื่ออาจารย์(EN)'],
+        ['ชื่ออาจารย์(TH)', 'teacher_Tname', 'teacher_Tname', 'ชื่ออาจารย์(TH)'],
         ['Email', 'teacher_email', 'teacher_email', 'Email'],
         ['Username', 'teacher_username', 'teacher_username', 'Username']
     ];
@@ -88,15 +88,15 @@ $(document).ready(function () {
                 '</div>';
         }
         html += '<div class="col-md-4 mb-3" id="facultySelect">' +
-            '<label>Faculty</label>' +
+            '<label>คณะ</label>' +
             '<select id="facultySelectAdd" class="form-control"></select>' +
             '</div>';
         html += '<div class="col-md-4 mb-3" id="majorSelect">' +
-            '<label>Major</label>' +
+            '<label>สาขา</label>' +
             '<select id="majorSelectAdd" class="form-control"></select>' +
             '</div>';
         html += '<div class="col-md-4 mb-3" id="degreeSelect">' +
-            '<label>Degree</label>' +
+            '<label>ระดับอาจารย์</label>' +
             '<select id="degreeSelectAdd" class="form-control"></select>' +
             '</div>';
         // html += '<div class="col-md-4 mb-3" >' +
@@ -159,21 +159,36 @@ $(document).ready(function () {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     function dropGen() {
@@ -246,7 +261,7 @@ $(document).ready(function () {
                             '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
                             '<td>' + response[i].teacher_email + '</td>' +
                             '<td>' + response[i].teacher_username + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -254,6 +269,126 @@ $(document).ready(function () {
             }
         });
     }
+
+    $('#btnSearch').click(function (e) {
+        e.preventDefault();
+        data1 = $('#select_search').val();
+        data2 = $('#SearchName').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher/Show_Max_Search_Data_ctl",
+            data: "&data=" + data1 + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+        
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher/Search_Show_Data_ctl",
+            data: "&data=" + data1 + "&search=" + data2+ "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].teacher_email + '</td>' +
+                            '<td>' + response[i].teacher_username + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
+
+    function LimitSearch()
+    {
+        data1 = $('#select_search').val();
+        data2 = $('#SearchName').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher/Show_Max_Search_Data_ctl",
+            data: "&data=" + data1 + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+        
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher/Search_Show_Data_ctl",
+            data: "&data=" + data1 + "&search=" + data2+ "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].teacher_email + '</td>' +
+                            '<td>' + response[i].teacher_username + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    }
+
+    /*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 
     $('#btnAdd').click(function (e) {
@@ -474,41 +609,6 @@ $(document).ready(function () {
         });
     });
 
-    $('#btnSearch').click(function (e) {
-        e.preventDefault();
-        data1 = $('#select_search').val();
-        data2 = $('#SearchName').val();
-        $.ajax({
-            type: "POST",
-            url: "../Admin_teacher/Search_Show_Data_ctl",
-            data: "&data=" + data1 + "&search=" + data2,
-            dataType: "json",
-            success: function (response) {
-                datatable = response;
-                console.log(response);
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html += '<tr>' +
-                            '<th>' +
-                            '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
-                            '</div>' +
-                            '</th>' +
-                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
-                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].teacher_email + '</td>' +
-                            '<td>' + response[i].teacher_username + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
-                            '</tr>';
-                    }
-                }
-                $('#showAllData').html(html);
-            }
-        });
-    });
 
     $('#btnDel').click(function (e) {
         e.preventDefault();
@@ -585,7 +685,7 @@ $(document).ready(function () {
                             '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
                             '<td>' + response[i].teacher_email + '</td>' +
                             '<td>' + response[i].teacher_username + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }

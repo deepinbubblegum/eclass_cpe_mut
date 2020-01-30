@@ -61,8 +61,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                        <button type="button" id="btnSave" class="btn btn-primary">บันทึก</button>
                     </div>
                 </div>
             </div>
@@ -119,8 +119,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" id="btnDel" class="btn btn-primary">Delete</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                        <button type="button" id="btnDel" class="btn btn-primary">ลบ</button>
                     </div>
                 </div>
             </div>
@@ -144,10 +144,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="dropdown">
                             <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardTableDrop2" type="button"><i class="material-icons">more_vert</i></button>
                             <div aria-labelledby="cardTableDrop2" class="dropdown-menu dropdown-menu-right menu">
-                                <a class="dropdown-item" id="btnAdd">Add</a>
+                                <a class="dropdown-item" id="btnAdd">เพิ่มข้อมูล</a>
                                 <!-- <a class="dropdown-item" id="btnAddcsv">Add (File csv)</a> -->
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" data-toggle="modal" data-target="#modaldel">Delete</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#modaldel">ลบข้อมูล</a>
                             </div>
                         </div>
                     </div>

@@ -48,7 +48,7 @@ class Model_su_subject extends CI_Model
                 //                LEFT JOIN major ON subject_major = major_id;
         }
 
-        public function Search_data_model($keyword, $type)
+        public function Show_Max_Search_Data_model($keyword, $type)
         {
                 $this->db->select('subject_id, subject_name, major_name,major_id,major_faculty');
                 $this->db->from('subject');
@@ -64,6 +64,31 @@ class Model_su_subject extends CI_Model
                 $this->db->order_by("subject_major", "asc");
                 $this->db->order_by("subject_id", "asc");
                 $this->db->order_by("subject_name", "asc");
+                $query = $this->db->get();
+                return $query->num_rows();
+        }
+
+        public function Search_data_model($keyword, $type, $limit, $start)
+        {
+                if ($limit == 0 and $start == 0) {
+                        $limit = null;
+                        $start = null;
+                }
+                $this->db->select('subject_id, subject_name, major_name,major_id,major_faculty');
+                $this->db->from('subject');
+                $this->db->join('major', 'subject_major = major_id', 'left');
+                if ($type != null) {
+                        $this->db->or_like($type, $keyword);
+                } else {
+
+                        $this->db->like('subject_id', $keyword);
+                        $this->db->or_like('subject_name', $keyword);
+                        $this->db->or_like('major_name', $keyword);
+                }
+                $this->db->order_by("subject_major", "asc");
+                $this->db->order_by("subject_id", "asc");
+                $this->db->order_by("subject_name", "asc");
+                $this->db->limit($limit, $start);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
                         return $query->result();

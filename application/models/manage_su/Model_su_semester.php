@@ -9,6 +9,22 @@ class Model_su_semester extends CI_Model
                 return $query->num_rows();
         }
 
+        public function Show_Max_Search_Data_model($keyword, $type)
+        {
+                $this->db->select('semester_id, semester_year, semester_part,semester_name');
+                $this->db->from('semester');
+                if ($type != null) {
+                        $this->db->like($type, $keyword);
+                } else {
+                        $this->db->like('semester_year', $keyword);
+                        $this->db->or_like('semester_part', $keyword);
+                        $this->db->or_like('semester_name', $keyword);
+                }
+
+                $query = $this->db->get();
+                return $query->num_rows();
+        }
+
         public function Show_Data_Semester_model($limit = null, $start = null)
         {
                 if ($limit == 0 and $start == 0) {
@@ -62,8 +78,12 @@ class Model_su_semester extends CI_Model
                 }
         }
 
-        public function Search_data_model($keyword, $type)
+        public function Search_data_model($keyword, $type, $limit, $start)
         {
+                if ($limit == 0 and $start == 0) {
+                        $limit = null;
+                        $start = null;
+                }
                 $this->db->select('semester_id, semester_year, semester_part,semester_name');
                 $this->db->from('semester');
                 if ($type != null) {
@@ -73,7 +93,7 @@ class Model_su_semester extends CI_Model
                         $this->db->or_like('semester_part', $keyword);
                         $this->db->or_like('semester_name', $keyword);
                 }
-
+                $this->db->limit($limit, $start);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
                         return $query->result();
@@ -82,12 +102,17 @@ class Model_su_semester extends CI_Model
                 }
         }
 
-        public function Show_Sort_model($data, $sort)
+        public function Show_Sort_model($data, $sort, $limit, $start)
         {
+                if ($limit == 0 and $start == 0) {
+                        $limit = null;
+                        $start = null;
+                }
                 $this->db->select('semester_id, semester_year, semester_part, semester_name');
                 $this->db->from('semester');
                 $this->db->order_by($data, $sort);
                 $this->db->order_by("semester_part", "ASC");
+                $this->db->limit($limit, $start);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
                         return $query->result();

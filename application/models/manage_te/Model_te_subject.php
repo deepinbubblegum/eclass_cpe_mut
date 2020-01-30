@@ -114,4 +114,14 @@ class Model_te_subject extends CI_Model
             return false;
         }
     }
+
+    public function getSubject_Alert_model($semester)
+    {
+        $query = $this->db->query('SELECT * FROM ps_teacher WHERE ps_tea_semester = "'.$semester.'" AND ps_tea_read = "0" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
 }

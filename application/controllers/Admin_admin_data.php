@@ -67,11 +67,21 @@ class Admin_admin_data extends MY_Controller
         $this->Model_su_admin_data->Delete_Data_model($data, $arg);
     }
 
+    public function Show_Max_Search_Data_ctl()
+    {
+        $keyword = $this->input->post('data');
+        $type = $this->input->post('search');
+        $result = $this->Model_su_admin_data->Show_Max_Search_Data_model($keyword, $type);
+        echo json_encode($result);
+    }
+
     public function Search_Show_Data_ctl()
     {
         $keyword = $this->input->post('data');
         $type = $this->input->post('search');
-        $result = $this->Model_su_admin_data->Search_data_model($keyword, $type);
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_admin_data->Search_data_model($keyword, $type, $start, $limit);
         echo json_encode($result);
     }
 

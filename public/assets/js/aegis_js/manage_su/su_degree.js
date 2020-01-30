@@ -27,13 +27,13 @@ $(document).ready(function () {
         ['de_Ename', 'ชื่อระดับอาจารย์ภาษาอังกฤษ']
     ];
 
-    var theadGenValue = ['Grade', 'Degree TName', 'Degree EName', 'Option'];
+    var theadGenValue = ['ระดับ', 'ชื่อระดับ(TH)', 'ชื่อระดับ(EN)', 'ตัวเลือก'];
 
     inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['Grade', 'Grade', 'Grade', 'Grade'],
-        ['Degree TName', 'Degree_TName', 'Degree_TName', 'Thai NAME'],
-        ['Degree EName', 'Degree_EName', 'Degree_EName', 'English NAME']
+        ['ระดับ', 'Grade', 'Grade', 'ระดับ'],
+        ['ชื่อระดับ(TH)', 'Degree_TName', 'Degree_TName', 'ชื่อระดับ(TH)'],
+        ['ชื่อระดับ(EN)', 'Degree_EName', 'Degree_EName', 'ชื่อระดับ(EN)']
     ];
 
     var formData = ["#Grade", "#Degree_TName", "#Degree_EName"];
@@ -135,7 +135,7 @@ $(document).ready(function () {
                             '</th>' +
                             '<td> ' + response[i].de_Tname + ' </td>' +
                             '<td> ' + response[i].de_Ename + ' </td>' +
-                            '<td><a value="' + i + '" data="' + response[i].de_id + '" class="item-edit" >Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].de_id + '" class="item-edit" >แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -168,7 +168,7 @@ $(document).ready(function () {
                             '</th>' +
                             '<td> ' + response[i].de_Tname + ' </td>' +
                             '<td> ' + response[i].de_Ename + ' </td>' +
-                            '<td><a value="' + i + '" data="' + response[i].de_id + '" class="item-edit" >Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].de_id + '" class="item-edit" >แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }

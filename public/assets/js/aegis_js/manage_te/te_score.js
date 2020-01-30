@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var url = $(location).attr('href').split("/");
     var iurl = '';
     var getMenu;
@@ -7,20 +7,21 @@ $(document).ready(function() {
     showMenuPoint();
 
 
-    $('#btnAddScore').click(function(e) {
+    $('#btnAddScore').click(function (e) {
         e.preventDefault();
         $('#Modal').modal('show');
         $('#ModalLabel').text('เพิ่มเมนูคะแนน');
         $("#PointView").prop("checked", true);
         //todayDate = new Date().toISOString();
         // $('#StartDatePicker').val(todayDate);
+
         $('#save').text('บันทึกข้อมูล');
         iurl = "/" + url[3] + "/Te_subject_point/insertMenuScore";
 
         $('#accordionOne').activate('option', 'active', '#accM-1');
     });
 
-    $('#save').click(function(e) {
+    $('#save').click(function (e) {
         header = $('#Headtext').val();
         description = $('#Textarea').val();
         PointMulti = $("input[name='PointView']:checked").val();
@@ -29,7 +30,7 @@ $(document).ready(function() {
             type: "POST",
             url: iurl,
             data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&StdView=' + PointMulti + '&editID=' + editMenuId,
-            success: function() {
+            success: function () {
                 $('#Headtext').val("");
                 $('#Textarea').val("");
                 $('#Modal').modal('hide');
@@ -38,7 +39,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#btnModalClose').click(function(e) {
+    $('#btnModalClose').click(function (e) {
         $('#Headtext').val('');
         $('#Textarea').val('');
     });
@@ -47,7 +48,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_point/showMenuPoint/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 getMenu = response;
                 console.log(response);
                 var html = '';
@@ -120,21 +121,23 @@ $(document).ready(function() {
                 }
                 $('.showMenuScore').html(html);
                 sortMenu();
-                $.each(getMenu, function(i, p) {
+                $.each(getMenu, function (i, p) {
                     showUnit(getMenu[i].point_id);
-                    $('#addInMenu-' + getMenu[i].point_id).click(function(e) {
+                    $('#addInMenu-' + getMenu[i].point_id).click(function (e) {
                         pointId = getMenu[i].point_id;
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_point/insertFieldScore';
                         $('#addField').modal('show');
                         $("#PointMulti").prop("checked", true);
                         $('#addFieldLabel').text('Create in menu : ' + getMenu[i].point_name);
+                        $('#optionSet').val('1');
+                        $('#FieldMaxtxt').text('คะแนนเต็ม');
                         // $("input[name=PointMulti]").attr('disabled', false);
                         accordionI = getMenu[i].point_id;
                     });
                     //$('#showInMenu-' + getMenu[i].point_id).click(function(e) {}); use da href
                     // $('#impInMenu-' + getMenu[i].point_id).click(function(e) {});
                     // $('#expInMenu-' + getMenu[i].point_id).click(function(e) {});
-                    $('#delMenu-' + getMenu[i].point_id).click(function(e) {
+                    $('#delMenu-' + getMenu[i].point_id).click(function (e) {
                         takeThisDel = 'delMenu';
                         delPid = getMenu[i].point_id;
                         $("#txtDel").text('Menu:' + getMenu[i].point_name);
@@ -143,7 +146,7 @@ $(document).ready(function() {
                         // $('#addField').modal('show');
                         // $('#addFieldLabel').text('Create in menu : ' + getMenu[i].point_name);
                     });
-                    $('#editMenu-' + getMenu[i].point_id).click(function(e) {
+                    $('#editMenu-' + getMenu[i].point_id).click(function (e) {
                         console.log('editMenu');
                         e.preventDefault();
                         $('#Headtext').val(getMenu[i].point_name);
@@ -199,8 +202,8 @@ $(document).ready(function() {
             placeholder: 'p-2 f34r-bg-n-txt sortableItem placeholder',
             forceHelperSize: true,
 
-            stop: function() {
-                $.map($(this).find('div.sortableItem'), function(el) {
+            stop: function () {
+                $.map($(this).find('div.sortableItem'), function (el) {
                     var Setid = $(el).attr('id');
                     var id = $(el).attr('id2');
                     // console.log('ID+' + id);
@@ -213,8 +216,13 @@ $(document).ready(function() {
                 $.ajax({
                     type: "POST",
                     url: '/' + url[3] + '/Te_subject_point/SortIndex',
-                    data: { sortArray, sortIDArray, ArraySubject, ArraySemester },
-                    success: function() {
+                    data: {
+                        sortArray,
+                        sortIDArray,
+                        ArraySubject,
+                        ArraySemester
+                    },
+                    success: function () {
                         sortArray = [];
                         sortIDArray = [];
                         ArraySemester = [];
@@ -235,8 +243,8 @@ $(document).ready(function() {
             placeholder: 'p-2 f34r-bg-n-txt sortableItem placeholder',
             forceHelperSize: true,
 
-            stop: function() {
-                $.map($(this).find('div.sortMenu'), function(el) {
+            stop: function () {
+                $.map($(this).find('div.sortMenu'), function (el) {
                     var Menuid = $(el).attr('data1');
                     // console.log('ID+' + id);
                     sortIDArray.push(Menuid);
@@ -247,8 +255,12 @@ $(document).ready(function() {
                 $.ajax({
                     type: "POST",
                     url: '/' + url[3] + '/Te_subject_point/SortMenu',
-                    data: { sortIDArray, ArraySubject, ArraySemester },
-                    success: function() {
+                    data: {
+                        sortIDArray,
+                        ArraySubject,
+                        ArraySemester
+                    },
+                    success: function () {
                         sortIDArray = [];
                         ArraySemester = [];
                         ArraySubject = [];
@@ -286,6 +298,15 @@ $(document).ready(function() {
         }
         $('#optionSet').html(html);
     }
+
+    $('#optionSet').change(function () {
+        if ($('#optionSet').val() == 1) {
+            $('#FieldMaxtxt').text('คะแนนเต็ม');
+        } else {
+            $('#FieldMaxtxt').text('สูตรในการคำนวน');
+        }
+    });
+
     //------------------------------------------------------------------------------------------------------------------------
     function htmlEncodeF34R(textInPut) {
         textInPut = textInPut.replace(/\(/gi, "%28");
@@ -298,7 +319,7 @@ $(document).ready(function() {
         return textInPut;
     }
 
-    $('#fieldSave').click(function(e) {
+    $('#fieldSave').click(function (e) {
         fieldCheck = '';
         fullName = $('#addFieldFN').val();
         miniName = $('#addFieldMN').val();
@@ -332,7 +353,7 @@ $(document).ready(function() {
         takeField(fullName, miniName, ticket, maxPoint, optionSet, PointMulti);
     });
 
-    $('#fieldClose').click(function(e) {
+    $('#fieldClose').click(function (e) {
         $('#addFieldFN').val('');
         $('#addFieldMN').val('');
         $('#addFieldTK')[0].checked = false;
@@ -344,7 +365,7 @@ $(document).ready(function() {
             type: "POST",
             url: fieldSaveUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&setpoint_option=' + optionSet + '&pointId=' + pointId + '&pointIdChild=' + pointIdChild + /*|*/ '&ticket=' + ticket + '&fullName=' + fullName + '&miniName=' + miniName + '&maxPoint=' + maxPoint + '&pointMulti=' + PointMulti,
-            success: function() {
+            success: function () {
                 $('#addFieldFN').val("");
                 $('#addFieldMN').val("");
                 $('#addFieldTK')[0].checked = false;
@@ -368,7 +389,8 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_point/showPointField/' + subject_id + '-' + semester + '-' + popUp,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
+                // console.log(response);
                 var html = "";
                 if (!getField[popUp]) getField[popUp] = []
                 getField[popUp] = response;
@@ -419,15 +441,15 @@ $(document).ready(function() {
                     html += '<h1>NO DATA</h1>'
                 }
                 $('#genIn-' + popUp).html(html);
-                console.log(getField[popUp])
-                $.each(getField[popUp], function(i, p) {
-                    $('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
+                // console.log(getField[popUp])
+                $.each(getField[popUp], function (i, p) {
+                    $('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         console.log('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         showPoint(getField[popUp][i].setpoint_setpoint_id, popUp);
                         $('#model_score_tittle').text(getField[popUp][i].setpoint_mininame);
                         $('#showPoint').modal('show');
                     });
-                    $('#addTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
+                    $('#addTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         console.log('#addTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         $('#addTicket').modal('show');
                         $('#addTicketLabel').text('เพิ่มคะแนน ' + getField[popUp][i].setpoint_mininame);
@@ -435,9 +457,15 @@ $(document).ready(function() {
                         setIdParent = getField[popUp][i].setpoint_setpoint_id;
                         setMaxPoint = getField[popUp][i].setpoint_maxpoint;
                     });
-                    $('#editField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
+                    $('#editField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         $('#addFieldFN').val(response[i].setpoint_fullname);
                         $('#addFieldMN').val(response[i].setpoint_mininame);
+
+                        if (response[i].setpoint_option == 1) {
+                            $('#FieldMaxtxt').text('คะแนนเต็ม');
+                        } else {
+                            $('#FieldMaxtxt').text('สูตรในการคำนวน');
+                        }
 
                         $('#addFieldLabel').text('Edit Field : ' + response[i].setpoint_fullname);
                         //$('#addFieldTK').val(response[i].setpoint_ticket);
@@ -463,14 +491,14 @@ $(document).ready(function() {
                             toggle: true
                         });
                     });
-                    $('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
+                    $('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         console.log('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         parentTK = response[i].setpoint_setpoint_id;
                         childTK = response[i].setpoint_id;
                         $('#mininame').text(getField[popUp][i].setpoint_mininame);
                         $('#genTicket').modal('show');
                     });
-                    $('#delField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
+                    $('#delField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         //console.log('#delField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         $("#txtDel").text('Field:' + getField[popUp][i].setpoint_mininame);
                         $("#ModalDelete").modal('show');
@@ -485,7 +513,7 @@ $(document).ready(function() {
                     });
                 });
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
@@ -503,13 +531,13 @@ $(document).ready(function() {
     var parentTK = 0;
     var childTK = 0;
 
-    $('#genTicketClose').click(function(e) {
+    $('#genTicketClose').click(function (e) {
         $('#ticket_discrip').val('');
         $('#ticketNumber').val('');
         $('#ticket_point').val('');
     });
 
-    $('#genTicketSave').click(function(e) {
+    $('#genTicketSave').click(function (e) {
         discript = $('#ticket_discrip').val();
         tknb = $('#ticketNumber').val();
         ticket_point = $('#ticket_point').val();
@@ -519,7 +547,7 @@ $(document).ready(function() {
             url: '/' + url[3] + '/Gen_ticket/gen_key',
             data: '&ticket_discrip=' + discript + '&ticketNumber=' + tknb + '&parentTK=' + parentTK + '&childTK=' + childTK + '&semester=' + semester + '&subject=' + subject_id + '&ticket_point=' + ticket_point,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 if (response) {
                     gurl = '/Gen_ticket/ticket_and_qrCode/' + response;
@@ -532,7 +560,7 @@ $(document).ready(function() {
     var takeThisDel = '';
     var delCid = '';
     var delPid = '';
-    $('#Delete').click(function(e) {
+    $('#Delete').click(function (e) {
         if (takeThisDel == "delField") {
             delField(delCid, delPid);
             //alert('Deleted!');
@@ -555,7 +583,7 @@ $(document).ready(function() {
             type: "POST",
             url: '/' + url[3] + '/Te_subject_point/delMenu',
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid,
-            success: function() {
+            success: function () {
                 // console.log('Deleted Successfully');
                 showMenuPoint();
             }
@@ -567,7 +595,7 @@ $(document).ready(function() {
             type: "POST",
             url: '/' + url[3] + '/Te_subject_point/delField',
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdChild=' + cid + '&setIdParent=' + pid,
-            success: function() {
+            success: function () {
                 // console.log('Deleted Successfully');
                 showMenuPoint();
             }
@@ -592,7 +620,7 @@ $(document).ready(function() {
             url: takeThisUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + childId + '&setIdParent=' + parentId,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 //console.log(response + '<- This is showPoint response');
                 html = '';
                 if (response.length != undefined) {
@@ -618,8 +646,8 @@ $(document).ready(function() {
                     html = '<label>NO DATA</label>';
                 }
                 $('#showPointZone').html(html);
-                $.each(response, function(i, p) {
-                    $('#btnDelPoint-' + response[i].point_std_setpoint_id + '-' + response[i].point_std_id + '-' + i).click(function(e) {
+                $.each(response, function (i, p) {
+                    $('#btnDelPoint-' + response[i].point_std_setpoint_id + '-' + response[i].point_std_id + '-' + i).click(function (e) {
                         stdId = response[i].point_std_user_id;
                         pointIndex = response[i].point_std_index;
                         childField = response[i].point_std_id;
@@ -638,7 +666,7 @@ $(document).ready(function() {
         });
     }
 
-    $('#btnConfrimDelPointSTD').click(function(e) {
+    $('#btnConfrimDelPointSTD').click(function (e) {
         delPoint();
         $('#ModalConDel').modal('hide');
         $('#tr-' + parentField + '-' + childField + '-' + index).addClass('text-danger');
@@ -651,7 +679,7 @@ $(document).ready(function() {
             type: "POST",
             url: pUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + childField + '&setIdParent=' + parentField + '&pointIndex=' + pointIndex + '&stdId=' + stdId,
-            success: function() {
+            success: function () {
                 console.log('Deleted Successfully');
                 // Snackbar.show({
                 //     actionText: 'close',
@@ -665,12 +693,12 @@ $(document).ready(function() {
         });
     }
 
-    $('#ticketClose').click(function(e) {
+    $('#ticketClose').click(function (e) {
         $('#addTicketUID').val("");
         $('#addTicketP').val("");
     });
 
-    $(document).on('keypress', function(e) {
+    $(document).on('keypress', function (e) {
         if (e.which == 13) {
             uID = $('#addTicketUID').val();
             tPoint = $('#addTicketP').val();
@@ -685,7 +713,7 @@ $(document).ready(function() {
                 url: pUrl,
                 data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&tPoint=' + tPoint + '&uID=' + uID,
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     $('#addTicketUID').val("");
                     $("#addTicketUID").focus();
                     console.log(response);
@@ -699,7 +727,7 @@ $(document).ready(function() {
                     });
                     // $('#addTicketP').val("");
                 },
-                error: function() {
+                error: function () {
                     $('#addTicketUID').val("");
                     $("#addTicketUID").focus();
                     Snackbar.show({
@@ -715,7 +743,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#ticketSave').click(function(e) {
+    $('#ticketSave').click(function (e) {
         uID = $('#addTicketUID').val();
         tPoint = $('#addTicketP').val();
         //if (tPoint > setMaxPoint) tPoint = setMaxPoint;
@@ -729,7 +757,7 @@ $(document).ready(function() {
             url: pUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&tPoint=' + tPoint + '&uID=' + uID,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 $('#addTicketUID').val("");
                 $("#addTicketUID").focus();
                 console.log(response);
@@ -743,7 +771,7 @@ $(document).ready(function() {
                 });
                 // $('#addTicketP').val("");
             },
-            error: function() {
+            error: function () {
                 $('#addTicketUID').val("");
                 $("#addTicketUID").focus();
                 Snackbar.show({

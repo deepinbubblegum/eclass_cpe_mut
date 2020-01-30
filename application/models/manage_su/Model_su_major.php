@@ -28,7 +28,7 @@ class Model_su_major extends CI_Model
                 }
         }
 
-        public function Search_data_model($keyword, $type)
+        public function Show_Max_Data_Search_model($keyword, $type)
         {
                 $this->db->select('major_id, major_name, faculty_name');
                 $this->db->from('major');
@@ -41,6 +41,27 @@ class Model_su_major extends CI_Model
                         $this->db->or_like('faculty_name', $keyword);
                 }
 
+                $query = $this->db->get();
+                return $query->num_rows();
+        }
+
+        public function Search_data_model($keyword, $type, $start ,$limit)
+        {
+                if ($limit == 0 and $start == 0) {
+                        $limit = null;
+                        $start = null;
+                }
+                $this->db->select('major_id, major_name, faculty_name');
+                $this->db->from('major');
+                $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
+                if ($type != null) {
+                        $this->db->like($type, $keyword);
+                } else {
+                        $this->db->like('major_id', $keyword);
+                        $this->db->or_like('major_name', $keyword);
+                        $this->db->or_like('faculty_name', $keyword);
+                }
+                $this->db->limit($limit, $start);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
                         return $query->result();
@@ -92,12 +113,17 @@ class Model_su_major extends CI_Model
                 }
         }
 
-        public function Show_Sort_ctl_medel($data, $sort)
+        public function Show_Sort_ctl_medel($data, $sort, $start ,$limit)
         {
+                if ($limit == 0 and $start == 0) {
+                        $limit = null;
+                        $start = null;
+                }
                 $this->db->select('major_id, major_name, faculty_name ,faculty_id');
                 $this->db->from('major');
                 $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
                 $this->db->order_by($data, $sort);
+                $this->db->limit($limit, $start);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
                         return $query->result();

@@ -3,7 +3,8 @@ $(document).ready(function () {
     var a;
     var datatable_semester;
     var datasubject;
-    var data_semester;
+    var SpecialSubject;
+    var subjectAlert;
     var Sel_Sub;
     var SubCoop;
     var SubAssCoop;
@@ -36,6 +37,23 @@ $(document).ready(function () {
                     }
                 }
                 $('#yearterm').html(html);
+                CheckAlert();
+                // SubjectCoop();
+            }
+        });
+    }
+
+    function CheckAlert() {
+        var url = $(location).attr('href').split("/");
+        semester_data = $("#yearterm :selected").val();
+        $.ajax({
+            type: "POST",
+            url: "../" + url[3] + "/Teacher_subject/getSubject_Alert",
+            data: "&data=" + semester_data,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                subjectAlert = response;
                 SubjectCoop();
             }
         });
@@ -43,11 +61,11 @@ $(document).ready(function () {
 
     function SubjectCoop() {
         var url = $(location).attr('href').split("/");
-        semester_data = semesterSelected = $("#yearterm :selected").val();
+        semesterSelected = $("#yearterm :selected").val();
         $.ajax({
             type: "POST",
             url: "../" + url[3] + "/Teacher_subject/getSubject_Coop",
-            data: "data=" + semesterSelected,
+            data: "&data=" + semesterSelected,
             dataType: "json",
             success: function (response) {
                 SubCoop = response;
@@ -73,10 +91,20 @@ $(document).ready(function () {
                 var html = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        var chkalert = 0;
+                        var htmlAlert = '';
                         txtSub = response[i].subsem_subject;
                         for (a = 0; a < SubCoop.length; a++) {
                             if (SubCoop[a].subcoop_mainsub == response[i].subsem_subject) {
                                 txtSub += " / " + SubCoop[a].subcoop_supsub;
+                            }
+                        }
+                        for (z = 0; z < subjectAlert.length; z++) {
+                            if (subjectAlert[z].ps_tea_subAdd == response[i].subsem_subject) {
+                                chkalert += 1;
+                                htmlAlert = '<span style="font-size: 1.7em; color:#FF00FF;">' +
+                                    '<i class="far fa-bell faa-ring animated float-sm-left ml-1 mr-1" title="แจ้งเตือน"></i>' +
+                                    '</span>';
                             }
                         }
                         html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
@@ -87,6 +115,7 @@ $(document).ready(function () {
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
                             '</div>' +
                             '<div class="card-footer text-muted">' +
+                            htmlAlert +
                             '<span style="font-size: 1.7em;" id="EditSubJoin' + i + '" value="' + response[i].subsem_subject + '" data-1="' + response[i].subsem_semester + '">' +
                             '<i class="fas fa-edit float-sm-right ml-1 mr-1" title="แก้ไขวิชาร่วม"></i>' +
                             '</span>' +
@@ -156,10 +185,18 @@ $(document).ready(function () {
                 var txtSubAssist = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        var htmlAlert = '';
                         txtSubAssist = response[i].subject_id;
                         for (a = 0; a < SubCoop.length; a++) {
                             if (SubCoop[a].subcoop_mainsub == response[i].subject_id) {
                                 txtSubAssist += " / " + SubCoop[a].subcoop_supsub;
+                            }
+                        }
+                        for (z = 0; z < subjectAlert.length; z++) {
+                            if (subjectAlert[z].ps_tea_subAdd == response[i].subject_id) {
+                                htmlAlert = '<span style="font-size: 1.7em; color:#FF00FF;">' +
+                                    '<i class="far fa-bell faa-ring animated float-sm-left ml-1 mr-1" title="แจ้งเตือน"></i>' +
+                                    '</span>';
                             }
                         }
                         html +=
@@ -168,7 +205,11 @@ $(document).ready(function () {
                             '<div class="card-body">' +
                             '<h5 class="card-title" value="' + response[i].subject_id + '">' + txtSubAssist + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
+                            htmlAlert +
                             '</div>' +
+                            // '<div class="card-footer text-muted">' +
+                           
+                            // '</div>' +
                             '</a>';
                     }
                 }
@@ -184,6 +225,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 console.log(response);
+                SpecialSubject = response;
                 var txtSub = '';
                 var html = '';
                 if (response != null) {
@@ -201,11 +243,63 @@ $(document).ready(function () {
                             '<h5 class="card-title" value="' + response[i].subsem_subject + '" >' + txtSub + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
                             '</div>' +
+                            '<div class="card-footer text-muted">' +
+                            '<span style="font-size: 1.7em;" id="EditSubJoinSpecail' + i + '" value="' + response[i].subsem_subject + '" data-1="' + response[i].subsem_semester + '">' +
+                            '<i class="fas fa-edit float-sm-right ml-1 mr-1" title="แก้ไขวิชาร่วม"></i>' +
+                            '</span>' +
+                            '<span style="font-size: 1.7em;" id="EditImageSpecail' + i + '" value="' + response[i].subsem_subject + '" data-1="' + response[i].subsem_semester + '">' +
+                            '<i class="far fa-images float-sm-right ml-1 mr-1" title="แก้ไขรูปภาพ"></i>' +
+                            '</span>' +
+                            '</div>' +
                             '</a>';
                     }
                 }
                 $('#showSubject_Special').html(html);
                 sortui();
+                $.each(SpecialSubject, function (x) {
+                    $('#EditSubJoinSpecail' + x).click(function () {
+                        // alert(datasubject[x].subsem_subject);
+                        $("#SubjectJoin_Edit").empty();
+                        subjectEdit = $(this).attr('value');
+                        semesterEdit = $(this).attr('data-1');
+                        $('#ShowSemester_Edit').text(semesterEdit);
+                        $('#ShowSubject_Edit').text(subjectEdit);
+                        $.ajax({
+                            url: "/" + url[3] + "/Teacher_add_subject/Subject_Add_data_ctl",
+                            dataType: "json",
+                            success: function (response) {
+                                var html = '';
+                                var y;
+                                if (response != null) {
+                                    for (y = 0; y < response.length; y++) {
+                                        if (response[y].subject_id != subjectEdit) {
+                                            html += '<option value="' + response[y].subject_id + '" data-2="' + response[y].subject_teacher + '">' + response[y].subject_name + ' (' + response[y].subject_id + ') </option>';
+                                        }
+                                    }
+                                }
+                                $('#SubjectJoin_Edit_option').html(html);
+                            }
+                        });
+                        for (a = 0; a < SubCoop.length; a++) {
+                            if (SubCoop[a].subcoop_mainsub == subjectEdit) {
+                                $('#SubjectJoin_Edit').append('<option value="' + SubCoop[a].subcoop_supsub + '"> ' + SubCoop[a].subject_name + ' (' + SubCoop[a].subcoop_supsub + ') </option>');
+                            }
+                        }
+                        $('#Modal_Edit_subject_join').modal('show');
+                        return false;
+                    });
+
+                    $('#EditImageSpecail' + x).click(function () {
+                        subjectEdit = $(this).attr('value');
+                        semesterEdit = $(this).attr('data-1');
+                        // alert(semesterEdit+subjectEdit);
+                        setflag = true;
+                        console.log(setflag);
+                        $('#cropper_img').modal('show');
+                        return false;
+                    });
+
+                });
             }
         });
     }
@@ -351,7 +445,8 @@ $(document).ready(function () {
 
     $('#yearterm').change(function (e) {
         e.preventDefault();
-        showSubject();
+        CheckAlert();
+        // showSubject();
     });
 
 

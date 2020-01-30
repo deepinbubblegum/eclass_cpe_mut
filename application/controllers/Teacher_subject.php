@@ -75,4 +75,11 @@ class Teacher_subject extends MY_Controller
         $result = $this->Model_te_subject->selectSubject_Special($data,$userID);
         echo json_encode($result);
     }
+
+    public function getSubject_Alert()
+    {
+        $semester = $this->input->post('data');
+        $result = $this->Model_te_subject->getSubject_Alert_model($semester);
+        echo json_encode($result);
+    }
 }

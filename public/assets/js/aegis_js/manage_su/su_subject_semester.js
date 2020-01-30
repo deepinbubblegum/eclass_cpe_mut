@@ -51,7 +51,7 @@ $(document).ready(function () {
     ];
 
     //head of table
-    var theadGenValue = ['Semester', 'Subject ID', 'Subject Name', 'Teacher ID', 'Teacher Name'];
+    var theadGenValue = ['ปีการศึกษา', 'รหัสวิชา', 'ชื่อวิชา', 'รหัสอาจารย์', 'ชื่อาจารย์'];
 
     function dropPag() {
         var html = '';
@@ -246,21 +246,36 @@ $(document).ready(function () {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        show_data();
+        //show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
-        show_data();
+        //show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
-        show_data();
+        //show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     function disableArrow(start, pageMax) {
@@ -367,6 +382,29 @@ $(document).ready(function () {
         e.preventDefault();
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_subject_semester/Show_Max_Data_Search_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
         $.ajax({
             type: "POST",
             url: "../Admin_subject_semester/Search_Show_Data_ctl",
@@ -397,6 +435,64 @@ $(document).ready(function () {
             },
         });
     });
+
+    function LimitSearch()
+    {
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_subject_semester/Show_Max_Data_Search_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_subject_semester/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function (response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox" >' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].subject_id + '"  value="' + response[i].semester_id + '" id="' + response[i].semester_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].semester_id + i + '"> ' + response[i].semester_name + ' </label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].subject_id + '</td>' +
+                            '<td>' + response[i].subject_name + '</td>' +
+                            '<td>' + response[i].teacher_code_id + '</td>' +
+                            '<td>' + response[i].teacher_Ename + '</td>' +
+                            // '<td><a data="' + response[i].semester_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            },
+        });
+    }
 
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
     $(document).keyup(function (e) {

@@ -75,7 +75,7 @@ class Model_te_add_subject extends CI_Model
 
     public function Edit_Subject_Join($semester_edit, $subject_edit, $subjoin)
     {
-        $this->db->query('DELETE FROM subject_coop WHERE subcoop_semester = "'.$semester_edit.'" AND subcoop_mainsub = "'.$subject_edit.'" ');
+        $this->db->query('DELETE FROM subject_coop WHERE subcoop_semester = "' . $semester_edit . '" AND subcoop_mainsub = "' . $subject_edit . '" ');
         $arrayLength = count($subjoin);
         for ($i = 0; $i < $arrayLength; $i++) {
             $this->db->query('INSERT INTO subject_coop(subcoop_semester,subcoop_mainsub,subcoop_supsub) VALUES("' . $semester_edit . '"  ,"' . $subject_edit . '" , "' . $subjoin[$i] . '") ');
@@ -84,7 +84,7 @@ class Model_te_add_subject extends CI_Model
 
     public function Edit_NoSubject_Join($semester_edit, $subject_edit)
     {
-        $this->db->query('DELETE FROM subject_coop WHERE subcoop_semester = "'.$semester_edit.'" AND subcoop_mainsub = "'.$subject_edit.'" ');
+        $this->db->query('DELETE FROM subject_coop WHERE subcoop_semester = "' . $semester_edit . '" AND subcoop_mainsub = "' . $subject_edit . '" ');
     }
 
     public function SubjectCopy($semester, $te_id)
@@ -107,7 +107,7 @@ class Model_te_add_subject extends CI_Model
             foreach ($queryPoint->result_array() as $row) {
                 $dataPoint_id[] = $row['point_id'];
                 $this->db->query('INSERT INTO subject_point(point_semester, point_subject, point_id,point_name, point_discription, point_StdView, point_Index)
-                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['point_id'] . '", "' . $row['point_name'] . '" , "' . $row['point_discription'] . '" , "' . $row['point_StdView'] . '" , "'.$row['point_Index'].'") ');
+                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['point_id'] . '", "' . $row['point_name'] . '" , "' . $row['point_discription'] . '" , "' . $row['point_StdView'] . '" , "' . $row['point_Index'] . '") ');
             }
             if (count($dataPoint_id) != 0) {
                 for ($i = 0; $i <  count($dataPoint_id); $i++) {
@@ -124,12 +124,12 @@ class Model_te_add_subject extends CI_Model
         }
 
         $dataDowload = array();
-        $queryDow = $this->db->query('SELECT * FROM menuDownload WHERE menuDowSemesterId = "'.$SemCopy.'" AND menuDowSubjectId = "'.$SubCopy.'"');
+        $queryDow = $this->db->query('SELECT * FROM menuDownload WHERE menuDowSemesterId = "' . $SemCopy . '" AND menuDowSubjectId = "' . $SubCopy . '"');
         if ($queryDow->num_rows() > 0) {
             foreach ($queryDow->result_array() as $row) {
                 $dataDowload[] = $row['menuDowId'];
                 $this->db->query('INSERT INTO menuDownload(menuDowSemesterId,menuDowSubjectId,menuDowId,menuDowName,menuDowDescrpition,menuDowIndex)
-                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['menuDowId'] . '", "' . $row['menuDowName'] . '" , "' . $row['menuDowDescrpition'] . '" , "'.$row['menuDowIndex'].'") ');
+                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['menuDowId'] . '", "' . $row['menuDowName'] . '" , "' . $row['menuDowDescrpition'] . '" , "' . $row['menuDowIndex'] . '") ');
             }
             if (count($dataDowload) != 0) {
                 for ($i = 0; $i <  count($dataDowload); $i++) {
@@ -137,20 +137,20 @@ class Model_te_add_subject extends CI_Model
                     if ($queryFileDow->num_rows() > 0) {
                         foreach ($queryFileDow->result_array() as $row) {
                             $this->db->query('INSERT INTO fileDownload(fileSemesterId, fileSubjectId, fileMenuDowId, fileUserId, fileName, fileSize, fileType, fileTimestamp, fileIndex) 
-                            VALUES("'.$semester.'", "'.$subject_id.'" , "'.$dataDowload[$i].'" , "'.$te_id.'" , 
-                            "'.$row['fileName'].'" , "'.$row['fileSize'].'" , "'.$row['fileType'].'" , NOW() , "'.$row['fileIndex'].'") ');
+                            VALUES("' . $semester . '", "' . $subject_id . '" , "' . $dataDowload[$i] . '" , "' . $te_id . '" , 
+                            "' . $row['fileName'] . '" , "' . $row['fileSize'] . '" , "' . $row['fileType'] . '" , NOW() , "' . $row['fileIndex'] . '") ');
                         }
                     }
                     // $getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
-                    $src = '/Eclass/uploads/file/' . $SemCopy . $SubCopy . '/' . 'Downloads' . '/' .$dataDowload[$i];
+                    $src = '/Eclass/uploads/file/' . $SemCopy . $SubCopy . '/' . 'Downloads' . '/' . $dataDowload[$i];
                     $dest = '/Eclass/uploads/file/' . $semester . $subject_id . '/' . 'Downloads' . '/';
-                    shell_exec("cp -r $src $dest"); 
+                    shell_exec("cp -r $src $dest");
                 }
             }
         }
 
         // $dataUpload = array();
-        $queryUp = $this->db->query('SELECT * FROM menuUpload WHERE menuUpSemesterId = "'.$SemCopy.'" AND menuUpSubjectId = "'.$SubCopy.'"');
+        $queryUp = $this->db->query('SELECT * FROM menuUpload WHERE menuUpSemesterId = "' . $SemCopy . '" AND menuUpSubjectId = "' . $SubCopy . '"');
         if ($queryUp->num_rows() > 0) {
             foreach ($queryUp->result_array() as $row) {
                 // $dataUpload[] = $row['menuUpId'];
@@ -159,15 +159,68 @@ class Model_te_add_subject extends CI_Model
             }
         }
 
-        $queryAnnouce = $this->db->query('SELECT * FROM subject_annouce WHERE annouce_semester = "'.$SemCopy.'" AND annouce_subject = "'.$SubCopy.'" ');
+        $queryAnnouce = $this->db->query('SELECT * FROM subject_annouce WHERE annouce_semester = "' . $SemCopy . '" AND annouce_subject = "' . $SubCopy . '" ');
         if ($queryAnnouce->num_rows() > 0) {
             foreach ($queryAnnouce->result_array() as $row) {
                 // $dataUpload[] = $row['menuUpId'];
                 $this->db->query('INSERT INTO subject_annouce(annouce_semester,annouce_subject,annouce_id,annouce_name,annouce_discription, annouce_time_start, annouce_time_end, annouce_user_id)
-                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['annouce_id'] . '", "' . $row['annouce_name'] . '" , "' . $row['annouce_discription'] . '" ,  NOW() , "' . $row['annouce_time_end'] . '" , "'.$te_id.'" ) ');
+                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $row['annouce_id'] . '", "' . $row['annouce_name'] . '" , "' . $row['annouce_discription'] . '" ,  NOW() , "' . $row['annouce_time_end'] . '" , "' . $te_id . '" ) ');
+            }
+        }
+
+        $dataVote = [];
+        $queryVote = $this->db->query('SELECT * FROM menuVote WHERE menuVoteSemester = "' . $SemCopy . '" AND menuVoteSubject = "' . $SubCopy . '" ');
+        if ($queryVote->num_rows() > 0) {
+            foreach ($queryVote->result_array() as $rowVote) {
+                $dataVote[] = $rowVote['menuVoteId'];
+                $this->db->query('INSERT INTO menuVote(menuVoteSemester,menuVoteSubject,menuVoteId,menuVoteName,menuVoteDescription,menuVoteStatus)
+                VALUES("' . $semester . '", "' . $subject_id . '", "' . $rowVote['menuVoteId'] . '", "' . $rowVote['menuVoteName'] . '" , "' . $rowVote['menuVoteDescription'] . '" , "' . $rowVote['menuVoteStatus'] . '" ) ');
+            }
+            if (count($dataVote) != 0) {
+                for ($i = 0; $i <  count($dataVote); $i++) {
+                    $queryChoiceVote = $this->db->query('SELECT * FROM choiceVote WHERE choiceVoteSemester = "' . $SemCopy . '" AND choiceVoteSubject = "' . $SubCopy . '" AND choiceVoteMenuId = "' . $dataVote[$i] . '"  ');
+                    if ($queryChoiceVote->num_rows() > 0) {
+                        foreach ($queryChoiceVote->result_array() as $rowChoiceVote) {
+                            $this->db->query('INSERT INTO choiceVote(choiceVoteSemester, choiceVoteSubject, choiceVoteMenuId, choiceVoteId, choiceVoteText)
+                                VALUES ("' . $semester . '", "' . $subject_id . '", "' . $dataVote[$i] . '", "' . $rowChoiceVote['choiceVoteId'] . '" , "' . $rowChoiceVote['choiceVoteText'] . '" ) ');
+                        }
+                    }
+                }
+            }
+        }
+
+        $dataQuiz = [];
+        $queryQuiz = $this->db->query('SELECT * FROM menuQuiz WHERE menuQuizSemester = "' . $SemCopy . '" AND menuQuizSubject = "' . $SubCopy . '" ');
+        if ($queryQuiz->num_rows() > 0) {
+            foreach ($queryQuiz->result_array() as $rowQuiz) {
+                $dataQuiz[] = $rowQuiz['menuQuizId'];
+                $this->db->query('INSERT INTO menuQuiz(menuQuizSemester,menuQuizSubject,menuQuizId,menuQuizName,menuQuizDescription,menuQuizStatus)
+                VALUES("' . $semester . '", "' . $subject_id . '", "' . $rowQuiz['menuQuizId'] . '", "' . $rowQuiz['menuQuizName'] . '" , "' . $rowQuiz['menuQuizDescription'] . '" , "' . $rowQuiz['menuQuizStatus'] . '" ) ');
+            }
+            if (count($dataQuiz) != 0) {
+                for ($i = 0; $i < count($dataQuiz); $i++) {
+                    $dataHeaderQuiz = [];
+                    $queryheaderQuiz = $this->db->query('SELECT * FROM headerQuiz WHERE headerQuizSemester = "' . $SemCopy . '" AND headerQuizSubject = "' . $SubCopy . '" AND headerQuizMenuQuizId = "' . $dataQuiz[$i] . '" ');
+                    if ($queryheaderQuiz->num_rows() > 0) {
+                        foreach ($queryheaderQuiz->result_array() as $rowheaderQuiz) {
+                            $dataHeaderQuiz[] = $rowheaderQuiz['headerQuizId'];
+                            $this->db->query('INSERT INTO headerQuiz(headerQuizSemester,headerQuizSubject,headerQuizMenuQuizId,headerQuizId,headerQuizName) 
+                            VALUES("' . $semester . '", "' . $subject_id . '", "' . $rowheaderQuiz['headerQuizMenuQuizId'] . '", "' . $rowheaderQuiz['headerQuizId'] . '" , "' . $rowheaderQuiz['headerQuizName'] . '" ) ');
+                        }
+                        if (count($dataHeaderQuiz) != 0) {
+                            for ($a = 0; $a < count($dataHeaderQuiz); $a++) {
+                                $queryChoiceQuiz = $this->db->query('SELECT * FROM choiceQuiz WHERE choiceQuizSemester = "' . $SemCopy . '" AND choiceQuizSubject = "' . $SubCopy . '" AND choiceQuizMenuQuizId = "' . $dataQuiz[$i] . '" AND choiceQuizHeadId = "' . $dataHeaderQuiz[$a] . '" ');
+                                if ($queryChoiceQuiz->num_rows() > 0) {
+                                    foreach ($queryChoiceQuiz->result_array() as $rowChoiceQuiz) {
+                                        $this->db->query('INSERT INTO choiceQuiz(choiceQuizSemester,choiceQuizSubject,choiceQuizMenuQuizId,choiceQuizHeadId,choiceQuizId,choiceQuizText,choiceQuizPoint)
+                                        VALUES("' . $semester . '", "' . $subject_id . '", "' . $dataQuiz[$i] . '", "' . $dataHeaderQuiz[$a] . '" , "' . $rowChoiceQuiz['choiceQuizId'] . '" , "' . $rowChoiceQuiz['choiceQuizText'] . '" , "' . $rowChoiceQuiz['choiceQuizPoint'] . '" ) ');
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-
-
 }

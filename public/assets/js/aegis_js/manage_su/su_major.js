@@ -34,12 +34,12 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['Major ID', 'Major Name', 'Faculty', 'Option'];
+    var theadGenValue = ['รหัสสาขา', 'ชื่อสาขา', 'คณะ', 'ตัวเลือก'];
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['major ID', 'major_ID', 'major_ID', 'ID'],
-        ['major Name', 'major_Name', 'major_Name', 'NAME']
+        ['รหัสสาขา', 'major_ID', 'major_ID', 'รหัส'],
+        ['ชื่อสาขา', 'major_Name', 'major_Name', 'ชื่อ']
     ];
 
     var formData = ["#major_ID", "#major_Name"];
@@ -55,10 +55,10 @@ $(document).ready(function() {
     var Sort = [
         ['major_id', 'ASC', 'รหัสสาขา A > Z'],
         ['major_id', 'DESC', 'รหัสสาขา Z > A'],
-        ['major_name', 'ASC', 'ชื่อสาขา A > Z'],
-        ['major_name', 'DESC', 'ชื่อสาขา Z > A'],
-        ['faculty_name', 'ASC', 'ชื่อคณะ A > Z'],
-        ['faculty_name', 'DESC', 'ชื่อคณะ Z > A']
+        ['major_name', 'ASC', 'ชื่อสาขา ก > ฮ'],
+        ['major_name', 'DESC', 'ชื่อสาขา ฮ > ก'],
+        ['faculty_name', 'ASC', 'ชื่อคณะ ก > ฮ'],
+        ['faculty_name', 'DESC', 'ชื่อคณะ ฮ > ก']
     ];
 
     function formDataValClr() {
@@ -108,7 +108,7 @@ $(document).ready(function() {
                 '</div>';
         }
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Faculty</label>' +
+            '<label>คณะ</label>' +
             '<select id="selectAdd" class="form-control"></select>' +
             '</div>';
         html += '</div>';
@@ -178,21 +178,36 @@ $(document).ready(function() {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
+        
     });
 
     $('#chevron_right').click(function() {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_left').click(function() {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     function disableArrow(start, pageMax) {
@@ -253,7 +268,7 @@ $(document).ready(function() {
                             '</th>' +
                             '<td>' + response[i].major_name + '</td>' +
                             '<td>' + response[i].faculty_name + '</td>' +
-                            '<td><a data="' + response[i].major_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            '<td><a data="' + response[i].major_id + '" value="' + i + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -266,10 +281,33 @@ $(document).ready(function() {
         e.preventDefault();
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_major/Show_Max_Data_Search_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function(maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
         $.ajax({
             type: "POST",
             url: "../Admin_major/Search_Show_Data_ctl",
-            data: "&data=" + data + "&search=" + data2,
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
             dataType: "json",
             success: function(response) {
                 var html = '';
@@ -286,7 +324,7 @@ $(document).ready(function() {
                             '</th>' +
                             '<td>' + response[i].major_name + '</td>' +
                             '<td>' + response[i].faculty_name + '</td>' +
-                            '<td><a data="' + response[i].major_id + '" class="item-edit">Edit</a></td>' +
+                            '<td><a data="' + response[i].major_id + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -294,6 +332,62 @@ $(document).ready(function() {
             }
         });
     });
+
+    function LimitSearch()
+    {
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_major/Show_Max_Data_Search_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function(maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_major/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function(response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].major_id + '" id="' + response[i].faculty_name + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].faculty_name + i + '">' + response[i].major_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].major_name + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
+                            '<td><a data="' + response[i].major_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    }
 
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
 
@@ -461,7 +555,7 @@ $(document).ready(function() {
         $.ajax({
             type: 'POST',
             url: "../Admin_major/Show_Sort_ctl",
-            data: '&data=' + data + '&sort=' + sort,
+            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit,
             dataType: "json",
             success: function (response) {
                 datatable = response;
@@ -479,7 +573,7 @@ $(document).ready(function() {
                             '</th>' +
                             '<td>' + response[i].major_name + '</td>' +
                             '<td>' + response[i].faculty_name + '</td>' +
-                            '<td><a data="' + response[i].major_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            '<td><a data="' + response[i].major_id + '" value="' + i + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }

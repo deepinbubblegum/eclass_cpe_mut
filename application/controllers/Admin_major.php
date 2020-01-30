@@ -15,6 +15,14 @@ class Admin_major extends MY_Controller
                 echo json_encode($result);
         }
 
+        public function Show_Max_Data_Search_ctl()
+        {
+                $keyword = $this->input->post('data');
+                $type = $this->input->post('search');
+                $result = $this->Model_su_major->Show_Max_Data_Search_model($keyword, $type);
+                echo json_encode($result);
+        }
+
         public function Show_Data_ctl()
         {
                 $start = $this->input->post('start');
@@ -27,7 +35,9 @@ class Admin_major extends MY_Controller
         {
                 $keyword = $this->input->post('data');
                 $type = $this->input->post('search');
-                $result = $this->Model_su_major->Search_data_model($keyword,$type);
+                $start = $this->input->post('start');
+                $limit = $this->input->post('limit');
+                $result = $this->Model_su_major->Search_data_model($keyword, $type, $start ,$limit);
                 echo json_encode($result);
         }
 
@@ -72,7 +82,9 @@ class Admin_major extends MY_Controller
         {
                 $data = $this->input->post('data');
                 $sort = $this->input->post('sort');
-                $result = $this->Model_su_major->Show_Sort_ctl_medel($data, $sort);
+                $start = $this->input->post('start');
+                $limit = $this->input->post('limit');
+                $result = $this->Model_su_major->Show_Sort_ctl_medel($data, $sort, $start ,$limit);
                 echo json_encode($result);
         }
 }

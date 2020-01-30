@@ -30,10 +30,10 @@ $(document).ready(function() {
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['teacher_code_id', 'ID'],
-        ['teacher_Tname', 'TNAME'],
-        ['teacher_Ename', 'ENAME'],
-        ['per_name', 'PERMISSION']
+        ['teacher_code_id', 'รหัสอาจารย์'],
+        ['teacher_Tname', 'ชื่ออาจารย์(TH)'],
+        ['teacher_Ename', 'ชื่ออาจารย์(EN)'],
+        ['per_name', 'ชื่อระดับสิทธิ์']
         // ['user_email', 'EMAIL'],
         // ['user_major', 'MAJOR'],
         // ['user_permission', 'PERMISSION']
@@ -103,12 +103,12 @@ $(document).ready(function() {
         var html = '';
         html += '<div class="form-row" >';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Permission</label>' +
+            '<label>ระดับสิทธิ์</label>' +
             '<select id="selectAddPermission" class="form-control">' +
             '</select>' +
             '</div>';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Teacher</label>' +
+            '<label>อาจารย์</label>' +
             '<select id="selectAddTeacher" class="form-control">' +
             '</select>' +
             '</div>';

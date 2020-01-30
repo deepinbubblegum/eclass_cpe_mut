@@ -45,8 +45,10 @@ $(document).ready(function () {
 
     SubjectSemester();
     ShowSetpoint();
+    Teacher_Owner_Subject();
 
     var dataMenu;
+    var dataTeacherOwner = '';
 
     function ShowMenu() {
         $.ajax({
@@ -493,6 +495,18 @@ $(document).ready(function () {
         });
     });
 
+    function Teacher_Owner_Subject() {
+        $.ajax({
+            type: 'POST',
+            url: "/" + url[3] + "/Te_special_point/Teacher_Owner",
+            data: '&semester=' + semester,
+            dataType: "json",
+            success: function (response) {
+                dataTeacherOwner = response;
+            }
+        });
+    }
+
 
     /*------------------------------------------------------------------------------------------------ Show Student Request ------------------------------------------------------------------------------------------ */
 
@@ -543,9 +557,13 @@ $(document).ready(function () {
 
                             '</select>' +
                             '</div>' +
-                            '<div class="col-md-6">' +
+                            '<div class="col-md-4">' +
                             '<label for="inputState">ยืนยันการแลกคะแนนนักศึกษาทั้งหมด</label>' +
                             '<button type="button" id="confirmAll' + i + '" data1="' + response[i].menuPS_id + '" class="btn btn-primary">ยืนยันทั้งหมด</button>' +
+                            '</div>' +
+                            '<div class="col-md-4">' +
+                            '<label for="inputState">ออกเอกสารขอแลกคะแนน</label>' +
+                            '<button type="button" id="PrintPDF' + i + '" data1="' + response[i].menuPS_id + '" class="btn btn-success">ออกเอกสาร</button>' +
                             '</div>' +
                             '</div>' +
 
@@ -590,7 +608,7 @@ $(document).ready(function () {
                             PointAll.push(point);
                         });
                         // alert(idMenu);
-                        if(PointAll != ''){
+                        if (PointAll != '') {
                             $.ajax({
                                 type: 'POST',
                                 url: "/" + url[3] + "/Te_special_point/ConfirmStdAll",
@@ -615,7 +633,7 @@ $(document).ready(function () {
                                     ShowStdRequest();
                                 }
                             });
-                        }else{
+                        } else {
                             Snackbar.show({
                                 actionText: 'close',
                                 pos: 'top-center',
@@ -625,8 +643,53 @@ $(document).ready(function () {
                                 text: 'ไม่มีข้อมูลที่จะยืนยัน'
                             });
                         }
-                        
+
                     });
+
+                    $('#PrintPDF' + i).click(function () {
+                        // alert(dataTeacherOwner);
+                        var teacher_TH = '';
+                        idMenu = $(this).attr('data1');
+                        var selectSubjectPDF = $('#SelectSubjectRequest' + i).val();
+
+                        if (selectSubjectPDF == 'all') {
+                            Snackbar.show({
+                                actionText: 'close',
+                                pos: 'top-center',
+                                actionTextColor: '#f44336',
+                                backgroundColor: '#323232',
+                                width: 'auto',
+                                text: 'กรุณาเลือกวิชาที่ต้องการออกเอกสาร'
+                            });
+                            return false;
+                        } else {
+                            var SubTextPDF = $('#SelectSubjectRequest' + i + ' :selected').text();
+                            var subject_all = SubTextPDF.split(')')[0];
+                            var sub_id = subject_all.split('(')[1];
+                            var sub_name = SubTextPDF.split(')')[1];
+                            for (t = 0; t < dataTeacherOwner.length; t++) {
+                                if (selectSubjectPDF == dataTeacherOwner[t].subsem_subject) {
+                                    teacher_TH = dataTeacherOwner[t].de_Tname + ' ' + dataTeacherOwner[t].teacher_Tname
+                                }
+                            }
+                        }
+
+                        $('#Tbody' + i).find('tr').each(function (i, el) {
+                            var $tds = $(this).find('td'),
+                                std_id = $tds.eq(0).text(),
+                                point = $tds.eq(2).text(),
+                                teaConfirm = $tds.eq(6).text();
+                            if (teaConfirm != 'ยังไม่รับทราบ') {
+
+                            }
+                        });
+
+                        $.ajax("/" + url[3] + "/Te_Pdf/index", function(data) {
+                            alert(data);
+                        });
+
+                    });
+
                 });
                 if (idMenu != '') {
                     $('#collapseSub' + idMenu).collapse({
@@ -806,6 +869,13 @@ $(document).ready(function () {
                         var stateConfirm = '';
                         var btndel = '';
                         var btnConfirm = '';
+                        var tea_confirm = '';
+                        if (response[a].ps_tea_confirm == 1) {
+                            tea_confirm = '<span style="color:#2196f3;" class="chip"><i class="far fa-check-circle mr-2"></i>รับทราบแล้ว</span>';
+                        } else {
+                            tea_confirm = '<span style="color:#f44336;" class="chip"><i class="far fa-times-circle mr-2"></i>ยังไม่รับทราบ</span>';
+                        }
+
                         if (response[a].ps_std_status == 0) {
                             stateConfirm = 'ยังไม่ยืนยัน';
                             btndel = '<button type="button" class="btn btn-danger btn-sm" id="btlDel' + menuID + a + '" data="' + response[a].ps_std_stdID + '" data2="' + response[a].ps_std_subAdd + '" data3="' + response[a].ps_std_psID + '"  >ลบ</button>';
@@ -823,6 +893,7 @@ $(document).ready(function () {
                             '<td>' + stateConfirm + '</td>' +
                             '<td>' + btnConfirm + '</td>' +
                             '<td>' + btndel + '</td>' +
+                            '<td>' + tea_confirm + '</td>' +
                             '</tr>';
                     }
                 }

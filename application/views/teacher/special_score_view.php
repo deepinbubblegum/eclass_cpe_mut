@@ -139,7 +139,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <input type="radio" class="custom-control-input" id="defaultGroupExample3" name="groupOfDefaultRadios">
                                                         <label class="custom-control-label" for="defaultGroupExample3">แสดงคะแนนจากไฟล์รายชื่อนักศึกษา</label>
                                                         </div> -->
-                                                        <label for="Textarea">setpoint_option</label>
+                                                        <label for="Textarea">ชนิดช่องคะแนน</label>
                                                         <form class="form-inline">
                                                                 <select name="optionSet" id="optionSet" class="form-control">
                                                                         <!-- <option value="25611" id="25611">Ticket</option>
@@ -148,13 +148,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </select>
                                                         </form>
 
-                                                        <label for="Textarea">setpoint_fullname</label>
+                                                        <label for="Textarea">ชื่อเต็มช่องคะแนน</label>
                                                         <input class="form-control" id="addFieldFN">
-                                                        <label for="Textarea">setpoint_mininame</label>
+                                                        <label for="Textarea">ชื่อย่อช่องคะแนน</label>
                                                         <input class="form-control" id="addFieldMN">
                                                         <!-- <label for="Textarea">setpoint_ticket</label> -->
                                                         <!-- <input class="form-control" id="addFieldTK"> -->
-                                                        <label for="Textarea">setpoint_maxpoint</label>
+                                                        <label for="Textarea" id="FieldMaxtxt">คะแนนเต็ม</label>
                                                         <input class="form-control" id="addFieldMP" value="1">
 
                                                         <label for="Textarea" class="mt-3">รูปแบบการกรอกคะแนน</label>
