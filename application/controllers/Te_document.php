@@ -47,7 +47,7 @@ class Te_document extends MY_Controller
 
         // กำหนดข้อความส่วนแสดง header
         define('MYPDF_HEADER_LOGO', 'MII_icon.png');
-        define('MYPDF_HEADER_LOGO_WIDTH', 29);
+        define('MYPDF_HEADER_LOGO_WIDTH', 20);
         define('MYPDF_HEADER_TITLE', "MAHANAKORN Institute of Innovation Club                                       MII-01");
         define('MYPDF_HEADER_STRING', "Mahanakorn University of Technology (MUT)\n140 ChueamSamphan Rd., NongChok, BKK 10530 Tel 02-988-3666 ext 1230");
 
@@ -72,11 +72,12 @@ class Te_document extends MY_Controller
         );
 
         // กำหนดรูปแบบของฟอนท์และขนาดฟอนท์ที่ใช้ใน header และ footer
-        $pdf->setHeaderFont(array('THSarabunnew', '', 14));
-
+        $pdf->setHeaderFont(Array('THSarabunnew', '', 14));
+        $pdf->setFooterFont(Array('THSarabunnew', '', 12.5));
         // กำหนด margins
         $pdf->SetMargins(MYPDF_MARGIN_LEFT, MYPDF_MARGIN_TOP, MYPDF_MARGIN_RIGHT);
         $pdf->SetHeaderMargin(MYPDF_MARGIN_HEADER);
+        $pdf->SetFooterMargin(MYPDF_MARGIN_FOOTER);
 
         // กำหนดการแบ่งหน้าอัตโนมัติ
         $pdf->SetAutoPageBreak(TRUE, MYPDF_MARGIN_BOTTOM);
@@ -108,6 +109,7 @@ class Te_document extends MY_Controller
         $pdf->Ln(2);
         $pdf->MultiCell(0, 5, $txt2, 0, 'L', 0, 1, '', '', true);
         $pdf->Ln(2);
+
 
         // จบการทำงานและแสดงไฟล์ pdf
         // การกำหนดในส่วนนี้ สามารถปรับรูปแบบต่างๆ ได้ เช่นให้บันทึกเป้นไฟล์ หรือให้แสดง pdf เลย ดูวิธีใช้งานที่คู่มือของ tcpdf เพิ่มเติม
