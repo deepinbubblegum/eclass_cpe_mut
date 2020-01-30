@@ -77,20 +77,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         ?>
 
                                                         <?php
-                                                        if (substr($bit, 2, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="uploads" href=" ';
-                                                                echo base_url('te_select/uploads/') . $subject_id . '-' . $semester . '">
-                                                                <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-upload"></i></span>
-                                                                <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ดาวน์โหลด
-                                                                </span>
-                                                                </a>';
-                                                        }
-                                                        ?>
-
-
-                                                        <?php
                                                         if (substr($bit, 0, 1) == '1' || $bit == '0') {
                                                                 echo '<a class="nav-item nav-link" id="media" href="';
                                                                 echo base_url("te_select/media/") . $subject_id . '-' . $semester . '">
