@@ -154,7 +154,7 @@ class Te_media extends MY_Controller
                 // }else{
                 //         $dir = 'media_uploads/image/souce_image';
                 // }
-                $dir = 'media_uploads/image/souce_image';
+                $dir = 'media_uploads/Image/souce_image';
                 // $dir_image = 'media_uploads/image/souce_image/';
                 $config['upload_path'] = $dir;
                 $config['allowed_types'] = '*';
