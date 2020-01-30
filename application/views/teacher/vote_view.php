@@ -220,11 +220,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                         <ul class="nav nav-justified nav-tabs mt-3" id="justifiedTab" role="tablist">
                                 <li class="nav-item">
-                                        <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">แบบทดสอบ</a>
+                                        <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">โหวต</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                         <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">โหวต</a>
-                                </li>
+                                </li> -->
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
