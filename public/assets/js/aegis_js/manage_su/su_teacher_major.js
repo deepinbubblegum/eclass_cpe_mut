@@ -475,7 +475,8 @@ $(document).ready(function () {
                 txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
             }
             data1 = $("#teacherSelectAdd :selected").val();
-            data2 = $("#majorSelectAdd :selected").val();
+            data2Encode = $("#majorSelectAdd :selected").val();
+            data2 = encodeURIComponent(data2Encode);
             $.ajax({
                 type: "POST",
                 url: iurl,

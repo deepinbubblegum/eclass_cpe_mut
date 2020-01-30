@@ -30,7 +30,7 @@ class Model_su_major extends CI_Model
 
         public function Show_Max_Data_Search_model($keyword, $type)
         {
-                $this->db->select('major_id, major_name, faculty_name');
+                $this->db->select('major_id, major_name, faculty_name ,faculty_id');
                 $this->db->from('major');
                 $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
                 if ($type != null) {
@@ -51,7 +51,7 @@ class Model_su_major extends CI_Model
                         $limit = null;
                         $start = null;
                 }
-                $this->db->select('major_id, major_name, faculty_name');
+                $this->db->select('major_id, major_name, faculty_name ,faculty_id');
                 $this->db->from('major');
                 $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
                 if ($type != null) {

@@ -470,7 +470,8 @@ $(document).ready(function () {
             // data = $('#formAdd').serialize();
             subject_id = $.trim($('#subject_id').val());
             subject_name = $.trim($('#subject_name').val());
-            data2 = $("#selectAddMajor :selected").val();
+            data2Encode = $("#selectAddMajor :selected").val();
+            data2 = encodeURIComponent(data2Encode);
             if (iurl == '../Admin_subject/Add_Data_ctl') {
                 txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';

@@ -361,7 +361,8 @@ $(document).ready(function () {
     }
 
     function select_teacher_add() {
-        $data = $('#selectAddMajor :selected').val();
+        $dataEncode = $('#selectAddMajor :selected').val();
+        $data = encodeURIComponent($dataEncode);
         $.ajax({
             type: "POST",
             url: "../Admin_teacher_subject/Select_Teacher_Add_ctl",

@@ -310,6 +310,7 @@ $(document).ready(function() {
             data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
             dataType: "json",
             success: function(response) {
+                datatable = response;
                 var html = '';
                 var i;
                 if (response != null) {
@@ -324,7 +325,7 @@ $(document).ready(function() {
                             '</th>' +
                             '<td>' + response[i].major_name + '</td>' +
                             '<td>' + response[i].faculty_name + '</td>' +
-                            '<td><a data="' + response[i].major_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '<td><a data="' + response[i].major_id + '" value="' + i + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -366,6 +367,7 @@ $(document).ready(function() {
             data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
             dataType: "json",
             success: function(response) {
+                datatable = response;
                 var html = '';
                 var i;
                 if (response != null) {

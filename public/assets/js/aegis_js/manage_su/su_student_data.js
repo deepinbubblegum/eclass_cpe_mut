@@ -614,7 +614,8 @@ $(document).ready(function() {
             });
 
             data = FormData.serialize();
-            data2 = $("#majorSelectAdd :selected").val();
+            data2Encode = $("#majorSelectAdd :selected").val();
+            data2 = encodeURIComponent(data2Encode);
             
             $.ajax({
                 type: "POST",
