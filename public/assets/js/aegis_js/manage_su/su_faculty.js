@@ -26,12 +26,12 @@ $(document).ready(function () {
         ['faculty_name', 'ชื่อคณะ']
     ];
 
-    var theadGenValue = ['Faculty ID', 'Faculty Name', 'Option'];
+    var theadGenValue = ['รหัสคณะ', 'ชื่อคณะ', 'ตัวเลือก'];
 
     inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['faculty ID', 'faculty_ID', 'faculty_ID', 'ID'],
-        ['faculty Name', 'faculty_Name', 'faculty_Name', 'NAME']
+        ['รหัสคณะ', 'faculty_ID', 'faculty_ID', 'รหัส'],
+        ['ชื่อคณะ', 'faculty_Name', 'faculty_Name', 'ชื่อ']
     ];
 
     var formData = ["#faculty_ID", "#faculty_Name"];
@@ -47,8 +47,8 @@ $(document).ready(function () {
     var Sort = [
         ['faculty_id', 'ASC', 'รหัสคณะ A > Z'],
         ['faculty_id', 'DESC', 'รหัสคณะ Z > A'],
-        ['faculty_name', 'ASC', 'ชื่อคณะ A > Z'],
-        ['faculty_name', 'DESC', 'ชื่อคณะ Z > A']
+        ['faculty_name', 'ASC', 'ชื่อคณะ ก > ฮ'],
+        ['faculty_name', 'DESC', 'ชื่อคณะ ฮ > ก']
     ];
 
     function formDataValClr() {
@@ -146,7 +146,7 @@ $(document).ready(function () {
                             '</div>' +
                             '</th>' +
                             '<td> ' + response[i].faculty_name + ' </td>' +
-                            '<td><a value="' + i + '" data="' + response[i].faculty_id + '" class="item-edit" >Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].faculty_id + '" class="item-edit" >แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -178,7 +178,7 @@ $(document).ready(function () {
                             '</div>' +
                             '</th>' +
                             '<td> ' + response[i].faculty_name + ' </td>' +
-                            '<td><a value="' + i + '" data="' + response[i].faculty_id + '" class="item-edit" >Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].faculty_id + '" class="item-edit" >แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -239,9 +239,14 @@ $(document).ready(function () {
         console.log(result, check);
         if (check == result) {
             e.preventDefault();
+            
+            FormData = $('#formAdd').find('input:text').each(function(){
+                $(this).val($.trim($(this).val()));
+            });
             // data = $('#formAdd').serialize();
-            faculty_ID = $.trim($('#faculty_ID').val());
-            faculty_Name = $.trim($('#faculty_Name').val());
+            data = FormData.serialize();
+            // faculty_ID = $.trim($('#faculty_ID').val());
+            // faculty_Name = $.trim($('#faculty_Name').val());
 
             if (iurl == '../Admin_faculty/Add_Data_ctl') {
                 txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
@@ -250,8 +255,8 @@ $(document).ready(function () {
             } else {
                 txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
-                // data += '&org_id=' + iddata;
-                data = '&org_id=' + iddata;
+                data += '&org_id=' + iddata;
+                // data = '&org_id=' + iddata;
                 $('#Modal').modal('hide');
             }
 
@@ -363,7 +368,7 @@ $(document).ready(function () {
                             '</div>' +
                             '</th>' +
                             '<td> ' + response[i].faculty_name + ' </td>' +
-                            '<td><a value="' + i + '" data="' + response[i].faculty_id + '" class="item-edit" >Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].faculty_id + '" class="item-edit" >แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }

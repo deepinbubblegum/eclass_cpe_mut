@@ -119,13 +119,15 @@ class Model_te_point_special extends CI_Model
     {
         if($option == 'all')
         {
-            $query = $this->db->query('SELECT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, ps_std_point, ps_std_status, subject_name FROM ps_student 
+            $query = $this->db->query('SELECT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, ps_std_point, ps_std_status, subject_name, ps_tea_confirm FROM ps_student 
             LEFT JOIN subject ON subject_id = ps_std_subAdd
+            LEFT JOIN ps_teacher ON ps_std_semester = ps_tea_semester AND ps_std_subject = ps_tea_subject AND ps_std_psID = ps_tea_menu AND ps_std_subAdd = ps_tea_subAdd
             WHERE ps_std_semester = "'.$semester.'" AND ps_std_subject = "'.$subject.'" AND ps_std_psID = "'.$menuID.'" order by ps_std_stdID ');
             return $query->result();
         }else{
-            $query = $this->db->query('SELECT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, ps_std_point, ps_std_status, subject_name FROM ps_student 
+            $query = $this->db->query('SELECT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, ps_std_point, ps_std_status, subject_name, ps_tea_confirm FROM ps_student 
             LEFT JOIN subject ON subject_id = ps_std_subAdd
+            LEFT JOIN ps_teacher ON ps_std_semester = ps_tea_semester AND ps_std_subject = ps_tea_subject AND ps_std_psID = ps_tea_menu AND ps_std_subAdd = ps_tea_subAdd
             WHERE ps_std_semester = "'.$semester.'" AND ps_std_subject = "'.$subject.'" AND ps_std_psID = "'.$menuID.'" AND ps_std_subAdd = "'.$option.'" order by ps_std_stdID ');
             return $query->result();
         }
@@ -149,6 +151,15 @@ class Model_te_point_special extends CI_Model
             WHERE ps_std_semester = "'.$semester.'" AND ps_std_subject = "'.$subject.'" AND ps_std_psID = "'.$idMenu.'" AND ps_std_subAdd = "'.$subAddAll[$i].'" 
             AND ps_std_stdID = "'.$StdAll[$i].'"  ');
         }
+    }
+
+    public function getTeacherOwner($semester)
+    {
+        $query = $this->db->query('SELECT subsem_semester , subsem_subject , teacher_code_id , teacher_Ename , teacher_Tname , de_Ename , de_Tname FROM subject_semester
+        LEFT JOIN teacher ON subsem_teacher = teacher_code_id
+        LEFT JOIN degree ON teacher_degree = de_id
+        WHERE subsem_semester = "'.$semester.'" ');
+        return $query->result();
     }
 
 }

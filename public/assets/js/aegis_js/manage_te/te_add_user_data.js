@@ -28,9 +28,9 @@ $(document).ready(function() {
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['substd_stdid', 'ID'],
-        ['std_Tname', 'TNAME'],
-        ['std_Ename', 'ENAME'],
+        ['substd_stdid', 'รหัสนักศึกษา'],
+        ['std_Tname', 'ชื่อนักศึกษา(TH)'],
+        ['std_Ename', 'ชื่อนักศึกษา(EN)'],
         ['substd_sec', 'SEC'],
         // ['std_email', 'EMAIL'],
         // ['std_major', 'MAJOR'],
@@ -38,14 +38,14 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['substd_stdid', 'std_Tname', 'std_Ename', "substd_sec"];
+    var theadGenValue = ['รหัสนักศึกษา', 'ชื่อนักศึกษา(TH)', 'ชื่อนักศึกษา(EN)', "SEC"];
 
     var formData = ["#substd_stdid", "#std_Tname", "#std_Ename", "#substd_sec"];
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['substd_stdid', 'substd_stdid', 'substd_stdid', 'substd_stdid'],
-        ['substd_sec', 'substd_sec', 'substd_sec', 'substd_sec'],
+        ['รหัสนักศึกษา', 'substd_stdid', 'substd_stdid', 'รหัสนักศึกษา'],
+        ['SEC', 'substd_sec', 'substd_sec', 'SEC'],
         // ['std_Tname', 'std_Tname', 'std_Tname', 'std_Tname'],
         // ['std_Ename', 'std_Ename', 'std_Ename', 'std_Ename'],
         // ['std_email', 'std_email', 'std_email', 'std_email']

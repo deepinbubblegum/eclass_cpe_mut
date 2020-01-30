@@ -55,7 +55,7 @@ class Model_su_student_data extends CI_Model
         }
     }
 
-    public function Search_data_model($keyword, $type)
+    public function Show_Max_Search_Data_model($keyword, $type)
     {
         $this->db->select('std_code_id, std_Tname, std_Ename, std_email, faculty_name, faculty_id, major_name,major_id');
         $this->db->from('student');
@@ -81,11 +81,51 @@ class Model_su_student_data extends CI_Model
             $this->db->or_like('std_Tname', $keyword);
             $this->db->or_like('std_Ename', $keyword);
             $this->db->or_like('std_email', $keyword);
-            // $this->db->or_like('faculty_name', $keyword);
+            $this->db->or_like('faculty_name', $keyword);
             $this->db->or_like('major_name', $keyword);
         }
         $this->db->order_by("major_id", "asc");
         $this->db->order_by("std_code_id", "asc");
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function Search_data_model($keyword, $type, $start, $limit)
+    {
+        if ($limit == 0 and $start == 0) {
+            $limit = null;
+            $start = null;
+        }
+        $this->db->select('std_code_id, std_Tname, std_Ename, std_email, faculty_name, faculty_id, major_name,major_id');
+        $this->db->from('student');
+        $this->db->join('major', 'std_major = major_id', 'left');
+        $this->db->join('faculty', 'major_faculty = faculty_id', 'left');
+        if ($type != null) {
+            if ($type == 'std_major') {
+                $searchData = 'major_name';
+            } else if ($type == 'std_Tname') {
+                $searchData = 'std_Tname';
+            } else if ($type == 'std_Ename') {
+                $searchData = 'std_Ename';
+            } else if ($type == 'std_email') {
+                $searchData = 'std_email';
+            } else if ($type == 'faculty_name') {
+                $searchData = 'faculty_name';
+            } else if ($type == 'std_code_id') {
+                $searchData = 'std_code_id';
+            }
+            $this->db->like($searchData, $keyword);
+        } else {
+            $this->db->like('std_code_id', $keyword);
+            $this->db->or_like('std_Tname', $keyword);
+            $this->db->or_like('std_Ename', $keyword);
+            $this->db->or_like('std_email', $keyword);
+            $this->db->or_like('faculty_name', $keyword);
+            $this->db->or_like('major_name', $keyword);
+        }
+        $this->db->order_by("major_id", "asc");
+        $this->db->order_by("std_code_id", "asc");
+        $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();

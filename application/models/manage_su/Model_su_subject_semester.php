@@ -53,9 +53,34 @@ class Model_su_subject_semester extends CI_Model
         $this->db->delete('subject_semester'); 
     }
 
-
-    public function Search_data_model($keyword, $type)
+    public function Show_Max_Search_Data_model($keyword, $type)
     {
+        $this->db->select('*');
+        $this->db->from('subject_semester');
+        $this->db->join('semester', 'subject_semester.subsem_semester = semester.semester_id', 'inner');
+        $this->db->join('subject', 'subject_semester.subsem_subject = subject.subject_id', 'left');
+        $this->db->join('teacher', 'subject_semester.subsem_teacher = teacher.teacher_code_id', 'inner');
+        if ($type != null) {
+            $this->db->like($type, $keyword);
+        } else {
+            $this->db->like('semester_name', $keyword);
+            $this->db->or_like('subject_id', $keyword);
+            $this->db->or_like('subject_name', $keyword);
+            $this->db->or_like('teacher_code_id', $keyword);
+            $this->db->or_like('teacher_Ename', $keyword);
+        }
+        $this->db->order_by("semester_id", "DESC");
+        $this->db->order_by("subject_id", "ASC");
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function Search_data_model($keyword,$type,$limit,$start)
+    {
+        if ($limit == 0 and $start == 0) {
+            $limit = null;
+            $start = null;
+        }
         $this->db->select('*');
         $this->db->from('subject_semester');
         $this->db->join('semester', 'subject_semester.subsem_semester = semester.semester_id', 'inner');
@@ -80,6 +105,7 @@ class Model_su_subject_semester extends CI_Model
         }
         $this->db->order_by("semester_id", "DESC");
         $this->db->order_by("subject_id", "ASC");
+        $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();

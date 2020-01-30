@@ -79,8 +79,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" id="btnDel" class="btn btn-primary">Delete</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                        <button type="button" id="btnDel" class="btn btn-primary">ลบ</button>
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div aria-labelledby="cardTableDrop2" class="dropdown-menu dropdown-menu-right menu">
                                 <!-- <a class="dropdown-item" id="btnAdd">Add</a>
                                 <div class="dropdown-divider"></div> -->
-                                <a class="dropdown-item" data-toggle="modal" data-target="#modaldel">Delete</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#modaldel">ลบข้อมูล</a>
                             </div>
                         </div>
                     </div>

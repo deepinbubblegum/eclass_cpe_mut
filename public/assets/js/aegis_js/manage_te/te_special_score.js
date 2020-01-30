@@ -141,6 +141,8 @@ $(document).ready(function() {
                         $('#addField').modal('show');
                         $("#PointMulti").prop("checked", true);
                         $('#addFieldLabel').text('Create in menu : ' + getMenu[i].point_name);
+                        $('#optionSet').val('1');
+                        $('#FieldMaxtxt').text('คะแนนเต็ม');
                         // $("input[name=PointMulti]").attr('disabled', false);
                         accordionI = getMenu[i].point_id;
                     });
@@ -299,6 +301,14 @@ $(document).ready(function() {
         }
         $('#optionSet').html(html);
     }
+
+    $('#optionSet').change(function () {
+        if ($('#optionSet').val() == 1) {
+            $('#FieldMaxtxt').text('คะแนนเต็ม');
+        } else {
+            $('#FieldMaxtxt').text('สูตรในการคำนวน');
+        }
+    });
     //------------------------------------------------------------------------------------------------------------------------
     function htmlEncodeF34R(textInPut) {
         textInPut = textInPut.replace(/\(/gi, "%28");
@@ -451,6 +461,12 @@ $(document).ready(function() {
                     $('#editField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
                         $('#addFieldFN').val(response[i].setpoint_fullname);
                         $('#addFieldMN').val(response[i].setpoint_mininame);
+
+                        if (response[i].setpoint_option == 1) {
+                            $('#FieldMaxtxt').text('คะแนนเต็ม');
+                        } else {
+                            $('#FieldMaxtxt').text('สูตรในการคำนวน');
+                        }
 
                         $('#addFieldLabel').text('Edit Field : ' + response[i].setpoint_fullname);
                         //$('#addFieldTK').val(response[i].setpoint_ticket);

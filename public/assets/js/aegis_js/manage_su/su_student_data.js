@@ -37,7 +37,7 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['รหัส', 'ชื่อ (ไทย)', 'ชื่อ (อังกฤษ)', 'อีเมล', 'คณะ', 'สาขา', 'option'];
+    var theadGenValue = ['รหัส', 'ชื่อ (TH)', 'ชื่อ (EN)', 'อีเมล', 'คณะ', 'สาขา', 'ตัวเลือก'];
 
     var formData = ["#std_code_id", "#std_Tname", "#std_Ename", "#std_email"];
 
@@ -207,21 +207,36 @@ $(document).ready(function() {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_right').click(function() {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_left').click(function() {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     function disableArrow(start, pageMax) {
@@ -286,7 +301,7 @@ $(document).ready(function() {
                             '<td>' + response[i].std_email + '</td>' +
                             '<td>' + response[i].faculty_name + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -294,6 +309,127 @@ $(document).ready(function() {
             }
         });
     }
+
+    $('#btnSearch').click(function(e) {
+        e.preventDefault();
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_student_data/Show_Max_Search_Data_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function(maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                console.log(start, limit);
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_student_data/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function(response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].std_code_id + '" id="' + response[i].std_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].std_code_id + i + '">' + response[i].std_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].std_Tname + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
+                            '<td>' + response[i].std_email + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
+                            '<td>' + response[i].major_name + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
+
+    function LimitSearch()
+    {
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_student_data/Show_Max_Search_Data_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function(maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                console.log(start, limit);
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_student_data/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function(response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].std_code_id + '" id="' + response[i].std_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].std_code_id + i + '">' + response[i].std_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].std_Tname + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
+                            '<td>' + response[i].std_email + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
+                            '<td>' + response[i].major_name + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    }
+
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
 
     //--------------------------------------------START_BASIC_TOOLS--------------------------------------------//
@@ -560,42 +696,6 @@ $(document).ready(function() {
         }
     });
 
-    $('#btnSearch').click(function(e) {
-        e.preventDefault();
-        data = $('#SearchName').val();
-        data2 = $('#select_search').val();
-        $.ajax({
-            type: "POST",
-            url: "../Admin_student_data/Search_Show_Data_ctl",
-            data: "&data=" + data + "&search=" + data2,
-            dataType: "json",
-            success: function(response) {
-                datatable = response;
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html +=
-                            '<tr>' +
-                            '<th>' +
-                            '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].std_code_id + '" id="' + response[i].std_code_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].std_code_id + i + '">' + response[i].std_code_id + '</label>' +
-                            '</div>' +
-                            '</th>' +
-                            '<td>' + response[i].std_Tname + '</td>' +
-                            '<td>' + response[i].std_Ename + '</td>' +
-                            '<td>' + response[i].std_email + '</td>' +
-                            '<td>' + response[i].faculty_name + '</td>' +
-                            '<td>' + response[i].major_name + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
-                            '</tr>';
-                    }
-                }
-                $('#showAllData').html(html);
-            }
-        });
-    });
 
     $('#btnDel').click(function(e) {
         e.preventDefault();
@@ -673,7 +773,7 @@ $(document).ready(function() {
                             '<td>' + response[i].std_email + '</td>' +
                             '<td>' + response[i].faculty_name + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
