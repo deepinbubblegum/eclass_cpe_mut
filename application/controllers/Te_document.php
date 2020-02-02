@@ -93,6 +93,6 @@ class Te_document extends MY_Controller
 
         unlink($dir . '/tmp/' . $title . '.docx');
         unlink($dir . '/tmp/' . $title . '2.docx');
-        // echo '<iframe src="https://docs.google.com/viewer?url=' . base_url('office/msword/') . 'helloWorld.docx' . '&embedded=true"  style="position: absolute;width:100%; height: 100%;border: none;"></iframe>';
+        // echo '<iframe src="https://docs.google.com/viewer?url=' . base_url('office/msword/') . $title . ".docx" . '&embedded=true"  style="position: absolute;width:100%; height: 100%;border: none;"></iframe>';
     }
 }
