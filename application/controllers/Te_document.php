@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\TemplateProcessor;
+use DocxMerge\DocxMerge;
 
 class Te_document extends MY_Controller
 {
@@ -29,6 +30,7 @@ class Te_document extends MY_Controller
 
     public function index()
     {
+        // หน้าแรก
         $this->load->helper('path');
         // $path_msword = APPPATH."msword/";
         $dir = 'office/msword/';
@@ -48,15 +50,49 @@ class Te_document extends MY_Controller
             'Advisor_email' => 'silpakorn@mutacth.com'
         ));
 
-        header("Content-Description: File Transfer");
-        header('Content-Disposition: attachment; filename="' . $title . '.docx"');
-        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-        header('Content-Transfer-Encoding: binary');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Expires: 0');
-        $templateProcessor->saveAs('php://output');
+        // header("Content-Description: File Transfer");
+        // header('Content-Disposition: attachment; filename="' . $title . '.docx"');
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        // header('Content-Transfer-Encoding: binary');
+        // header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        // header('Expires: 0');
+        // $templateProcessor->saveAs('php://output');
 
-        // $templateProcessor->saveAs($dir.$title.'.docx');
+        $templateProcessor->saveAs($dir . '/tmp/' . $title . '.docx');
+
+        // แผ่นรายชื่อ
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+
+        $fontStyleName = 'oneUserDefinedStyle';
+        $phpWord->addFontStyle(
+            $fontStyleName,
+            array('name' => 'TH SarabunPSK', 'size' => 14, 'color' => '000000', 'bold' => false),
+        );
+        $phpWord->addParagraphStyle(
+            'p2Style', array('align' => 'center')
+        );
+
+        for ($i=0; $i < 80; $i++) { 
+            $section->addText(
+                '6111110096	นางสาวญานิกา 	ภาคพานิช	5 คะแนน',
+                $fontStyleName,
+                'p2Style'
+            );
+        }
+
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save($dir . '/tmp/' . $title . '2.docx');
+
+        // รวมเอกสาร
+        $dm = new DocxMerge();
+        $dm->merge([
+            $dir . '/tmp/' . $title . '.docx',
+            $dir . '/tmp/' . $title . '2.docx'
+        ], $dir .  $title . ".docx");
+
+        unlink($dir . '/tmp/' . $title . '.docx');
+        unlink($dir . '/tmp/' . $title . '2.docx');
         // echo '<iframe src="https://docs.google.com/viewer?url=' . base_url('office/msword/') . 'helloWorld.docx' . '&embedded=true"  style="position: absolute;width:100%; height: 100%;border: none;"></iframe>';
     }
 }
