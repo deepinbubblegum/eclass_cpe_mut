@@ -28,8 +28,8 @@ $(document).ready(function () {
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['per_name', 'NAME'],
-        ['per_bit', 'BIT'],
+        ['per_name', 'ชื่อระดับสิทธิ์'],
+        ['per_id', 'รหัสระดับสิทธิ์'],
         // ['user_email', 'EMAIL'],
         // ['user_major', 'MAJOR'],
         // ['user_permission', 'PERMISSION']
@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['per_name', 'per_name', 'per_name', 'per_name'],
+        ['ชื่อระดับสิทธิ์', 'per_name', 'per_name', 'ชื่อระดับสิทธิ์'],
         // ['user_Tname', 'user_Tname', 'user_Tname', 'user_Tname'],
         // ['user_Ename', 'user_Ename', 'user_Ename', 'user_Ename'],
         // ['user_email', 'user_email', 'user_email', 'user_email']
@@ -270,7 +270,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "/" + url[3] + "/Teacher_add_permission/Search_Show_Data_ctl",
-            data: "&data=" + data + "&search=" + data2,
+            data: "&data=" + data + "&search=" + data2 + "&subject_id=" + subject_id + '&semester=' + semester,
             dataType: "json",
             success: function (response) {
                 console.log(response);

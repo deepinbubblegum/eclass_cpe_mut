@@ -34,7 +34,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 .f34r-txt-think {
                         color: rgba(0, 150, 136, 0.7)
                 }
-                
+
 
                 .placeholder {
                         border: 40px solid;
@@ -61,6 +61,38 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </head>
 
 <body>
+
+        <!-- Modal -->
+        <div class="modal fade" id="addMenuupload" tabindex="-1" role="dialog" aria-labelledby="addMenuuploadLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h5 class="modal-title" id="addMenuuploadLabel">เพิ่มเมนูดาวน์โหลด</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                        <div class="floating text-left mb-3">
+                                                <!-- <label for="CMenuupload">ชื่อเมนู ดาวน์โหลด</label> -->
+                                                <input aria-describedby="CMenuuploadHelp" class="form-control" id="CMenuupload" placeholder="ชื่อเมนู ดาวน์โหลด" type="text">
+                                                <div class="invalid-feedback">
+                                                        *กรุณากรอกชื่อเมนู
+                                                </div>
+                                        </div>
+
+                                        <div class="input-group mt-3" id="summernote">
+                                                <!-- <textarea class="form-control" id="discription_menu" placeholder="รายละเอียดเมนู ดาวน์โหลด" rows="10"></textarea> -->
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" id="btnModalClose" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                        <button type="button" id="btnModalSave" class="btn btn-primary">สร้าง</button>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
         <div class="col text-center mt-3">
                 <nav class="navbar navbar-light " style="max-height: auto; min-width: 335px; background-color: #dadfe4;">
                         <div class="navbar-brand" href="#">
@@ -70,7 +102,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         &nbsp; ดาวน์โหลด
                                 </span>
                         </div>
-                        <button class="btn btn btn-secondary my-2 my-sm-0" data-toggle="modal" data-target="#addMenuupload">
+                        <button class="btn btn btn-secondary my-2 my-sm-0" data-toggle="modal" data-target="#addMenuupload" id="Modal_Add">
                                 <span style="font-size: 1.1em;">
                                         <i class="fas fa-plus"></i></span>
                                 &nbsp;เพิ่มเมนูดาวน์โหลด
@@ -121,36 +153,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <!-- End Modal Delete -->
 
-                <!-- Modal -->
-                <div class="modal fade" id="addMenuupload" tabindex="-1" role="dialog" aria-labelledby="addMenuuploadLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                        <div class="modal-header">
-                                                <h5 class="modal-title" id="addMenuuploadLabel">เพิ่มเมนูดาวน์โหลด</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                </button>
-                                        </div>
-                                        <div class="modal-body">
-                                                <div class="floating text-left">
-                                                        <!-- <label for="CMenuupload">ชื่อเมนู ดาวน์โหลด</label> -->
-                                                        <input aria-describedby="CMenuuploadHelp" class="form-control" id="CMenuupload" placeholder="ชื่อเมนู ดาวน์โหลด" type="text">
-                                                        <div class="invalid-feedback">
-                                                                *กรุณากรอกชื่อเมนู
-                                                        </div>
-                                                </div>
 
-                                                <div class="input-group mt-3">
-                                                        <textarea class="form-control" id="discription_menu" placeholder="รายละเอียดเมนู ดาวน์โหลด" rows="10"></textarea>
-                                                </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                                <button type="button" id="btnModalClose" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                <button type="button" id="btnModalSave" class="btn btn-primary">สร้าง</button>
-                                        </div>
-                                </div>
-                        </div>
-                </div>
 
                 <!-- modal -->
                 <div class="modal fade bd-example-modal-lg" id="progress_modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="progress_modal" aria-hidden="true">

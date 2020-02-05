@@ -178,4 +178,11 @@ class Te_special_point extends MY_Controller
         $this->Model_te_point_special->ConfirmStdRequestAll($semester, $subject, $memuId, $StdAll, $subAddAll, $PointAll, $idMenu);
     }
 
+    public function Teacher_Owner()
+    {
+        $semester = $this->input->post('semester');
+        $result = $this->Model_te_point_special->getTeacherOwner($semester);
+        echo json_encode($result);
+    }
+
 }

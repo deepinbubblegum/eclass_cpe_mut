@@ -130,7 +130,7 @@ class Model_te_subject_point extends CI_Model
 
     public function insertMenu($semester, $subject, $Header, $Description, $StdView)
     {
-        $MaxIndex = $this->db->query('SELECT IFNULL(max(CAST(point_Index AS int))+1,"1") AS newIndex FROM subject_point where point_semester = "'.$semester.'" and point_subject="'.$subject.'" ');
+        $MaxIndex = $this->db->query('SELECT IFNULL(max(CAST(point_Index AS int))+1,"1") AS newIndex FROM subject_point where point_semester = "' . $semester . '" and point_subject="' . $subject . '" ');
         $newindex = $MaxIndex->row()->newIndex;
 
         $maxid = $this->db->query("
@@ -139,28 +139,48 @@ class Model_te_subject_point extends CI_Model
             where point_semester = '" . $semester . "' and point_subject='" . $subject . "';
         ");
         $newid = $maxid->row()->newid;
-        $this->db->query('insert into subject_point values("' . $semester . '","' . $subject . '","' . $newid . '","' . $Header . '","' . $Description . '" , "'.$StdView.'" , "'.$newindex.'");');
+        // $this->db->query('insert into subject_point values("' . $semester . '","' . $subject . '","' . $newid . '","' . $Header . '","' . $Description . '" , "' . $StdView . '" , "' . $newindex . '");');
+        $data = array(
+            'point_semester' => $semester,
+            'point_subject' => $subject,
+            'point_id' => $newid,
+            'point_name' => $Header,
+            'point_discription' => $Description,
+            'point_StdView' => $StdView,
+            'point_Index' => $newindex,
+        );
+        $this->db->insert('subject_point', $data);
     }
 
     public function insertMenuSpecial($semester, $subject, $Header, $Description, $StdView)
     {
-        $chkMenu = $this->db->query('SELECT * FROM `subject_point` WHERE point_semester = "'.$semester.'" AND point_subject = "'.$subject.'" ');
+        $chkMenu = $this->db->query('SELECT * FROM `subject_point` WHERE point_semester = "' . $semester . '" AND point_subject = "' . $subject . '" ');
         if ($chkMenu->num_rows() > 0) {
             return 0;
-        }else{
-            $MaxIndex = $this->db->query('SELECT IFNULL(max(CAST(point_Index AS int))+1,"1") AS newIndex FROM subject_point where point_semester = "'.$semester.'" and point_subject="'.$subject.'" ');
+        } else {
+            $MaxIndex = $this->db->query('SELECT IFNULL(max(CAST(point_Index AS int))+1,"1") AS newIndex FROM subject_point where point_semester = "' . $semester . '" and point_subject="' . $subject . '" ');
             $newindex = $MaxIndex->row()->newIndex;
 
             $maxid = $this->db->query(" select IFNULL(max(CAST(point_id AS int)),0)+1 as newid
                 from subject_point
                 where point_semester = '" . $semester . "' and point_subject='" . $subject . "' ");
             $newid = $maxid->row()->newid;
-            $this->db->query('insert into subject_point values("' . $semester . '","' . $subject . '","' . $newid . '","' . $Header . '","' . $Description . '" , "'.$StdView.'" , "'.$newindex.'");');
+            // $this->db->query('insert into subject_point values("' . $semester . '","' . $subject . '","' . $newid . '","' . $Header . '","' . $Description . '" , "' . $StdView . '" , "' . $newindex . '");');
+            $data = array(
+                'point_semester' => $semester,
+                'point_subject' => $subject,
+                'point_id' => $newid,
+                'point_name' => $Header,
+                'point_discription' => $Description,
+                'point_StdView' => $StdView,
+                'point_Index' => $newindex,
+            );
+            $this->db->insert('subject_point', $data);
             return 1;
         }
     }
 
-    public function editMenu($semester, $subject, $Header, $Description, $editID ,$StdView)
+    public function editMenu($semester, $subject, $Header, $Description, $editID, $StdView)
     {
         $this->db->set('point_name', $Header);
         $this->db->set('point_discription', $Description);

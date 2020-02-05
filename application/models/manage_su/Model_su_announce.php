@@ -19,7 +19,7 @@ class Model_su_announce extends CI_Model
 
         public function announce_showdata_model()
         {
-                $query = $this->db->query('SELECT anc_id, title, content, e_time FROM announce_su;');
+                $query = $this->db->query('SELECT anc_id, title, content, e_time FROM announce_su ORDER BY s_time DESC');
                 if ($query->num_rows() > 0) {
                         return $query->result();
                 } else {

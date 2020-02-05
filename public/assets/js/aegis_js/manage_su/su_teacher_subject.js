@@ -35,7 +35,7 @@ $(document).ready(function () {
     ];
 
     //head of table
-    var theadGenValue = ['Subject ID', 'Subject Name', 'Teacher', 'Option'];
+    var theadGenValue = ['รหัสวิชา', 'ชื่อวิชา', 'อาจารย์', 'ตัวเลือก'];
 
     var Sort = [
         ['subject_id', 'ASC', 'รหัสวิชา A > Z'],
@@ -69,22 +69,22 @@ $(document).ready(function () {
         var html = '';
         html += '<div class="form-row" >';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Faculty</label>' +
+            '<label>คณะ</label>' +
             '<select id="selectAddFaculty" class="form-control">' +
             '</select>' +
             '</div>';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Major</label>' +
+            '<label>สาขา</label>' +
             '<select id="selectAddMajor" class="form-control">' +
             '</select>' +
             '</div>';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Subject</label>' +
+            '<label>วิชา</label>' +
             '<select id="selectAddSubject" class="form-control">' +
             '</select>' +
             '</div>';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Teacher</label>' +
+            '<label>อาจารย์</label>' +
             '<select id="selectAddTeacher" class="form-control">' +
             '</select>' +
             '</div>';
@@ -151,21 +151,36 @@ $(document).ready(function () {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     function dropGen() {
@@ -236,7 +251,7 @@ $(document).ready(function () {
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
                             '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
 
@@ -252,10 +267,32 @@ $(document).ready(function () {
         e.preventDefault();
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher_subject/Show_Max_Search_Data_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
         $.ajax({
             type: "POST",
             url: "../Admin_teacher_subject/Search_Show_Data_ctl",
-            data: "&data=" + data + "&search=" + data2,
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
             dataType: "json",
             success: function (response) {
                 datatable = response;
@@ -274,7 +311,7 @@ $(document).ready(function () {
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
                             '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
 
@@ -284,6 +321,65 @@ $(document).ready(function () {
             }
         });
     });
+    
+    function LimitSearch()
+    {
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher_subject/Show_Max_Search_Data_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher_subject/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" data="' + response[i].teacher_code_id + '" value="' + response[i].subject_id + '"  id="' + response[i].subject_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].subject_id + i + '">(' + response[i].subject_major + ') ' + response[i].subject_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].subject_name + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+
+                }
+
+                $('#showAllData').html(html);
+            }
+        });
+    }
 
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
 
@@ -360,7 +456,8 @@ $(document).ready(function () {
     }
 
     function select_teacher_add() {
-        $data = $('#selectAddMajor :selected').val();
+        $dataEncode = $('#selectAddMajor :selected').val();
+        $data = encodeURIComponent($dataEncode);
         $.ajax({
             type: "POST",
             url: "../Admin_teacher_subject/Select_Teacher_Add_ctl",
@@ -381,7 +478,8 @@ $(document).ready(function () {
     }
 
     function select_subject_add() {
-        $data = $('#selectAddMajor :selected').val();
+        $dataEncode = $('#selectAddMajor :selected').val();
+        $data = encodeURIComponent($dataEncode);
         $.ajax({
             type: "POST",
             url: "../Admin_teacher_subject/Select_Subject_Add_ctl",
@@ -615,7 +713,7 @@ $(document).ready(function () {
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
                             '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }

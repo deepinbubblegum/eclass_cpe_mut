@@ -35,15 +35,15 @@ $(document).ready(function () {
     ];
 
     //head of table
-    var theadGenValue = ['Admin ID' /*, 'admin_Password'*/ , 'Admin Name(TH)', 'Admin Name(EN)', 'Email' /*, 'option'*/ ];
+    var theadGenValue = ['รหัสผู้ดูแล' /*, 'admin_Password'*/ , 'ชื่อผู้ดูแล(TH)', 'ชื่อผู้ดูแล(EN)', 'Email' /*, 'option'*/ ];
 
     var formData = ["#admin_id", /*"#admin_password",*/ "#admin_Tname", "#admin_Ename", "#admin_email"];
 
     var inModelSelect = [
         //['TEXT','ID','NAME','HOLDER']
-        ['Faculty', 'selectAddFaculty'],
-        ['Major', 'selectAddMajor'],
-        ['Teacher', 'selectAddTeacher']
+        ['คณะ', 'selectAddFaculty'],
+        ['สาขา', 'selectAddMajor'],
+        ['อาจารย์', 'selectAddTeacher']
     ];
 
     var inModelValue = [
@@ -227,21 +227,36 @@ $(document).ready(function () {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     function disableArrow(start, pageMax) {
@@ -346,7 +361,8 @@ $(document).ready(function () {
     }
 
     function select_teacher_add() {
-        $data = $('#selectAddMajor :selected').val();
+        $dataEncode = $('#selectAddMajor :selected').val();
+        $data = encodeURIComponent($dataEncode);
         $.ajax({
             type: "POST",
             url: "../Admin_teacher_subject/Select_Teacher_Add_ctl",
@@ -362,6 +378,124 @@ $(document).ready(function () {
                     }
                 }
                 $('#selectAddTeacher').html(html);
+            }
+        });
+    }
+
+    $('#btnSearch').click(function (e) {
+        e.preventDefault();
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_admin_data/Show_Max_Search_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 ,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                console.log(start, limit);
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_admin_data/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            //'<td>' + response[i].admin_password + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].teacher_email + '</td>' +
+                            // '<td><a value="' + i + '" data="' + response[i].admin_id + '" class="item-edit">Edit</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
+
+    function LimitSearch()
+    {
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_admin_data/Show_Max_Search_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 ,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                console.log(start, limit);
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_admin_data/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            //'<td>' + response[i].admin_password + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].teacher_email + '</td>' +
+                            // '<td><a value="' + i + '" data="' + response[i].admin_id + '" class="item-edit">Edit</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
             }
         });
     }
@@ -573,41 +707,6 @@ $(document).ready(function () {
         hideAllPop();
     });
 
-    $('#btnSearch').click(function (e) {
-        e.preventDefault();
-        data = $('#SearchName').val();
-        data2 = $('#select_search').val();
-        $.ajax({
-            type: "POST",
-            url: "../Admin_admin_data/Search_Show_Data_ctl",
-            data: "&data=" + data + "&search=" + data2,
-            dataType: "json",
-            success: function (response) {
-                datatable = response;
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html +=
-                            '<tr>' +
-                            '<th>' +
-                            '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
-                            '</div>' +
-                            '</th>' +
-                            //'<td>' + response[i].admin_password + '</td>' +
-                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
-                            '<td>' + response[i].teacher_email + '</td>' +
-                            // '<td><a value="' + i + '" data="' + response[i].admin_id + '" class="item-edit">Edit</a></td>' +
-                            '</tr>';
-                    }
-                }
-                $('#showAllData').html(html);
-            }
-        });
-    });
 
     $('#btnDel').click(function (e) {
         e.preventDefault();

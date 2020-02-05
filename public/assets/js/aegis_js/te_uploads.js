@@ -8,6 +8,33 @@ $(document).ready(function() {
     var nameCollector = [];
     var url = $(location).attr('href').split("/");
 
+    $('#summernote').summernote({
+        dialogsInBody: true,
+        codeviewFilter: false,
+        codeviewIframeFilter: true,
+        placeholder: 'รายละเอียดเมนู ดาวน์โหลด',
+        // tabsize: 1,
+        height: 350,
+        toolbar: [
+            ['style', ['style']],
+            // ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            // ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+
+    $('#summernote').summernote('code', '');
+
+    $('#Modal_Add').click(function (e) {
+        e.preventDefault();
+        $('#addMenuuploadLabel').text('เพิ่มเมนูดาวน์โหลด');
+        $('#summernote').summernote('code', '');
+        $('#CMenuupload').val('');
+    });
+
     function file_ico(type) {
         html_ico = '';
         type = type.split("/");
@@ -73,7 +100,8 @@ $(document).ready(function() {
     $('#btnModalSave').click(function(e) {
         e.preventDefault();
         menuname = $('#CMenuupload').val();
-        menudiscription = $('#discription_menu').val();
+        // menudiscription = $('#discription_menu').val();
+        menudiscription = $('#summernote').summernote('code');
 
         if (menuUpdate == 'UPDATE') {
             iurl = "/" + url[3] + "/Te_upload/editMenu";
@@ -81,10 +109,21 @@ $(document).ready(function() {
             iurl = '/' + url[3] + '/Te_upload/create_menu';
         }
 
+        var form_data = new FormData();
+        form_data.append('menuname', menuname);
+        form_data.append('descrip', menudiscription);
+        form_data.append('subject_id', subject_id);
+        form_data.append('semester', semester);
+        form_data.append('editId', editMenuId);
+
         $.ajax({
             type: "POST",
             url: iurl,
-            data: "&menuname=" + menuname + "&descrip=" + menudiscription + "&subject_id=" + subject_id + "&semester=" + semester + "&editId=" + editMenuId,
+            // data: "&menuname=" + menuname + "&descrip=" + menudiscription + "&subject_id=" + subject_id + "&semester=" + semester + "&editId=" + editMenuId,
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
             success: function(response) {
                 console.log(response);
                 showMenuUploaded();
@@ -178,7 +217,8 @@ $(document).ready(function() {
                         console.log(getMenu[i]);
                         e.preventDefault();
                         $('#CMenuupload').val(getMenu[i].menuDowName);
-                        $('#discription_menu').val(getMenu[i].menuDowDescrpition);
+                        // $('#discription_menu').val(getMenu[i].menuDowDescrpition);
+                        $('#summernote').summernote('code', getMenu[i].menuDowDescrpition);
                         $('#btnModalSave').text('ยืนยันการแก้ไข');
                         $('#addMenuuploadLabel').text('แก้ไขเมนู');
                         $('#addMenuupload').modal('show');

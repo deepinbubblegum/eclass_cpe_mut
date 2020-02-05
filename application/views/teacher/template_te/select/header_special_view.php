@@ -35,6 +35,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         $bitSide = $this->session->userdata('ses_permission');
         ?>
+
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.js"></script>
+
 </head>
 
 <body class="bg-light h-100" style="font-family: 'Mitr', sans-serif;">
@@ -135,7 +139,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <?php
                                 if (substr($bitSide, 0, 1) == 1 || $bitSide == 0) {
-                                        echo '<a class="nav-item nav-link" id="score" href="'; echo base_url('Te_select_special/score/') . $subject_id . '-' . $semester . '">
+                                        echo '<a class="nav-item nav-link" id="score" href="';
+                                        echo base_url('Te_select_special/score/') . $subject_id . '-' . $semester . '">
                                         <span style="font-size: 1.5em;">
                                         <i class="fas fa-star-half-alt"></i></span>
                                         <span style="font-size: 1.2em;">
@@ -147,7 +152,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <?php
                                 if (substr($bitSide, 1, 1) == 1 || $bitSide == 0) {
-                                        echo '<a class="nav-item nav-link" id="special_point" href="'; echo base_url('Te_select_special/special_point/') . $subject_id . '-' . $semester . '">
+                                        echo '<a class="nav-item nav-link" id="special_point" href="';
+                                        echo base_url('Te_select_special/special_point/') . $subject_id . '-' . $semester . '">
                                         <span style="font-size: 1.5em;">
                                         <i class="fas fa-star-half-alt"></i></span>
                                         <span style="font-size: 1.2em;">
@@ -168,7 +174,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="navdrawer-divider" id="line"></div>
 
                                 <?php
-                                if (substr($bitSide, 2, 1) == 1 ||$bitSide == '0') {
+                                if (substr($bitSide, 2, 1) == 1 || $bitSide == '0') {
                                         echo '<a class="nav-item nav-link" id="add_permission" href="';
                                         echo base_url('Te_select_special/add_permission/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">

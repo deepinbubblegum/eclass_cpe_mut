@@ -99,11 +99,21 @@ class Admin_subject_semester extends MY_Controller
         echo json_encode($result);
     }
 
+    public function Show_Max_Data_Search_ctl()
+    {
+        $keyword = $this->input->post('data');
+        $type = $this->input->post('search');
+        $result = $this->Model_su_subject_semester->Show_Max_Search_Data_model($keyword,$type);
+        echo json_encode($result);
+    }
+
     public function Search_Show_Data_ctl()
     {
         $keyword = $this->input->post('data');
         $type = $this->input->post('search');
-        $result = $this->Model_su_subject_semester->Search_data_model($keyword,$type);
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_subject_semester->Search_data_model($keyword,$type,$limit,$start);
         echo json_encode($result);
     }
 

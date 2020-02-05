@@ -16,6 +16,14 @@ class Admin_semester extends MY_Controller
         echo json_encode($result);
     }
 
+    public function Show_Max_Data_Search_ctl()
+    {
+        $keyword = $this->input->post('data');
+        $type = $this->input->post('search');
+        $result = $this->Model_su_semester->Show_Max_Search_Data_model($keyword, $type);
+        echo json_encode($result);
+    }
+
     public function Show_Data_ctl()
     {
         $start = $this->input->post('start');
@@ -60,7 +68,9 @@ class Admin_semester extends MY_Controller
     {
         $keyword = $this->input->post('data');
         $type = $this->input->post('search');
-        $result = $this->Model_su_semester->Search_data_model($keyword,$type);
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_semester->Search_data_model($keyword, $type, $limit, $start);
         echo json_encode($result);
     }
 
@@ -68,7 +78,9 @@ class Admin_semester extends MY_Controller
     {
         $data = $this->input->post('data');
         $sort = $this->input->post('sort');
-        $result = $this->Model_su_semester->Show_Sort_model($data, $sort);
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_semester->Show_Sort_model($data, $sort, $limit, $start);
         echo json_encode($result);
     }
 }

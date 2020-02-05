@@ -5,7 +5,7 @@ class Model_su_admin_data extends CI_Model
 {
     public function Show_Max_Data_model()
     {
-        $query = $this->db->get('teacher');
+        $query = $this->db->query('SELECT * FROM teacher WHERE teacher_admin = "1" ');
         return $query->num_rows();
     }
 
@@ -30,7 +30,7 @@ class Model_su_admin_data extends CI_Model
         }
     }
 
-    public function Search_data_model($keyword, $type)
+    public function Show_Max_Search_Data_model($keyword, $type)
     {
         $this->db->select('*');
         $this->db->from('teacher');
@@ -57,6 +57,42 @@ class Model_su_admin_data extends CI_Model
         $this->db->where('teacher_admin', '1');
         $this->db->order_by("de_grade", "asc");
         $this->db->order_by("teacher_Ename", "asc");
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function Search_data_model($keyword, $type, $start, $limit)
+    {
+        if ($limit == 0 and $start == 0) {
+            $limit = null;
+            $start = null;
+        }
+        $this->db->select('*');
+        $this->db->from('teacher');
+        $this->db->group_start();
+        if ($type != null) {
+            if ($type == 'teacher_code_id') {
+                $searchData = 'teacher_code_id';
+            } else if ($type == 'teacher_Tname') {
+                $searchData = 'teacher_Tname';
+            } else if ($type == 'teacher_Ename') {
+                $searchData = 'teacher_Ename';
+            } else if ($type == 'teacher_email') {
+                $searchData = 'teacher_email';
+            }
+            $this->db->or_like($searchData, $keyword);
+        } else {
+            $this->db->like('teacher_code_id', $keyword);
+            $this->db->or_like('teacher_Tname', $keyword);
+            $this->db->or_like('teacher_Ename', $keyword);
+            $this->db->or_like('teacher_email', $keyword); 
+        }
+        $this->db->group_end();
+        $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
+        $this->db->where('teacher_admin', '1');
+        $this->db->order_by("de_grade", "asc");
+        $this->db->order_by("teacher_Ename", "asc");
+        $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();

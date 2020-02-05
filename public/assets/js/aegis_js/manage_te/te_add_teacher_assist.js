@@ -30,10 +30,10 @@ $(document).ready(function() {
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['teacher_code_id', 'ID'],
-        ['teacher_Tname', 'TNAME'],
-        ['teacher_Ename', 'ENAME'],
-        ['per_name', 'PERMISSION']
+        ['teacher_code_id', 'รหัสอาจารย์'],
+        ['teacher_Tname', 'ชื่ออาจารย์(TH)'],
+        ['teacher_Ename', 'ชื่ออาจารย์(EN)'],
+        ['per_name', 'ชื่อระดับสิทธิ์']
         // ['user_email', 'EMAIL'],
         // ['user_major', 'MAJOR'],
         // ['user_permission', 'PERMISSION']
@@ -103,12 +103,12 @@ $(document).ready(function() {
         var html = '';
         html += '<div class="form-row" >';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Permission</label>' +
+            '<label>ระดับสิทธิ์</label>' +
             '<select id="selectAddPermission" class="form-control">' +
             '</select>' +
             '</div>';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Teacher</label>' +
+            '<label>อาจารย์</label>' +
             '<select id="selectAddTeacher" class="form-control">' +
             '</select>' +
             '</div>';
@@ -138,11 +138,12 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_teacher_assist/Teacher_Data_Add",
             dataType: "json",
             success: function(response) {
+                console.log(response);
                 var html = '';
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Tname + '</option>';
+                        html += '<option value="' + response[i].teacher_code_id + '">'+ response[i].de_Tname + " " +  response[i].teacher_Tname + '</option>';
                     }
                 }
                 $('#selectAddTeacher').html(html);
@@ -275,8 +276,8 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].per_name + '</td>' +
                             '<td>' + response[i].per_bit + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
@@ -312,8 +313,8 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].per_name + '</td>' +
                             '<td>' + response[i].per_bit + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +

@@ -51,11 +51,21 @@ class Admin_teacher_major extends MY_Controller
         $this->Model_su_teacher_major->Delete_Data_model($data_teacher, $data_major);
     }
 
+    public function Show_Max_Search_Data_ctl()
+    {
+        $data = $this->input->post('data');
+        $keyword = $this->input->post('search');
+        $result = $this->Model_su_teacher_major->Show_Max_Search_Data_model($data, $keyword);
+        echo json_encode($result);
+    }
+
     public function Search_Show_Data_ctl()
     {
         $data = $this->input->post('data');
         $keyword = $this->input->post('search');
-        $result = $this->Model_su_teacher_major->Search_data_model($data, $keyword);
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_teacher_major->Search_data_model($data, $keyword, $start, $limit);
         echo json_encode($result);
     }
 

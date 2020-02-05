@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phpoffice/phpword": "^0.17.0",
+        "krustnic/docx-merge": "^1.0"
+    }
+}

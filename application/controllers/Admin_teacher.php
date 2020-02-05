@@ -74,11 +74,21 @@ class Admin_teacher extends MY_Controller
         $this->Model_su_teacher->Delete_Data_model($data);
     }
 
+    public function Show_Max_Search_Data_ctl()
+    {
+        $data = $this->input->post('data');
+        $keyword = $this->input->post('search');
+        $result = $this->Model_su_teacher->Show_Max_Search_Data_model($data, $keyword);
+        echo json_encode($result);
+    }
+
     public function Search_Show_Data_ctl()
     {
         $data = $this->input->post('data');
         $keyword = $this->input->post('search');
-        $result = $this->Model_su_teacher->Search_data_model($data, $keyword);
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_teacher->Search_data_model($data, $keyword, $start, $limit);
         echo json_encode($result);
     }
 

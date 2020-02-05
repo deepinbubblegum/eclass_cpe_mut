@@ -28,9 +28,9 @@ $(document).ready(function() {
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['substd_stdid', 'ID'],
-        ['std_Tname', 'TNAME'],
-        ['std_Ename', 'ENAME'],
+        ['substd_stdid', 'รหัสนักศึกษา'],
+        ['std_Tname', 'ชื่อนักศึกษา(TH)'],
+        ['std_Ename', 'ชื่อนักศึกษา(EN)'],
         ['substd_sec', 'SEC'],
         // ['std_email', 'EMAIL'],
         // ['std_major', 'MAJOR'],
@@ -38,14 +38,14 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['substd_stdid', 'std_Tname', 'std_Ename', "substd_sec"];
+    var theadGenValue = ['รหัสนักศึกษา', 'ชื่อนักศึกษา(TH)', 'ชื่อนักศึกษา(EN)', "SEC"];
 
     var formData = ["#substd_stdid", "#std_Tname", "#std_Ename", "#substd_sec"];
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['substd_stdid', 'substd_stdid', 'substd_stdid', 'substd_stdid'],
-        ['substd_sec', 'substd_sec', 'substd_sec', 'substd_sec'],
+        ['รหัสนักศึกษา', 'substd_stdid', 'substd_stdid', 'รหัสนักศึกษา'],
+        ['SEC', 'substd_sec', 'substd_sec', 'SEC'],
         // ['std_Tname', 'std_Tname', 'std_Tname', 'std_Tname'],
         // ['std_Ename', 'std_Ename', 'std_Ename', 'std_Ename'],
         // ['std_email', 'std_email', 'std_email', 'std_email']
@@ -175,21 +175,36 @@ $(document).ready(function() {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_right').click(function() {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     $('#chevron_left').click(function() {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
-        show_data();
+        // show_data();
+        if($('#SearchName').val() == ""){
+            show_data();
+        }else{
+            LimitSearch();
+        }
     });
 
     function disableArrow(start, pageMax) {
@@ -239,6 +254,126 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response);
                 datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].substd_stdid + '" id="' + response[i].substd_stdid + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].substd_stdid + i + '">' + response[i].substd_stdid + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].std_Tname + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
+                            '<td>' + response[i].substd_sec + '</td>' +
+                            // '<td>' + response[i].std_email + '</td>' +
+                            // '<td>' + response[i].major_name + '</td>' +
+                            // '<td>' + response[i].permission_name + '</td>' +
+                            // '<td><a value="' + i + '" data="' + response[i].substd_stdid + '" class="item-edit">Edit</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    }
+
+    $('#btnSearch').click(function(e) {
+        e.preventDefault();
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            data: '&subject_id=' + subject_id + '&semester=' + semester + "&data=" + data + "&search=" + data2,
+            url: "/" + url[3] + "/Teacher_add_student/Show_Max_Search_Data_ctl",
+            dataType: "json",
+            success: function(maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                console.log(start, limit);
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/" + url[3] + "/Teacher_add_student/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&subject_id=" + subject_id + '&semester=' + semester + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function(response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].substd_stdid + '" id="' + response[i].substd_stdid + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].substd_stdid + i + '">' + response[i].substd_stdid + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].std_Tname + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
+                            '<td>' + response[i].substd_sec + '</td>' +
+                            // '<td>' + response[i].std_email + '</td>' +
+                            // '<td>' + response[i].major_name + '</td>' +
+                            // '<td>' + response[i].permission_name + '</td>' +
+                            // '<td><a value="' + i + '" data="' + response[i].substd_stdid + '" class="item-edit">Edit</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
+
+    function LimitSearch()
+    {
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            data: '&subject_id=' + subject_id + '&semester=' + semester + "&data=" + data + "&search=" + data2,
+            url: "/" + url[3] + "/Teacher_add_student/Show_Max_Search_Data_ctl",
+            dataType: "json",
+            success: function(maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                console.log(start, limit);
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/" + url[3] + "/Teacher_add_student/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&subject_id=" + subject_id + '&semester=' + semester + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function(response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -542,42 +677,6 @@ $(document).ready(function() {
         hideAllPop();
     });
 
-    $('#btnSearch').click(function(e) {
-        e.preventDefault();
-        data = $('#SearchName').val();
-        data2 = $('#select_search').val();
-        $.ajax({
-            type: "POST",
-            url: "/" + url[3] + "/Teacher_add_student/Search_Show_Data_ctl",
-            data: "&data=" + data + "&search=" + data2,
-            dataType: "json",
-            success: function(response) {
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html +=
-                            '<tr>' +
-                            '<th>' +
-                            '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].substd_stdid + '" id="' + response[i].substd_stdid + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].substd_stdid + i + '">' + response[i].substd_stdid + '</label>' +
-                            '</div>' +
-                            '</th>' +
-                            '<td>' + response[i].std_Tname + '</td>' +
-                            '<td>' + response[i].std_Ename + '</td>' +
-                            '<td>' + response[i].substd_sec + '</td>' +
-                            // '<td>' + response[i].std_email + '</td>' +
-                            // '<td>' + response[i].major_name + '</td>' +
-                            // '<td>' + response[i].permission_name + '</td>' +
-                            // '<td><a value="' + i + '" data="' + response[i].substd_stdid + '" class="item-edit">Edit</a></td>' +
-                            '</tr>';
-                    }
-                }
-                $('#showAllData').html(html);
-            }
-        });
-    });
 
     $('#btnDel').click(function(e) {
         e.preventDefault();

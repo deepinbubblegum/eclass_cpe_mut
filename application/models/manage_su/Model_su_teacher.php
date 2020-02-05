@@ -30,7 +30,7 @@ class Model_su_teacher extends CI_Model
         }
     }
 
-    public function Search_data_model($data, $keyword)
+    public function Show_Max_Search_Data_model($data, $keyword)
     {
         $this->db->select('*');
         $this->db->from('teacher');
@@ -46,6 +46,31 @@ class Model_su_teacher extends CI_Model
         }
         $this->db->order_by("de_grade", "asc");
         $this->db->order_by("teacher_Ename", "asc");
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function Search_data_model($data, $keyword, $start, $limit)
+    {
+        if ($limit == 0 and $start == 0) {
+            $limit = null;
+            $start = null;
+        }
+        $this->db->select('*');
+        $this->db->from('teacher');
+        $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
+        if ($data != null) {
+            $this->db->or_like($data, $keyword);
+        } else {
+            $this->db->like('teacher_code_id', $keyword);
+            $this->db->or_like('teacher_Tname', $keyword);
+            $this->db->or_like('teacher_Ename', $keyword);
+            $this->db->or_like('teacher_email', $keyword);
+            $this->db->or_like('teacher_username', $keyword);
+        }
+        $this->db->order_by("de_grade", "asc");
+        $this->db->order_by("teacher_Ename", "asc");
+        $this->db->limit($limit, $start);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
