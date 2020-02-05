@@ -30,7 +30,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 'chart_js/Chart.js',
                 'snackbar_js/snackbar.min.js',
                 'aegis_js/user_uses.js',
-                'aegis_js/langSwitching.js'
+                'aegis_js/langSwitching.js',
+                // 'summernote/dist/summernote-bs4.min.css',
+                // 'summernote/dist/summernote-bs4.min.js'
         );
         echo assets_css($multi_assets_css);
         echo assets_js($multi_assets_js);

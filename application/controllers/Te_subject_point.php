@@ -124,7 +124,7 @@ class Te_subject_point extends MY_Controller
         $semester = $this->input->post('semester');
         $subject = $this->input->post('subject');
         $Header = $this->input->post('header');
-        $Description = $this->input->post('description');
+        $Description = $this->input->post('description',false);
         $StdView = $this->input->post('StdView');
         //$User = $this->input->post('dataUser');
         $this->Model_te_subject_point->insertMenu($semester, $subject, $Header, $Description, $StdView);
@@ -135,7 +135,7 @@ class Te_subject_point extends MY_Controller
         $semester = $this->input->post('semester');
         $subject = $this->input->post('subject');
         $Header = $this->input->post('header');
-        $Description = $this->input->post('description');
+        $Description = $this->input->post('description',false);
         $StdView = $this->input->post('StdView');
         //$User = $this->input->post('dataUser');
         $result = $this->Model_te_subject_point->insertMenuSpecial($semester, $subject, $Header, $Description, $StdView);
@@ -147,7 +147,7 @@ class Te_subject_point extends MY_Controller
         $semester = $this->input->post('semester');
         $subject = $this->input->post('subject');
         $Header = $this->input->post('header');
-        $Description = $this->input->post('description');
+        $Description = $this->input->post('description',false);
         $StdView = $this->input->post('StdView');
         $editID = $this->input->post('editID'); 
         $this->Model_te_subject_point->editMenu($semester, $subject, $Header, $Description, $editID, $StdView);

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var url = $(location).attr('href').split("/");
     var editMenuId = '';
     var fieldSaveUrl = '';
@@ -12,7 +12,25 @@ $(document).ready(function() {
     var clearPoint = '0';
     $('#choiceVotePoint').val(clearPoint);
 
-    $('#btnAddVote').click(function(e) {
+    $('#summernote').summernote({
+        placeholder: 'รายละเอียดเนื้อหาประกาศ',
+        // tabsize: 1,
+        height: 250,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            // ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+
+    $('#summernote').summernote('code', '');
+
+
+    $('#btnAddVote').click(function (e) {
         e.preventDefault();
         $('#Modal').modal('show');
         $('#ModalLabel').text('เพิ่มเมนูโหวต');
@@ -20,22 +38,29 @@ $(document).ready(function() {
         //todayDate = new Date().toISOString();
         // $('#StartDatePicker').val(todayDate);
         $('#btnModalSave').text('บันทึกข้อมูล');
+        $('#summernote').summernote('code', '');
         iurl = "/" + url[3] + "/Te_subject_vote/insertMenuVote";
     });
 
-    $('#btnModalSave').click(function(e) {
+    $('#btnModalSave').click(function (e) {
         header = $('#Headtext').val();
-        description = $('#Textarea').val();
+        // description = $('#Textarea').val();
+        description = $('#summernote').summernote('code');
         menuStatus = '';
-        if ($('#checkBox01').prop("checked")) { menuStatus += 1 } else { menuStatus += 0 }
+        if ($('#checkBox01').prop("checked")) {
+            menuStatus += 1
+        } else {
+            menuStatus += 0
+        }
 
         $.ajax({
             type: "POST",
             url: iurl,
             data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&status=' + menuStatus + '&editID=' + editMenuId,
-            success: function() {
+            success: function () {
                 $('#Headtext').val("");
-                $('#Textarea').val("");
+                // $('#Textarea').val("");
+                $('#summernote').summernote('code', '');
                 $('#Modal').modal('hide');
                 showMenuVote();
             }
@@ -46,7 +71,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_vote/getStudent/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 studentCount = response[0].studentCount;
             }
         });
@@ -56,7 +81,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_vote/showMenuVote/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 getMenu = response;
                 var html = '';
                 if (response != null) {
@@ -92,14 +117,14 @@ $(document).ready(function() {
                     }
                 }
                 $('.showMenuVote').html(html);
-                
+
                 $('#collapse' + idMenu).collapse({
                     toggle: true
                 });
 
-                $.each(getMenu, function(i, p) {
+                $.each(getMenu, function (i, p) {
                     showChoice(getMenu[i].menuVoteId);
-                    $('#addInMenu-' + getMenu[i].menuVoteId).click(function(e) {
+                    $('#addInMenu-' + getMenu[i].menuVoteId).click(function (e) {
                         SMenuID = getMenu[i].menuVoteId;
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_vote/insertFieldVote';
                         $('#addField').modal('show');
@@ -110,7 +135,7 @@ $(document).ready(function() {
                     // $('#showInMenu-' + getMenu[i].menuVoteId).click(function(e) {}); use da href
                     // $('#impInMenu-' + getMenu[i].menuVoteId).click(function(e) {});
                     // $('#expInMenu-' + getMenu[i].menuVoteId).click(function(e) {});
-                    $('#delMenu-' + getMenu[i].menuVoteId).click(function(e) {
+                    $('#delMenu-' + getMenu[i].menuVoteId).click(function (e) {
                         takeThisDel = 'delMenu';
                         delPid = getMenu[i].menuVoteId;
                         $("#txtDel").text('Menu:' + getMenu[i].menuVoteName);
@@ -119,16 +144,21 @@ $(document).ready(function() {
                         // $('#addField').modal('show');
                         // $('#addFieldLabel').text('Create in menu : ' + getMenu[i].menuVoteName);
                     });
-                    $('#editMenu-' + getMenu[i].menuVoteId).click(function(e) {
+                    $('#editMenu-' + getMenu[i].menuVoteId).click(function (e) {
                         e.preventDefault();
                         $('#Headtext').val(getMenu[i].menuVoteName);
-                        $('#Textarea').val(getMenu[i].menuVoteDescription);
+                        // $('#Textarea').val(getMenu[i].menuVoteDescription);
+                        $('#summernote').summernote('code', getMenu[i].menuVoteDescription);
                         idMenu = i;
                         //$("input[name='PointView'][value='" + response[i].point_StdView + "']").prop('checked', true);
                         // if ($('#checkBox01').prop("checked")) { menuStatus += 1 } else { menuStatus += 0 }
                         // if ($('#checkBox02').prop("checked")) { menuStatus += 1 } else { menuStatus += 0 }
                         // if ($('#checkBox03').prop("checked")) { menuStatus += 1 } else { menuStatus += 0 }
-                        if (getMenu[i].menuVoteStatus.substring(0, 1) == '1') { $('#checkBox01').prop("checked", true); } else { $('#checkBox01').prop("checked", false); }
+                        if (getMenu[i].menuVoteStatus.substring(0, 1) == '1') {
+                            $('#checkBox01').prop("checked", true);
+                        } else {
+                            $('#checkBox01').prop("checked", false);
+                        }
                         // if (getMenu[i].menuVoteStatus.substring(1, 2) == '1') { $('#checkBox01').prop("checked", true); } else { $('#checkBox02').prop("checked", false); }
                         // if (getMenu[i].menuVoteStatus.substring(2, 3) == '1') { $('#checkBox02').prop("checked", true); } else { $('#checkBox03').prop("checked", false); }
                         // if (getMenu[i].menuVoteStatus.substring(3, 4) == '1') { $('#checkBox03').prop("checked", true); } else { $('#checkBox03').prop("checked", false); }
@@ -149,7 +179,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_vote/showVoteField/' + subject_id + '-' + semester + '-' + mVoteId,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = "";
                 if (!getField[mVoteId]) getField[mVoteId] = []
                 getField[mVoteId] = response;
@@ -170,10 +200,10 @@ $(document).ready(function() {
                     html += '<h1>NO DATA</h1>'
                 }
                 $('#fieldOlTag-' + mVoteId).html(html);
-                $.each(getField[mVoteId], function(i, p) {
+                $.each(getField[mVoteId], function (i, p) {
                     //console.log(mVoteId, getField[mVoteId][i].choiceVoteId);
                     showPoint(mVoteId, getField[mVoteId][i].choiceVoteId);
-                    $('#delChoiceVote-' + mVoteId + '-' + getField[mVoteId][i].choiceVoteId).click(function(e) {
+                    $('#delChoiceVote-' + mVoteId + '-' + getField[mVoteId][i].choiceVoteId).click(function (e) {
                         //console.log('#delField-' + mVoteId + '-' + getField[mVoteId][i].choiceVoteId);
                         $("#txtDel").text('Field:' + getField[mVoteId][i].choiceVoteText);
                         $("#ModalDelete").modal('show');
@@ -183,7 +213,7 @@ $(document).ready(function() {
                         idMenu = mVoteId - 1;
                         //delField(response[i].setpoint_id, response[i].choiceVoteId);
                     });
-                    $('#editChoiceVote-' + mVoteId + '-' + getField[mVoteId][i].choiceVoteId).click(function(e) {
+                    $('#editChoiceVote-' + mVoteId + '-' + getField[mVoteId][i].choiceVoteId).click(function (e) {
                         $('#addFieldHQN').val(getField[mVoteId][i].choiceVoteText);
                         $('#addFieldLabel').text('Edit Header : ' + getField[mVoteId][i].choiceVoteText);
                         $('#addField').modal('show');
@@ -194,7 +224,7 @@ $(document).ready(function() {
                     });
                 });
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
@@ -204,7 +234,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_vote/showPoint/' + subject_id + '-' + semester + '-' + menuId + '-' + fieldId,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = "";
                 if (response.length != undefined) {
                     html += '[' + response[0].stdCount + '/' + studentCount + ']';
@@ -213,13 +243,13 @@ $(document).ready(function() {
                 }
                 $('#fieldOlTagChild-' + menuId + '-' + fieldId).html(html);
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
     }
 
-    $('#Delete').click(function(e) {
+    $('#Delete').click(function (e) {
         if (takeThisDel == "delChoice") {
             delChoice(delPid, delCid, delKid);
         } else if (takeThisDel == "delField") {
@@ -237,13 +267,13 @@ $(document).ready(function() {
         $("#ModalDelete").modal('hide');
     });
 
-    $('#fieldSave').click(function(e) {
+    $('#fieldSave').click(function (e) {
         choiceTxt = $('#addFieldHQN').val();
         $.ajax({
             type: "POST",
             url: fieldSaveUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&choiceTxt=' + choiceTxt + '&menuId=' + SMenuID + '&headId=' + SHeadID,
-            success: function() {
+            success: function () {
                 $('#addFieldHQN').val("");
                 $('#addField').modal('hide');
                 showMenuVote();
@@ -258,7 +288,7 @@ $(document).ready(function() {
             type: "POST",
             url: '/' + url[3] + '/Te_subject_vote/delField',
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid + '&setIdChild=' + cid,
-            success: function() {
+            success: function () {
                 // console.log('Deleted Successfully');
                 showMenuVote();
             }
@@ -270,7 +300,7 @@ $(document).ready(function() {
             type: "POST",
             url: '/' + url[3] + '/Te_subject_vote/delMenu',
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid,
-            success: function() {
+            success: function () {
                 // console.log('Deleted Successfully');
                 showMenuVote();
             }

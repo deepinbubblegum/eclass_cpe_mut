@@ -38,31 +38,55 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </head>
 
 <body>
-        <div class="col text-center mt-3">
-                <nav class="navbar navbar-light " style="max-height: auto; min-width: 335px; background-color: #dadfe4;">
-                        <div class="navbar-brand" href="#">
-                                <span style="font-size: 1.2em;">
-                                        <i class="fas fa-chalkboard"></i></span>
-                                <span style="font-size: 0.8em;">
-                                        &nbsp; อัปโหลด
-                                </span>
-                        </div>
-                        <!-- <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn btn-secondary my-2 my-sm-0" type="submit">
-                                <span style="font-size: 1.1em;">
-                                        <i class="fas fa-search"></i></span>
-                                &nbsp;ค้นหา
-                        </button>
-                </form> -->
-                        <button class="btn btn btn-secondary my-2 my-sm-0" data-toggle="modal" data-target="#addMenudownload">
-                                <span style="font-size: 1.1em;">
-                                        <i class="fas fa-plus"></i></span>
-                                &nbsp;เพิ่มเมนูอัปโหลด
-                        </button>
-                </nav>
 
-                <!-- Modal Delete -->
+        <!-- Modal -->
+        <div class="modal fade" id="addMenudownload" tabindex="-1" role="dialog" aria-labelledby="addMenudownloadLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h5 class="modal-title" id="addMenudownloadLabel">เพิ่มเมนูอัปโหลด</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                        <div class="floating text-left">
+                                                <!-- <label for="CMenudownload">ชื่อเมนู อัปโหลด</label> -->
+                                                <input aria-describedby="CMenudownloadHelp" class="form-control" id="CMenudownload" placeholder="ชื่อเมนู อัปโหลด" type="text">
+                                                <div class="invalid-feedback">
+                                                        *กรุณากรอกชื่อเมนู
+                                                </div>
+                                        </div>
+                                        <form>
+                                                <div class="row mt-3 mb-3">
+                                                        <div class="col-7">
+                                                                <label for="datePick">
+                                                                        <input class="form-control text-black" name="pickdatelabel" id="datePick" placeholder="Pick a date" type="text">
+                                                                </label>
+                                                        </div>
+                                                        <div class="col">
+                                                                <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                                                                        <input type="text" class="form-control" id="timePick" placeholder="Pick a time">
+                                                                        <span class="input-group-addon">
+                                                                                <span class="glyphicon glyphicon-time"></span>
+                                                                        </span>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </form>
+                                        <div class="input-group mt-4" id="summernote">
+                                                <!-- <textarea class="form-control" id="discription_menu" placeholder="รายละเอียดเมนู อัปโหลด" rows="10"></textarea> -->
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" id="btnModalClose" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                        <button type="button" id="btnModalSave" class="btn btn-primary">สร้าง</button>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
+        <!-- Modal Delete -->
         <div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="ModalDelete" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -84,52 +108,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
         <!-- End Modal Delete -->
 
-                <!-- Modal -->
-                <div class="modal fade" id="addMenudownload" tabindex="-1" role="dialog" aria-labelledby="addMenudownloadLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                        <div class="modal-header">
-                                                <h5 class="modal-title" id="addMenudownloadLabel">เพิ่มเมนูอัปโหลด</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                </button>
-                                        </div>
-                                        <div class="modal-body">
-                                                <div class="floating text-left">
-                                                        <!-- <label for="CMenudownload">ชื่อเมนู อัปโหลด</label> -->
-                                                        <input aria-describedby="CMenudownloadHelp" class="form-control" id="CMenudownload" placeholder="ชื่อเมนู อัปโหลด" type="text">
-                                                        <div class="invalid-feedback">
-                                                                *กรุณากรอกชื่อเมนู
-                                                        </div>
-                                                </div>
-                                                <form>
-                                                        <div class="row mt-3">
-                                                                <div class="col-7">
-                                                                        <label for="datePick">
-                                                                                <input class="form-control text-black" name="pickdatelabel" id="datePick" placeholder="Pick a date" type="text">
-                                                                        </label>
-                                                                </div>
-                                                                <div class="col">
-                                                                        <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                                                                                <input type="text" class="form-control" id="timePick" placeholder="Pick a time">
-                                                                                <span class="input-group-addon">
-                                                                                        <span class="glyphicon glyphicon-time"></span>
-                                                                                </span>
-                                                                        </div>
-                                                                </div>
-                                                        </div>
-                                                </form>
-                                                <div class="input-group mt-4">
-                                                        <textarea class="form-control" id="discription_menu" placeholder="รายละเอียดเมนู อัปโหลด" rows="10"></textarea>
-                                                </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                                <button type="button" id="btnModalClose" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                <button type="button" id="btnModalSave" class="btn btn-primary">สร้าง</button>
-                                        </div>
-                                </div>
+
+        <div class="col text-center mt-3">
+                <nav class="navbar navbar-light " style="max-height: auto; min-width: 335px; background-color: #dadfe4;">
+                        <div class="navbar-brand" href="#">
+                                <span style="font-size: 1.2em;">
+                                        <i class="fas fa-chalkboard"></i></span>
+                                <span style="font-size: 0.8em;">
+                                        &nbsp; อัปโหลด
+                                </span>
                         </div>
-                </div>
+                        <!-- <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn btn-secondary my-2 my-sm-0" type="submit">
+                                <span style="font-size: 1.1em;">
+                                        <i class="fas fa-search"></i></span>
+                                &nbsp;ค้นหา
+                        </button>
+                </form> -->
+                        <button class="btn btn btn-secondary my-2 my-sm-0" data-toggle="modal" id="Modal_Add" data-target="#addMenudownload">
+                                <span style="font-size: 1.1em;">
+                                        <i class="fas fa-plus"></i></span>
+                                &nbsp;เพิ่มเมนูอัปโหลด
+                        </button>
+                </nav>
 
                 <div class="container-fluid mx-auto text-left">
                         <ul class="nav nav-justified nav-tabs mt-3" id="justifiedTab" role="tablist">

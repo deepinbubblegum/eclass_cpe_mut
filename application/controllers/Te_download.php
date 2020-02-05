@@ -124,7 +124,7 @@ class Te_download extends MY_Controller
                         'menuUpSubjectId' => $this->input->post('subject_id'),
                         'menuUpId' => $this->auto_id_ctl($this->input->post('semester'),$this->input->post('subject_id')),
                         'menuUpName' => $this->input->post('namemenu'),
-                        'menuUpDescripition' => $this->input->post('discrip'),
+                        'menuUpDescripition' => $this->input->post('discrip',false),
                         'menuUpTimeStart' => date("Y-m-d H:i:s"),
                         'menuUpTimeEnd' => $this->input->post('date') .' '. $this->input->post('time')
                 );
@@ -137,7 +137,7 @@ class Te_download extends MY_Controller
                 $menuUpSubjectId = $this->input->post('subject_id');
                 $menuUpId = $this->input->post('editId');
                 $menuUpName = $this->input->post('namemenu');
-                $menuUpDescripition = $this->input->post('discrip');
+                $menuUpDescripition = $this->input->post('discrip',false);
                 $menuUpTimeEnd = $this->input->post('date') .' '. $this->input->post('time') ;
 
                 $this->Model_te_download->editUpMenu($menuUpSemesterId,$menuUpSubjectId,$menuUpId,$menuUpName,$menuUpDescripition,$menuUpTimeEnd);

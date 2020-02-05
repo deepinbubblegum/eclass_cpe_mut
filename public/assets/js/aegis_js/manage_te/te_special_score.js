@@ -6,6 +6,26 @@ $(document).ready(function() {
     var accordionI = '';
     showMenuPoint();
 
+    $('#summernote').summernote({
+        dialogsInBody: true,
+        codeviewFilter: false,
+        codeviewIframeFilter: true,
+        placeholder: 'รายละเอียดช่องคะแนน',
+        // tabsize: 1,
+        height: 350,
+        toolbar: [
+            ['style', ['style']],
+            // ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            // ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+
+    $('#summernote').summernote('code', '');
+
 
     $('#btnAddScore').click(function(e) {
         e.preventDefault();
@@ -16,19 +36,34 @@ $(document).ready(function() {
         // $('#StartDatePicker').val(todayDate);
         $('#save').text('บันทึกข้อมูล');
         iurl = "/" + url[3] + "/Te_subject_point/insertMenuScoreSpecial";
+        $('#summernote').summernote('code', '');
 
         $('#accordionOne').activate('option', 'active', '#accM-1');
     });
 
     $('#save').click(function(e) {
         header = $('#Headtext').val();
-        description = $('#Textarea').val();
+        // description = $('#Textarea').val();
+        description = $('#summernote').summernote('code');
         PointMulti = $("input[name='PointView']:checked").val();
+
+        var form_data = new FormData();
+        form_data.append('semester', semester);
+        form_data.append('subject', subject_id);
+        form_data.append('header', header);
+        form_data.append('description', description);
+        form_data.append('StdView', PointMulti);
+        form_data.append('editID', editMenuId);
+
         var txt = '';
         $.ajax({
             type: "POST",
             url: iurl,
-            data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&StdView=' + PointMulti + '&editID=' + editMenuId,
+            // data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&StdView=' + PointMulti + '&editID=' + editMenuId,
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
             success: function(response) {
                 $('#Headtext').val("");
                 $('#Textarea').val("");
@@ -162,7 +197,8 @@ $(document).ready(function() {
                         console.log('editMenu');
                         e.preventDefault();
                         $('#Headtext').val(getMenu[i].point_name);
-                        $('#Textarea').val(getMenu[i].point_discription);
+                        // $('#Textarea').val(getMenu[i].point_discription);
+                        $('#summernote').summernote('code', getMenu[i].point_discription);
                         $("input[name='PointView'][value='" + response[i].point_StdView + "']").prop('checked', true);
 
                         $('#ModalLabel').text('แก้ไขเมนูคะแนน');

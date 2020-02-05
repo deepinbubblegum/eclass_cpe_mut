@@ -15,10 +15,11 @@ class Admin_announce extends MY_Controller
 
         public function Add_Data_ctl()
         {
+                // echo $this->input->post('content',false);
                 $data = array(
                         'anc_id' => $this->auto_id(),
                         'title' => $this->input->post('title'),
-                        'content' => $this->input->post('content'),
+                        'content' => $this->input->post('content',false),
                         'uid_anc_id' => $this->session->ses_id,
                         's_time' => date("Y-m-d H:i:s"),
                         'e_time' => $this->input->post('e_date') .' '. date("H:i:s")
@@ -44,7 +45,7 @@ class Admin_announce extends MY_Controller
                 $dataid = $this->input->post('dataid');
                 $data = array(
                         'title' => $this->input->post('datatitle'),
-                        'content' => $this->input->post('content'),
+                        'content' => $this->input->post('content',false),
                         'uid_anc_id' => $this->session->ses_id,
                         'e_time' => $this->input->post('e_date') .' '. date("H:i:s")
                 );

@@ -32,18 +32,21 @@ class Model_te_add_permission extends CI_Model
                 }
         }
 
-        public function Search_data_model($keyword, $type)
+        public function Search_data_model($keyword,$type, $subject_id, $semester)
         {
                 $this->db->select('*');
                 $this->db->from('permission');
                 if ($type != null) {
                         $this->db->or_like($type, $keyword);
                 } else {
-
+                        $this->db->group_start();
                         $this->db->like('per_name', $keyword);
                         $this->db->or_like('per_bit', $keyword);
                         $this->db->or_like('per_id', $keyword);
+                        $this->db->group_end();
                 }
+                $this->db->where('per_subject', $subject_id);
+                $this->db->where('per_semester',$semester);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
                         return $query->result();

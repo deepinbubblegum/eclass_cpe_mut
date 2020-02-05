@@ -80,7 +80,7 @@ class Te_subject_vote extends MY_Controller
         $semester = $this->input->post('semester');
         $subject = $this->input->post('subject');
         $Header = $this->input->post('header');
-        $Description = $this->input->post('description');
+        $Description = $this->input->post('description',false);
         $menuStatus = $this->input->post('status');
         //$User = $this->input->post('dataUser');
         $this->Model_te_subject_vote->insertMenu($semester, $subject, $Header, $Description, $menuStatus);
@@ -112,7 +112,7 @@ class Te_subject_vote extends MY_Controller
         $semester = $this->input->post('semester');
         $subject = $this->input->post('subject');
         $Header = $this->input->post('header');
-        $Description = $this->input->post('description');
+        $Description = $this->input->post('description',false);
         $menuStatus = $this->input->post('status');
         $editID = $this->input->post('editID');
 

@@ -83,11 +83,25 @@ class Teacher_add_student extends MY_Controller
         $this->Model_te_add_student->Delete_Data_model($data,$data2,$data3);
     }
 
+    public function Show_Max_Search_Data_ctl()
+    {
+        $keyword = $this->input->post('data');
+        $type = $this->input->post('search');
+        $subject_id = $this->input->post('subject_id');
+        $semester = $this->input->post('semester');
+        $result = $this->Model_te_add_student->Show_Max_Search_Data_model($keyword, $type, $subject_id, $semester);
+        echo json_encode($result);
+    }
+
     public function Search_Show_Data_ctl()
     {
-        $keyword = $this->input->post('search');
-        $type = $this->input->post('select_search');
-        $result = $this->Model_te_add_student->Search_data_model($keyword, $type);
+        $keyword = $this->input->post('data');
+        $type = $this->input->post('search');
+        $subject_id = $this->input->post('subject_id');
+        $semester = $this->input->post('semester');
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_te_add_student->Search_data_model($keyword, $type, $subject_id, $semester, $start, $limit);
         echo json_encode($result);
     }
 }

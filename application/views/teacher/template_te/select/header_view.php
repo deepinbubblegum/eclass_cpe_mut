@@ -36,6 +36,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
         $bitSide = $this->session->userdata('ses_permission');
         ?>
 
+        <!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.js"></script> -->
+
         <?php echo assets_js('aegis_js/manage_te/te_read_point_request.js'); ?>
 
 </head>
@@ -211,7 +214,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </a>';
                                 }
                                 ?>
-
 
                                 <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
                                         <span style="font-size: 1.5em;">

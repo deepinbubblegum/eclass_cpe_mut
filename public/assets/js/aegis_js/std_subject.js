@@ -130,5 +130,6 @@ $(document).ready(function() {
     $('#yearterm').change(function(e) {
         e.preventDefault();
         SubjectCoop();
+        showSubject_Special();
     });
 });

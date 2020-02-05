@@ -54,7 +54,7 @@ class Model_te_add_student extends CI_Model
                 $this->db->delete('subject_student');
         }
 
-        public function Search_data_model($keyword, $type)
+        public function Show_Max_Search_Data_model($keyword, $type, $subject_id, $semester)
         {
                 $this->db->select('substd_stdid, std_Tname, std_Ename, substd_subject, substd_sec');
                 $this->db->from('subject_student');
@@ -71,11 +71,46 @@ class Model_te_add_student extends CI_Model
                         }
                         $this->db->or_like($searchData, $keyword);
                 } else {
+                        $this->db->group_start();
                         $this->db->like('substd_stdid', $keyword);
                         $this->db->or_like('std_Tname', $keyword);
                         $this->db->or_like('std_Ename', $keyword);
                         $this->db->or_like('substd_sec', $keyword);
+                        $this->db->group_end();
                 }
+                $this->db->where('substd_subject', $subject_id);
+                $this->db->where('substd_semester',$semester);
+                $query = $this->db->get();
+                return $query->num_rows();
+        }
+
+        public function Search_data_model($keyword, $type, $subject_id, $semester, $start, $limit)
+        {
+                $this->db->select('substd_stdid, std_Tname, std_Ename, substd_subject, substd_sec');
+                $this->db->from('subject_student');
+                $this->db->join('student', 'substd_stdid = std_code_id', 'left');
+                if ($type != null) {
+                        if ($type == 'substd_stdid') {
+                                $searchData = 'substd_stdid';
+                        } else if ($type == 'std_Tname') {
+                                $searchData = 'std_Tname';
+                        } else if ($type == 'std_Ename') {
+                                $searchData = 'std_Ename';
+                        }else if ($type == 'substd_sec') {
+                                $searchData = 'substd_sec';
+                        }
+                        $this->db->or_like($searchData, $keyword);
+                } else {
+                        $this->db->group_start();
+                        $this->db->like('substd_stdid', $keyword);
+                        $this->db->or_like('std_Tname', $keyword);
+                        $this->db->or_like('std_Ename', $keyword);
+                        $this->db->or_like('substd_sec', $keyword);
+                        $this->db->group_end();
+                }
+                $this->db->where('substd_subject', $subject_id);
+                $this->db->where('substd_semester',$semester);
+                $this->db->limit($limit, $start);
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
                         return $query->result();
