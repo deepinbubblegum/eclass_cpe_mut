@@ -2,6 +2,8 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\TemplateProcessor;
+use DocxMerge\DocxMerge;
 
 class Te_document extends MY_Controller
 {
@@ -10,63 +12,87 @@ class Te_document extends MY_Controller
         parent::__construct();
     }
 
+
+    public function DateThai()
+    {
+        $thaimonth = array(
+            "มกราคม", "กุมภาพันธ์", "มีนาคม",
+            "เมษายน", "พฤษภาคม", "มิถุนายน",
+            "กรกฎาคม", "สิงหาคม", "กันยายน",
+            "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+        );
+        $strYear = date("Y") + 543;
+        $strDay = date("j");
+        $strMonth = date("n");
+        return $strDay . ' ' . $thaimonth[$strMonth] . ' ' . $strYear;
+    }
+
+
     public function index()
     {
+        // หน้าแรก
         $this->load->helper('path');
         // $path_msword = APPPATH."msword/";
         $dir = 'office/msword/';
-        // echo $path_msword;
+        $title = 'MII-' . date('Y-m-d H:i:s');
+        $templateProcessor = new TemplateProcessor($dir . 'template/templates.docx');
+
+        $templateProcessor->setValues(array(
+            'Te_name' => 'อาจารย์ยศธร ภูมิสุทธิ์',
+            'DateThai' => $this->DateThai(),
+            'Semester' => '1/2561',
+            'Id_subject-name' => 'CPEN1111 Computer Programming II',
+            'Te_signature_name' => 'อาจารย์ศิลปกร  ปิยะปัญญาพงษ์',
+            'Club_president_name' => 'นายอภิเชษฐ์ เมืองทรัพย์',
+            'Club_president_phone' => '093-145-8777',
+            'Club_president_email' => '5911110129@mutacth.com',
+            'contact' => '0-2988-3666 ต่อ 1230, 09-1009-9861',
+            'Advisor_email' => 'silpakorn@mutacth.com'
+        ));
+
+        // header("Content-Description: File Transfer");
+        // header('Content-Disposition: attachment; filename="' . $title . '.docx"');
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        // header('Content-Transfer-Encoding: binary');
+        // header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        // header('Expires: 0');
+        // $templateProcessor->saveAs('php://output');
+
+        $templateProcessor->saveAs($dir . '/tmp/' . $title . '.docx');
+
+        // แผ่นรายชื่อ
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        /* Note: any element you append to a document must reside inside of a Section. */
-
-        // Adding an empty Section to the document...
         $section = $phpWord->addSection();
-        // Adding Text element to the Section having font styled by default...
-        $section->addText(
-            '"Learn from yesterday, live for today, hope for tomorrow. '
-                . 'The important thing is not to stop questioning." '
-                . '(Albert Einstein)'
-        );
 
-        /*
- * Note: it's possible to customize font style of the Text element you add in three ways:
- * - inline;
- * - using named font style (new font style object will be implicitly created);
- * - using explicitly created font style object.
- */
-
-        // Adding Text element with font customized inline...
-        $section->addText(
-            '"Great achievement is usually born of great sacrifice, '
-                . 'and is never the result of selfishness." '
-                . '(Napoleon Hill)',
-            array('name' => 'Tahoma', 'size' => 10)
-        );
-
-        // Adding Text element with font customized using named font style...
         $fontStyleName = 'oneUserDefinedStyle';
         $phpWord->addFontStyle(
             $fontStyleName,
-            array('name' => 'Tahoma', 'size' => 10, 'color' => '1B2232', 'bold' => true)
+            array('name' => 'TH SarabunPSK', 'size' => 14, 'color' => '000000', 'bold' => false),
         );
-        $section->addText(
-            '"The greatest accomplishment is not in never falling, '
-                . 'but in rising again after you fall." '
-                . '(Vince Lombardi)',
-            $fontStyleName
+        $phpWord->addParagraphStyle(
+            'p2Style', array('align' => 'center')
         );
 
-        // Adding Text element with font customized using explicitly created font style object...
-        $fontStyle = new \PhpOffice\PhpWord\Style\Font();
-        $fontStyle->setBold(true);
-        $fontStyle->setName('Tahoma');
-        $fontStyle->setSize(13);
-        $myTextElement = $section->addText('"Believe you can and you\'re halfway there." (Theodor Roosevelt)');
-        $myTextElement->setFontStyle($fontStyle);
+        for ($i=0; $i < 80; $i++) { 
+            $section->addText(
+                '6111110096	นางสาวญานิกา 	ภาคพานิช	5 คะแนน',
+                $fontStyleName,
+                'p2Style'
+            );
+        }
 
-        // Saving the document as OOXML file...
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save($dir . 'helloWorld.docx');
-        echo '<iframe src="https://docs.google.com/viewer?url=' . base_url('office/msword/') . 'helloWorld.docx' . '&embedded=true"  style="position: absolute;width:100%; height: 100%;border: none;"></iframe>';
+        $objWriter->save($dir . '/tmp/' . $title . '2.docx');
+
+        // รวมเอกสาร
+        $dm = new DocxMerge();
+        $dm->merge([
+            $dir . '/tmp/' . $title . '.docx',
+            $dir . '/tmp/' . $title . '2.docx'
+        ], $dir .  $title . ".docx");
+
+        unlink($dir . '/tmp/' . $title . '.docx');
+        unlink($dir . '/tmp/' . $title . '2.docx');
+        // echo '<iframe src="https://docs.google.com/viewer?url=' . base_url('office/msword/') . $title . ".docx" . '&embedded=true"  style="position: absolute;width:100%; height: 100%;border: none;"></iframe>';
     }
 }

@@ -16,6 +16,10 @@ class ComposerStaticInit8ff6eeb2d10e29645f48327de82fcf1a
             'PhpOffice\\PhpWord\\' => 18,
             'PhpOffice\\Common\\' => 17,
         ),
+        'D' => 
+        array (
+            'DocxMerge\\' => 10,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -31,9 +35,17 @@ class ComposerStaticInit8ff6eeb2d10e29645f48327de82fcf1a
         array (
             0 => __DIR__ . '/..' . '/phpoffice/common/src/Common',
         ),
+        'DocxMerge\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/krustnic/docx-merge/src',
+        ),
     );
 
     public static $classMap = array (
+        'DocxMerge\\DocxMerge' => __DIR__ . '/..' . '/krustnic/docx-merge/src/DocxMerge.php',
+        'DocxMerge\\DocxMerge\\Docx' => __DIR__ . '/..' . '/krustnic/docx-merge/src/DocxMerge/Docx.php',
+        'DocxMerge\\DocxMerge\\Prettify' => __DIR__ . '/..' . '/krustnic/docx-merge/src/DocxMerge/Prettify.php',
+        'DocxMerge\\libraries\\TbsZip' => __DIR__ . '/..' . '/krustnic/docx-merge/src/libraries/TbsZip.php',
         'PclZip' => __DIR__ . '/..' . '/pclzip/pclzip/pclzip.lib.php',
     );
 

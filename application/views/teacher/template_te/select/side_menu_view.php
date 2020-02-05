@@ -51,6 +51,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         </a>
 
                                                         <?php
+                                                        if (substr($bit, 3, 1) == 1 || $bit == 0) {
+                                                                echo '<a class="nav-item nav-link" id="score" href="'; 
+                                                                echo base_url('te_select/score/') . $subject_id . '-' . $semester .'">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-star-half-alt"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;คะแนน
+                                                                </span>
+                                                                </a>';
+                                                        }
+                                                        ?>
+
+                                                        <?php
                                                         if (substr($bit, 2, 1) == '1' || $bit == '0') {
                                                                 echo '<a class="nav-item nav-link" id="uploads" href=" ';
                                                                 echo base_url('te_select/uploads/') . $subject_id . '-' . $semester . '">
