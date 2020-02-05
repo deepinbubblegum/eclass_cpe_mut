@@ -31,7 +31,9 @@ class Teacher_add_permission extends MY_Controller
     {
         $keyword = $this->input->post('data');
         $type = $this->input->post('search');
-        $result = $this->Model_te_add_permission->Search_data_model($keyword,$type);
+        $subject_id = $this->input->post('subject_id');
+        $semester = $this->input->post('semester');
+        $result = $this->Model_te_add_permission->Search_data_model($keyword,$type, $subject_id, $semester);
         echo json_encode($result);
     }
 

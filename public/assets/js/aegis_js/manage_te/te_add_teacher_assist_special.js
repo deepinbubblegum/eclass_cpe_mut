@@ -142,7 +142,7 @@ $(document).ready(function() {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Tname + '</option>';
+                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].de_Tname + " " +  response[i].teacher_Tname + '</option>';
                     }
                 }
                 $('#selectAddTeacher').html(html);

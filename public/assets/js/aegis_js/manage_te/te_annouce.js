@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('#header').text('ประกาศถึงนักศึกษา : ' + subject_id + ' / ' + semester);
 
     var url = $(location).attr('href').split("/");
@@ -7,12 +7,32 @@ $(document).ready(function() {
     var idAnnouce;
     ShowDataAnnouce();
 
+    $('#summernote').summernote({
+        dialogsInBody: true,
+        codeviewFilter: false,
+        codeviewIframeFilter: true,
+        placeholder: 'เนื้อหาประกาศ',
+        // tabsize: 1,
+        height: 350,
+        toolbar: [
+            ['style', ['style']],
+            // ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            // ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+
+    $('#summernote').summernote('code', '');
+
 
     $("input[name^=EndDatePicker]").css('cursor', 'pointer');
 
     $('.datepicker').on(
         'dp.show',
-        function(e) {
+        function (e) {
             $(".bootstrap-datetimepicker-widget").css(
                 "background-color", "#3c3e43");
         });
@@ -35,10 +55,10 @@ $(document).ready(function() {
         labelMonthSelect: 'Choose a month from the dropdown menu',
         labelYearSelect: 'Choose a year from the dropdown menu',
         ok: 'Ok',
-        onClose: function() {
+        onClose: function () {
             console.log('Datepicker closes')
         },
-        onOpen: function() {
+        onOpen: function () {
             console.log('Datepicker opens')
         },
         selectMonths: true,
@@ -54,7 +74,7 @@ $(document).ready(function() {
             dataType: "json",
             // url: '/' + url[3] + '/Std_select/Show_Data_ctl/' + subject_id + '-' + semester,
             // dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 var html = '';
                 var i;
@@ -133,17 +153,19 @@ $(document).ready(function() {
     }
 
     var todayDate;
-    $('#Add_annouce').click(function(e) {
+    $('#Add_annouce').click(function (e) {
         e.preventDefault();
         $('#Modal').modal('show');
         $('#ModalLabel').text('เพิ่มข้อมูลข่าวสาาร');
         todayDate = new Date().toISOString();
         // $('#StartDatePicker').val(todayDate);
         $('#save').text('บันทึกข้อมูล');
+        $('#summernote').summernote('code', '');
+        $('#Headtext').val('');
         iurl = "/" + url[3] + "/Te_annouce/Add_Data_ctl";
     });
 
-    $('#accordionOne').on('click', '#iconEdit', function(e) {
+    $('#accordionOne').on('click', '#iconEdit', function (e) {
         e.preventDefault();
         todayDate = new Date().toISOString();
         ivalue = $(this).attr('value');
@@ -152,7 +174,8 @@ $(document).ready(function() {
         $('#save').text('แก้ไขข้อมูล');
         iurl = "/" + url[3] + "/Te_annouce/Edit_Data_ctl";
         $('#Headtext').val(data_annouce[ivalue].annouce_name);
-        $('#Textarea').val(data_annouce[ivalue].annouce_discription);
+        // $('#Textarea').val(data_annouce[ivalue].annouce_discription);
+        $('#summernote').summernote('code', data_annouce[ivalue].annouce_discription);
         if (data_annouce[ivalue].annouce_time_end == '0000-00-00') {
             $('#EndDatePicker').val("");
         } else {
@@ -161,9 +184,10 @@ $(document).ready(function() {
         idAnnouce = data_annouce[ivalue].annouce_id;
     });
 
-    $('#save').click(function(e) {
+    $('#save').click(function (e) {
         dataHead = $('#Headtext').val();
-        dataAnnouce = $('#Textarea').val();
+        // dataAnnouce = $('#Textarea').val();
+        dataAnnouce = $('#summernote').summernote('code');
         dateEnd = $('#EndDatePicker').val();
         if (dateEnd == '') {
             dateEnd = 0;
@@ -186,7 +210,7 @@ $(document).ready(function() {
                 width: 'auto',
                 text: 'กรุณาใส่ข้อมูลหัวข้อประกาศ'
             });
-        } else if (dataAnnouce == '') {
+        } else if ($('#summernote').summernote('isEmpty')) {
             Snackbar.show({
                 actionText: 'close',
                 pos: 'top-center',
@@ -196,14 +220,29 @@ $(document).ready(function() {
                 text: 'กรุณาใส่ข้อมูลเนื้อหาประกาศ'
             });
         } else {
+
+            var form_data = new FormData();
+            form_data.append('semester', semester);
+            form_data.append('subject', subject_id);
+            form_data.append('Headtext', dataHead);
+            form_data.append('dataAnnouce', dataAnnouce);
+            form_data.append('dataStart', todayDate);
+            form_data.append('dateEnd', dateEnd);
+            form_data.append('AnnouceId', idAnnouce);
+
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: '&semester=' + semester + '&subject=' + subject_id + '&Headtext=' + dataHead + '&dataAnnouce=' + dataAnnouce + '&dataStart=' + todayDate + '&dateEnd=' + dateEnd + '&AnnouceId=' + idAnnouce,
-                success: function() {
+                // data: '&semester=' + semester + '&subject=' + subject_id + '&Headtext=' + dataHead + '&dataAnnouce=' + dataAnnouce + '&dataStart=' + todayDate + '&dateEnd=' + dateEnd + '&AnnouceId=' + idAnnouce,
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function () {
                     $('#Headtext').val("");
-                    $('#Textarea').val("");
+                    // $('#Textarea').val("");
                     $('#EndDatePicker').val("");
+                    $('#summernote').summernote('code', '');
                     ShowDataAnnouce();
                     if (iurl != "/" + url[3] + "/Te_annouce/Add_Data_ctl") {
                         $('#Modal').modal('hide');
@@ -221,13 +260,13 @@ $(document).ready(function() {
         }
     });
 
-    $('#Delete').click(function(e) {
+    $('#Delete').click(function (e) {
         e.preventDefault();
         $.ajax({
             type: "POST",
             url: "/" + url[3] + "/Te_annouce/Del_Data_ctl",
             data: '&semester=' + semester + '&subject=' + subject_id + '&AnnouceId=' + idAnnouce,
-            success: function() {
+            success: function () {
                 $('#ModalDelete').modal('hide');
                 ShowDataAnnouce();
                 Snackbar.show({
@@ -239,7 +278,7 @@ $(document).ready(function() {
                     text: 'ลบข้อมูล ( Success: ลบข้อมูลเรียบร้อย )'
                 });
             },
-            error: function() {
+            error: function () {
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -254,7 +293,7 @@ $(document).ready(function() {
 
 
 
-    $('#accordionOne').on('click', '#iconDelete', function(e) {
+    $('#accordionOne').on('click', '#iconDelete', function (e) {
         e.preventDefault();
         ivalue = $(this).attr('value');
         idAnnouce = data_annouce[ivalue].annouce_id;

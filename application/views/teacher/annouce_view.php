@@ -61,8 +61,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
 
                         <div class="form-group">
-                            <label for="Textarea">เนื้อหาประกาศ</label>
-                            <textarea class="form-control" id="Textarea" rows="5"></textarea>
+                            <!-- <label for="Textarea">เนื้อหาประกาศ</label>
+                            <textarea class="form-control" id="Textarea" rows="5"></textarea> -->
+                            <div class="input-group" id="summernote">
+
+                            </div>
                         </div>
 
                         <div class="form-group">

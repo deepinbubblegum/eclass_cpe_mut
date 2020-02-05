@@ -136,7 +136,7 @@ class Te_upload extends MY_Controller
                         'menuDowSubjectId' => $this->input->post('subject_id'),
                         'menuDowId' => $this->auto_id_ctl($this->input->post('semester'), $this->input->post('subject_id')),
                         'menuDowName' => $this->input->post('menuname'),
-                        'menuDowDescrpition' => $this->input->post('descrip')
+                        'menuDowDescrpition' => $this->input->post('descrip',false)
                 );
                 $this->Model_te_upload->dow_add_menu($data);
         }
@@ -147,7 +147,7 @@ class Te_upload extends MY_Controller
                 $menuUpSubjectId = $this->input->post('subject_id');
                 $menuUpId = $this->input->post('editId');
                 $menuUpName = $this->input->post('menuname');
-                $menuUpDescripition = $this->input->post('descrip');
+                $menuUpDescripition = $this->input->post('descrip',false);
 
                 $this->Model_te_upload->editUpMenu($menuUpSemesterId, $menuUpSubjectId, $menuUpId, $menuUpName, $menuUpDescripition);
         }

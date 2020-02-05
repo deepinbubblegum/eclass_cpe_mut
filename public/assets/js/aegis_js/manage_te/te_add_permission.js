@@ -270,7 +270,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "/" + url[3] + "/Teacher_add_permission/Search_Show_Data_ctl",
-            data: "&data=" + data + "&search=" + data2,
+            data: "&data=" + data + "&search=" + data2 + "&subject_id=" + subject_id + '&semester=' + semester,
             dataType: "json",
             success: function (response) {
                 console.log(response);

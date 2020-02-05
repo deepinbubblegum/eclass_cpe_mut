@@ -1,12 +1,48 @@
 $(document).ready(function () {
         showdata();
+
         var getdate;
+
+        $('#summernote').summernote({
+                placeholder: 'รายละเอียดเนื้อหาประกาศ',
+                // tabsize: 1,
+                height: 250,
+                toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        // ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+        });
+
+        $('#summernoteEdit').summernote({
+                placeholder: 'รายละเอียดเนื้อหาประกาศ',
+                // tabsize: 1,
+                height: 250,
+                toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        // ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+        });
+
+        $('#summernote').summernote('code', '');
+
         $('#save').click(function (e) {
                 e.preventDefault();
                 titlename = $('#Titlename').val();
-                content = $('#textareacontent').val();
+                // content = $('#textareacontent').val();
+                content = $('#summernote').summernote('code');
+                contentEncode = escape(content);
                 e_date = $('#set_e_date').val();
-                console.log(e_date);
+                console.log(contentEncode);
                 if (titlename === '') {
                         $('#Titlename').addClass('is-invalid');
                         return false;
@@ -14,7 +50,18 @@ $(document).ready(function () {
                         $('#Titlename').removeClass('is-invalid');
                 }
 
-                if(content === ''){
+                // if (content === '') {
+                //         Snackbar.show({
+                //                 actionText: 'close',
+                //                 pos: 'top-center',
+                //                 actionTextColor: '#da0041',
+                //                 backgroundColor: '#323232',
+                //                 width: 'auto',
+                //                 text: 'กรุณากรอกข้อมูลเนื้อหาประกาศ'
+                //         });
+                //         return false;
+                // }
+                if ($('#summernote').summernote('isEmpty')) {
                         Snackbar.show({
                                 actionText: 'close',
                                 pos: 'top-center',
@@ -26,16 +73,26 @@ $(document).ready(function () {
                         return false;
                 }
 
+                var form_data = new FormData();
+                form_data.append('title', titlename);
+                form_data.append('content', content);
+                form_data.append('e_date', e_date);
+
                 $.ajax({
                         type: "POST",
                         url: "../admin_announce/add_data_ctl",
-                        data: "&title=" + titlename + "&content=" + content + "&e_date=" + e_date,
+                        // data: "&title=" + titlename + "&content=" + contentEncode + "&e_date=" + e_date,
+                        data: form_data,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
                         dataType: "json",
                         success: function (response) {
                                 if (response == true) {
                                         $('#Titlename').val('');
                                         $('#textareacontent').val('');
                                         $('#set_e_date').val('');
+                                        $('#summernote').summernote('code', '');
                                         Snackbar.show({
                                                 actionText: 'close',
                                                 pos: 'top-center',
@@ -59,6 +116,8 @@ $(document).ready(function () {
                                 getdate = response;
                                 html = '';
                                 for (i = 0; i < response.length; i++) {
+                                        textContext = unescape(response[i]['content']);
+                                        // AA = summernote('code', response[i]['content']);
                                         if (i == 0) {
                                                 html += '<div class="expansion-panel list-group-item show">';
                                         } else {
@@ -105,7 +164,8 @@ $(document).ready(function () {
                                                 dataindex = $(this).attr('posi');
                                                 $('#anc_edit_btn').val(dataid);
                                                 $('#Titlename_edit').val(response[dataindex]['title']);
-                                                $('#textareacontent_edit').val(response[dataindex]['content']);
+                                                // $('#textareacontent_edit').val(response[dataindex]['content']);
+                                                $('#summernoteEdit').summernote('code', unescape(response[dataindex]['content']));
                                                 $('#and_editModal').modal('toggle');
                                         });
                                 }
@@ -143,9 +203,11 @@ $(document).ready(function () {
                 e.preventDefault();
                 dataid = $(this).attr('value');
                 title = $('#Titlename_edit').val();
-                content = $('#textareacontent_edit').val();
+                // content = $('#textareacontent_edit').val();
+                // content = $('#summernoteEdit').summernote('code');
+                content = $('#summernoteEdit').summernote('code');
+                contentEncode = escape(content);
                 e_date = $('#set_e_date_edit').val();
-
                 if (title == '') {
                         $('#Titlename_edit').addClass('is-invalid');
                         return false;
@@ -153,7 +215,7 @@ $(document).ready(function () {
                         $('#Titlename_edit').removeClass('is-invalid');
                 }
 
-                if(content === ''){
+                if (content === '') {
                         Snackbar.show({
                                 actionText: 'close',
                                 pos: 'top-center',
@@ -165,11 +227,21 @@ $(document).ready(function () {
                         return false;
                 }
 
+                var form_data = new FormData();
+                form_data.append('dataid', dataid);
+                form_data.append('datatitle', title);
+                form_data.append('content', content);
+                form_data.append('e_date', e_date);
+
                 $.ajax({
                         type: "post",
                         url: "../admin_announce/edit_data_ctl",
-                        data: "&dataid=" + dataid + "&datatitle=" + title + "&content=" + content + "&e_date=" + e_date,
+                        // data: "&dataid=" + dataid + "&datatitle=" + title + "&content=" + content + "&e_date=" + e_date,
                         dataType: "json",
+                        data: form_data,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
                         success: function (response) {
                                 if (response == true) {
                                         showdata();

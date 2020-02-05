@@ -69,15 +69,35 @@ class Model_te_annouce extends CI_Model
         WHERE annouce_semester = "' . $semester . '" AND annouce_subject = "' . $subject . '" ');
         $newid = $maxid->row()->newid;
 
-        $this->db->query('INSERT INTO subject_annouce(annouce_semester,annouce_subject,annouce_id,annouce_name,annouce_discription,annouce_time_start,annouce_time_end,annouce_user_id)
-        VALUES("' . $semester . '" , "' . $subject . '" , "' . $newid . '" , "' . $Header . '" , "' . $Annouce . '" , NOW() , "' . $Edate . '" , "' . $User . '")');
+        // $this->db->query('INSERT INTO subject_annouce(annouce_semester,annouce_subject,annouce_id,annouce_name,annouce_discription,annouce_time_start,annouce_time_end,annouce_user_id)
+        // VALUES("' . $semester . '" , "' . $subject . '" , "' . $newid . '" , "' . $Header . '" , "' . $Annouce . '" , NOW() , "' . $Edate . '" , "' . $User . '")');
+        $data = array(
+            'annouce_semester' => $semester,
+            'annouce_subject' => $subject,
+            'annouce_id' => $newid,
+            'annouce_name' => $Header,
+            'annouce_discription' => $Annouce,
+            'annouce_time_start' => date("Y-m-d H:i:s"),
+            'annouce_time_end' => $Edate,
+            'annouce_user_id' => $User
+        );
+        $this->db->insert('subject_annouce', $data);
     }
 
     public function Edit_Data_Annouce_model($semester, $subject, $id, $Header, $Annouce, $Sdata, $Edate, $User)
     {
-        $this->db->query('UPDATE subject_annouce SET annouce_name="' . $Header . '" , annouce_discription="' . $Annouce . '" , annouce_time_start=NOW() , 
-        annouce_time_end="' . $Edate . '" , annouce_user_id="' . $User . '" 
-        WHERE annouce_semester="' . $semester . '" AND annouce_subject = "' . $subject . '" AND annouce_id="' . $id . '" ');
+        // $this->db->query('UPDATE subject_annouce SET annouce_name="' . $Header . '" , annouce_discription="' . $Annouce . '" , annouce_time_start=NOW() , 
+        // annouce_time_end="' . $Edate . '" , annouce_user_id="' . $User . '" 
+        // WHERE annouce_semester="' . $semester . '" AND annouce_subject = "' . $subject . '" AND annouce_id="' . $id . '" ');
+        $this->db->set('annouce_name', $Header);
+        $this->db->set('annouce_discription', $Annouce);
+        $this->db->set('annouce_time_start', date("Y-m-d H:i:s"));
+        $this->db->set('annouce_time_end', $Edate);
+        $this->db->set('annouce_user_id', $User);
+        $this->db->where('annouce_semester', $semester);
+        $this->db->where('annouce_subject', $subject);
+        $this->db->where('annouce_id', $id);
+        $this->db->update('subject_annouce');
     }
 
     public function Delete_Data_Annouce_model($semester, $subject, $id)

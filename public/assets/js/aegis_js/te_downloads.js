@@ -12,6 +12,34 @@ $(document).ready(function() {
     });
     $('.clockpicker').clockpicker();
 
+    $('#summernote').summernote({
+        dialogsInBody: true,
+        codeviewFilter: false,
+        codeviewIframeFilter: true,
+        placeholder: 'รายละเอียดเมนู อัปโหลด',
+        tabsize: 1,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            // ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            // ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+
+    $('#summernote').summernote('code', '');
+
+    $('#Modal_Add').click(function (e) {
+        e.preventDefault();
+        $('#summernote').summernote('code', '');
+        $('#CMenudownload').val('');
+        $('#datePick').val('');
+        $('#timePick').val('')
+    });
+
     function file_ico(type) {
         html_ico = '';
         type = type.split("/");
@@ -176,7 +204,8 @@ $(document).ready(function() {
                         $('#datePick').val(splitData[0]);
                         splitTime = splitData[1].split(':');
                         $('#timePick').val(splitTime[0] + ':' + splitTime[1]);
-                        $('#discription_menu').val(getMenu[i].menuUpDescripition);
+                        // $('#discription_menu').val(getMenu[i].menuUpDescripition);
+                        $('#summernote').summernote('code', getMenu[i].menuUpDescripition);
                         $('#btnModalSave').text('ยืนยันการแก้ไข');
                         $('#addMenudownloadLabel').text('แก้ไขเมนู');
                         $('#addMenudownload').modal('show');
@@ -211,22 +240,38 @@ $(document).ready(function() {
         namemenu = $('#CMenudownload').val();
         date = $('#datePick').val();
         time = $('#timePick').val() + ':00';
-        discrip = $('#discription_menu').val();
+        // discrip = $('#discription_menu').val();
+        discrip = $('#summernote').summernote('code');
         if (menuUpdate == 'UPDATE') {
             iurl = "/" + url[3] + "/Te_download/editMenu";
         } else {
             iurl = '/' + url[3] + '/Te_download/create_menu';
         }
+
+        var form_data = new FormData();
+        form_data.append('namemenu', namemenu);
+        form_data.append('date', date);
+        form_data.append('time', time);
+        form_data.append('discrip', discrip);
+        form_data.append('subject_id', subject_id);
+        form_data.append('semester', semester);
+        form_data.append('editId', editMenuId);
+
         $.ajax({
             type: "POST",
             url: iurl,
-            data: "&namemenu=" + namemenu + "&date=" + date + "&time=" + time + "&discrip=" + discrip + "&subject_id=" + subject_id + "&semester=" + semester + "&editId=" + editMenuId,
+            // data: "&namemenu=" + namemenu + "&date=" + date + "&time=" + time + "&discrip=" + discrip + "&subject_id=" + subject_id + "&semester=" + semester + "&editId=" + editMenuId,
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
             success: function(response) {
                 showMenuDownload();
                 $('#CMenudownload').val('');
                 $('#datePick').val('');
                 $('#timePick').val('')
-                $('#discription_menu').val('');
+                // $('#discription_menu').val('');
+                $('#summernote').summernote('code', '');
                 $('#addMenudownload').modal('hide');
                 $('#addMenudownloadLabel').text('เพิ่มเมนูดาวน์โหลด');
                 menuUpdate = 0;
