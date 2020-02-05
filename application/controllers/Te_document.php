@@ -67,7 +67,7 @@ class Te_document extends MY_Controller
         $fontStyleName = 'oneUserDefinedStyle';
         $phpWord->addFontStyle(
             $fontStyleName,
-            array('name' => 'TH SarabunPSK', 'size' => 14, 'color' => '000000', 'bold' => false),
+            array('name' => 'TH SarabunPSK', 'size' => 14, 'color' => '000000', 'bold' => false)
         );
         $phpWord->addParagraphStyle(
             'p2Style', array('align' => 'center')
