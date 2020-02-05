@@ -1,4 +1,10 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
+    year = semester.substr(0, 4);
+    part = semester.substr(4, 1);
+    $('#header').text('แบบทดสอบ : ' + subject_id + ' - ' + year + '/' + part);
+
+
     var url = $(location).attr('href').split("/");
     var getField = [];
     var getUnit = [];
@@ -7,7 +13,7 @@ $(document).ready(function() {
     var menuStatus = [];
     selectCheck();
     showMenuQuiz();
-    $('#btnModalSave').click(function(e) {
+    $('#btnModalSave').click(function (e) {
         var test = document.querySelector('input[name="test"]:checked').value;
         //console.log(test);
     });
@@ -16,7 +22,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Std_subject_quiz/selectCheck/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 checkMenu = response;
                 console.log(response);
             }
@@ -27,7 +33,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Std_subject_quiz/showMenuQuiz/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 getMenu = response;
                 var html = '';
                 if (response != null) {
@@ -77,7 +83,7 @@ $(document).ready(function() {
                     }
                 }
                 $('.showMenuQuiz').html(html);
-                $.each(getMenu, function(i, p) {
+                $.each(getMenu, function (i, p) {
                     //console.log(getMenu[i].menuQuizStatus.substr(0, 1), '0-1');
                     //console.logg(getMenu[i].menuQuizStatus.substr(1, 1), '1-1');
                     //console.logg(getMenu[i].menuQuizStatus.substr(2, 1), '2-1');
@@ -105,7 +111,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Std_subject_quiz/showQuizField/' + subject_id + '-' + semester + '-' + mQuizId,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = "";
                 if (!getField[mQuizId]) getField[mQuizId] = []
                 getField[mQuizId] = response;
@@ -123,11 +129,11 @@ $(document).ready(function() {
                     html += '<h1>NO DATA</h1>'
                 }
                 $('#headerHere-' + mQuizId).html(html);
-                $.each(getField[mQuizId], function(i, p) {
+                $.each(getField[mQuizId], function (i, p) {
                     showChoice(mQuizId, getField[mQuizId][i].headerQuizId);
                 });
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
@@ -139,7 +145,7 @@ $(document).ready(function() {
             type: "POST",
             url: '/' + url[3] + '/Std_subject_quiz/' + randChoice[CMenuID] + '/' + subject_id + '-' + semester + '-' + CMenuID + '-' + CHeaderID,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 if (!getUnit[CMenuID]) getUnit[CMenuID] = []
                 if (!getUnit[CMenuID][CHeaderID]) getUnit[CMenuID][CHeaderID] = []
                 getUnit[CMenuID][CHeaderID] = response;
@@ -173,17 +179,17 @@ $(document).ready(function() {
                 //     $('input[name="test-' + CMenuID + '-' + CHeaderID + '"]').attr('disabled', false);
                 // }
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
     }
     ajaxCount = 0;
-    $(document).ajaxStop(function() {
+    $(document).ajaxStop(function () {
         //console.log('AJAX HAS BEEN STOPPED-' + ajaxCount);
         if (ajaxCount <= 0) {
             showScore();
-            $.each(getMenu, function(i, p) {
+            $.each(getMenu, function (i, p) {
 
                 for (f34r = 0; f34r < checkMenu.length; f34r++) {
                     if (checkMenu[f34r].pointQuizMenuQuizId * 1 == getMenu[i].menuQuizId * 1) {
@@ -191,7 +197,7 @@ $(document).ready(function() {
                     }
                 }
 
-                $('#btnSend-' + getMenu[i].menuQuizId).click(function(e) {
+                $('#btnSend-' + getMenu[i].menuQuizId).click(function (e) {
                     var k = '';
                     var getPoint = [];
                     var getChoice = [];
@@ -214,7 +220,9 @@ $(document).ready(function() {
                     //console.logg(getChoice); 
                     //console.log('#btnSend-' + getMenu[i].menuQuizId);
 
-                    result = getPoint.filter((getPoint) => { return getPoint == '-1'; });
+                    result = getPoint.filter((getPoint) => {
+                        return getPoint == '-1';
+                    });
                     if (result.length > 0) {
                         if (confirm('ท่านยังทำไม่ครบทุกข้อ จะยืนยันการส่งหรือไม่?')) {
                             //console.log('saved');
@@ -237,11 +245,11 @@ $(document).ready(function() {
                             type: "POST",
                             url: '/' + url[3] + '/Std_subject_quiz/insertPoint',
                             data: '&semester=' + semester + '&subject=' + subject_id + '&menuId=' + getMenu[i].menuQuizId + '&headId=' + getChoice + '&pointId=' + getPoint,
-                            success: function() {
+                            success: function () {
                                 alert('บันทึกสำเร็จ');
                                 $('#btnSend-' + getMenu[i].menuQuizId).parent().parent().parent().hide();
                             },
-                            error: function() {
+                            error: function () {
                                 alert('บันทึกไม่สำเร็จ');
                             }
                         });
@@ -257,11 +265,11 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Std_subject_quiz/showScore/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 //console.log('showScore');
                 //console.log(response);
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });

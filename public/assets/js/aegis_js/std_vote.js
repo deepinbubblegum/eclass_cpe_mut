@@ -1,4 +1,10 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
+    year = semester.substr(0, 4);
+    part = semester.substr(4, 1);
+    $('#header').text('โหวต : ' + subject_id + ' - ' + year + '/' + part);
+
+
     var url = $(location).attr('href').split("/");
     var editMenuId = '';
     var fieldSaveUrl = '';
@@ -11,7 +17,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_vote/showMenuVote/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 getMenu = response;
                 var html = '';
                 if (response != null) {
@@ -45,9 +51,9 @@ $(document).ready(function() {
                     }
                 }
                 $('.showMenuVote').html(html);
-                $.each(getMenu, function(i, p) {
+                $.each(getMenu, function (i, p) {
                     showChoice(getMenu[i].menuVoteId);
-                    $('#btnSend-' + getMenu[i].menuVoteId).click(function(e) {
+                    $('#btnSend-' + getMenu[i].menuVoteId).click(function (e) {
                         console.log('RINKAFU - ' + getMenu[i].menuVoteId);
                         radioElement = document.querySelector('input[name="test-' + getMenu[i].menuVoteId + '"]:checked');
                         choiceId = radioElement.value;
@@ -57,11 +63,11 @@ $(document).ready(function() {
                             type: "POST",
                             url: '/' + url[3] + '/Std_subject_vote/insertPoint',
                             data: '&semester=' + semester + '&subject=' + subject_id + '&menuId=' + getMenu[i].menuVoteId + '&choiceId=' + choiceId,
-                            success: function() {
+                            success: function () {
                                 alert('บันทึกสำเร็จ');
                                 selectPoint(getMenu[i].menuVoteId);
                             },
-                            error: function() {
+                            error: function () {
                                 alert('บันทึกไม่สำเร็จ');
                             }
                         });
@@ -76,7 +82,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_vote/showVoteField/' + subject_id + '-' + semester + '-' + mVoteId,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = "";
                 if (!getField[mVoteId]) getField[mVoteId] = []
                 getField[mVoteId] = response;
@@ -98,16 +104,16 @@ $(document).ready(function() {
                 }
                 $('#fieldOlTag-' + mVoteId).html(html);
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
     }
     ajaxCount = 0;
-    $(document).ajaxStop(function() {
+    $(document).ajaxStop(function () {
         if (ajaxCount == 0) {
             console.log('ajax0');
-            $.each(getMenu, function(i, p) {
+            $.each(getMenu, function (i, p) {
                 selectPoint(getMenu[i].menuVoteId);
             });
 
@@ -123,7 +129,7 @@ $(document).ready(function() {
             url: '/' + url[3] + '/Std_subject_vote/selectPoint',
             data: '&semester=' + semester + '&subject=' + subject_id + '&menuId=' + thisMenuId,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 html = '';
                 if (response.length != undefined) {
                     html += '<i title="โหวดเรียบร้อยแล้ว" class="fas fa-check-circle success-color">โหวดเรียบร้อยแล้ว</i>';

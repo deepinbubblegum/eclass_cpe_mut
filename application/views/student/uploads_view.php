@@ -25,7 +25,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span style="font-size: 1.2em;">
                                         <i class="fas fa-chalkboard"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        &nbsp; อัปโหลด
+                                        <!-- &nbsp; อัปโหลด -->
+                                        &nbsp; <span id="header"></span>
                                 </span>
                         </div>
                         <!-- <form class="form-inline">

@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+        year = semester.substr(0, 4);
+        part = semester.substr(4, 1);
+        $('#header').text('สื่อสารสนเทศ : ' + subject_id + ' - ' + year + '/' + part);
+
+
         var _files;
         var url = $(location).attr('href').split("/");
         show_media();

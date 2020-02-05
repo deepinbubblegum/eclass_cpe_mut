@@ -1,6 +1,10 @@
 $(document).ready(function () {
     // alert(semester);
 
+    year = semester.substr(0, 4);
+    part = semester.substr(4, 1);
+    $('#header').text('ขอแลกคะแนน : ' + subject_id + ' - ' + year + '/' + part);
+
     var url = $(location).attr('href').split("/");
     var dataStdPoint = '';
     ShowMenu();

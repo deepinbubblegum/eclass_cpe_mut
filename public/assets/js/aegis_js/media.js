@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+        year = semester.substr(0, 4);
+        part = semester.substr(4, 1);
+        $('#header').text('สื่อสารสนเทศ : ' + subject_id + ' - ' + year + '/' + part);
+
         var _files;
         var url = $(location).attr('href').split("/");
         show_media();
@@ -28,7 +32,7 @@ $(document).ready(function () {
                                                         '</a>' +
                                                         '<div aria-labelledby="' + response[index]['media_id'] + '" class="collapse" data-parent="#accordionOne" id="' + response[index]['media_id'] + '">' +
                                                         '<div class="expansion-panel-body">' +
-                                                        '<p>'+response[index]['media_detail_txt']+'</p>'+
+                                                        '<p>' + response[index]['media_detail_txt'] + '</p>' +
                                                         '<video controls crossorigin playsinline>"' +
                                                         '<source src="' + window.location.protocol + '//' + window.location.hostname + '/media_uploads/video/souce_video/' + response[index]['media_real_name'] + '" type="video/mp4">' +
                                                         '<center class="mt-2" style="font-size: 18px">' +
@@ -49,7 +53,7 @@ $(document).ready(function () {
                                                         '</a>' +
                                                         '<div aria-labelledby="headingTwo" class="collapse" data-parent="#accordionOne" id="' + response[index]['media_id'] + '">' +
                                                         '<div class="expansion-panel-body">' +
-                                                        '<p>'+response[index]['media_detail_txt']+'</p>'+
+                                                        '<p>' + response[index]['media_detail_txt'] + '</p>' +
                                                         '<audio id="player" style="width: 100%;" controls>' +
                                                         '<source src="' + window.location.protocol + '//' + window.location.hostname + '/media_uploads/audio/souce_audio/' + response[index]['media_real_name'] + '" type="audio/mp3" />' +
                                                         '</audio>' +
@@ -67,7 +71,7 @@ $(document).ready(function () {
                                                         '</a>' +
                                                         '<div aria-labelledby="headingThree" class="collapse" data-parent="#accordionOne" id="' + response[index]['media_id'] + '">' +
                                                         '<div class="expansion-panel-body">' +
-                                                        '<p>'+response[index]['media_detail_txt']+'</p>'+
+                                                        '<p>' + response[index]['media_detail_txt'] + '</p>' +
                                                         '<img src="' + window.location.protocol + '//' + window.location.hostname + '/media_uploads/image/souce_image/' + response[index]['media_real_name'] + '" class="img-fluid" alt="Responsive image">' +
                                                         '</div>' +
                                                         '</div>' +
