@@ -19,7 +19,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 'aegis_css/material-font-icon.css',
                 'chart_css/Chart.css',
                 'aegis_css/su.css',
-                'snackbar_css/snackbar.min.css'
+                'snackbar_css/snackbar.min.css',
+                'summernote_css/summernote-bs4.min.css'
         );
 
         $multi_assets_js = array(
@@ -31,7 +32,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 'snackbar_js/snackbar.min.js',
                 'aegis_js/user_uses.js',
                 'aegis_js/langSwitching.js',
-                // 'summernote/dist/summernote-bs4.min.css',
+                'summernote_js/summernote-bs4.min.js',
                 // 'summernote/dist/summernote-bs4.min.js'
         );
         echo assets_css($multi_assets_css);

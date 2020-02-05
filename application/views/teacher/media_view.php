@@ -29,7 +29,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <i class="fas fa-photo-video"></i>
                                 </span>
                                 <span style="font-size: 0.8em;">
-                                        &nbsp; สื่อสารสนเทศ
+                                        <!-- &nbsp; สื่อสารสนเทศ -->
+                                        &nbsp; <span id="header"></span>
                                 </span>
                         </div>
 

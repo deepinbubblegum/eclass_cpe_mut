@@ -1,4 +1,9 @@
 $(document).ready(function() {
+
+    year = semester.substr(0, 4);
+    part = semester.substr(4, 1);
+    $('#header').text('ไฟล์ประกอบการสอน : ' + subject_id + ' - ' + year + '/' + part);
+
     var url = $(location).attr('href').split("/");
 
     function file_ico(type) {

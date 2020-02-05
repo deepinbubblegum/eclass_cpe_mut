@@ -1,5 +1,8 @@
 $(document).ready(function () {
-    $('#header').text('ประกาศถึงนักศึกษา : ' + subject_id + ' / ' + semester);
+
+    year = semester.substr(0, 4);
+    part = semester.substr(4, 1);
+    $('#header').text('ประกาศถึงนักศึกษา : ' + subject_id + ' - ' + year + '/' + part);
 
     var url = $(location).attr('href').split("/");
     var data_annouce;
