@@ -57,17 +57,17 @@ class Model_te_subject_quiz extends CI_Model
             $newid = $maxid->row()->newid;
 
             $maxindex = $this->db->query("
-            select IFNULL(max(setpoint_index),0)+1 as newindex
+            select IFNULL(max(CAST(setpoint_index AS int)),0)+1 as newindex
             from subject_setpoint
             where setpoint_semester = '" . $semester . "' and setpoint_subject='" . $subject . "' and setpoint_id = '" . $menuPoint . "'; ");
-            $maxindex = $maxindex->row()->newindex;
+            $newindex = $maxindex->row()->newindex;
 
             $data = array(
                 'setpoint_semester' => $semester,
                 'setpoint_subject' => $subject,
                 'setpoint_id' => $menuPoint,
                 'setpoint_setpoint_id' => $newid,
-                'setpoint_index' => $maxindex,
+                'setpoint_index' => $newindex,
                 'setpoint_ticket' => '0',
                 'setpoint_fullname' => $menuName,
                 'setpoint_mininame' => $menuName,
