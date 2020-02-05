@@ -84,7 +84,11 @@ $(document).ready(function() {
                         data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
                         dataType: "json",
                         success: function(response) {
-                            alert('EXPORT SUCCESS');
+                            if(response != 0){
+                                alert('EXPORT SUCCESS');
+                            }else{
+                                alert('EXPORT FAILED : ยังไม่มีนักศึกษาทำควิซ');
+                            }
                             $('#exportSame').text('');
                             $('#exportData').modal('hide');
                             console.log(response);
@@ -394,6 +398,7 @@ $(document).ready(function() {
                         $('#choiceQuizText').val(getUnit[CMenuID][CHeaderID][i].choiceQuizText);
                         $('#choiceQuizPoint').val(getUnit[CMenuID][CHeaderID][i].choiceQuizPoint);
                         pUrl = '/' + url[3] + '/Te_subject_quiz/editChoiceQuiz';
+                        //console.log(getMId);
                         editChoice = response[i].choiceQuizId;
                         getMId = CMenuID;
                         getHId = CHeaderID;
