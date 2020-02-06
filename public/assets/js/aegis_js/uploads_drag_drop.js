@@ -367,8 +367,88 @@ $(document).ready(function () {
 
         nameCollector[pos] = [];
         upload(0, pos);
+        showMenufiles();
         //$('#btnUpload').hide();
         //$('#btnClearAll').hide();
+    }
+    showMenufiles();
+    function showMenufiles() {
+        $.ajax({
+            url: '/' + url[3] + '/std_upload/showMenuUpload_files/' + subject_id + '-' + semester,
+            dataType: "json",
+            success: function(response) {
+                getMenu = response;
+                console.log(response);
+                var htmltxt = '';
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        htmltxt +=
+                            '<div class="expansion-panel list-group-item" >' +
+                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
+                            response[i].menuUpName +
+                            '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
+                            '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
+                            '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
+                            '</div>' +
+                            '</a>' +
+                            '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
+                            '<div class="expansion-panel-body">' +
+                            response[i].menuUpDescripition +
+                            '<div id="menuDowId-' + response[i].menuUpId + '">' +
+                            '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2">' +
+                            '<span class="mr-2 mb-0" style="font-size: 28px;">' +
+                            '<i class="fas fa-file-download"></i>' +
+                            '<span class="mr-2 text-black" style="font-size: 18px;">ทดสอบ</span>' +
+                            '<div class="mt-0">' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;">size : 20GB</small>' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;">type : pdf</small>' +
+                            '</div>' +
+                            '</span>' +
+                            '<span>' +
+                            '<button class="btn btn-float btn-info my-1"><i class="fas fa-download"></i></button>' +
+                            '</span>' +
+                            '</li>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    }
+                }
+                $('.showfilesupload').html(htmltxt);
+                for (i = 0; i < getMenu.length; i++) {
+                    show_data(i);
+                }
+            }
+        });
+    }
+
+    function show_data(popUp) {
+        $.ajax({
+            url: '/' + url[3] + '/std_upload/showDownloadList/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId,
+            dataType: "json",
+            success: function(response) {
+                getData = response;
+                var html = "";
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<li href="#" class="list-group-item d-flex flex-wrap justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
+                            '<span class="mr-2 mb-0" style="font-size: 28px;">' + file_ico(response[i].fileType) +
+                            '<span class="mr-2 text-black" style="font-size: 18px;"> ' + response[i].fileName + '</span>' +
+                            '<div class="mt-0">' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;"> Size : ' + fileSizeCal(response[i].fileSize) + '</small>' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;"> Type : ' + response[i].fileType + '</small>' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;"> Uploaded on : ' + response[i].fileTimestamp + '</small>' +
+                            '</div>' +
+                            '</li>';
+                    }
+                }
+                $('#menuDowId-' + getMenu[popUp].menuUpId).html(html);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Status: " + textStatus + "Error: " + errorThrown);
+            }
+        });
     }
 
 });

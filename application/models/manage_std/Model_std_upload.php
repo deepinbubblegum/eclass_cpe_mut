@@ -43,4 +43,34 @@ class Model_std_upload extends CI_Model
             return FALSE;
         }
     }
+
+    public function getMenuUpload_files($subjectId, $semesterId)
+    {
+        $this->db->select('*');
+        $this->db->from('menuUpload');
+        $this->db->where('menuUpSubjectId', $subjectId);
+        $this->db->where('menuUpSemesterId', $semesterId);
+        //$this->db->order_by('menuDowId', 'DESC');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function getData($subjectId, $semesterId, $menuId, $ses_id)
+    {
+        $this->db->select('*');
+        $this->db->from('fileUpload');
+        $this->db->where('fileSubjectId', $subjectId);
+        $this->db->where('fileSemesterId', $semesterId);
+        $this->db->where('fileMenuUpId', $menuId);
+        $this->db->where('fileUserId', $ses_id);
+        //$this->db->order_by('fileTimestamp', 'DESC');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+    }
 }
