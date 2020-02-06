@@ -23,9 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+// $config['base_url'] = 'https://eclass.mes.mut.ac.th/';
 // $config['base_url'] = 'https://www.cpe.mut.ac.th/';
-$config['base_url'] = 'https://www.cpe.mut.ac.th/';
-
+$config['base_url'] = 'https://eclass.mes.mut.ac.th/';
 /*
 |--------------------------------------------------------------------------
 | Index File

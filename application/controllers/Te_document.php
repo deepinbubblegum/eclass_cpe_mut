@@ -30,16 +30,16 @@ class Te_document extends MY_Controller
         return $strDay . ' ' . $thaimonth[$strMonth] . ' ' . $strYear;
     }
 
-    public function sheet(){
-        $this->load->helper('path');
-        $dir = 'office/msword/';
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Hello World !');
+    // public function sheet(){
+    //     $this->load->helper('path');
+    //     $dir = 'office/msword/';
+    //     $spreadsheet = new Spreadsheet();
+    //     $sheet = $spreadsheet->getActiveSheet();
+    //     $sheet->setCellValue('A1', 'Hello World !');
         
-        $writer = new Xlsx($spreadsheet);
-        $writer->save($dir .'hello world.xlsx');
-    }
+    //     $writer = new Xlsx($spreadsheet);
+    //     $writer->save($dir .'hello world.xlsx');
+    // }
 
     public function index()
     {
