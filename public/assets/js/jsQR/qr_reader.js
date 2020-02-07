@@ -113,7 +113,10 @@ $(document).ready(function () {
                 // var count_list = 0;
                 // if (count_list == 0) {
                 select.innerHTML = '';
-                select.appendChild(document.createElement('option'));
+                // const choose_camera = document.createElement('option');
+                // const choose_label = document.createTextNode('Choose cameras');
+                // choose_camera.appendChild(choose_label);
+                // select.appendChild(choose_camera);
                 // }
                 mediaDevices.forEach(mediaDevice => {
                         if (mediaDevice.kind === 'videoinput') {
@@ -158,7 +161,7 @@ $(document).ready(function () {
                                 requestAnimationFrame(tick);
                                 return navigator.mediaDevices.enumerateDevices();
                         })
-                        .then(gotDevices)
+                        .then(/*gotDevices*/)
                         .catch(error => {
                                 console.error(error);
                         });
