@@ -72,7 +72,7 @@ $(document).ready(function () {
                                                         '<div aria-labelledby="headingThree" class="collapse" data-parent="#accordionOne" id="' + response[index]['media_id'] + '">' +
                                                         '<div class="expansion-panel-body">' +
                                                         '<p>' + response[index]['media_detail_txt'] + '</p>' +
-                                                        '<img src="' + window.location.protocol + '//' + window.location.hostname + '/media_uploads/image/souce_image/' + response[index]['media_real_name'] + '" class="img-fluid" alt="Responsive image">' +
+                                                        '<img src="' + window.location.protocol + '//' + window.location.hostname + '/media_uploads/Image/souce_image/' + response[index]['media_real_name'] + '" class="img-fluid" alt="Responsive image">' +
                                                         '</div>' +
                                                         '</div>' +
                                                         '</div>';
