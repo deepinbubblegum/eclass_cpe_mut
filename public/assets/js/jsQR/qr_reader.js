@@ -99,7 +99,7 @@ $(document).ready(function () {
         const select = document.getElementById('select_camera');
         let currentStream;
         var flag = 0;
-        var count_list = 0;
+
         $('#Ticket').val('');
         // $('#select_camera').hide();
         function stopMediaTracks(stream) {
@@ -109,22 +109,23 @@ $(document).ready(function () {
         }
 
         function gotDevices(mediaDevices) {
-                if (count_list == 0) {
-                        select.innerHTML = '';
-                        // select.appendChild(document.createElement('option'));
-                }
                 let count = 1;
+                // var count_list = 0;
+                // if (count_list == 0) {
+                select.innerHTML = '';
+                select.appendChild(document.createElement('option'));
+                // }
                 mediaDevices.forEach(mediaDevice => {
                         if (mediaDevice.kind === 'videoinput') {
-                                if (count_list == 0) {
-                                        const option = document.createElement('option');
-                                        option.value = mediaDevice.deviceId;
-                                        const label = mediaDevice.label || `Camera ${count++}`;
-                                        const textNode = document.createTextNode(label);
-                                        option.appendChild(textNode);
-                                        select.appendChild(option);
-                                        count_list = 1;
-                                }
+                                // if (count_list <= count) {
+                                const option = document.createElement('option');
+                                option.value = mediaDevice.deviceId;
+                                const label = mediaDevice.label || `Camera ${count++}`;
+                                const textNode = document.createTextNode(label);
+                                option.appendChild(textNode);
+                                select.appendChild(option);
+                                // count_list++;
+                                // }
                         }
                 });
                 // $('#select_camera').show();
