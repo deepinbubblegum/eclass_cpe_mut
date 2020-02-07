@@ -91,7 +91,7 @@ $(document).ready(function () {
         // const select = $('#select_camera');
 
         $('#qr_canvas').hide();
-        $('#select_camera').hide();
+
         const video = document.createElement("video");
         const canvasElement = document.getElementById('qr_canvas');
         const canvas = canvasElement.getContext("2d");
@@ -99,9 +99,9 @@ $(document).ready(function () {
         const select = document.getElementById('select_camera');
         let currentStream;
         var flag = 0;
-        var count = 0;
+        var count_list = 0;
         $('#Ticket').val('');
-
+        // $('#select_camera').hide();
         function stopMediaTracks(stream) {
                 stream.getTracks().forEach(track => {
                         track.stop();
@@ -109,27 +109,29 @@ $(document).ready(function () {
         }
 
         function gotDevices(mediaDevices) {
-                select.innerHTML = '';
-                select.appendChild(document.createElement('option'));
+                if (count_list == 0) {
+                        select.innerHTML = '';
+                        // select.appendChild(document.createElement('option'));
+                }
                 let count = 1;
                 mediaDevices.forEach(mediaDevice => {
                         if (mediaDevice.kind === 'videoinput') {
-                                const option = document.createElement('option');
-                                if(count == 1){
-                                        option.setAttribute("select", true);
+                                if (count_list == 0) {
+                                        const option = document.createElement('option');
+                                        option.value = mediaDevice.deviceId;
+                                        const label = mediaDevice.label || `Camera ${count++}`;
+                                        const textNode = document.createTextNode(label);
+                                        option.appendChild(textNode);
+                                        select.appendChild(option);
+                                        count_list = 1;
                                 }
-                                option.value = mediaDevice.deviceId;
-                                const label = mediaDevice.label || `Camera ${count++}`;
-                                const textNode = document.createTextNode(label);
-                                option.appendChild(textNode);
-                                select.appendChild(option);
                         }
                 });
+                // $('#select_camera').show();
         }
 
         function qr_reader_start() {
                 $('#qr_canvas').show(500);
-                $('#select_camera').show(500);
                 if (typeof currentStream !== 'undefined') {
                         stopMediaTracks(currentStream);
                 }
@@ -206,27 +208,36 @@ $(document).ready(function () {
         $('#btn_start_reader').click(function (e) {
                 e.preventDefault();
                 flag++;
-                if(flag == 1){
+                if (flag == 1) {
                         qr_reader_start();
                         $('#Ticket').val('');
                         console.log('ON');
-                }else{
+                } else {
                         qr_reader_stop();
                         flag = 0;
                         console.log('OFF');
                 }
         });
 
-        $('#qr_close').click(function (e) {
+        $('#select_camera').change(function (e) {
                 e.preventDefault();
                 qr_reader_stop();
+                qr_reader_start();
         });
-        
-        function qr_reader_stop(){
+
+        $('#qr_close').click(function (e) {
+                e.preventDefault();
+                if (flag == 1) {
+                        qr_reader_stop();
+                }
+                $("#modal_ticket").modal('hide');
+        });
+
+        function qr_reader_stop() {
                 video.pause();
                 stopMediaTracks(currentStream);
                 $('#qr_canvas').hide();
-                $('#select_camera').hide();
+                // $('#select_camera').hide();
         }
 
         function bootstrapClearButton() {

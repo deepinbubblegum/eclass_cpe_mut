@@ -39,7 +39,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="modal-content">
                                 <div class="modal-header">
                                         <h5 class="modal-title" id="modal_ticketLabel">กรอกรหัสคะแนน</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <!-- data-dismiss="modal" -->
+                                        <button type="button" class="close" id="qr_close" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                         </button>
                                 </div>
@@ -50,7 +51,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <div class="my-1">
                                                         <!-- <label class="mr-sm-2" for="inlineFormCustomSelect">Cameras</label> -->
                                                         <select id="select_camera" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                                                                <option></option>
                                                         </select>
                                                 </div>
                                                 <div class="form-group position-relative mt-1">
