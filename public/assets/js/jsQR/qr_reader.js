@@ -91,6 +91,7 @@ $(document).ready(function () {
         // const select = $('#select_camera');
 
         $('#qr_canvas').hide();
+        $('#select_camera').hide();
         const video = document.createElement("video");
         const canvasElement = document.getElementById('qr_canvas');
         const canvas = canvasElement.getContext("2d");
@@ -128,6 +129,7 @@ $(document).ready(function () {
 
         function qr_reader_start() {
                 $('#qr_canvas').show(500);
+                $('#select_camera').show(500);
                 if (typeof currentStream !== 'undefined') {
                         stopMediaTracks(currentStream);
                 }
@@ -224,6 +226,7 @@ $(document).ready(function () {
                 video.pause();
                 stopMediaTracks(currentStream);
                 $('#qr_canvas').hide();
+                $('#select_camera').hide();
         }
 
         function bootstrapClearButton() {
