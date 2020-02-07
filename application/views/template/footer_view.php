@@ -20,6 +20,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
         echo assets_js('jsQR/jsQR.js');
         echo assets_js('jsQR/qr_reader.js');
         ?>
+
+        <style>
+                video {
+                        width: 100%;
+                        max-width: 600px;
+                        display: block;
+                        margin: 0 auto;
+                }
+        </style>
 </head>
 
 <body>
@@ -37,6 +46,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="modal-body">
                                         <form>
                                                 <canvas class="mx-auto" id="qr_canvas" style="border: 1px solid rgb(14, 168, 234); width: 100%; height: 100%;"></canvas>
+                                                <!-- <video id="video" autoplay playsinline></video> -->
+                                                <div class="my-1">
+                                                        <label class="mr-sm-2" for="inlineFormCustomSelect">Cameras</label>
+                                                        <select id="select_camera" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                                <option></option>
+                                                        </select>
+                                                </div>
                                                 <div class="form-group position-relative mt-1">
                                                         <div class="floating-label">
                                                                 <label for="Ticket"><i class="fas fa-hashtag"></i>&nbsp;&nbsp;รหัสใบงาน</label>
