@@ -5,6 +5,9 @@ use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\TemplateProcessor;
 use DocxMerge\DocxMerge;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Te_document extends MY_Controller
 {
     public function __construct()
@@ -27,6 +30,16 @@ class Te_document extends MY_Controller
         return $strDay . ' ' . $thaimonth[$strMonth] . ' ' . $strYear;
     }
 
+    // public function sheet(){
+    //     $this->load->helper('path');
+    //     $dir = 'office/msword/';
+    //     $spreadsheet = new Spreadsheet();
+    //     $sheet = $spreadsheet->getActiveSheet();
+    //     $sheet->setCellValue('A1', 'Hello World !');
+        
+    //     $writer = new Xlsx($spreadsheet);
+    //     $writer->save($dir .'hello world.xlsx');
+    // }
 
     public function index()
     {
@@ -93,6 +106,10 @@ class Te_document extends MY_Controller
 
         unlink($dir . '/tmp/' . $title . '.docx');
         unlink($dir . '/tmp/' . $title . '2.docx');
+
+
+
+
         // echo '<iframe src="https://docs.google.com/viewer?url=' . base_url('office/msword/') . $title . ".docx" . '&embedded=true"  style="position: absolute;width:100%; height: 100%;border: none;"></iframe>';
     }
 }

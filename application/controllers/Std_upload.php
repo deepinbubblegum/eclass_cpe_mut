@@ -119,5 +119,28 @@ class Std_upload extends MY_Controller
                     } 
                 } 
                 
-        } 
+        }
+
+        public function showMenuUpload_files($sid)
+        {
+                $str_arr = explode("-", $sid);
+                $data = array(
+                        'subject_id' => $str_arr[0],
+                        'semester' => $str_arr[1],
+                );
+                $result = $this->Model_std_upload->getMenuUpload_files($data['subject_id'], $data['semester']);
+                echo json_encode($result);
+        }
+
+        public function showDownloadList($sid)
+        {
+                $str_arr = explode("-", $sid);
+                $data = array(
+                        'subject_id' => $str_arr[0],
+                        'semester' => $str_arr[1],
+                'menu_id' => $str_arr[2]
+                );
+                $result = $this->Model_std_upload->getData($data['subject_id'], $data['semester'], $data['menu_id'], $this->session->ses_id);
+                echo json_encode($result);
+        }
 }
