@@ -15,7 +15,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 'bootstrap_css/material_pugin.css',
                 '../fontawesome/css/all.css',
                 'aegis_css/cpe-mes.css',
-                'aegis_css/font_Mitr.css',
+                // 'aegis_css/font_Mitr.css',
+                'aegis_css/font_sarabun.css',
                 'aegis_css/material-font-icon.css',
                 'chart_css/Chart.css',
                 'aegis_css/su.css',
@@ -40,7 +41,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         ?>
 </head>
 
-<body class="bg-light h-100" style="font-family: 'Mitr', sans-serif;">
+<body class="bg-light h-100" style="font-family: 'Sarabun', sans-serif;">
         <div class="navbar w-100 sticky-top navbar-dark navbar-full doc-navbar-default mainnavbar" style="min-width: 375px; width:100%;">
                 <!-- ปุ่มด้านซ้าย -->
 
