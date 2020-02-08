@@ -230,4 +230,15 @@ class Te_subject_point extends MY_Controller
         // print_r($sortArray);
         $this->Model_te_subject_point->IndexMenu($sortIDArray, $ArraySemester, $ArraySubject);
     }
+
+    public function checkMaxpointSTD()
+    {
+        $point_std_semester = $this->input->post('semester');
+        $point_std_subject = $this->input->post('subject_id');
+        $point_std_id = $this->input->post('setIdChild');
+        $point_std_setpoint_id = $this->input->post('setIdParent');
+        $point_std_user_id = $this->input->post('std');
+        $result = $this->Model_te_subject_point->checkMaxpointSTD_modal($point_std_semester,$point_std_subject,$point_std_id,$point_std_setpoint_id,$point_std_user_id);
+        echo json_encode($result); 
+    }
 }
