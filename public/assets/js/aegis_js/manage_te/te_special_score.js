@@ -776,56 +776,131 @@ $(document).ready(function () {
 
     $(document).on('keypress', function (e) {
         if (e.which == 13) {
+
             uID = $('#addTicketUID').val();
             tPoint = $('#addTicketP').val();
+
+            maxstd = 0;
+            maxstd = parseFloat(maxstd) + parseFloat(tPoint);
+
+            $.ajax({
+                type: "POST",
+                url: '/' + url[3] + '/Te_subject_point/checkMaxpointSTD',
+                data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&std=' + uID,
+                dataType: "json",
+                success: function (response) {
+                    // console.log(response);
+                    if (response != null) {
+                        for (i = 0; i < response.length; i++) {
+                            // tPoint = tPoint + (response[i].point_std_point*1);
+                            maxstd = parseFloat(maxstd) + parseFloat(response[i].point_std_point);
+                        }
+                    }
+
+                    if (maxstd > setMaxPoint) {
+                        Snackbar.show({
+                            actionText: 'close',
+                            pos: 'top-center',
+                            actionTextColor: '#FF0000',
+                            backgroundColor: '#323232',
+                            width: 'auto',
+                            text: 'คะแนนเกินคะแนนสูงสุด'
+                        });
+                        return false
+                    } else {
+                        AddPoint_std(uID, tPoint);
+                    }
+                }
+            });
+
             //if (tPoint > setMaxPoint) tPoint = setMaxPoint;
             //console.log(uID, tPoint, setMaxPoint, subject_id + '-' + semester, setIdParent, setIdChild);
 
             //pUrl = '/' + url[3] + '/Te_subject_point/insertFieldScore/' + semester + '-' + subject_id + '-' + pointId + '-' + ticket + '-' + fullName + '-' + miniName + '-' + maxPoint;
             pUrl = '/' + url[3] + '/Te_subject_point/insertInFieldPoint';
 
-            $.ajax({
-                type: "POST",
-                url: pUrl,
-                data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&tPoint=' + tPoint + '&uID=' + uID,
-                dataType: "json",
-                success: function (response) {
-                    $('#addTicketUID').val("");
-                    $("#addTicketUID").focus();
-                    console.log(response);
-                    Snackbar.show({
-                        actionText: 'close',
-                        pos: 'top-center',
-                        actionTextColor: '#4CAF50',
-                        backgroundColor: '#323232',
-                        width: 'auto',
-                        text: response
-                    });
-                    // $('#addTicketP').val("");
-                },
-                error: function () {
-                    $('#addTicketUID').val("");
-                    $("#addTicketUID").focus();
-                    Snackbar.show({
-                        actionText: 'close',
-                        pos: 'top-center',
-                        actionTextColor: '#FF0000',
-                        backgroundColor: '#323232',
-                        width: 'auto',
-                        text: 'ไม่มีข้อมูลในระบบ'
-                    });
-                }
-            });
+            // $.ajax({
+            //     type: "POST",
+            //     url: pUrl,
+            //     data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&tPoint=' + tPoint + '&uID=' + uID,
+            //     dataType: "json",
+            //     success: function (response) {
+            //         $('#addTicketUID').val("");
+            //         $("#addTicketUID").focus();
+            //         console.log(response);
+            //         Snackbar.show({
+            //             actionText: 'close',
+            //             pos: 'top-center',
+            //             actionTextColor: '#4CAF50',
+            //             backgroundColor: '#323232',
+            //             width: 'auto',
+            //             text: response
+            //         });
+            //         // $('#addTicketP').val("");
+            //     },
+            //     error: function () {
+            //         $('#addTicketUID').val("");
+            //         $("#addTicketUID").focus();
+            //         Snackbar.show({
+            //             actionText: 'close',
+            //             pos: 'top-center',
+            //             actionTextColor: '#FF0000',
+            //             backgroundColor: '#323232',
+            //             width: 'auto',
+            //             text: 'ไม่มีข้อมูลในระบบ'
+            //         });
+            //     }
+            // });
         }
     });
 
     $('#ticketSave').click(function (e) {
         uID = $('#addTicketUID').val();
         tPoint = $('#addTicketP').val();
+
+        maxstd = 0;
+        maxstd = parseFloat(maxstd) + parseFloat(tPoint);
+
+        // console.log(setIdChild);
+        $.ajax({
+            type: "POST",
+            url: '/' + url[3] + '/Te_subject_point/checkMaxpointSTD',
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&std=' + uID,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        // tPoint = tPoint + (response[i].point_std_point*1);
+                        maxstd = parseFloat(maxstd) + parseFloat(response[i].point_std_point);
+                    }
+                }
+
+                if (maxstd > setMaxPoint) {
+                    Snackbar.show({
+                        actionText: 'close',
+                        pos: 'top-center',
+                        actionTextColor: '#FF0000',
+                        backgroundColor: '#323232',
+                        width: 'auto',
+                        text: 'คะแนนเกินคะแนนสูงสุด'
+                    });
+                    return false
+                } else {
+                    AddPoint_std(uID, tPoint);
+                }
+            }
+        });
+
         //if (tPoint > setMaxPoint) tPoint = setMaxPoint;
-        //console.log(uID, tPoint, setMaxPoint, subject_id + '-' + semester, setIdParent, setIdChild);
+        // console.log(uID, tPoint, setMaxPoint, subject_id + '-' + semester, setIdParent, setIdChild);
 
         //pUrl = '/' + url[3] + '/Te_subject_point/insertFieldScore/' + semester + '-' + subject_id + '-' + pointId + '-' + ticket + '-' + fullName + '-' + miniName + '-' + maxPoint;
+
+    });
+
+
+    function AddPoint_std(uID, tPoint) {
         pUrl = '/' + url[3] + '/Te_subject_point/insertInFieldPoint';
 
         $.ajax({
@@ -860,7 +935,6 @@ $(document).ready(function () {
                 });
             }
         });
-    });
-
+    }
 
 });

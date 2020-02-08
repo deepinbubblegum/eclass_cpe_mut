@@ -264,4 +264,15 @@ class Model_te_subject_point extends CI_Model
             // echo $sortArray[$i];
         }
     }
+
+    public function checkMaxpointSTD_modal($point_std_semester,$point_std_subject,$point_std_id,$point_std_setpoint_id,$point_std_user_id)
+    {
+        $query = $this->db->query('SELECT * FROM subject_point_student  WHERE point_std_semester = "' . $point_std_semester . '" AND point_std_subject = "' . $point_std_subject . '" AND point_std_id = "' . $point_std_id . '" AND
+        point_std_setpoint_id = "' . $point_std_setpoint_id . '" AND point_std_user_id = "' . $point_std_user_id . '" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
 }
