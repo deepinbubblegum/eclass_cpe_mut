@@ -36,7 +36,7 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['รหัสระดับสิทธิ์', 'ชื่อระดับสิทธิ์', 'เลขระดับสิทธิ์', 'Option'];
+    var theadGenValue = ['รหัสระดับสิทธิ์', 'ชื่อระดับสิทธิ์', 'Option'];
 
     var formData = ["#per_name"];
 
