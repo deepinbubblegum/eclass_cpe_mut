@@ -161,7 +161,7 @@ $(document).ready(function () {
                                 requestAnimationFrame(tick);
                                 return navigator.mediaDevices.enumerateDevices();
                         })
-                        .then(/*gotDevices*/)
+                        .then( /*gotDevices*/ )
                         .catch(error => {
                                 console.error(error);
                         });
@@ -244,6 +244,28 @@ $(document).ready(function () {
                 // $('#select_camera').hide();
         }
 
+        // function key_rex(arg) {
+        //         re = /([A-Z^0-9]{4})([A-Z^0-9]{4})([A-Z^0-9]{4})([A-Z^0-9]{4})([A-Z^0-9]{4})/g;
+        //         result = arg.replace(re, "$1-$2-$3-$4-$5");
+        //         console.log('regex = ' + result);
+        //         return result;
+        // }
+
+        // $('#Ticket').keypress(function (e) {
+        //         key_txt = $('#Ticket').val().toUpperCase();
+        //         $('#Ticket').val(key_rex(key_txt));
+        // });
+
+        $('#Ticket').keyup(function (e) {
+                $('#Ticket').val($('#Ticket').val().toUpperCase());
+                noOfTxt = $('#Ticket').val().replace(/-/gi, "").length;
+                if (e.keyCode != 8) { //back space
+                        if (noOfTxt != 0 && noOfTxt % 4 == 0 && noOfTxt < 20) {
+                                $('#Ticket').val($('#Ticket').val() + '-');
+                        }
+                }
+        });
+
         function bootstrapClearButton() {
                 $('.position-relative :input').on('keydown focus', function () {
                         if ($(this).val().length > 0) {
@@ -259,4 +281,5 @@ $(document).ready(function () {
                 });
         }
         bootstrapClearButton();
+
 });
