@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <?php
         echo assets_css('aegis_css/uploads_drag_drop.css');
         echo assets_js('aegis_js/te_uploads.js');
-        echo assets_js('jquery_js/jquery-ui.min.js');
+        // echo assets_js('jquery_js/jquery-ui.min.js');
         ?>
         <style>
                 .f34r-bg-n-txt {

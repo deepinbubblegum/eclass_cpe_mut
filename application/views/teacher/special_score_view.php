@@ -12,7 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 subject_id = '<?php echo $subject_id; ?>';
                 semester = '<?php echo $semester; ?>';
         </script>
-        <?php echo assets_js('jquery_js/jquery-ui.min.js'); ?>
+        <?php //echo assets_js('jquery_js/jquery-ui.min.js'); ?>
         <?php echo assets_js('aegis_js/manage_te/te_special_score.js'); ?>
         <style>
                 .f34r-bg-n-txt {
@@ -61,6 +61,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 }
 
                 /* .sortableItem {cursor: pointer;} */
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                }
         </style>
 
 </head>
@@ -154,11 +159,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <label for="Textarea">ชื่อเต็มช่องคะแนน</label>
                                                         <input class="form-control" id="addFieldFN">
                                                         <label for="Textarea">ชื่อย่อช่องคะแนน</label>
-                                                        <input class="form-control" id="addFieldMN">
+                                                        <input class="form-control" id="addFieldMN" maxlength="5">
                                                         <!-- <label for="Textarea">setpoint_ticket</label> -->
                                                         <!-- <input class="form-control" id="addFieldTK"> -->
                                                         <label for="Textarea" id="FieldMaxtxt">คะแนนเต็ม</label>
-                                                        <input class="form-control" id="addFieldMP" value="1">
+                                                        <input class="form-control" id="addFieldMP" value="1" type="number">
 
                                                         <label for="Textarea" class="mt-3">รูปแบบการกรอกคะแนน</label>
                                                         <div class="custom-control custom-radio custom-control-inline mt-2 mb-2">
@@ -205,9 +210,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <label for="Textarea">Ticket Discription</label>
                                                         <input class="form-control" id="ticket_discrip">
                                                         <label for="Textarea">Ticket Point</label>
-                                                        <input class="form-control" id="ticket_point">
+                                                        <input class="form-control" id="ticket_point" type="number">
                                                         <label for="Textarea">Number of Ticket</label>
-                                                        <input class="form-control" id="ticketNumber">
+                                                        <input class="form-control" id="ticketNumber" type="number">
                                                 </div>
 
                                         </div>
@@ -235,9 +240,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <div class="modal-body">
                                                 <div class="form-group">
                                                         <label for="Textarea">addTicket_point</label>
-                                                        <input class="form-control" id="addTicketP">
+                                                        <input class="form-control" id="addTicketP" type="number">
                                                         <label for="Textarea">addTicket_userId</label>
-                                                        <input class="form-control" id="addTicketUID">
+                                                        <input class="form-control" id="addTicketUID" type="number">
                                                 </div>
 
                                         </div>

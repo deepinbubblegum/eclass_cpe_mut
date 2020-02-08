@@ -29,7 +29,7 @@ $(document).ready(function() {
     var dropSearchValue = [
         //[VALUE,TEXT]
         ['per_name', 'NAME'],
-        ['per_bit', 'BIT'],
+        // ['per_bit', 'BIT'],
         // ['user_email', 'EMAIL'],
         // ['user_major', 'MAJOR'],
         // ['user_permission', 'PERMISSION']
@@ -238,7 +238,7 @@ $(document).ready(function() {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].per_name + '</td>' +
-                            '<td>' + response[i].per_bit + '</td>' +
+                            // '<td>' + response[i].per_bit + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].per_bit + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -273,7 +273,7 @@ $(document).ready(function() {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].per_name + '</td>' +
-                            '<td>' + response[i].per_bit + '</td>' +
+                            // '<td>' + response[i].per_bit + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].per_bit + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }

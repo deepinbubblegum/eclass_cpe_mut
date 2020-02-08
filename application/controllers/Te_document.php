@@ -13,6 +13,7 @@ class Te_document extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('manage_te/Model_te_point_special');
     }
 
 
@@ -43,6 +44,12 @@ class Te_document extends MY_Controller
 
     public function index()
     {
+        $semester = $this->input->post('semester');
+        $maxdoc = $this->db->query("SELECT IFNULL(lpad(lpad(max(CAST(substr(doc_no,3,2)AS int))+1,2,'0'),4,'80'),'8001') as newNO FROM no_doc WHERE doc_semester = '" . $semester . "'  ");
+        $newdoc = $maxdoc->row()->newNO;
+        $this->db->query('INSERT INTO no_doc VALUES("' . $semester . '" , "' . $newdoc . '")');
+        $yearDoc = substr($semester, 2, 2);
+
         // หน้าแรก
         $this->load->helper('path');
         // $path_msword = APPPATH."msword/";
@@ -51,11 +58,12 @@ class Te_document extends MY_Controller
         $templateProcessor = new TemplateProcessor($dir . 'template/templates.docx');
 
         $templateProcessor->setValues(array(
-            'Te_name' => 'อาจารย์ยศธร ภูมิสุทธิ์',
+            'NoDoc' => $yearDoc . "/" . $newdoc,
+            'Te_name' => $this->input->post('teacher_TH'),
             'DateThai' => $this->DateThai(),
-            'Semester' => '1/2561',
-            'Id_subject-name' => 'CPEN1111 Computer Programming II',
-            'Te_signature_name' => 'อาจารย์ศิลปกร  ปิยะปัญญาพงษ์',
+            'Semester' => $this->input->post('semesterDoc'),
+            'Id_subject-name' => $this->input->post('subject_ID') . " " . $this->input->post('subject_Name'),
+            'Te_signature_name' => $this->input->post('teacher'),
             'Club_president_name' => 'นายอภิเชษฐ์ เมืองทรัพย์',
             'Club_president_phone' => '093-145-8777',
             'Club_president_email' => '5911110129@mutacth.com',
@@ -83,12 +91,17 @@ class Te_document extends MY_Controller
             array('name' => 'TH SarabunPSK', 'size' => 14, 'color' => '000000', 'bold' => false)
         );
         $phpWord->addParagraphStyle(
-            'p2Style', array('align' => 'center')
+            'p2Style',
+            array('align' => 'center')
         );
 
-        for ($i=0; $i < 80; $i++) { 
+        $StdID = $this->input->post('StdID');
+        $StdName = $this->input->post('StdName');
+        $Stdpoint = $this->input->post('Stdpoint');
+        for ($i = 0; $i < count($StdID); $i++) {
             $section->addText(
-                '6111110096	นางสาวญานิกา 	ภาคพานิช	5 คะแนน',
+                // '6111110096	นางสาวญานิกา 	ภาคพานิช	5 คะแนน',
+                $StdID[$i] . "     " . $StdName[$i] . "     " . $Stdpoint[$i] . "   คะแนน",
                 $fontStyleName,
                 'p2Style'
             );
@@ -111,5 +124,7 @@ class Te_document extends MY_Controller
 
 
         // echo '<iframe src="https://docs.google.com/viewer?url=' . base_url('office/msword/') . $title . ".docx" . '&embedded=true"  style="position: absolute;width:100%; height: 100%;border: none;"></iframe>';
+        // redirect('https://docs.google.com/viewer?url='. base_url('office/msword/') . $title . ".docx");
+        echo json_encode('https://docs.google.com/viewer?url='. base_url('office/msword/') . $title . ".docx");
     }
 }

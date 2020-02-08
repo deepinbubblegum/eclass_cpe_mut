@@ -32,6 +32,30 @@ $(document).ready(function () {
 
     $('#summernote').summernote('code', '');
 
+    $("#addFieldMN").keypress(function (event) {
+        var ew = event.which;
+        if (ew == 32)
+            return true;
+        if (48 <= ew && ew <= 57)
+            return true;
+        if (65 <= ew && ew <= 90)
+            return true;
+        if (97 <= ew && ew <= 122)
+            return true;
+        return false;
+    });
+
+    $("#addFieldMP").keyup(function (event) {
+        // var re = new RegExp("[ก-๙]",);
+        var re = new RegExp("[ๆๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦห]", );
+        const chars = event.target.value.split('');
+        const char = chars.pop();
+        if (re.test(char)) {
+            event.target.value = chars.join('');
+            // console.log(`${char} is not a valid character.`);
+        }
+    });
+
 
     $('#btnAddScore').click(function (e) {
         e.preventDefault();
@@ -44,27 +68,9 @@ $(document).ready(function () {
         iurl = "/" + url[3] + "/Te_subject_point/insertMenuScore";
         $('#summernote').summernote('code', '');
 
-        $('#accordionOne').activate('option', 'active', '#accM-1');
+        // $('#accordionOne').activate('option', 'active', '#accM-1');
     });
 
-
-    // $('#Modal').on('shown.bs.modal', function () {
-    //     $('#summernote').summernote({
-    //         dialogsInBody: true,
-    //         placeholder: 'รายละเอียดช่องคะแนน',
-    //         // tabsize: 1,
-    //         height: 350,
-    //         toolbar: [
-    //             ['style', ['style']],
-    //             ['font', ['bold', 'underline', 'clear']],
-    //             ['color', ['color']],
-    //             ['para', ['ul', 'ol', 'paragraph']],
-    //             // ['table', ['table']],
-    //             ['insert', ['link', 'picture', 'video']],
-    //             ['view', ['fullscreen', 'codeview', 'help']]
-    //         ]
-    //     });
-    // });
 
     $('#save').click(function (e) {
         header = $('#Headtext').val();
@@ -362,8 +368,12 @@ $(document).ready(function () {
     $('#optionSet').change(function () {
         if ($('#optionSet').val() == 1) {
             $('#FieldMaxtxt').text('คะแนนเต็ม');
+            $('#addFieldMP').prop('type', 'number');
+            // $('#addFieldMP').val('1');
         } else {
             $('#FieldMaxtxt').text('สูตรในการคำนวน');
+            $('#addFieldMP').prop('type', 'text');
+            // $('#addFieldMP').val('');
         }
     });
 
@@ -450,7 +460,7 @@ $(document).ready(function () {
             url: '/' + url[3] + '/Te_subject_point/showPointField/' + subject_id + '-' + semester + '-' + popUp,
             dataType: "json",
             success: function (response) {
-                // console.log(response);
+                console.log(response);
                 var html = "";
                 if (!getField[popUp]) getField[popUp] = []
                 getField[popUp] = response;
@@ -512,7 +522,7 @@ $(document).ready(function () {
                     $('#addTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         console.log('#addTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         $('#addTicket').modal('show');
-                        $('#addTicketLabel').text('เพิ่มคะแนน ' + getField[popUp][i].setpoint_mininame);
+                        $('#addTicketLabel').text('เพิ่มคะแนน ' + getField[popUp][i].setpoint_mininame + ' (คะแนนเต็ม ' + getField[popUp][i].setpoint_maxpoint + ')');
                         setIdChild = popUp;
                         setIdParent = getField[popUp][i].setpoint_setpoint_id;
                         setMaxPoint = getField[popUp][i].setpoint_maxpoint;
@@ -523,8 +533,10 @@ $(document).ready(function () {
 
                         if (response[i].setpoint_option == 1) {
                             $('#FieldMaxtxt').text('คะแนนเต็ม');
+                            $('#addFieldMP').prop('type', 'number');
                         } else {
                             $('#FieldMaxtxt').text('สูตรในการคำนวน');
+                            $('#addFieldMP').prop('type', 'text');
                         }
 
                         $('#addFieldLabel').text('Edit Field : ' + response[i].setpoint_fullname);
@@ -760,8 +772,21 @@ $(document).ready(function () {
 
     $(document).on('keypress', function (e) {
         if (e.which == 13) {
+
             uID = $('#addTicketUID').val();
             tPoint = $('#addTicketP').val();
+
+            if (tPoint > setMaxPoint) {
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#FF0000',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: 'คะแนนที่ใส่เกินคะแนนสูงสุด'
+                });
+                return false
+            }
             //if (tPoint > setMaxPoint) tPoint = setMaxPoint;
             //console.log(uID, tPoint, setMaxPoint, subject_id + '-' + semester, setIdParent, setIdChild);
 
@@ -806,6 +831,18 @@ $(document).ready(function () {
     $('#ticketSave').click(function (e) {
         uID = $('#addTicketUID').val();
         tPoint = $('#addTicketP').val();
+
+        if (tPoint > setMaxPoint) {
+            Snackbar.show({
+                actionText: 'close',
+                pos: 'top-center',
+                actionTextColor: '#FF0000',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'คะแนนที่ใส่เกินคะแนนสูงสุด'
+            });
+            return false
+        }
         //if (tPoint > setMaxPoint) tPoint = setMaxPoint;
         //console.log(uID, tPoint, setMaxPoint, subject_id + '-' + semester, setIdParent, setIdChild);
 

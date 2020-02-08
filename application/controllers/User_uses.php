@@ -20,7 +20,8 @@ class User_uses extends MY_Controller
                                         'ses_tname' => $sign_status[0]['std_Tname'],
                                         'ses_ename' => $sign_status[0]['std_Ename'],
                                         'ses_mojor_id' => $sign_status[0]['std_major'],
-                                        'ses_status' => 'student'
+                                        'ses_status' => 'student',
+                                        'ses_statustext' => 'นักศึกษา'
                                 );
                                 $this->session->set_userdata($newdata);
                         } else if ($sign_status[0]['teacher_code_id'] != '' && $sign_status[0]['teacher_admin'] == '0') {
@@ -28,7 +29,10 @@ class User_uses extends MY_Controller
                                         'ses_id' => $sign_status[0]['teacher_code_id'],
                                         'ses_tname' => $sign_status[0]['teacher_Tname'],
                                         'ses_ename' => $sign_status[0]['teacher_Ename'],
-                                        'ses_status' => 'teacher'
+                                        'ses_THdegree' => $sign_status[0]['de_Tname'],
+                                        'ses_ENdegree' => $sign_status[0]['de_Ename'],
+                                        'ses_status' => 'teacher',
+                                        'ses_statustext' => 'อาจารย์'
                                 );
                                 $this->session->set_userdata($newdata);
                         } else if ($sign_status[0]['teacher_code_id'] != '' && $sign_status[0]['teacher_admin'] == '1') {
@@ -36,7 +40,10 @@ class User_uses extends MY_Controller
                                         'ses_id' => $sign_status[0]['teacher_code_id'],
                                         'ses_tname' => $sign_status[0]['teacher_Tname'],
                                         'ses_ename' => $sign_status[0]['teacher_Ename'],
-                                        'ses_status' => 'admin'
+                                        'ses_THdegree' => $sign_status[0]['de_Tname'],
+                                        'ses_ENdegree' => $sign_status[0]['de_Ename'],
+                                        'ses_status' => 'admin',
+                                        'ses_statustext' => 'ผู้ดูแลระบบ'
                                 );
                                 $this->session->set_userdata($newdata);
                         }

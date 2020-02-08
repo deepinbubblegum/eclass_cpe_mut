@@ -39,8 +39,9 @@ class Model_user_uses extends CI_Model
                 //                 }
                 //         }
                 // }
-                $this->db->select('teacher_code_id, teacher_Tname, teacher_Ename, teacher_admin');
+                $this->db->select('teacher_code_id, teacher_Tname, teacher_Ename, teacher_admin, de_Tname, de_Ename');
                 $this->db->from('teacher');
+                $this->db->join('degree', 'teacher_degree = de_id', 'left');
                 $this->db->where('teacher_username', $username);
                 $this->db->where('teacher_password', $password);
                 $this->db->or_where('teacher_email', $username);

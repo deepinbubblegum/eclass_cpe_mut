@@ -9,6 +9,13 @@ class Te_special_point extends MY_Controller
         $this->load->model('manage_te/Model_te_point_special');
     }
 
+    public function getTeacherSP()
+    {
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject');
+        $result = $this->Model_te_point_special->getTeacher($semester,$subject);
+        echo json_encode($result);
+    }
 
     public function ShowMenu()
     {
@@ -184,5 +191,12 @@ class Te_special_point extends MY_Controller
         $result = $this->Model_te_point_special->getTeacherOwner($semester);
         echo json_encode($result);
     }
+
+    // public function NumberDoc()
+    // {
+    //     $semester = $this->input->post('semester');
+    //     $result = $this->Model_te_point_special->getNumberDoc($semester);
+    //     echo json_encode($result);
+    // }
 
 }
