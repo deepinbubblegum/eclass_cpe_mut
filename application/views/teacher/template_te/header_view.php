@@ -88,7 +88,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php
                                 if (isset($this->session->ses_id)) {
                                         echo  '<a class="title_message">
-                                                <span style="font-size: 1.2em;">' . $this->session->ses_tname . ' </span>
+                                                <span style="font-size: 1.2em;">' . $this->session->ses_tname . '</span>
                                                 &nbsp;
                                                 </a>
                                                 <span style="font-size: 1.5em;">
@@ -170,6 +170,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="container">
                                         <?php
                                         if (isset($this->session->ses_tname)) {
+                                                echo '<div class="mb-2 mt-2">รหัส : '.$this->session->ses_id.'</div>';
+                                                echo '<div class="mb-2 mt-2">ชื่อ : '.$this->session->ses_THdegree.$this->session->ses_tname.'</div>';
+                                                echo '<div class="mb-3 mt-2">สถานะ : '.$this->session->ses_statustext.'</div>';
                                                 echo '<button type="button" id="Signout_btn" class="btn btn-danger btn-lg btn-block">ออกจากระบบ</button>';
                                         } else {
                                                 echo '<form id="sigin_form">

@@ -195,6 +195,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="container">
                                         <?php
                                         if (isset($this->session->ses_tname)) {
+                                                echo '<div class="mb-2 mt-2">รหัส : '.$this->session->ses_id.'</div>';
+                                                echo '<div class="mb-2 mt-2">ชื่อ : '.$this->session->ses_THdegree.$this->session->ses_tname.'</div>';
+                                                echo '<div class="mb-3 mt-2">สถานะ : '.$this->session->ses_statustext.'</div>';
                                                 if ($this->session->ses_status == 'teacher' || $this->session->ses_status == 'admin') {
                                                         echo '<a href="' . base_url('teacher') . '"><button type="button" id="" class="btn btn-info btn-lg btn-block">หน้าจัดการอาจารย์</button></a>';
                                                         echo '<div class="navdrawer-divider mt-3"></div>';

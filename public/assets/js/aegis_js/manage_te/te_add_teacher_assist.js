@@ -40,7 +40,7 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['รหัสอาจารย์ผู้ช่วย', 'ชื่อ-สกุล (TH)', 'ชื่อ-สกุล (EN)', 'ชื่อระดับสิทธิ์', 'เลขระดับสิทธิ์', 'Option'];
+    var theadGenValue = ['รหัสอาจารย์ผู้ช่วย', 'ชื่อ-สกุล (TH)', 'ชื่อ-สกุล (EN)', 'ชื่อระดับสิทธิ์', 'Option'];
 
     var formData = ["#Teacher_code_id", "#per_name"];
 
@@ -279,7 +279,7 @@ $(document).ready(function() {
                             '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
                             '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].per_name + '</td>' +
-                            '<td>' + response[i].per_bit + '</td>' +
+                            // '<td>' + response[i].per_bit + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -316,7 +316,7 @@ $(document).ready(function() {
                             '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
                             '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].per_name + '</td>' +
-                            '<td>' + response[i].per_bit + '</td>' +
+                            // '<td>' + response[i].per_bit + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }

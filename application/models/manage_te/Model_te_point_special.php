@@ -93,9 +93,10 @@ class Model_te_point_special extends CI_Model
 
     public function getStdRequest($semester,$subject,$menuID)
     {
-        $query = $this->db->query('SELECT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, ps_std_point, ps_std_status, subject_name, ps_tea_confirm FROM ps_student 
+        $query = $this->db->query('SELECT DISTINCT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, std_Tname, std_Ename, ps_std_point, ps_std_status, subject_name, ps_tea_confirm FROM ps_student 
         LEFT JOIN subject ON subject_id = ps_std_subAdd
-        LEFT JOIN ps_teacher ON ps_std_semester = ps_tea_semester AND ps_std_subject = ps_tea_subject AND ps_std_psID = ps_tea_menu AND ps_std_subAdd = ps_tea_subAdd
+        LEFT JOIN student on ps_std_stdID = std_code_id
+        LEFT JOIN ps_teacher ON ps_std_semester = ps_tea_semester AND ps_std_subject = ps_tea_subject AND ps_std_psID = ps_tea_menu AND ps_std_subAdd = ps_tea_subAdd AND ps_std_stdID = ps_tea_std
         WHERE ps_std_semester = "'.$semester.'" AND ps_std_subject = "'.$subject.'" AND ps_std_psID = "'.$menuID.'" order by ps_std_stdID  ');
         return $query->result();
     }
@@ -119,15 +120,17 @@ class Model_te_point_special extends CI_Model
     {
         if($option == 'all')
         {
-            $query = $this->db->query('SELECT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, ps_std_point, ps_std_status, subject_name, ps_tea_confirm FROM ps_student 
+            $query = $this->db->query('SELECT DISTINCT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, std_Tname, std_Ename, ps_std_point, ps_std_status, subject_name, ps_tea_confirm FROM ps_student 
             LEFT JOIN subject ON subject_id = ps_std_subAdd
-            LEFT JOIN ps_teacher ON ps_std_semester = ps_tea_semester AND ps_std_subject = ps_tea_subject AND ps_std_psID = ps_tea_menu AND ps_std_subAdd = ps_tea_subAdd
+            LEFT JOIN student on ps_std_stdID = std_code_id
+            LEFT JOIN ps_teacher ON ps_std_semester = ps_tea_semester AND ps_std_subject = ps_tea_subject AND ps_std_psID = ps_tea_menu AND ps_std_subAdd = ps_tea_subAdd AND ps_std_stdID = ps_tea_std
             WHERE ps_std_semester = "'.$semester.'" AND ps_std_subject = "'.$subject.'" AND ps_std_psID = "'.$menuID.'" order by ps_std_stdID ');
             return $query->result();
         }else{
-            $query = $this->db->query('SELECT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, ps_std_point, ps_std_status, subject_name, ps_tea_confirm FROM ps_student 
+            $query = $this->db->query('SELECT DISTINCT ps_std_semester, ps_std_subject, ps_std_psID, ps_std_subAdd, ps_std_stdID, std_Tname, std_Ename, ps_std_point, ps_std_status, subject_name, ps_tea_confirm FROM ps_student 
             LEFT JOIN subject ON subject_id = ps_std_subAdd
-            LEFT JOIN ps_teacher ON ps_std_semester = ps_tea_semester AND ps_std_subject = ps_tea_subject AND ps_std_psID = ps_tea_menu AND ps_std_subAdd = ps_tea_subAdd
+            LEFT JOIN student on ps_std_stdID = std_code_id
+            LEFT JOIN ps_teacher ON ps_std_semester = ps_tea_semester AND ps_std_subject = ps_tea_subject AND ps_std_psID = ps_tea_menu AND ps_std_subAdd = ps_tea_subAdd AND ps_std_stdID = ps_tea_std
             WHERE ps_std_semester = "'.$semester.'" AND ps_std_subject = "'.$subject.'" AND ps_std_psID = "'.$menuID.'" AND ps_std_subAdd = "'.$option.'" order by ps_std_stdID ');
             return $query->result();
         }
@@ -155,11 +158,30 @@ class Model_te_point_special extends CI_Model
 
     public function getTeacherOwner($semester)
     {
-        $query = $this->db->query('SELECT subsem_semester , subsem_subject , teacher_code_id , teacher_Ename , teacher_Tname , de_Ename , de_Tname FROM subject_semester
+        $query = $this->db->query('SELECT subsem_semester , subsem_subject , teacher_code_id , teacher_Ename , teacher_Tname , de_Ename , de_Tname , subject_id , subject_name FROM subject_semester
         LEFT JOIN teacher ON subsem_teacher = teacher_code_id
         LEFT JOIN degree ON teacher_degree = de_id
+        LEFT JOIN subject ON subsem_subject = subject_id
         WHERE subsem_semester = "'.$semester.'" ');
         return $query->result();
+    }
+
+    public function getTeacher($semester,$subject)
+    {
+        $query = $this->db->query('SELECT teacher_Ename, teacher_Tname , de_Ename , de_Tname FROM subject_semester
+        LEFT JOIN teacher ON subsem_teacher = teacher_code_id
+        LEFT JOIN degree ON teacher_degree = de_id
+        WHERE subsem_semester = "'.$semester.'" AND subsem_subject = "'.$subject.'" ');
+        return $query->result();
+    }
+
+    public function getNumberDoc($semester)
+    {
+        $maxdoc = $this->db->query("SELECT IFNULL(lpad(lpad(max(CAST(substr(doc_no,3,2)AS int))+1,2,'0'),4,'80'),'8001') as newNO FROM no_doc WHERE doc_semester = '".$semester."'  ");
+        $newdoc = $maxdoc->row()->newNO;
+        // return $query->result();
+        $this->db->query('INSERT INTO no_doc VALUES("'.$semester.'" , "'.$newdoc.'")');
+        return $newdoc;
     }
 
 }

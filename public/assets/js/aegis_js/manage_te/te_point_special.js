@@ -3,6 +3,10 @@ $(document).ready(function () {
     var url = $(location).attr('href').split("/");
     var iurl = '';
     // alert('semester5555');
+    year = semester.substr(0, 4);
+    part = semester.substr(4, 1);
+    semesterDoc = part + "/" + year;
+    var teacher = '';
 
     $("input[name^=EndDatePicker]").css('cursor', 'pointer');
 
@@ -46,9 +50,24 @@ $(document).ready(function () {
     SubjectSemester();
     ShowSetpoint();
     Teacher_Owner_Subject();
+    getTeacherSP();
 
     var dataMenu;
     var dataTeacherOwner = '';
+
+    function getTeacherSP() {
+        $.ajax({
+            type: 'POST',
+            url: "/" + url[3] + "/Te_special_point/getTeacherSP",
+            data: '&semester=' + semester + '&subject=' + subject_id,
+            dataType: "json",
+            success: function (response) {
+                for (i = 0; i < response.length; i++) {
+                    teacher = response[i].de_Tname + "" + response[i].teacher_Tname
+                }
+            }
+        });
+    }
 
     function ShowMenu() {
         $.ajax({
@@ -649,6 +668,9 @@ $(document).ready(function () {
                     $('#PrintPDF' + i).click(function () {
                         // alert(dataTeacherOwner);
                         var teacher_TH = '';
+                        var subject_ID = '';
+                        var subject_Name = '';
+                        // var NoDoc = 0;
                         idMenu = $(this).attr('data1');
                         var selectSubjectPDF = $('#SelectSubjectRequest' + i).val();
 
@@ -669,24 +691,66 @@ $(document).ready(function () {
                             var sub_name = SubTextPDF.split(')')[1];
                             for (t = 0; t < dataTeacherOwner.length; t++) {
                                 if (selectSubjectPDF == dataTeacherOwner[t].subsem_subject) {
-                                    teacher_TH = dataTeacherOwner[t].de_Tname + ' ' + dataTeacherOwner[t].teacher_Tname
+                                    teacher_TH = dataTeacherOwner[t].de_Tname + ' ' + dataTeacherOwner[t].teacher_Tname;
+                                    subject_ID = dataTeacherOwner[t].subject_id;
+                                    subject_Name = dataTeacherOwner[t].subject_name;
                                 }
                             }
                         }
 
+                        var StdID = [];
+                        var StdName = [];
+                        var Stdpoint = [];
                         $('#Tbody' + i).find('tr').each(function (i, el) {
                             var $tds = $(this).find('td'),
                                 std_id = $tds.eq(0).text(),
                                 point = $tds.eq(2).text(),
                                 teaConfirm = $tds.eq(6).text();
                             if (teaConfirm != 'ยังไม่รับทราบ') {
-
+                                var name = '';
+                                for (s = 0; s < dataStdPoint.length; s++) {
+                                    if (dataStdPoint[s].ps_std_stdID == std_id) {
+                                        name = dataStdPoint[s].std_Tname;
+                                    }
+                                }
+                                StdID.push(std_id);
+                                StdName.push(name);
+                                Stdpoint.push(point);
                             }
                         });
 
-                        $.ajax("/" + url[3] + "/Te_Pdf/index", function(data) {
-                            alert(data);
-                        });
+                        if (StdID.length > 0) {
+                            $.ajax({
+                                type: 'POST',
+                                url: "/" + url[3] + "/Te_document/index",
+                                data: {
+                                    StdID,
+                                    StdName,
+                                    Stdpoint,
+                                    teacher_TH,
+                                    subject_ID,
+                                    subject_Name,
+                                    semesterDoc,
+                                    teacher,
+                                    semester
+                                },
+                                dataType: "json",
+                                success: function (response) {
+                                    // alert(response);
+                                    window.open(response);
+                                }
+                            });
+                        } else {
+                            Snackbar.show({
+                                actionText: 'close',
+                                pos: 'top-center',
+                                actionTextColor: '#f44336',
+                                backgroundColor: '#323232',
+                                width: 'auto',
+                                text: 'ไม่มีนักศึกษาแลกคะแนนได้'
+                            });
+                            return false;
+                        }
 
                     });
 

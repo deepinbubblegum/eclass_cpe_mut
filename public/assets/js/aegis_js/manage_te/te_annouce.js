@@ -247,9 +247,10 @@ $(document).ready(function () {
                     $('#EndDatePicker').val("");
                     $('#summernote').summernote('code', '');
                     ShowDataAnnouce();
-                    if (iurl != "/" + url[3] + "/Te_annouce/Add_Data_ctl") {
-                        $('#Modal').modal('hide');
-                    };
+                    // if (iurl != "/" + url[3] + "/Te_annouce/Add_Data_ctl") {
+                    //     $('#Modal').modal('hide');
+                    // };
+                    $('#Modal').modal('hide');
                     Snackbar.show({
                         actionText: 'close',
                         pos: 'top-center',
