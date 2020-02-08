@@ -34,7 +34,7 @@ class Model_te_subject_quiz extends CI_Model
         }
     }
 
-    public function exportPoint($semester, $subject, $menuPoint, $menuQuiz, $menuName, $maxPoint)
+    public function exportPoint($semester, $subject, $menuPoint, $menuQuiz, $menuName, $menuMiniName, $maxPoint)
     {
         $this->db->select('sum(choiceQuizPoint) as sumPoint ,pointQuizUserId');
         $this->db->from('pointQuiz ,choiceQuiz');
@@ -70,7 +70,7 @@ class Model_te_subject_quiz extends CI_Model
                 'setpoint_index' => $newindex,
                 'setpoint_ticket' => '0',
                 'setpoint_fullname' => $menuName,
-                'setpoint_mininame' => $menuName,
+                'setpoint_mininame' => $menuMiniName,
                 'setpoint_maxpoint' => $maxPoint,
                 'setpoint_option' => '1',
                 'setpoint_multi' => '0'

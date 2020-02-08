@@ -70,8 +70,9 @@ class Te_subject_quiz extends MY_Controller
         $menuPoint = $this->input->post('menuPoint');
         $menuQuiz = $this->input->post('menuQuiz');
         $menuName = $this->input->post('exportText');
+        $menuMiniName = $this->input->post('exportMini');
         $maxPoint = $this->input->post('exportMax');
-        $result = $this->Model_te_subject_quiz->exportPoint($semester, $subject, $menuPoint, $menuQuiz,$menuName,$maxPoint);
+        $result = $this->Model_te_subject_quiz->exportPoint($semester, $subject, $menuPoint, $menuQuiz,$menuName,$menuMiniName,$maxPoint);
         echo json_encode($result);
     }
 

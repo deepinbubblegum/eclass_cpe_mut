@@ -8,7 +8,7 @@ $(document).ready(function () {
     var editMenuId = '';
     var fieldSaveUrl = '';
     var getField = [];
-    var getUnit = [];
+    var getPoint = [];
     var SHeadID = '';
     var studentCount = 0;
     var idMenu = 0;
@@ -34,6 +34,16 @@ $(document).ready(function () {
 
     $('#summernote').summernote('code', '');
 
+    function SnackCall(SnackText){
+        Snackbar.show({
+            actionText: 'close',
+            pos: 'top-center',
+            actionTextColor: '#4CAF50',
+            backgroundColor: '#323232',
+            width: 'auto',
+            text: SnackText
+        });
+    }
 
     $('#btnAddVote').click(function (e) {
         e.preventDefault();
@@ -61,13 +71,22 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: iurl,
-            data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&status=' + menuStatus + '&editID=' + editMenuId,
+            //data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&status=' + menuStatus + '&editID=' + editMenuId,
+            data:{
+                semester:semester,
+                subject:subject_id,
+                header:header,
+                description:description,
+                status:menuStatus,
+                editID:editMenuId
+            },
             success: function () {
                 $('#Headtext').val("");
                 // $('#Textarea').val("");
                 $('#summernote').summernote('code', '');
                 $('#Modal').modal('hide');
                 showMenuVote();
+                SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
             }
         });
     });
@@ -106,6 +125,7 @@ $(document).ready(function () {
                             '<span style="font-size: 1.7em;"><a title="สร้างหัวข้อโหวต" id="addInMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="ลบเมนูโหวต" id="delMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="แก้ไขเมนูโหวต" id="editMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="ดูคะแนนโหวต" id="showScoreMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].menuVoteDescription +
@@ -179,6 +199,75 @@ $(document).ready(function () {
             }
         });
     }
+    ajaxCount=0;
+    $(document).ajaxStop(function () {
+        ajaxCount++;
+        if(ajaxCount == 1){
+            //console.log(getPoint[getMenu[i].menuVoteId]);
+        $.each(getMenu, function (i, p) {
+            chartCheck = 0;
+            $('#showScoreMenu-' + getMenu[i].menuVoteId).click(function (e) {
+
+                chartCheck++;
+                        if(chartCheck > 1){
+                            char.destroy();
+                        }
+                $("#showScoreModal").modal('show');
+                $("#scoreModalLabel").text(getMenu[i].menuVoteName);
+                
+                //---------------------------------------------------------------
+                //console.log(getField[getMenu[i].menuVoteId]);
+                //console.log(getField[getMenu[i].menuVoteId].choiceVoteText);
+                if (getField[getMenu[i].menuVoteId] != null) {
+                    getName = [];
+                    for (j = 0; j < getField[getMenu[i].menuVoteId].length; j++) {
+                        getName[getField[getMenu[i].menuVoteId][j].choiceVoteId] = getField[getMenu[i].menuVoteId][j].choiceVoteText;
+                    } 
+                }
+
+                var newAName = getName.filter(function (el) {
+                    return el != null;
+                  });
+
+                var newAPoint = getPoint[getMenu[i].menuVoteId].filter(function (el) {
+                    return el != null;
+                  });
+
+                console.log(getPoint[getMenu[i].menuVoteId]);
+
+                char = new Chart(document.getElementById("score_show"), {
+                    "type": "horizontalBar",
+                    "data": {
+                        //"labels": ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Grey"],
+                        "labels": newAName,
+                        "datasets": [{
+                            "label": "People",
+                            "data":  newAPoint,
+                            "fill": false,
+                            "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
+                                "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
+                                "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"
+                            ],
+                            "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
+                                "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"
+                            ],
+                            "borderWidth": 1
+                        }]
+                    },
+                    "options": {
+                        "scales": {
+                            "xAxes": [{
+                                "ticks": {
+                                    "beginAtZero": true
+                                }
+                            }]
+                        }
+                    }
+                });
+            });
+        });
+    }
+    });
 
     function showChoice(mVoteId) {
         $.ajax({
@@ -240,9 +329,13 @@ $(document).ready(function () {
             url: '/' + url[3] + '/Te_subject_vote/showPoint/' + subject_id + '-' + semester + '-' + menuId + '-' + fieldId,
             dataType: "json",
             success: function (response) {
-                var html = "";
+                if (!getPoint[menuId]) 
+                getPoint[menuId] = []
+                var html = ""; 
                 if (response.length != undefined) {
                     html += '[' + response[0].stdCount + '/' + studentCount + ']';
+                    getPoint[menuId][fieldId] = response[0].stdCount;
+                    
                 } else {
                     html += '<h1>NO DATA</h1>'
                 }
@@ -277,11 +370,19 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: fieldSaveUrl,
-            data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&choiceTxt=' + choiceTxt + '&menuId=' + SMenuID + '&headId=' + SHeadID,
+            //data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&choiceTxt=' + choiceTxt + '&menuId=' + SMenuID + '&headId=' + SHeadID,
+            data:{
+                semester:semester,
+                subject_id:subject_id,
+                choiceTxt:choiceTxt,
+                menuId:SMenuID,
+                headId:SHeadID
+            },
             success: function () {
                 $('#addFieldHQN').val("");
                 $('#addField').modal('hide');
                 showMenuVote();
+                SnackCall("บันทึกข้อมูลหัวข้อสำเร็จ");
             }
         });
     });
@@ -296,6 +397,7 @@ $(document).ready(function () {
             success: function () {
                 // console.log('Deleted Successfully');
                 showMenuVote();
+                SnackCall("ลบข้อมูลตัวเลือกสำเร็จ");
             }
         });
     }
@@ -308,6 +410,7 @@ $(document).ready(function () {
             success: function () {
                 // console.log('Deleted Successfully');
                 showMenuVote();
+                SnackCall("ลบเมนูสำเร็จ");
             }
         });
     }
