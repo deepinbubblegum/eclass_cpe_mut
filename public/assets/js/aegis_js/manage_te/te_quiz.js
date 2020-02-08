@@ -35,6 +35,17 @@ $(document).ready(function () {
 
     $('#summernote').summernote('code', '');
 
+    function SnackCall(SnackText){
+        Snackbar.show({
+            actionText: 'close',
+            pos: 'top-center',
+            actionTextColor: '#4CAF50',
+            backgroundColor: '#323232',
+            width: 'auto',
+            text: SnackText
+        });
+    }
+
     function selectMenuPoint() {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_point/showMenuPoint/' + subject_id + '-' + semester,
@@ -76,6 +87,7 @@ $(document).ready(function () {
     $('#exportSave').click(function (e) {
         menuPointId = $('#menuPoint :selected').val();
         exportText = $('#menuExportTxt').val();
+        exportMini = $('#menuExportMn').val();
         exportMax = $('#menuExportMax').val();
 
         exportCheck = false;
@@ -103,13 +115,22 @@ $(document).ready(function () {
                     $.ajax({
                         type: "POST",
                         url: '/' + url[3] + '/Te_subject_quiz/exportPoint/',
-                        data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
+                        //data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
+                        data:{
+                            semester:semester,
+                            subject:subject_id,
+                            menuPoint:menuPointId,
+                            menuQuiz:exportMenuQuiz,
+                            exportText:exportText,
+                            exportMini:exportMini,
+                            exportMax:exportMax
+                        },
                         dataType: "json",
                         success: function(response) {
                             if(response != 0){
-                                alert('EXPORT SUCCESS');
+                                SnackCall('ส่งออกข้อมูลสำเร็จ');
                             }else{
-                                alert('EXPORT FAILED : ยังไม่มีนักศึกษาทำควิซ');
+                                SnackCall('ส่งออกข้อมูลไม่สำเร็จ : ยังไม่มีนักศึกษาทำแบบทดสอบ');
                             }
                             $('#exportSame').text('');
                             $('#exportData').modal('hide');
@@ -184,7 +205,8 @@ $(document).ready(function () {
                 $('#Headtext').val("");
                 $('#Textarea').val("");
                 $('#Modal').modal('hide');
-                showMenuQuiz();
+                showMenuQuiz();                
+                SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
             }
         });
     });
@@ -317,11 +339,19 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: fieldSaveUrl,
-            data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&headerQuizName=' + headerQuizName + '&quizId=' + SMenuID + '&headId=' + SHeadID,
+            //data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&headerQuizName=' + headerQuizName + '&quizId=' + SMenuID + '&headId=' + SHeadID,
+            data:{
+                semester:semester,
+                subject_id:subject_id,
+                headerQuizName:headerQuizName,
+                quizId:SMenuID,
+                headId:SHeadID
+            },
             success: function () {
                 $('#addFieldHQN').val("");
                 showMenuQuiz();
                 $('#addField').modal('hide');
+                SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
             }
         });
     });
@@ -400,32 +430,27 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: pUrl,
-            data: '&semester=' + semester + '&subject_id=' + subject_id + '&menuId=' + getMId + '&headId=' + getHId + '&choiceQuizText=' + qText + '&choiceQuizPoint=' + qPoint + '&editId=' + editChoice,
+            //data: '&semester=' + semester + '&subject_id=' + subject_id + '&menuId=' + getMId + '&headId=' + getHId + '&choiceQuizText=' + qText + '&choiceQuizPoint=' + qPoint + '&editId=' + editChoice,
+            data:{
+                semester:semester,
+                subject_id:subject_id,
+                menuId:getMId,
+                headId:getHId,
+                choiceQuizText:qText,
+                choiceQuizPoint:qPoint,
+                editId:editChoice
+            },
             dataType: "json",
             success: function (response) {
                 $('#choiceQuizPoint').val(clearPoint);
                 $('#choiceQuizText').val("");
-                Snackbar.show({
-                    actionText: 'close',
-                    pos: 'top-center',
-                    actionTextColor: '#4CAF50',
-                    backgroundColor: '#323232',
-                    width: 'auto',
-                    text: response
-                });
+                SnackCall("บันทึกข้อมูลตัวเลือกควิซสำเร็จ");
                 showMenuQuiz();
             },
             error: function () {
                 $('#choiceQuizPoint').val(clearPoint);
                 $('#choiceQuizText').val("");
-                Snackbar.show({
-                    actionText: 'close',
-                    pos: 'top-center',
-                    actionTextColor: '#FF0000',
-                    backgroundColor: '#323232',
-                    width: 'auto',
-                    text: 'ไม่มีข้อมูลในระบบ'
-                });
+                SnackCall("บันทึกข้อมูลตัวเลือกควิซไม่สำเร็จ");
             }
         });
     }
@@ -532,6 +557,7 @@ $(document).ready(function () {
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid + '&setIdChild=' + cid + '&setIdKid=' + kid,
             success: function () {
                 // console.log('Deleted Successfully');
+                SnackCall("ลบตัวเลือกควิซสำเร็จ");
                 showMenuQuiz();
             }
         });
@@ -544,6 +570,7 @@ $(document).ready(function () {
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid + '&setIdChild=' + cid,
             success: function () {
                 // console.log('Deleted Successfully');
+                SnackCall("ลบตัวหัวข้อควิซสำเร็จ");
                 showMenuQuiz();
             }
         });
@@ -556,6 +583,7 @@ $(document).ready(function () {
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid,
             success: function () {
                 // console.log('Deleted Successfully');
+                SnackCall("ลบเมนูควิซสำเร็จ");
                 showMenuQuiz();
             }
         });

@@ -182,8 +182,13 @@ $(document).ready(function() {
                     }
                 }
 
+                var chartCheck = 0;
                 $.each(getFieldPoint, function(i, p) {
                     $("#charts-" + i).click(function(e) {
+                        chartCheck++;
+                        if (chartCheck > 1) {
+                            char.destroy();
+                        }
                         //console.log(i);
                         $('#exampleModalLabel').text(getFieldPoint[i].setpoint_mininame);
                         $('#exampleModal').modal('show');
@@ -235,7 +240,7 @@ $(document).ready(function() {
 
 
 
-                        new Chart(document.getElementById("score_show"), {
+                        char = new Chart(document.getElementById("score_show"), {
                             "type": "horizontalBar",
                             "data": {
                                 //"labels": ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Grey"],

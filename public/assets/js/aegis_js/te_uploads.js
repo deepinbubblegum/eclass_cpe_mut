@@ -188,7 +188,7 @@ $(document).ready(function() {
                             '</div>' +
                             '</div>' +
                             '<button class="btn btn-success my-1" id="btnUpload' + i + '">Upload</button>' +
-                            '<button class="btn btn-success my-1" id="btnClearAll' + i + '">Clear All</button>' +
+                            '<button class="btn btn-danger my-1" id="btnClearAll' + i + '">Clear All</button>' +
                             '<div id="uploadeds_files' + i + '">' +
                             '</div>' +
                             '</div>' +

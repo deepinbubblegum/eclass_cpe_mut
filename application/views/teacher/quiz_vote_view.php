@@ -8,6 +8,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta content="initial-scale=1, shrink-to-fit=no, width=device-width" name="viewport">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i|Roboto+Mono:300,400,700|Roboto+Slab:300,400,700" rel="stylesheet">
+                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script>
                 subject_id = '<?php echo $subject_id; ?>';
                 semester = '<?php echo $semester; ?>';
@@ -125,7 +128,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                         <div class="modal-header">
-                                                <h5 id="showScoreModalmpleModalLabel" class="modal-title">Modal title</h5>
+                                                <h5 id="scoreModalLabel" class="modal-title">Modal title</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -136,7 +139,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 </div>
                                                 <br>
                                                 <div id="f34r-here">
-                                                        Tables here
+                                                        <!-- Tables here -->
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
@@ -192,6 +195,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <div class="col-md-4 mb-3"> 
                                                         <label for="Textarea">ชื่อช่องคะแนน</label>
                                                         <input class="form-control" id="menuExportTxt">
+                                                        <label for="Textarea">ชื่อย่อช่องคะแนน</label>
+                                                        <input class="form-control" id="menuExportMn">
                                                         <label id='exportSame' class='text-danger'></label>
                                                         <br>
                                                         <label for="Textarea">ชื่อช่องคะแนน</label>
