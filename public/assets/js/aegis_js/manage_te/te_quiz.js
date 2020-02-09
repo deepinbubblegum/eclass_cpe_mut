@@ -470,6 +470,8 @@ $(document).ready(function () {
                 if (response.length != undefined) {
                     html += '<table>';
                     for (i = 0; i < response.length; i++) {
+                        //f34rNumber = Math.round((response[i].choiceQuizPoint) * 10000) / 10000;
+                        
                         html += '<tr>' +
                             '<td><li type="a"><span class="col-8">' + response[i].choiceQuizText + '</span></li></td>' +
                             '<td><span class="text-black-50 col-4">[' + response[i].choiceQuizPoint + ']</span></td>' +

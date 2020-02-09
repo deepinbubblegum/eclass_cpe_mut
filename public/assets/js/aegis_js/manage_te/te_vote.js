@@ -11,6 +11,7 @@ $(document).ready(function () {
     var getPoint = [];
     var SHeadID = '';
     var studentCount = 0;
+    var studentVoted = 0;
     var idMenu = 0;
     selectStudent();
     showMenuVote();
@@ -122,10 +123,10 @@ $(document).ready(function () {
                             '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
                             '<div class="expansion-panel-body">' +
                             /* --------BTN-------- */
-                            '<span style="font-size: 1.7em;"><a title="สร้างหัวข้อโหวต" id="addInMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="สร้างตัวเลือกโหวต" id="addInMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="ลบเมนูโหวต" id="delMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="แก้ไขเมนูโหวต" id="editMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a title="ดูคะแนนโหวต" id="showScoreMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="ดูคะแนนโหวต" id="showScoreMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-chart-bar"></a></i></span>&nbsp;' +
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].menuVoteDescription +
@@ -202,7 +203,8 @@ $(document).ready(function () {
     ajaxCount=0;
     $(document).ajaxStop(function () {
         ajaxCount++;
-        if(ajaxCount == 1){
+        console.log(ajaxCount);
+        //if(ajaxCount == 1){
             //console.log(getPoint[getMenu[i].menuVoteId]);
         $.each(getMenu, function (i, p) {
             chartCheck = 0;
@@ -264,9 +266,21 @@ $(document).ready(function () {
                         }
                     }
                 });
+                studentVoted = 0;
+                for (p = 0; p < newAPoint.length; p++) {
+                    studentVoted = studentVoted + (newAPoint[p]*1);
+                }
+                notVote = (studentCount*1) - (studentVoted*1);
+
+                html2 = '<table class="table table-striped mt-2"><tbody>';
+                html2 += '<tr><td>Student</td> <td>' + studentCount + '</td> <td>People</td> </tr>'; 
+                html2 += '<tr><td>Voted</td> <td>' + studentVoted + '</td> <td>People</td> </tr>'; 
+                html2 += '<tr><td>No Vote</td> <td>' + notVote + '</td> <td>People</td> </tr>'; 
+                html2 += '</tbody></table>'
+                $('#f34r-here').html(html2);
             });
         });
-    }
+    //}
     });
 
     function showChoice(mVoteId) {
@@ -335,7 +349,6 @@ $(document).ready(function () {
                 if (response.length != undefined) {
                     html += '[' + response[0].stdCount + '/' + studentCount + ']';
                     getPoint[menuId][fieldId] = response[0].stdCount;
-                    
                 } else {
                     html += '<h1>NO DATA</h1>'
                 }
@@ -382,7 +395,7 @@ $(document).ready(function () {
                 $('#addFieldHQN').val("");
                 $('#addField').modal('hide');
                 showMenuVote();
-                SnackCall("บันทึกข้อมูลหัวข้อสำเร็จ");
+                SnackCall("บันทึกข้อมูลตัวเลือกโหวตสำเร็จ");
             }
         });
     });
@@ -397,7 +410,7 @@ $(document).ready(function () {
             success: function () {
                 // console.log('Deleted Successfully');
                 showMenuVote();
-                SnackCall("ลบข้อมูลตัวเลือกสำเร็จ");
+                SnackCall("ลบข้อมูลตัวเลือกโหวตสำเร็จ");
             }
         });
     }

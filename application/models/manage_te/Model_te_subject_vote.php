@@ -6,7 +6,7 @@ class Model_te_subject_vote extends CI_Model
     public function insertMenu($semester, $subject, $Header, $Description, $Status)
     {
         $maxid = $this->db->query("
-            select IFNULL(max(menuVoteId),0)+1 as newid
+            select IFNULL(max(cast(menuVoteId as int)),0)+1 as newid
             from menuVote
             where menuVoteSemester = '" . $semester . "' and menuVoteSubject ='" . $subject . "';
         ");
@@ -31,7 +31,7 @@ class Model_te_subject_vote extends CI_Model
     { //$data['semester'],$data['subject_id'],$data['pointId'],$data['ticket'],$data['fullName'],$data['miniName'],$data['maxPoint']
 
         $maxid = $this->db->query("
-            select IFNULL(max(choiceVoteId),0)+1 as newid
+            select IFNULL(max(cast(choiceVoteId as int)),0)+1 as newid
             from choiceVote
             where choiceVoteSemester = '" . $semester . "' and choiceVoteSubject ='" . $subject . "' and choiceVoteMenuId ='" . $menuId . "';
         ");
@@ -55,6 +55,7 @@ class Model_te_subject_vote extends CI_Model
         $this->db->from('menuVote');
         $this->db->where('menuVoteSubject', $subjectId);
         $this->db->where('menuVoteSemester', $semesterId);
+        $this->db->order_by('cast(menuVoteId as int)', 'ASC');
         //$this->db->order_by('menuDowId', 'DESC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -86,6 +87,7 @@ class Model_te_subject_vote extends CI_Model
         $this->db->where('choiceVoteSemester', $semesterId);
         $this->db->where('choiceVoteSubject', $subjectId);
         $this->db->where('choiceVoteMenuId', $menuId);
+        $this->db->order_by('cast(choiceVoteId as int)', 'ASC');
         //$this->db->order_by('cast(setpoint_index as int)', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

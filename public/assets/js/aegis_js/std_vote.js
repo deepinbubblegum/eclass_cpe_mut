@@ -4,6 +4,16 @@ $(document).ready(function () {
     part = semester.substr(4, 1);
     $('#header').text('โหวต : ' + subject_id + ' - ' + year + '/' + part);
 
+    function SnackCall(SnackText){
+        Snackbar.show({
+            actionText: 'close',
+            pos: 'top-center',
+            actionTextColor: '#4CAF50',
+            backgroundColor: '#323232',
+            width: 'auto',
+            text: SnackText
+        });
+    }
 
     var url = $(location).attr('href').split("/");
     var editMenuId = '';
@@ -21,57 +31,63 @@ $(document).ready(function () {
                 getMenu = response;
                 var html = '';
                 if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html +=
-                            '<div class="expansion-panel list-group-item success-color" >' +
-                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
-                            response[i].menuVoteName +
-                            '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
-                            '<span style="color: Dodgerblue;" id="success-icon-' + response[i].menuVoteId + '">' +
+                    for (i = 0; i < response.length; i++) { 
+                            if (response[i].menuVoteStatus == '1') {
+                                console.log('somthing blocked');
+                            } else if (response[i].menuVoteStatus == '0'){
+                                html +=
+                                    '<div class="expansion-panel list-group-item success-color" >' +
+                                    '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
+                                    response[i].menuVoteName +
+                                    '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
+                                    '<span style="color: Dodgerblue;" id="success-icon-' + response[i].menuVoteId + '">' +
 
-                            '</span>' +
-                            '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
-                            '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
-                            '</div>' +
-                            '</a>' +
-                            '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
-                            '<div class="expansion-panel-body">' +
-                            '<br>' +
-                            response[i].menuVoteDescription +
-                            '<hr>' +
-                            '<table class="table table-bordered">' +
-                            '<ol id="fieldOlTag-' + response[i].menuVoteId + '">' +
+                                    '</span>' +
+                                    '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
+                                    '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
+                                    '</div>' +
+                                    '</a>' +
+                                    '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
+                                    '<div class="expansion-panel-body">' +
+                                    '<br>' +
+                                    response[i].menuVoteDescription +
+                                    '<hr>' +
+                                    '<table class="table table-bordered">' +
+                                    '<ol id="fieldOlTag-' + response[i].menuVoteId + '">' +
 
-                            '</ol>' +
-                            '</table>' +
-                            '<button type="button" class="btn btn-info mt-3" id="btnSend-' + response[i].menuVoteId + '"' + '>บันทึกข้อมูล</button>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
+                                    '</ol>' +
+                                    '</table>' +
+                                    '<button type="button" class="btn btn-info mt-3" id="btnSend-' + response[i].menuVoteId + '"' + '>บันทึกข้อมูล</button>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                            } 
                     }
                 }
                 $('.showMenuVote').html(html);
                 $.each(getMenu, function (i, p) {
-                    showChoice(getMenu[i].menuVoteId);
-                    $('#btnSend-' + getMenu[i].menuVoteId).click(function (e) {
-                        console.log('RINKAFU - ' + getMenu[i].menuVoteId);
-                        radioElement = document.querySelector('input[name="test-' + getMenu[i].menuVoteId + '"]:checked');
-                        choiceId = radioElement.value;
-                        console.log(choiceId);
+                    if (response[i].menuVoteStatus == '0'){
+                        showChoice(getMenu[i].menuVoteId);
+                        $('#btnSend-' + getMenu[i].menuVoteId).click(function (e) {
+                            console.log('RINKAFU - ' + getMenu[i].menuVoteId);
+                            radioElement = document.querySelector('input[name="test-' + getMenu[i].menuVoteId + '"]:checked');
+                            choiceId = radioElement.value;
+                            console.log(choiceId);
 
-                        $.ajax({
-                            type: "POST",
-                            url: '/' + url[3] + '/Std_subject_vote/insertPoint',
-                            data: '&semester=' + semester + '&subject=' + subject_id + '&menuId=' + getMenu[i].menuVoteId + '&choiceId=' + choiceId,
-                            success: function () {
-                                alert('บันทึกสำเร็จ');
-                                selectPoint(getMenu[i].menuVoteId);
-                            },
-                            error: function () {
-                                alert('บันทึกไม่สำเร็จ');
-                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/' + url[3] + '/Std_subject_vote/insertPoint',
+                                data: '&semester=' + semester + '&subject=' + subject_id + '&menuId=' + getMenu[i].menuVoteId + '&choiceId=' + choiceId,
+                                success: function () {
+                                    SnackCall('บันทึกสำเร็จ');
+                                    selectPoint(getMenu[i].menuVoteId);
+                                },
+                                error: function () {
+                                    SnackCall('บันทึกไม่สำเร็จ');
+                                }
+                            });
                         });
-                    });
+                    }
                 });
 
             }

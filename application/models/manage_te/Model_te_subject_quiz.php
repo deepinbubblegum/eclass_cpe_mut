@@ -25,7 +25,7 @@ class Model_te_subject_quiz extends CI_Model
         $this->db->where('headerQuizSemester', $semesterId);
         $this->db->where('headerQuizSubject', $subjectId);
         $this->db->where('headerQuizMenuQuizId', $menuId);
-        //$this->db->order_by('cast(setpoint_index as int)', 'ASC');
+        $this->db->order_by('cast(headerQuizId as int)', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -51,7 +51,7 @@ class Model_te_subject_quiz extends CI_Model
 
         if ($query->num_rows() > 0) {
             $maxid = $this->db->query("
-            select lpad(IFNULL(max(setpoint_setpoint_id),0)+1,4,0) as newid
+            select lpad(IFNULL(max(CAST(setpoint_setpoint_id AS int)),0)+1,4,0) as newid
             from subject_setpoint
             where setpoint_semester = '" . $semester . "' and setpoint_subject='" . $subject . "' and setpoint_id = '" . $menuPoint . "'; ");
             $newid = $maxid->row()->newid;
@@ -103,7 +103,7 @@ class Model_te_subject_quiz extends CI_Model
         $this->db->where('choiceQuizSubject', $subjectId);
         $this->db->where('choiceQuizMenuQuizId', $menuId);
         $this->db->where('choiceQuizHeadId', $header);
-        //$this->db->order_by('cast(setpoint_index as int)', 'ASC');
+        $this->db->order_by('cast(choiceQuizId as int)', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -116,7 +116,7 @@ class Model_te_subject_quiz extends CI_Model
     public function insertQuiz($semester, $subject, $menuID, $headID, $choiceQuizText, $choiceQuizPoint)
     {
         $maxid = $this->db->query("
-            select IFNULL(max(choiceQuizId),0)+1 as newid
+            select IFNULL(max(CAST(choiceQuizId AS int)),0)+1 as newid
             from choiceQuiz
             where choiceQuizSemester = '" . $semester . "' and choiceQuizSubject ='" . $subject . "' and choiceQuizMenuQuizId ='" . $menuID . "' and choiceQuizHeadId ='" . $headID . "';
         ");
@@ -152,7 +152,7 @@ class Model_te_subject_quiz extends CI_Model
     { //$data['semester'],$data['subject_id'],$data['pointId'],$data['ticket'],$data['fullName'],$data['miniName'],$data['maxPoint']
 
         $maxid = $this->db->query("
-            select IFNULL(max(headerQuizId),0)+1 as newid
+            select IFNULL(max(CAST(headerQuizId AS int)),0)+1 as newid
             from headerQuiz
             where headerQuizSemester = '" . $semester . "' and headerQuizSubject ='" . $subject . "' and headerQuizMenuQuizId ='" . $quizId . "';
         ");
@@ -192,7 +192,7 @@ class Model_te_subject_quiz extends CI_Model
     public function insertMenu($semester, $subject, $Header, $Description, $Status)
     {
         $maxid = $this->db->query("
-            select IFNULL(max(menuQuizId),0)+1 as newid
+            select IFNULL(max(CAST(menuQuizId AS int)),0)+1 as newid
             from menuQuiz
             where menuQuizSemester = '" . $semester . "' and menuQuizSubject ='" . $subject . "';
         ");
