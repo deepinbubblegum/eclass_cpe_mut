@@ -201,7 +201,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ควิซ
+                                                                        &nbsp;&nbsp;แบบทดสอบ
                                                                 </span>
                                                                 </a>';
                                 }
@@ -213,7 +213,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;โหวต
+                                                                        &nbsp;&nbsp;แบบสอบถาม
                                                                 </span>
                                                                 </a>';
                                 }
@@ -287,7 +287,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-poll"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;ควิซ
+                                                &nbsp;&nbsp;แบบทดสอบ
                                         </span>
                                 </a>
                                 <a class="nav-item nav-link" href="<?php //echo base_url('te_select/vote/').$subject_id.'-'.$semester; 
@@ -295,7 +295,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-poll"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;โหวต
+                                                &nbsp;&nbsp;แบบสอบถาม
                                         </span>
                                 </a> -->
 

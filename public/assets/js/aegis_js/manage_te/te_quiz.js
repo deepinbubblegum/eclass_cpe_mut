@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     year = semester.substr(0, 4);
     part = semester.substr(4, 1);
-    $('#header').text('ควิซ : ' + subject_id + ' - ' + year + '/' + part);
+    $('#header').text('แบบทดสอบ : ' + subject_id + ' - ' + year + '/' + part);
 
     var url = $(location).attr('href').split("/");
     selectMenuPoint();
@@ -19,7 +19,7 @@ $(document).ready(function () {
     $('#choiceQuizPoint').val(clearPoint);
 
     $('#summernote').summernote({
-        placeholder: 'รายละเอียดช่องควิซ',
+        placeholder: 'รายละเอียดช่องแบบทดสอบ',
         // tabsize: 1,
         height: 250,
         toolbar: [
@@ -150,7 +150,7 @@ $(document).ready(function () {
     $('#btnAddQuiz').click(function (e) {
         e.preventDefault();
         $('#Modal').modal('show');
-        $('#ModalLabel').text('เพิ่มเมนูควิซ');
+        $('#ModalLabel').text('เพิ่มเมนูแบบทดสอบ');
         $('#summernote').summernote('code', '');
         //$("#PointView").prop("checked", true);
         //todayDate = new Date().toISOString();
@@ -232,11 +232,11 @@ $(document).ready(function () {
                             '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
                             '<div class="expansion-panel-body">' +
                             /* --------BTN-------- */
-                            '<span style="font-size: 1.7em;"><a title="สร้างหัวข้อควิซ" id="addInMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a title="ลบเมนูควิซ" id="delMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a title="แก้ไขเมนูควิซ" id="editMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="สร้างหัวข้อแบบทดสอบ" id="addInMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="ลบเมนูแบบทดสอบ" id="delMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="แก้ไขเมนูแบบทดสอบ" id="editMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="่ส่งออกคะแนน" id="exportMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-share-square"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a title="ดูคะแนนควิซ" id="showScoreMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="ดูคะแนนแบบทดสอบ" id="showScoreMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].menuQuizDescription +
@@ -318,7 +318,7 @@ $(document).ready(function () {
                             $('#checkBox03').prop("checked", false);
                         }
 
-                        $('#ModalLabel').text('แก้ไขเมนูควิซ');
+                        $('#ModalLabel').text('แก้ไขเมนูแบบทดสอบ');
                         $('#save').text('ยืนยันการแก้ไข');
 
                         $('#Modal').modal('show');
@@ -368,9 +368,9 @@ $(document).ready(function () {
                 if (response.length != undefined) {
                     for (i = 0; i < response.length; i++) {
                         html += '<li class=""><h4>' + response[i].headerQuizName + '</h4></li>' +
-                            '<span style="font-size: 1.5em;"><a href="#" title="เพิ่มตัวเลือกควิซ" id="addChoiceQuiz-' + mQuizId + '-' + response[i].headerQuizId + '"class="f34r-txt-black"><i class="fas fa-plus-square"></i></a></span>&nbsp;' +
-                            '<span style="font-size: 1.5em;"><a href="#" title="ลบตัวเลือกควิซ" id="delChoiceQuiz-' + mQuizId + '-' + response[i].headerQuizId + '"class="f34r-txt-black"><i class="fas fa-minus-square"></i></a></span>&nbsp;' +
-                            '<span style="font-size: 1.5em;"><a href="#" title="แก้ไขตัวเลือกควิซ" id="editChoiceQuiz-' + mQuizId + '-' + response[i].headerQuizId + '"class="f34r-txt-black"><i class="fas fa-pen"></i></a></span>&nbsp;' +
+                            '<span style="font-size: 1.5em;"><a href="#" title="เพิ่มตัวเลือกแบบทดสอบ" id="addChoiceQuiz-' + mQuizId + '-' + response[i].headerQuizId + '"class="f34r-txt-black"><i class="fas fa-plus-square"></i></a></span>&nbsp;' +
+                            '<span style="font-size: 1.5em;"><a href="#" title="ลบตัวเลือกแบบทดสอบ" id="delChoiceQuiz-' + mQuizId + '-' + response[i].headerQuizId + '"class="f34r-txt-black"><i class="fas fa-minus-square"></i></a></span>&nbsp;' +
+                            '<span style="font-size: 1.5em;"><a href="#" title="แก้ไขตัวเลือกแบบทดสอบ" id="editChoiceQuiz-' + mQuizId + '-' + response[i].headerQuizId + '"class="f34r-txt-black"><i class="fas fa-pen"></i></a></span>&nbsp;' +
                             '<ol id="fieldOlTagChild-' + mQuizId + '-' + response[i].headerQuizId + '">' +
                             '</ol>';
                     }
@@ -385,7 +385,7 @@ $(document).ready(function () {
                         idMenu = mQuizId - 1;
                         //console.log('#addChoiceQuiz-' + mQuizId + '-' + getField[mQuizId][i].headerQuizId);
                         $('#addChoice').modal('show');
-                        $('#addChoiceLabel').text('เพิ่มตัวเลือกควิซ ' + getField[mQuizId][i].headerQuizName);
+                        $('#addChoiceLabel').text('เพิ่มตัวเลือกแบบทดสอบ ' + getField[mQuizId][i].headerQuizName);
                         getMId = mQuizId;
                         getHId = getField[mQuizId][i].headerQuizId;
                         pUrl = '/' + url[3] + '/Te_subject_quiz/insertInFieldChoiceQuiz';
@@ -444,13 +444,13 @@ $(document).ready(function () {
             success: function (response) {
                 $('#choiceQuizPoint').val(clearPoint);
                 $('#choiceQuizText').val("");
-                SnackCall("บันทึกข้อมูลตัวเลือกควิซสำเร็จ");
+                SnackCall("บันทึกข้อมูลตัวเลือกแบบทดสอบสำเร็จ");
                 showMenuQuiz();
             },
             error: function () {
                 $('#choiceQuizPoint').val(clearPoint);
                 $('#choiceQuizText').val("");
-                SnackCall("บันทึกข้อมูลตัวเลือกควิซไม่สำเร็จ");
+                SnackCall("บันทึกข้อมูลตัวเลือกแบบทดสอบไม่สำเร็จ");
             }
         });
     }
@@ -490,7 +490,7 @@ $(document).ready(function () {
                     $('#EditQCBtn-' + CMenuID + '-' + CHeaderID + '-' + response[i].choiceQuizId).click(function (e) {
                         console.log('EditQCBtn', CMenuID, CHeaderID, getUnit[CMenuID][CHeaderID][i].choiceQuizId);
                         $('#addChoice').modal('show');
-                        $('#addChoiceLabel').text('แก้ไขตัวเลือกควิซ ' + getUnit[CMenuID][CHeaderID][i].choiceQuizText);
+                        $('#addChoiceLabel').text('แก้ไขตัวเลือกแบบทดสอบ ' + getUnit[CMenuID][CHeaderID][i].choiceQuizText);
                         $('#choiceQuizText').val(getUnit[CMenuID][CHeaderID][i].choiceQuizText);
                         $('#choiceQuizPoint').val(getUnit[CMenuID][CHeaderID][i].choiceQuizPoint);
                         pUrl = '/' + url[3] + '/Te_subject_quiz/editChoiceQuiz';
@@ -501,7 +501,7 @@ $(document).ready(function () {
                         idMenu = CMenuID - 1;
                         // console.log('#addChoiceQuiz-' + mQuizId + '-' + getField[mQuizId][i].headerQuizId);
                         // $('#addChoice').modal('show');
-                        // $('#addChoiceLabel').text('เพิ่มตัวเลือกควิซ ' + getField[mQuizId][i].headerQuizName);
+                        // $('#addChoiceLabel').text('เพิ่มตัวเลือกแบบทดสอบ ' + getField[mQuizId][i].headerQuizName);
                     });
 
                     $('#DelQCBtn-' + CMenuID + '-' + CHeaderID + '-' + response[i].choiceQuizId).click(function (e) {
@@ -559,7 +559,7 @@ $(document).ready(function () {
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid + '&setIdChild=' + cid + '&setIdKid=' + kid,
             success: function () {
                 // console.log('Deleted Successfully');
-                SnackCall("ลบตัวเลือกควิซสำเร็จ");
+                SnackCall("ลบตัวเลือกแบบทดสอบสำเร็จ");
                 showMenuQuiz();
             }
         });
@@ -572,7 +572,7 @@ $(document).ready(function () {
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid + '&setIdChild=' + cid,
             success: function () {
                 // console.log('Deleted Successfully');
-                SnackCall("ลบตัวหัวข้อควิซสำเร็จ");
+                SnackCall("ลบตัวหัวข้อแบบทดสอบสำเร็จ");
                 showMenuQuiz();
             }
         });
@@ -585,7 +585,7 @@ $(document).ready(function () {
             data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid,
             success: function () {
                 // console.log('Deleted Successfully');
-                SnackCall("ลบเมนูควิซสำเร็จ");
+                SnackCall("ลบเมนูแบบทดสอบสำเร็จ");
                 showMenuQuiz();
             }
         });

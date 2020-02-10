@@ -35,7 +35,7 @@ $(document).ready(function() {
                     for (i = 0; i < response.length; i++) {
                         disabler1 = disabler2 = '';
                         if (response[i].menuQuizStatus.substr(1, 1) == '1') {
-                            disabler1 = '*ควิซถูกปิดแล้ว';
+                            disabler1 = '*แบบทดสอบถูกปิดแล้ว';
                             disabler2 = 'disabled';
                         } else if (response[i].menuQuizStatus.substr(1, 1) == '0'){ 
                             disabler1 = disabler2 = '';
@@ -115,7 +115,7 @@ $(document).ready(function() {
                 getField[mQuizId] = response;
                 if (response.length != undefined) {
                     if (menuStatus[mQuizId].substr(1, 1) == '1') { //check disable
-                        disabler = '*ควิซนี้จะไม่ถูกบันทึกคะแนน';
+                        disabler = '*แบบทดสอบนี้จะไม่ถูกบันทึกคะแนน';
                     } else {
                         disabler = '';
                     }
@@ -232,7 +232,7 @@ $(document).ready(function() {
                     }
 
                     if (getMenu[i].menuQuizStatus.substr(1, 1) == '1') { //check disable
-                        alert('ควิซถูกปิดแล้ว');
+                        alert('แบบทดสอบถูกปิดแล้ว');
                         f34check = false;
                     }
 

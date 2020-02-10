@@ -80,12 +80,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                         <div class="modal-body">
                                                 <div class="form-group">
-                                                        <label for="Textarea">หัวข้อควิซ</label>
+                                                        <label for="Textarea">หัวข้อแบบทดสอบ</label>
                                                         <input class="form-control" id="Headtext">
                                                 </div>
 
                                                 <div class="form-group">
-                                                        <!-- <label for="Textarea">รายละเอียดช่องควิซ</label>
+                                                        <!-- <label for="Textarea">รายละเอียดช่องแบบทดสอบ</label>
                                                         <textarea class="form-control" id="Textarea" rows="5"></textarea> -->
                                                         <div class="input-group" id="summernote">
 
@@ -96,19 +96,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <label for="Textarea" class="mt-3 mb-3">menuQuizStatus</label>
                                                         <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox00">
-                                                                <label class="custom-control-label" for="checkBox00">สุ่มสลับตัวเลือกควิซ</label>
+                                                                <label class="custom-control-label" for="checkBox00">สุ่มสลับตัวเลือกแบบทดสอบ</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox01">
-                                                                <label class="custom-control-label" for="checkBox01">ปิดไม่ให้นักศึกษาทำควิซ</label>
+                                                                <label class="custom-control-label" for="checkBox01">ปิดไม่ให้นักศึกษาทำแบบทดสอบ</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox" hidden>
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox02">
-                                                                <label class="custom-control-label" for="checkBox02">ปิดไม่ให้นักศึกษาดูคะแนนควิซ</label>
+                                                                <label class="custom-control-label" for="checkBox02">ปิดไม่ให้นักศึกษาดูคะแนนแบบทดสอบ</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox" hidden>
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox03">
-                                                                <label class="custom-control-label" for="checkBox03">ปิดไม่ให้นักศึกษาดูควิซที่ทำไปแล้ว</label>
+                                                                <label class="custom-control-label" for="checkBox03">ปิดไม่ให้นักศึกษาดูแบบทดสอบที่ทำไปแล้ว</label>
                                                         </div>
                                                 </div>
 
@@ -277,7 +277,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span style="font-size: 1.2em;">
                                         <i class="fas fa-chalkboard"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        <!-- &nbsp; ควิซ -->
+                                        <!-- &nbsp; แบบทดสอบ -->
                                         &nbsp; <span id="header"></span>
                                 </span>
                         </div>
@@ -285,7 +285,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <button class="btn btn btn-info my-2 my-sm-0" type="submit" id="btnAddQuiz">
                                         <span style="font-size: 1.1em;">
                                                 <i class="fas fa-plus-circle"></i>
-                                                &nbsp;เพิ่มเมนูควิซ
+                                                &nbsp;เพิ่มเมนูแบบทดสอบ
                                         </span>
                                 </button>
                         </form>
@@ -298,7 +298,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">แบบทดสอบ</a>
                                 </li>
                                 <!-- <li class="nav-item">
-                                        <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">โหวต</a>
+                                        <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">แบบสอบถาม</a>
                                 </li> -->
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">

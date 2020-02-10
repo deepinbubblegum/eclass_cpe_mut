@@ -54,7 +54,7 @@ $(document).ready(function () {
         ['upload', 'upload', 'upload', 'อัปโหลด'],
         ['download', 'download', 'download', 'ดาวน์โหลด'],
         ['point', 'point', 'point', 'คะแนน'],
-        ['Chkvote', 'Chkvote', 'Chkvote', 'โหวต'],
+        ['Chkvote', 'Chkvote', 'Chkvote', 'แบบสอบถาม'],
         ['Chkquiz', 'Chkquiz', 'Chkquiz', 'แบบทดสอบ'],
         ['pointR', 'pointR', 'pointR', 'นักศึกษาแลกคะแนน'],
         ['permission', 'permission', 'permission', 'เพิ่มระดับสิทธิ์อาจารย์ผู้ช่วย'],

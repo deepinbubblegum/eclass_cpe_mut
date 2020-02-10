@@ -22,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span style="font-size: 1.2em;">
                                         <i class="fas fa-chalkboard"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        <!-- &nbsp; ควิซ -->
+                                        <!-- &nbsp; แบบทดสอบ -->
                                         &nbsp; <span id="header"></span>
                                 </span>
                         </div>
@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">แบบทดสอบ</a>
                                 </li>
                                 <!-- <li class="nav-item">
-                                        <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">โหวต</a>
+                                        <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">แบบสอบถาม</a>
                                 </li> -->
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">

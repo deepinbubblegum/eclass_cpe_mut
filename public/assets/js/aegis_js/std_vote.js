@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     year = semester.substr(0, 4);
     part = semester.substr(4, 1);
-    $('#header').text('โหวต : ' + subject_id + ' - ' + year + '/' + part);
+    $('#header').text('แบบสอบถาม : ' + subject_id + ' - ' + year + '/' + part);
 
     function SnackCall(SnackText){
         Snackbar.show({
@@ -105,7 +105,7 @@ $(document).ready(function () {
                 if (response.length != undefined) {
                     for (i = 0; i < response.length; i++) {
                         // html += '<h4><li class="">' + response[i].choiceVoteText + '</li></h4>' +
-                        //     //'<span style="font-size: 1.5em;"><a href="#" title="เพิ่มตัวเลือกโหวต" id="addChoiceVote-' + mVoteId + '-' + response[i].choiceVoteId + '"class="f34r-txt-black"><i class="fas fa-plus-square"></i></a></span>&nbsp;' +
+                        //     //'<span style="font-size: 1.5em;"><a href="#" title="เพิ่มตัวเลือกแบบสอบถาม" id="addChoiceVote-' + mVoteId + '-' + response[i].choiceVoteId + '"class="f34r-txt-black"><i class="fas fa-plus-square"></i></a></span>&nbsp;' +
                         //     '<ol id="fieldOlTagChild-' + mVoteId + '-' + response[i].choiceVoteId + '">' +
                         //     '</ol>';
                         html += '<label class="mt-2">' +
