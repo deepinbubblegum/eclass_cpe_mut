@@ -39,15 +39,31 @@ $(document).ready(function () {
         return false;
     });
 
-    $("#addFieldMP").keyup(function (event) {
-        // var re = new RegExp("[ก-๙]",);
-        var re = new RegExp("[ๆๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦห]", );
-        const chars = event.target.value.split('');
-        const char = chars.pop();
-        if (re.test(char)) {
-            event.target.value = chars.join('');
-            // console.log(`${char} is not a valid character.`);
-        }
+    $("#addFieldMP").keypress(function (event) {
+        // var re = new RegExp("[ๆๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦห]", );
+        // const chars = event.target.value.split('');
+        // const char = chars.pop();
+        // if (re.test(char)) {
+        //     event.target.value = chars.join('');
+        // }
+        var ew = event.which;
+        if (ew == 32)
+            return true;
+        if (48 <= ew && ew <= 57)
+            return true;
+        if (65 <= ew && ew <= 90)
+            return true;
+        if (97 <= ew && ew <= 122)
+            return true;
+        if (40 <= ew && ew <= 47)
+            return true;
+        if (ew == 35)
+            return true;
+        if (ew == 37)
+            return true;
+        if (ew == 61)
+            return true;
+        return false;
     });
 
 

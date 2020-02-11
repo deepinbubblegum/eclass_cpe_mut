@@ -45,15 +45,31 @@ $(document).ready(function () {
         return false;
     });
 
-    $("#addFieldMP").keyup(function (event) {
-        // var re = new RegExp("[ก-๙]",);
-        var re = new RegExp("[ๆๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦห]", );
-        const chars = event.target.value.split('');
-        const char = chars.pop();
-        if (re.test(char)) {
-            event.target.value = chars.join('');
-            // console.log(`${char} is not a valid character.`);
-        }
+    $("#addFieldMP").keypress(function (event) {
+        // var re = new RegExp("[ๆๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦห]", );
+        // const chars = event.target.value.split('');
+        // const char = chars.pop();
+        // if (re.test(char)) {
+        //     event.target.value = chars.join('');
+        // }
+        var ew = event.which;
+        if (ew == 32)
+            return true;
+        if (48 <= ew && ew <= 57)
+            return true;
+        if (65 <= ew && ew <= 90)
+            return true;
+        if (97 <= ew && ew <= 122)
+            return true;
+        if (40 <= ew && ew <= 47)
+            return true;
+        if (ew == 35)
+            return true;
+        if (ew == 37)
+            return true;
+        if (ew == 61)
+            return true;
+        return false;
     });
 
 
@@ -78,7 +94,7 @@ $(document).ready(function () {
         description = $('#summernote').summernote('code');
         PointMulti = $("input[name='PointView']:checked").val();
 
-        if(header == ''){
+        if (header == '') {
             Snackbar.show({
                 actionText: 'close',
                 pos: 'top-center',
@@ -414,7 +430,7 @@ $(document).ready(function () {
         // matchup = fullName.match(/\#/g);
         // console.log(matchup);
 
-        if(fullName == '' || miniName == '' || maxPoint == ''){
+        if (fullName == '' || miniName == '' || maxPoint == '') {
             Snackbar.show({
                 actionText: 'close',
                 pos: 'top-center',
@@ -638,7 +654,7 @@ $(document).ready(function () {
         tknb = $('#ticketNumber').val();
         ticket_point = $('#ticket_point').val();
 
-        if(discript == '' || tknb == '' || ticket_point == ''){
+        if (discript == '' || tknb == '' || ticket_point == '') {
             Snackbar.show({
                 actionText: 'close',
                 pos: 'top-center',
@@ -812,7 +828,7 @@ $(document).ready(function () {
             uID = $('#addTicketUID').val();
             tPoint = $('#addTicketP').val();
 
-            if(tPoint == ''){
+            if (tPoint == '') {
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -902,7 +918,7 @@ $(document).ready(function () {
         uID = $('#addTicketUID').val();
         tPoint = $('#addTicketP').val();
 
-        if(tPoint == ''){
+        if (tPoint == '') {
             Snackbar.show({
                 actionText: 'close',
                 pos: 'top-center',
