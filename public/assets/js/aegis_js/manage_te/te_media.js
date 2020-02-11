@@ -200,12 +200,13 @@ $(document).ready(function () {
                 e.preventDefault();
                 html = '';
                 _files = $(this)[0].files;
-                console.log(_files[0].name);
+                // console.log(_files[0].name);
                 $(this).next("label").text(_files[0].name);
         });
 
         $('#btn_save_video').click(function (e) {
                 e.preventDefault();
+                console.log('OK');
                 if (check_dup($('#video_name').val())) {
                         var form_data = new FormData();
                         form_data.append('file', _files[0]);
@@ -262,12 +263,13 @@ $(document).ready(function () {
                 e.preventDefault();
                 html = '';
                 _files = $(this)[0].files;
-                console.log(_files[0].name);
+                // console.log(_files[0].name);
                 $(this).next("label").text(_files[0].name);
         });
 
         $('#btn_save_audio').click(function (e) {
                 e.preventDefault();
+                // console.log('OK');
                 if (check_dup($('#audio_name').val())) {
                         var form_data = new FormData();
                         form_data.append('file', _files[0]);
@@ -322,12 +324,13 @@ $(document).ready(function () {
                 e.preventDefault();
                 html = '';
                 _files = $(this)[0].files;
-                console.log(_files[0].name);
+                // console.log(_files[0].name);
                 $(this).next("label").text(_files[0].name);
         });
 
         $('#btn_save_image').click(function (e) {
                 e.preventDefault();
+                // console.log('OK');
                 if (check_dup($('#image_name').val())) {
                         var form_data = new FormData();
                         form_data.append('file', _files[0]);
@@ -381,12 +384,12 @@ $(document).ready(function () {
         function check_dup(name_menu) {
                 for (index = 0; index < check_name.length; index++) {
                         if (name_menu == check_name[index]['media_show_name']) {
-                                // console.log('dup');
+                                console.log('dup');
                                 SnackCall('ชื่อไฟล์ซ้ำ')
                                 return false;
                         } else {
                                 // SnackCall('OK');
-                                // console.log('OK');
+                                console.log('OK');
                                 status = true;
                         }
                 }

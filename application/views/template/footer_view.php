@@ -20,15 +20,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
         echo assets_js('jsQR/jsQR.js');
         echo assets_js('jsQR/qr_reader.js');
         ?>
-
-        <style>
-                video {
-                        width: 100%;
-                        max-width: 600px;
-                        display: block;
-                        margin: 0 auto;
-                }
-        </style>
 </head>
 
 <body>
