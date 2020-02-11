@@ -215,7 +215,7 @@ $(document).ready(function () {
                                 return false;
                         }
                 }
-                if($('#video_name').val() == ""){
+                if($('#video_name').val() * 1 ==  0){
                         SnackCall('กรุณากำหนดชื่อไฟล์')
                         return false;
                 }
@@ -287,7 +287,7 @@ $(document).ready(function () {
                                 return false;
                         }
                 }
-                if($('#audio_name').val() == ''){
+                if($('#audio_name').val() * 1 ==  0){
                         SnackCall('กรุณากำหนดชื่อไฟล์')
                         return false;
                 }
@@ -366,7 +366,7 @@ $(document).ready(function () {
                         }
                 }
 
-                if($('#image_name').val() == ''){
+                if($('#image_name').val() * 1 ==  0){
                         SnackCall('กรุณากำหนดชื่อไฟล์')
                         return false;
                 }
