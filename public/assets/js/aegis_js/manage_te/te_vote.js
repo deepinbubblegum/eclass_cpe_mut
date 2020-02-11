@@ -68,7 +68,8 @@ $(document).ready(function () {
         } else {
             menuStatus += 0
         }
-
+        
+        if(header*1 != 0){
         $.ajax({
             type: "POST",
             url: iurl,
@@ -90,6 +91,9 @@ $(document).ready(function () {
                 SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
             }
         });
+        }else{
+            SnackCall('โปรดกรอกชื่อเมนู');
+        }
     });
 
     function selectStudent() {
@@ -126,7 +130,7 @@ $(document).ready(function () {
                             '<span style="font-size: 1.7em;"><a title="สร้างตัวเลือกแบบสำรวจ" id="addInMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="ลบเมนูแบบสำรวจ" id="delMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="แก้ไขเมนูแบบสำรวจ" id="editMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a title="ดูคะแนนแบบสำรวจ" id="showScoreMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-chart-bar"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="ดูผลสำรวจ" id="showScoreMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-chart-bar"></a></i></span>&nbsp;' +
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].menuVoteDescription +
@@ -215,7 +219,7 @@ $(document).ready(function () {
                             char.destroy();
                         }
                 $("#showScoreModal").modal('show');
-                $("#scoreModalLabel").text(getMenu[i].menuVoteName);
+                $("#scoreModalLabel").text('ผลสำรวจ : '+getMenu[i].menuVoteName);
                 
                 //---------------------------------------------------------------
                 //console.log(getField[getMenu[i].menuVoteId]);
@@ -416,24 +420,28 @@ $(document).ready(function () {
 
     $('#fieldSave').click(function (e) {
         choiceTxt = $('#addFieldHQN').val();
-        $.ajax({
-            type: "POST",
-            url: fieldSaveUrl,
-            //data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&choiceTxt=' + choiceTxt + '&menuId=' + SMenuID + '&headId=' + SHeadID,
-            data:{
-                semester:semester,
-                subject_id:subject_id,
-                choiceTxt:choiceTxt,
-                menuId:SMenuID,
-                headId:SHeadID
-            },
-            success: function () {
-                $('#addFieldHQN').val("");
-                $('#addField').modal('hide');
-                showMenuVote();
-                SnackCall("บันทึกข้อมูลตัวเลือกแบบสำรวจสำเร็จ");
-            }
-        });
+        if(choiceTxt*1 != 0){
+            $.ajax({
+                type: "POST",
+                url: fieldSaveUrl,
+                //data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&choiceTxt=' + choiceTxt + '&menuId=' + SMenuID + '&headId=' + SHeadID,
+                data:{
+                    semester:semester,
+                    subject_id:subject_id,
+                    choiceTxt:choiceTxt,
+                    menuId:SMenuID,
+                    headId:SHeadID
+                },
+                success: function () {
+                    $('#addFieldHQN').val("");
+                    $('#addField').modal('hide');
+                    showMenuVote();
+                    SnackCall("บันทึกข้อมูลตัวเลือกแบบสำรวจสำเร็จ");
+                }
+            });
+        }else{
+            SnackCall("โปรดกรอกชื่อตัวเลือก");
+        }
     });
 
     /////////////////////////////////////////////////////////
