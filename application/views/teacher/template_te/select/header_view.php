@@ -213,7 +213,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;แบบสอบถาม
+                                                                        &nbsp;&nbsp;แบบสำรวจ
                                                                 </span>
                                                                 </a>';
                                 }
@@ -295,7 +295,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-poll"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;แบบสอบถาม
+                                                &nbsp;&nbsp;แบบสำรวจ
                                         </span>
                                 </a> -->
 
