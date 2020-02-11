@@ -223,6 +223,7 @@ $(document).ready(function () {
                         $("#PointMulti").prop("checked", true);
                         $('#addFieldLabel').text('Create in menu : ' + getMenu[i].point_name);
                         $('#optionSet').val('1');
+                        $('#addFieldMP').prop('type', 'number');
                         $('#FieldMaxtxt').text('คะแนนเต็ม');
                         // $("input[name=PointMulti]").attr('disabled', false);
                         accordionI = getMenu[i].point_id;
@@ -468,6 +469,15 @@ $(document).ready(function () {
         $('#addFieldMN').val('');
         $('#addFieldTK')[0].checked = false;
         $('#addFieldMP').val('1');
+        $('#addFieldMP').prop('type', 'number');
+    });
+
+    $('#IconCloseFIELD').click(function (e) {
+        $('#addFieldFN').val('');
+        $('#addFieldMN').val('');
+        $('#addFieldTK')[0].checked = false;
+        $('#addFieldMP').val('1');
+        $('#addFieldMP').prop('type', 'number');
     });
 
     function takeField(fullName, miniName, ticket, maxPoint, optionSet, PointMulti) {
