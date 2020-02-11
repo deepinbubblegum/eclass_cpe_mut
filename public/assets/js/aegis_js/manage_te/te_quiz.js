@@ -15,6 +15,12 @@ $(document).ready(function () {
     var exportMenuQuiz = '';
     var idMenu = 0;
 
+    var goValidate = [
+        //TEXTBOX_ID ,NUMBER
+        ['#menuExportMn', 10], 
+        ['#menuExportTxt', 4]
+    ];
+
     var clearPoint = '0';
     $('#choiceQuizPoint').val(clearPoint);
 
@@ -35,7 +41,7 @@ $(document).ready(function () {
 
     $('#summernote').summernote('code', '');
 
-    function SnackCall(SnackText){
+    function SnackCall(SnackText) {
         Snackbar.show({
             actionText: 'close',
             pos: 'top-center',
@@ -97,7 +103,6 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 if (response.length != undefined) {
-                    console.log(response);
                     for (i = 0; i < response.length; i++) {
                         if (exportText == response[i].setpoint_mininame) {
                             $('#exportSame').text('*ชื่อนี้ถูกใช้ไปแล้ว');
@@ -116,20 +121,20 @@ $(document).ready(function () {
                         type: "POST",
                         url: '/' + url[3] + '/Te_subject_quiz/exportPoint/',
                         //data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
-                        data:{
-                            semester:semester,
-                            subject:subject_id,
-                            menuPoint:menuPointId,
-                            menuQuiz:exportMenuQuiz,
-                            exportText:exportText,
-                            exportMini:exportMini,
-                            exportMax:exportMax
+                        data: {
+                            semester: semester,
+                            subject: subject_id,
+                            menuPoint: menuPointId,
+                            menuQuiz: exportMenuQuiz,
+                            exportText: exportText,
+                            exportMini: exportMini,
+                            exportMax: exportMax
                         },
                         dataType: "json",
-                        success: function(response) {
-                            if(response != 0){
+                        success: function (response) {
+                            if (response != 0) {
                                 SnackCall('ส่งออกข้อมูลสำเร็จ');
-                            }else{
+                            } else {
                                 SnackCall('ส่งออกข้อมูลไม่สำเร็จ : ยังไม่มีนักศึกษาทำแบบทดสอบ');
                             }
                             $('#exportSame').text('');
@@ -205,7 +210,7 @@ $(document).ready(function () {
                 $('#Headtext').val("");
                 $('#Textarea').val("");
                 $('#Modal').modal('hide');
-                showMenuQuiz();                
+                showMenuQuiz();
                 SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
             }
         });
@@ -337,24 +342,28 @@ $(document).ready(function () {
 
     $('#fieldSave').click(function (e) {
         headerQuizName = $('#addFieldHQN').val();
-        $.ajax({
-            type: "POST",
-            url: fieldSaveUrl,
-            //data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&headerQuizName=' + headerQuizName + '&quizId=' + SMenuID + '&headId=' + SHeadID,
-            data:{
-                semester:semester,
-                subject_id:subject_id,
-                headerQuizName:headerQuizName,
-                quizId:SMenuID,
-                headId:SHeadID
-            },
-            success: function () {
-                $('#addFieldHQN').val("");
-                showMenuQuiz();
-                $('#addField').modal('hide');
-                SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
-            }
-        });
+        if(headerQuizName*1 != 0){
+            $.ajax({
+                type: "POST",
+                url: fieldSaveUrl,
+                //data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&headerQuizName=' + headerQuizName + '&quizId=' + SMenuID + '&headId=' + SHeadID,
+                data: {
+                    semester: semester,
+                    subject_id: subject_id,
+                    headerQuizName: headerQuizName,
+                    quizId: SMenuID,
+                    headId: SHeadID
+                },
+                success: function () {
+                    $('#addFieldHQN').val("");
+                    showMenuQuiz();
+                    $('#addField').modal('hide');
+                    SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
+                }
+            });
+        }else{
+            SnackCall("โปรดกรอกหัวข้อแบบทดสอบ");
+        }
     });
     var SHeadID = '';
 
@@ -423,8 +432,12 @@ $(document).ready(function () {
         //console.log(getMId, getHId, '-<');
         qText = $('#choiceQuizText').val();
         qPoint = $('#choiceQuizPoint').val();
-        saveHeader();
-        $('#addChoice').modal('hide');
+        if(qText*1 != 0){ 
+            saveHeader();
+            $('#addChoice').modal('hide');
+        }else{
+            SnackCall("โปรดกรอกชื่อตัวเลือก");
+        }
     });
 
     function saveHeader() {
@@ -432,14 +445,14 @@ $(document).ready(function () {
             type: "POST",
             url: pUrl,
             //data: '&semester=' + semester + '&subject_id=' + subject_id + '&menuId=' + getMId + '&headId=' + getHId + '&choiceQuizText=' + qText + '&choiceQuizPoint=' + qPoint + '&editId=' + editChoice,
-            data:{
-                semester:semester,
-                subject_id:subject_id,
-                menuId:getMId,
-                headId:getHId,
-                choiceQuizText:qText,
-                choiceQuizPoint:qPoint,
-                editId:editChoice
+            data: {
+                semester: semester,
+                subject_id: subject_id,
+                menuId: getMId,
+                headId: getHId,
+                choiceQuizText: qText,
+                choiceQuizPoint: qPoint,
+                editId: editChoice
             },
             dataType: "json",
             success: function (response) {
@@ -472,7 +485,7 @@ $(document).ready(function () {
                     html += '<table>';
                     for (i = 0; i < response.length; i++) {
                         //f34rNumber = Math.round((response[i].choiceQuizPoint) * 10000) / 10000;
-                        
+
                         html += '<tr>' +
                             '<td><li type="a"><span class="col-8">' + response[i].choiceQuizText + '</span></li></td>' +
                             '<td><span class="text-black-50 col-4">[' + response[i].choiceQuizPoint + ']</span></td>' +
@@ -528,9 +541,7 @@ $(document).ready(function () {
         $('#choiceQuizPoint').val(clearPoint);
         $('#choiceQuizText').val("");
     });
-
-
-
+ 
     var takeThisDel = '';
     var delPid = '';
     var delCid = '';
@@ -624,4 +635,31 @@ $(document).ready(function () {
         });
     }
 
+    $(document).ajaxStop(function () {
+        console.log('stopped');
+        validationF34R(goValidate);
+    });
+
+    //F34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34R 
+
+    function validationF34R(F34RValidate) {
+        $.each(F34RValidate, function (i, p) {
+            $(F34RValidate[i][0]).keypress(function (event) {
+                var ew = event.which;
+                if ($(F34RValidate[i][0]).val().length>=F34RValidate[i][1]){
+                    return false;
+                }
+                if (ew == 32)
+                    return true;
+                if (48 <= ew && ew <= 57)
+                    return true;
+                if (65 <= ew && ew <= 90)
+                    return true;
+                if (97 <= ew && ew <= 122)
+                    return true;
+
+                return false;
+            });
+        });
+    }
 });
