@@ -13,13 +13,21 @@ class Model_te_subject_vote extends CI_Model
 
         $newid = $maxid->row()->newid;
 
+        $maxindexMenu = $this->db->query("
+		select IFNULL(max(menuVoteIndex),0)+1 as newIndex
+        from menuVote
+        where menuVoteSemester = '".$semester."' and menuVoteSubject = '".$subject."' ");
+
+        $indexMenu = $maxindexMenu->row()->newIndex;
+
         $data = array(
             'menuVoteSemester' => $semester,
             'menuVoteSubject' => $subject,
             'menuVoteId' => $newid,
             'menuVoteName' => $Header,
             'menuVoteDescription' => $Description,
-            'menuVoteStatus' => $Status
+            'menuVoteStatus' => $Status,
+            'menuVoteIndex' => $indexMenu
         );
 
         $this->db->insert('menuVote', $data);
@@ -55,13 +63,25 @@ class Model_te_subject_vote extends CI_Model
         $this->db->from('menuVote');
         $this->db->where('menuVoteSubject', $subjectId);
         $this->db->where('menuVoteSemester', $semesterId);
-        $this->db->order_by('cast(menuVoteId as int)', 'ASC');
+        $this->db->order_by('menuVoteIndex', 'ASC');
         //$this->db->order_by('menuDowId', 'DESC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {
             return 0;
+        }
+    }
+
+    public function IndexMenu($sortMenuIDArray, $ArraySemester, $ArraySubject)
+    {
+        $num = count($sortMenuIDArray);
+        for ($i = 0; $i < $num; $i++) {
+            $newIndex = $i + 1;
+            $this->db->query('UPDATE menuVote SET menuVoteIndex = "' . $newIndex . '" WHERE menuVoteSemester = "' . $ArraySemester[$i] . '" 
+            AND menuVoteSubject = "' . $ArraySubject[$i] . '" AND menuVoteId = "' . $sortMenuIDArray[$i] . '" ');
+            // echo $sortMenuIDArray[$i];
+            // echo "<br>";
         }
     }
 

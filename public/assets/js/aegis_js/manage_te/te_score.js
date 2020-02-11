@@ -78,6 +78,18 @@ $(document).ready(function () {
         description = $('#summernote').summernote('code');
         PointMulti = $("input[name='PointView']:checked").val();
 
+        if(header == ''){
+            Snackbar.show({
+                actionText: 'close',
+                pos: 'top-center',
+                actionTextColor: '#FF0000',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'กรุณากรอกหัวข้อเมนูคะแนน'
+            });
+            return false;
+        }
+
         var form_data = new FormData();
         form_data.append('semester', semester);
         form_data.append('subject', subject_id);
@@ -402,6 +414,18 @@ $(document).ready(function () {
         // matchup = fullName.match(/\#/g);
         // console.log(matchup);
 
+        if(fullName == '' || miniName == '' || maxPoint == ''){
+            Snackbar.show({
+                actionText: 'close',
+                pos: 'top-center',
+                actionTextColor: '#FF0000',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'กรุณากรอกรายละเอียดให้ครบ'
+            });
+            return false;
+        }
+
         maxPoint = htmlEncodeF34R(maxPoint);
         fullName = htmlEncodeF34R(fullName);
         miniName = htmlEncodeF34R(miniName);
@@ -614,6 +638,18 @@ $(document).ready(function () {
         tknb = $('#ticketNumber').val();
         ticket_point = $('#ticket_point').val();
 
+        if(discript == '' || tknb == '' || ticket_point == ''){
+            Snackbar.show({
+                actionText: 'close',
+                pos: 'top-center',
+                actionTextColor: '#FF0000',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'กรุณากรอกรายละเอียดให้ครบถ้วน'
+            });
+            return false
+        }
+
         $.ajax({
             type: "POST",
             url: '/' + url[3] + '/Gen_ticket/gen_key',
@@ -776,6 +812,18 @@ $(document).ready(function () {
             uID = $('#addTicketUID').val();
             tPoint = $('#addTicketP').val();
 
+            if(tPoint == ''){
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#FF0000',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: 'กรุณากรอกคะแนนที่ได้'
+                });
+                return false
+            }
+
             maxstd = 0;
             maxstd = parseFloat(maxstd) + parseFloat(tPoint);
 
@@ -853,6 +901,18 @@ $(document).ready(function () {
     $('#ticketSave').click(function (e) {
         uID = $('#addTicketUID').val();
         tPoint = $('#addTicketP').val();
+
+        if(tPoint == ''){
+            Snackbar.show({
+                actionText: 'close',
+                pos: 'top-center',
+                actionTextColor: '#FF0000',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'กรุณากรอกคะแนนที่ได้'
+            });
+            return false
+        }
 
         maxstd = 0;
         maxstd = parseFloat(maxstd) + parseFloat(tPoint);

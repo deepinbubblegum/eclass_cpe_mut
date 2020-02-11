@@ -159,7 +159,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <label for="Textarea">ชื่อเต็มช่องคะแนน</label>
                                                         <input class="form-control" id="addFieldFN">
                                                         <label for="Textarea">ชื่อย่อช่องคะแนน</label>
-                                                        <input class="form-control" id="addFieldMN" maxlength="5">
+                                                        <input class="form-control" id="addFieldMN" maxlength="10">
                                                         <!-- <label for="Textarea">setpoint_ticket</label> -->
                                                         <!-- <input class="form-control" id="addFieldTK"> -->
                                                         <label for="Textarea" id="FieldMaxtxt">คะแนนเต็ม</label>

@@ -9,7 +9,7 @@ class Model_te_subject_quiz extends CI_Model
         $this->db->from('menuQuiz');
         $this->db->where('menuQuizSubject', $subjectId);
         $this->db->where('menuQuizSemester', $semesterId);
-        //$this->db->order_by('menuDowId', 'DESC');
+        $this->db->order_by('menuQuizIndex', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -84,7 +84,7 @@ class Model_te_subject_quiz extends CI_Model
                     'point_std_id' => $menuPoint,
                     'point_std_setpoint_id' => $newid,
                     'point_std_user_id' => $row->pointQuizUserId,
-                    'point_std_index' => str_pad("quiz".$countIndex++,8,"0",STR_PAD_LEFT),
+                    'point_std_index' => str_pad("quiz" . $countIndex++, 8, "0", STR_PAD_LEFT),
                     'point_std_point' => floatval($row->sumPoint)
                 );
                 $this->db->insert('subject_point_student', $data2);
@@ -199,13 +199,21 @@ class Model_te_subject_quiz extends CI_Model
 
         $newid = $maxid->row()->newid;
 
+        $maxindexMenu = $this->db->query("
+        select IFNULL(max(menuQuizIndex),0)+1 as newIndex
+        from menuQuiz
+        where menuQuizSemester = '".$semester."' and menuQuizSubject = '".$subject."' ");
+
+        $indexMenu = $maxindexMenu->row()->newIndex;
+
         $data = array(
             'menuQuizSemester' => $semester,
             'menuQuizSubject' => $subject,
             'menuQuizId' => $newid,
             'menuQuizName' => $Header,
             'menuQuizDescription' => $Description,
-            'menuQuizStatus' => $Status
+            'menuQuizStatus' => $Status,
+            'menuQuizIndex' => $indexMenu
         );
 
         $this->db->insert('menuQuiz', $data);
@@ -266,4 +274,17 @@ class Model_te_subject_quiz extends CI_Model
         $this->db->where_in('menuQuizId', $setIdParent);
         $this->db->delete('menuQuiz');
     }
+
+    public function IndexMenu($sortMenuIDArray, $ArraySemester, $ArraySubject)
+    {
+        $num = count($sortMenuIDArray);
+        for ($i = 0; $i < $num; $i++) {
+            $newIndex = $i + 1;
+            $this->db->query('UPDATE menuQuiz SET menuQuizIndex = "' . $newIndex . '" WHERE menuQuizSemester = "' . $ArraySemester[$i] . '" 
+            AND menuQuizSubject = "' . $ArraySubject[$i] . '" AND menuQuizId = "' . $sortMenuIDArray[$i] . '" ');
+            // echo $sortNameArray[$i];
+            // echo "<br>";
+        }
+    }
+
 }
