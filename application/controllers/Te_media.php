@@ -31,6 +31,14 @@ class Te_media extends MY_Controller
                 echo json_encode($res);
         }
 
+        public function media_name_dup()
+        {
+                echo json_encode($this->Model_media->check_name_dup(
+                        $this->input->post('semester'),
+                        $this->input->post('subject_id'),
+                        $this->input->post('name_menu'),
+                ));
+        }
 
         public function upload_video_ctl()
         {
@@ -92,7 +100,7 @@ class Te_media extends MY_Controller
                 // echo json_encode($_data);
                 // $semester = $this->input->post('semester');
                 // $subject_id = $this->input->post('subject_id');
-                // $_mediaID = $this->auto_id($semester, $subject_id);
+                // $_mediaID = $this->auto_id($semester, $subject_id);     
         }
 
         public function upload_audio_ctl()
@@ -180,7 +188,7 @@ class Te_media extends MY_Controller
 
                 $data_media = array(
                         'media_id' => $this->auto_id(
-                                $this->input->post('semester'), 
+                                $this->input->post('semester'),
                                 $this->input->post('subject_id')
                         ),
                         'media_semester' => $this->input->post('semester'),
