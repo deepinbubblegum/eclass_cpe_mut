@@ -41,14 +41,14 @@ $(document).ready(function() {
                             disabler1 = disabler2 = '';
                             html +=
                             '<div class="expansion-panel list-group-item">' +
-                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
+                            '<a aria-controls="collapse' + getMenu[i].menuQuizId + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + getMenu[i].menuQuizId + '">' +
                             response[i].menuQuizName + disabler1 +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
                             '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
                             '</div>' +
                             '</a>' +
-                            '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
+                            '<div aria-labelledby="heading' + getMenu[i].menuQuizId + '" class="collapse" data-parent="#accordionOne" id="collapse' + getMenu[i].menuQuizId + '">' +
                             '<div class="expansion-panel-body">' +
                             '<h3>' + response[i].menuQuizDescription + '</h3><hr>' +
 

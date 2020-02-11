@@ -287,7 +287,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <i class="fas fa-plus-circle"></i>
                                                 &nbsp;เพิ่มเมนูแบบทดสอบ
                                         </span>
-                                </button>
+                                </button> 
                         </form>
                 </nav>
 
