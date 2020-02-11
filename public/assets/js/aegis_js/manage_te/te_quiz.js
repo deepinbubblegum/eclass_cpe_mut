@@ -227,14 +227,14 @@ $(document).ready(function () {
                     for (i = 0; i < response.length; i++) {
                         html +=
                             '<div class="expansion-panel list-group-item success-color" >' +
-                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="sortableMenu expansion-panel-toggler collapsed" data1="' + response[i].menuQuizId + '" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
+                            '<a aria-controls="collapse' + getMenu[i].menuQuizId + '" aria-expanded="true" class="sortableMenu expansion-panel-toggler collapsed" data1="' + response[i].menuQuizId + '" data-toggle="collapse" href="#collapse' + getMenu[i].menuQuizId + '" id="heading' + getMenu[i].menuQuizId + '">' +
                             response[i].menuQuizName +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
                             '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
                             '</div>' +
                             '</a>' +
-                            '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
+                            '<div aria-labelledby="heading' + getMenu[i].menuQuizId + '" class="collapse" data-parent="#accordionOne" id="collapse' + getMenu[i].menuQuizId + '">' +
                             '<div class="expansion-panel-body">' +
                             /* --------BTN-------- */
                             '<span style="font-size: 1.7em;"><a title="สร้างหัวข้อแบบทดสอบ" id="addInMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
@@ -271,7 +271,7 @@ $(document).ready(function () {
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_quiz/insertFieldQuiz';
                         $('#addField').modal('show');
                         $('#addFieldLabel').text('Create in menu : ' + getMenu[i].menuQuizName);
-                        idMenu = i;
+                        idMenu = getMenu[i].menuQuizId;
                         // $("input[name=PointMulti]").attr('disabled', false);
                     });
                     $('#exportMenu-' + getMenu[i].menuQuizId).click(function (e) {
@@ -279,7 +279,7 @@ $(document).ready(function () {
                         $('#exportLabel').text('Export menu : ' + getMenu[i].menuQuizName);
                         $('#exportData').modal('show');
                         $('#menuExportTxt').val(getMenu[i].menuQuizName);
-                        idMenu = i;
+                        idMenu = getMenu[i].menuQuizId;
                     });
                     // $('#showInMenu-' + getMenu[i].menuQuizId).click(function(e) {}); use da href
                     // $('#impInMenu-' + getMenu[i].menuQuizId).click(function(e) {});
@@ -298,7 +298,7 @@ $(document).ready(function () {
                         $('#Headtext').val(getMenu[i].menuQuizName);
                         // $('#Textarea').val(getMenu[i].menuQuizDescription);
                         $('#summernote').summernote('code', getMenu[i].menuQuizDescription);
-                        idMenu = i;
+                        idMenu = getMenu[i].menuQuizId;
                         //$("input[name='PointView'][value='" + response[i].point_StdView + "']").prop('checked', true);
                         // if ($('#checkBox01').prop("checked")) { menuStatus += 1 } else { menuStatus += 0 }
                         // if ($('#checkBox02').prop("checked")) { menuStatus += 1 } else { menuStatus += 0 }
@@ -392,7 +392,7 @@ $(document).ready(function () {
                     showChoice(mQuizId, getField[mQuizId][i].headerQuizId);
                     //console.log(mQuizId, getField[mQuizId][i].headerQuizId);
                     $('#addChoiceQuiz-' + mQuizId + '-' + getField[mQuizId][i].headerQuizId).click(function (e) {
-                        idMenu = mQuizId - 1;
+                        idMenu = mQuizId;
                         //console.log('#addChoiceQuiz-' + mQuizId + '-' + getField[mQuizId][i].headerQuizId);
                         $('#addChoice').modal('show');
                         $('#addChoiceLabel').text('เพิ่มตัวเลือกแบบทดสอบ ' + getField[mQuizId][i].headerQuizName);
@@ -404,7 +404,7 @@ $(document).ready(function () {
                         //console.log('#delField-' + mQuizId + '-' + getField[mQuizId][i].headerQuizId);
                         $("#txtDel").text('Field:' + getField[mQuizId][i].headerQuizName);
                         $("#ModalDelete").modal('show');
-                        idMenu = mQuizId - 1;
+                        idMenu = mQuizId;
                         takeThisDel = "delField";
                         delCid = getField[mQuizId][i].headerQuizId;
                         delPid = mQuizId;
@@ -414,7 +414,7 @@ $(document).ready(function () {
                         $('#addFieldHQN').val(getField[mQuizId][i].headerQuizName);
                         $('#addFieldLabel').text('Edit Header : ' + getField[mQuizId][i].headerQuizName);
                         $('#addField').modal('show');
-                        idMenu = mQuizId - 1;
+                        idMenu = mQuizId;
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_quiz/updateFieldQuiz';
                         SHeadID = getField[mQuizId][i].headerQuizId;
                         SMenuID = mQuizId;
@@ -438,7 +438,7 @@ $(document).ready(function () {
         }else{
             SnackCall("โปรดกรอกชื่อตัวเลือก");
         }
-    });
+    }); 
 
     function saveHeader() {
         $.ajax({
@@ -512,7 +512,7 @@ $(document).ready(function () {
                         editChoice = response[i].choiceQuizId;
                         getMId = CMenuID;
                         getHId = CHeaderID;
-                        idMenu = CMenuID - 1;
+                        idMenu = CMenuID;
                         // console.log('#addChoiceQuiz-' + mQuizId + '-' + getField[mQuizId][i].headerQuizId);
                         // $('#addChoice').modal('show');
                         // $('#addChoiceLabel').text('เพิ่มตัวเลือกแบบทดสอบ ' + getField[mQuizId][i].headerQuizName);
@@ -526,7 +526,7 @@ $(document).ready(function () {
                         delPid = CMenuID;
                         delCid = CHeaderID;
                         delKid = response[i].choiceQuizId;
-                        idMenu = CMenuID - 1;
+                        idMenu = CMenuID;
                     });
                 });
             },
@@ -633,11 +633,14 @@ $(document).ready(function () {
                 });
             }
         });
-    }
-
+    } 
+    scroll = 0;
     $(document).ajaxStop(function () {
-        console.log('stopped');
-        validationF34R(goValidate);
+        if(scroll > 0){
+            $('html, body').animate({scrollTop:$(document).height()}, 'slow');
+        }
+        validationF34R(goValidate); 
+        scroll++;
     });
 
     //F34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34R 
