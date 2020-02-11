@@ -22,12 +22,23 @@ class Model_media extends CI_Model
                 $this->db->from('media_data');
                 $this->db->where('media_subject', $subjectId);
                 $this->db->where('media_semester', $semesterId);
+                $this->db->order_by('media_index', 'ASC');
                 $query = $this->db->get();
                 if ($query->num_rows() > 0) {
                         return $query->result();
                 } else {
                         return false;
                 }
+        }
+
+        public function Get_MaxIndex($semester, $subject_id)
+        {
+                $maxindex = $this->db->query("
+                select IFNULL(max(CAST(media_index AS int)),0)+1 as newindex
+                from media_data
+                where media_semester = '" . $semester . "' and media_subject='" . $subject_id . "' ");
+                return $maxindex->row()->newindex;
+                // return $newindex;
         }
 
         public function media_add($data_media)
@@ -91,6 +102,18 @@ class Model_media extends CI_Model
                         return false;
                 } else {
                         return true;
+                }
+        }
+
+        public function IndexMenu($sortMenuIDArray, $ArraySemester, $ArraySubject)
+        {
+                $num = count($sortMenuIDArray);
+                for ($i = 0; $i < $num; $i++) {
+                        $newIndex = $i + 1;
+                        $this->db->query('UPDATE media_data SET media_index = "' . $newIndex . '" WHERE media_semester = "' . $ArraySemester[$i] . '" 
+                        AND media_subject = "' . $ArraySubject[$i] . '" AND media_id = "' . $sortMenuIDArray[$i] . '" ');
+                        // echo $sortNameArray[$i];
+                        // echo "<br>";
                 }
         }
 }

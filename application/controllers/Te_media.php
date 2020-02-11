@@ -75,6 +75,10 @@ class Te_media extends MY_Controller
                 //         unlink($dir.'/'.$new_name.'.'.$typefile);
                 // }
 
+                $semester = $this->input->post('semester');
+                $subject_id = $this->input->post('subject_id');
+                $maxIndex = $this->Model_media->Get_MaxIndex($semester, $subject_id);
+
                 $data_media = array(
                         'media_id' => $this->auto_id($this->input->post('semester'), $this->input->post('subject_id')),
                         'media_semester' => $this->input->post('semester'),
@@ -82,7 +86,8 @@ class Te_media extends MY_Controller
                         'media_show_name' => $this->input->post('video_name'),
                         'media_detail_txt' => $this->input->post('discription_video'),
                         'media_real_name' => $new_name . '.' . $typefile,
-                        'media_type' => 'video'
+                        'media_type' => 'video',
+                        'media_index' => $maxIndex
                 );
                 $datareturn = $this->Model_media->media_add($data_media);
                 echo json_encode($datareturn);
@@ -138,6 +143,10 @@ class Te_media extends MY_Controller
                 //         unlink($dir.'/'.$new_name.'.'.$typefile);
                 // }
 
+                $semester = $this->input->post('semester');
+                $subject_id = $this->input->post('subject_id');
+                $maxIndex = $this->Model_media->Get_MaxIndex($semester, $subject_id);
+
                 $data_media = array(
                         'media_id' => $this->auto_id($this->input->post('semester'), $this->input->post('subject_id')),
                         'media_semester' => $this->input->post('semester'),
@@ -145,7 +154,8 @@ class Te_media extends MY_Controller
                         'media_show_name' => $this->input->post('audio_name'),
                         'media_detail_txt' => $this->input->post('discription_audio'),
                         'media_real_name' => $new_name . '.' . $typefile,
-                        'media_type' => 'audio'
+                        'media_type' => 'audio',
+                        'media_index' => $maxIndex
                 );
                 $datareturn = $this->Model_media->media_add($data_media);
                 echo json_encode($datareturn);
@@ -186,6 +196,10 @@ class Te_media extends MY_Controller
                 //         unlink($dir.'/'.$new_name.'.'.$typefile);
                 // }
 
+                $semester = $this->input->post('semester');
+                $subject_id = $this->input->post('subject_id');
+                $maxIndex = $this->Model_media->Get_MaxIndex($semester, $subject_id);
+
                 $data_media = array(
                         'media_id' => $this->auto_id(
                                 $this->input->post('semester'),
@@ -196,7 +210,8 @@ class Te_media extends MY_Controller
                         'media_show_name' => $this->input->post('image_name'),
                         'media_detail_txt' => $this->input->post('discription_image'),
                         'media_real_name' => $new_name . '.' . $typefile,
-                        'media_type' => 'image'
+                        'media_type' => 'image',
+                        'media_index' => $maxIndex
                 );
                 $datareturn = $this->Model_media->media_add($data_media);
                 echo json_encode($datareturn);
@@ -232,5 +247,14 @@ class Te_media extends MY_Controller
                         $data_edit
                 );
                 echo json_encode($return_media_edit);
+        }
+
+        public function SortMenu()
+        {
+                $sortMenuIDArray = $this->input->post('sortMenuIDArray[]');
+                $ArraySemester = $this->input->post('ArraySemester[]');
+                $ArraySubject = $this->input->post('ArraySubject[]');
+                // print_r($sortArray);
+                $this->Model_media->IndexMenu($sortMenuIDArray, $ArraySemester, $ArraySubject);
         }
 }
