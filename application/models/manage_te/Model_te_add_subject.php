@@ -159,7 +159,7 @@ class Model_te_add_subject extends CI_Model
             }
         }
 
-        $queryAnnouce = $this->db->query('SELECT * FROM subject_annouce WHERE annouce_semester = "' . $SemCopy . '" AND annouce_subject = "' . $SubCopy . '" ');
+        $queryAnnouce = $this->db->query('SELECT * FROM subject_annouce WHERE annouce_semester = "' . $SemCopy . '" AND annouce_subject = "' . $SubCopy . '" ORDER BY annouce_time_start DESC ');
         if ($queryAnnouce->num_rows() > 0) {
             foreach ($queryAnnouce->result_array() as $row) {
                 // $dataUpload[] = $row['menuUpId'];
