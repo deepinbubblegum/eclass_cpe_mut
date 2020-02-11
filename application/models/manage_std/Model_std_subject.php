@@ -33,8 +33,8 @@ class Model_std_subject extends CI_Model
     {
         $query = $this->db->query('SELECT DISTINCT subject_name,subsem_subject, subsem_semester FROM subject_semester 
         LEFT JOIN subject ON subsem_subject = subject_id 
-        LEFT JOIN subject_student ON subsem_subject = substd_subject 
-        WHERE subsem_semester = "'.$data.'" AND substd_stdid = "'.$userID.'"  ');
+        LEFT JOIN subject_student ON subsem_subject = substd_subject AND subsem_semester = substd_semester
+        WHERE subsem_semester = "'.$data.'" AND substd_stdid = "'.$userID.'" ');
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {
