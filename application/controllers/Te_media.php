@@ -36,7 +36,7 @@ class Te_media extends MY_Controller
                 echo json_encode($this->Model_media->check_name_dup(
                         $this->input->post('semester'),
                         $this->input->post('subject_id'),
-                        $this->input->post('name_menu'),
+                        $this->input->post('name_menu')
                 ));
         }
 
