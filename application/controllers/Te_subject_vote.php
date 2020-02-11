@@ -149,4 +149,13 @@ class Te_subject_vote extends MY_Controller
         $result = $this->Model_te_subject_vote->deleteMenu($semester, $subject_id, $setIdParent);
         echo json_encode($result);
     }
+
+    public function SortMenu()
+    {
+        $sortMenuIDArray = $this->input->post('sortMenuIDArray[]');
+        $ArraySemester = $this->input->post('ArraySemester[]');
+        $ArraySubject = $this->input->post('ArraySubject[]');
+        $this->Model_te_subject_vote->IndexMenu($sortMenuIDArray, $ArraySemester, $ArraySubject);
+    }
+
 }

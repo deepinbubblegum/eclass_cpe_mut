@@ -51,7 +51,7 @@ $(document).ready(function() {
     var inModelPermis = [
         ['point', 'point', 'point', 'คะแนน'],
         ['point_request', 'point_request', 'point_request', 'แลกคะแนนคะแนน'],
-        ['permission', 'permission', 'permission', 'เพิ่มระดับสิทธิ์อาจารย์ผู้ช่วย'],
+        ['permission', 'permission', 'permission', 'เพิ่มระดับสิทธิ์'],
         ['assist', 'assist', 'assist', 'เพิ่มอาจารย์ผู้ช่วย'],
     ];
 

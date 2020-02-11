@@ -60,9 +60,10 @@ function setup() {
 					playSound5();
 				}
 			}
-			if(stateSoundFi == 0){
+			if (stateSoundFi == 0) {
 				if (hr == 0 && min == 0 && sec <= 0) {
-					playSoundFI();
+					// playSoundFI();
+					TimeFinish = setInterval(playSoundFI, 1000);
 				}
 			}
 
@@ -77,17 +78,21 @@ function setup() {
 }
 setInterval(setup, 1000);
 
+
 function playSound5() {
 	stateSound5 = 1;
 	song5.play();
 }
 
 function playSoundFI() {
+	clearTimeout(TimeFinish);
 	stateSoundFi = 1;
 	songfinish.play();
 }
 
 function timerstart() {
+	stateSound5 = 0;
+	stateSoundFi = 0;
 	flagtimer = true;
 	document.getElementById('Start').hidden = true;
 	document.getElementById('Stop').hidden = false;
@@ -100,6 +105,8 @@ function timerstop() {
 }
 
 function timerset() {
+	stateSound5 = 0;
+	stateSoundFi = 0;
 	hr = parseInt(document.getElementById('Hoursset').value);
 	if (!hr) hr = 0;
 	min = parseInt(document.getElementById('Minutesset').value);

@@ -275,7 +275,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
-                                        <div class="list-group mt-3 showMenuVote" id="accordionOne">
+                                        <div class="list-group mt-3 showMenuVote DragMenu" id="accordionOne">
                                                 <!-- <div class="expansion-panel list-group-item">
                                                         <a aria-controls="collapseOne" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseOne" id="headingOne">
                                                                 Vote #1

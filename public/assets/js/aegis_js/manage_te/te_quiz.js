@@ -222,7 +222,7 @@ $(document).ready(function () {
                     for (i = 0; i < response.length; i++) {
                         html +=
                             '<div class="expansion-panel list-group-item success-color" >' +
-                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
+                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="sortableMenu expansion-panel-toggler collapsed" data1="' + response[i].menuQuizId + '" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
                             response[i].menuQuizName +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
@@ -253,6 +253,7 @@ $(document).ready(function () {
                     }
                 }
                 $('.showMenuQuiz').html(html);
+                sortMenu();
 
                 $('#collapse' + idMenu).collapse({
                     toggle: true
@@ -588,4 +589,37 @@ $(document).ready(function () {
             }
         });
     }
+
+    function sortMenu() {
+        var sortMenuIDArray = [];
+        var ArraySemester = [];
+        var ArraySubject = [];
+        $(".DragMenu").sortable({
+            tolerance: 'pointer',
+            revert: 'invalid',
+            placeholder: 'p-2 f34r-bg-n-txt sortableMenu placeholder',
+            forceHelperSize: true,
+            stop: function() {
+                $.map($(this).find('a.sortableMenu'), function(el) {
+                    var MenuDowid = $(el).attr('data1');
+                    sortMenuIDArray.push(MenuDowid);
+                    ArraySubject.push(subject_id);
+                    ArraySemester.push(semester);
+                });
+                console.log(sortMenuIDArray);
+                $.ajax({
+                    type: "POST",
+                    url: '/' + url[3] + '/Te_subject_quiz/SortMenu',
+                    data: { sortMenuIDArray, ArraySemester, ArraySubject },
+                    success: function() {
+                        sortMenuIDArray = [];
+                        ArraySemester = [];
+                        ArraySubject = [];
+                        showMenuQuiz();
+                    }
+                });
+            }
+        });
+    }
+
 });
