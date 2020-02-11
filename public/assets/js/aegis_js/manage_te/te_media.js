@@ -214,6 +214,10 @@ $(document).ready(function () {
                                 return false;
                         }
                 }
+                if($('#video_name').val() == ""){
+                        SnackCall('กรุณากำหนดชื่อไฟล์')
+                        return false;
+                }
                 var form_data = new FormData();
                 form_data.append('file', _files[0]);
                 form_data.append('video_name', $('#video_name').val());
@@ -281,6 +285,10 @@ $(document).ready(function () {
                                 SnackCall('ชื่อไฟล์ซ้ำ')
                                 return false;
                         }
+                }
+                if($('#audio_name').val() == ''){
+                        SnackCall('กรุณากำหนดชื่อไฟล์')
+                        return false;
                 }
                 var form_data = new FormData();
                 form_data.append('file', _files[0]);
@@ -356,6 +364,12 @@ $(document).ready(function () {
                                 return false;
                         }
                 }
+
+                if($('#image_name').val() == ''){
+                        SnackCall('กรุณากำหนดชื่อไฟล์')
+                        return false;
+                }
+
                 var form_data = new FormData();
                 form_data.append('file', _files[0]);
                 form_data.append('image_name', $('#image_name').val());
