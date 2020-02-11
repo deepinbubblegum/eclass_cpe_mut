@@ -109,7 +109,7 @@ $(document).ready(function () {
                         }
                         html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<a class="card" style="min-width: 310px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../' + url[3] + '/te_select/annouce/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
-                            '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/' + response[i].subsem_semester + response[i].subsem_subject + '.png" onerror="this.src=\'/Img_sem/img_not_found.png\'" alt="Card image cap">' +
+                            '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/' + response[i].subsem_semester + response[i].subsem_subject + '.png?t=' + new Date().getTime() + '"onerror="this.src=\'/Img_sem/img_not_found.png\'" alt="Card image cap">' +
                             '<div class="card-body">' +
                             '<h5 class="card-title" value="' + response[i].subsem_subject + '" >' + txtSub + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
@@ -208,7 +208,7 @@ $(document).ready(function () {
                             htmlAlert +
                             '</div>' +
                             // '<div class="card-footer text-muted">' +
-                           
+
                             // '</div>' +
                             '</a>';
                     }
@@ -238,9 +238,9 @@ $(document).ready(function () {
                         }
                         html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<a class="card" style="min-width: 310px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../' + url[3] + '/te_select_special/annouce/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
-                            '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/' + response[i].subsem_semester + response[i].subsem_subject + '.png" onerror="this.src=\'/Img_sem/img_not_found.png\'" alt="Card image cap">' +
-                            '<div class="card-body">' +
-                            '<h5 class="card-title" value="' + response[i].subsem_subject + '" >' + txtSub + '</h5>' +
+                            '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/' + response[i].subsem_semester + response[i].subsem_subject + '.png?t=' + new Date().getTime() + '"onerror="this.src=\'/Img_sem/img_not_found.png\'" alt="Card image cap">' +
+                        '<div class="card-body">' +
+                        '<h5 class="card-title" value="' + response[i].subsem_subject + '" >' + txtSub + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
                             '</div>' +
                             '<div class="card-footer text-muted">' +

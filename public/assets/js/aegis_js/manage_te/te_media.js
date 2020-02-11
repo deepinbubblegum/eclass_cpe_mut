@@ -4,7 +4,7 @@ $(document).ready(function () {
         part = semester.substr(4, 1);
         $('#header').text('สื่อสารสนเทศ : ' + subject_id + ' - ' + year + '/' + part);
 
-
+        var check_name = [];
         var _files;
         var url = $(location).attr('href').split("/");
         show_media();
@@ -20,6 +20,7 @@ $(document).ready(function () {
                         },
                         dataType: "json",
                         success: function (response) {
+                                check_name = response;
                                 console.log(response);
                                 for (index = 0; index < response.length; index++) {
                                         if (response[index]['media_type'] == 'video') {
@@ -189,7 +190,6 @@ $(document).ready(function () {
                 });
         });
 
-
         function player() {
                 Plyr.setup('video');
                 Plyr.setup('audio');
@@ -206,52 +206,55 @@ $(document).ready(function () {
 
         $('#btn_save_video').click(function (e) {
                 e.preventDefault();
-                var form_data = new FormData();
-                form_data.append('file', _files[0]);
-                form_data.append('video_name', $('#video_name').val());
-                form_data.append('discription_video', $('#discription_video').val());
-                form_data.append('subject_id', subject_id);
-                form_data.append('semester', semester);
-                console.log(form_data);
-                $('#upload_process').modal('show');
-                $.ajax({
-                        xhr: function () {
-                                var xhr = new window.XMLHttpRequest();
-                                html = '';
-                                xhr.upload.addEventListener("progress", function (evt) {
-                                        if (evt.lengthComputable) {
-                                                $('#file_video').modal('hide');
-                                                var percentComplete = evt.loaded / evt.total;
-                                                percentComplete = parseInt(percentComplete * 100);
-                                                console.log(percentComplete);
-                                                html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">' + percentComplete + '%</div>';
-                                                if (percentComplete === 100) {
-                                                        html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
-                                                        setTimeout(function () {
-                                                                $('#upload_process').modal('hide');
-                                                        }, 1200);
+                if (check_dup($('#video_name').val())) {
+                        var form_data = new FormData();
+                        form_data.append('file', _files[0]);
+                        form_data.append('video_name', $('#video_name').val());
+                        form_data.append('discription_video', $('#discription_video').val());
+                        form_data.append('subject_id', subject_id);
+                        form_data.append('semester', semester);
+                        console.log(form_data);
+                        $('#upload_process').modal('show');
+                        $.ajax({
+                                xhr: function () {
+                                        var xhr = new window.XMLHttpRequest();
+                                        html = '';
+                                        xhr.upload.addEventListener("progress", function (evt) {
+                                                if (evt.lengthComputable) {
+                                                        $('#file_video').modal('hide');
+                                                        var percentComplete = evt.loaded / evt.total;
+                                                        percentComplete = parseInt(percentComplete * 100);
+                                                        console.log(percentComplete);
+                                                        html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">' + percentComplete + '%</div>';
+                                                        if (percentComplete === 100) {
+                                                                html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
+                                                                setTimeout(function () {
+                                                                        $('#upload_process').modal('hide');
+                                                                }, 1200);
+                                                        }
+                                                        $('#progressupload').html(html);
                                                 }
-                                                $('#progressupload').html(html);
-                                        }
-                                }, false);
+                                        }, false);
 
-                                return xhr;
-                        },
-                        type: "POST",
-                        url: "/" + url[3] + "/Te_media/upload_video_ctl",
-                        data: form_data,
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-                        dataType: "json",
-                        success: function (response) {
-                                show_media();
-                                $('#upload_process').modal('hide');
-                                $('#video_name').val('');
-                                $('#discription_video').val('');
-                                $('#video_file').val('');
-                        }
-                });
+                                        return xhr;
+                                },
+                                type: "POST",
+                                url: "/" + url[3] + "/Te_media/upload_video_ctl",
+                                data: form_data,
+                                contentType: false,
+                                cache: false,
+                                processData: false,
+                                dataType: "json",
+                                success: function (response) {
+                                        show_media();
+                                        console.log(response);
+                                        $('#upload_process').modal('hide');
+                                        $('#video_name').val('');
+                                        $('#discription_video').val('');
+                                        $('#video_file').val('');
+                                }
+                        });
+                }
         });
 
         // ---------------function audio-upload--------------
@@ -265,51 +268,53 @@ $(document).ready(function () {
 
         $('#btn_save_audio').click(function (e) {
                 e.preventDefault();
-                var form_data = new FormData();
-                form_data.append('file', _files[0]);
-                form_data.append('audio_name', $('#audio_name').val());
-                form_data.append('discription_audio', $('#discription_audio').val());
-                form_data.append('subject_id', subject_id);
-                form_data.append('semester', semester);
-                console.log(form_data);
-                $('#upload_process').modal('show');
-                $.ajax({
-                        xhr: function () {
-                                var xhr = new window.XMLHttpRequest();
-                                html = '';
-                                xhr.upload.addEventListener("progress", function (evt) {
-                                        if (evt.lengthComputable) {
-                                                $('#file_audio').modal('hide');
-                                                var percentComplete = evt.loaded / evt.total;
-                                                percentComplete = parseInt(percentComplete * 100);
-                                                console.log(percentComplete);
-                                                html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">' + percentComplete + '%</div>';
-                                                if (percentComplete === 100) {
-                                                        html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
-                                                        setTimeout(function () {
-                                                                $('#upload_process').modal('hide');
-                                                        }, 1200);
+                if (check_dup($('#audio_name').val())) {
+                        var form_data = new FormData();
+                        form_data.append('file', _files[0]);
+                        form_data.append('audio_name', $('#audio_name').val());
+                        form_data.append('discription_audio', $('#discription_audio').val());
+                        form_data.append('subject_id', subject_id);
+                        form_data.append('semester', semester);
+                        console.log(form_data);
+                        $('#upload_process').modal('show');
+                        $.ajax({
+                                xhr: function () {
+                                        var xhr = new window.XMLHttpRequest();
+                                        html = '';
+                                        xhr.upload.addEventListener("progress", function (evt) {
+                                                if (evt.lengthComputable) {
+                                                        $('#file_audio').modal('hide');
+                                                        var percentComplete = evt.loaded / evt.total;
+                                                        percentComplete = parseInt(percentComplete * 100);
+                                                        console.log(percentComplete);
+                                                        html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">' + percentComplete + '%</div>';
+                                                        if (percentComplete === 100) {
+                                                                html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
+                                                                setTimeout(function () {
+                                                                        $('#upload_process').modal('hide');
+                                                                }, 1200);
+                                                        }
+                                                        $('#progressupload').html(html);
                                                 }
-                                                $('#progressupload').html(html);
-                                        }
-                                }, false);
+                                        }, false);
 
-                                return xhr;
-                        },
-                        type: "POST",
-                        url: "/" + url[3] + "/Te_media/upload_audio_ctl",
-                        data: form_data,
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-                        dataType: "json",
-                        success: function (response) {
-                                show_media();
-                                $('#audio_name').val('');
-                                $('#discription_audio').val('');
-                                $('#audio_file').val('');
-                        }
-                });
+                                        return xhr;
+                                },
+                                type: "POST",
+                                url: "/" + url[3] + "/Te_media/upload_audio_ctl",
+                                data: form_data,
+                                contentType: false,
+                                cache: false,
+                                processData: false,
+                                dataType: "json",
+                                success: function (response) {
+                                        show_media();
+                                        $('#audio_name').val('');
+                                        $('#discription_audio').val('');
+                                        $('#audio_file').val('');
+                                }
+                        });
+                }
         });
 
         // ---------------function image-upload--------------
@@ -323,51 +328,79 @@ $(document).ready(function () {
 
         $('#btn_save_image').click(function (e) {
                 e.preventDefault();
-                var form_data = new FormData();
-                form_data.append('file', _files[0]);
-                form_data.append('image_name', $('#image_name').val());
-                form_data.append('discription_image', $('#discription_image').val());
-                form_data.append('subject_id', subject_id);
-                form_data.append('semester', semester);
-                console.log(form_data);
-                $('#upload_process').modal('show');
-                $.ajax({
-                        xhr: function () {
-                                var xhr = new window.XMLHttpRequest();
-                                html = '';
-                                xhr.upload.addEventListener("progress", function (evt) {
-                                        if (evt.lengthComputable) {
-                                                $('#file_image').modal('hide');
-                                                var percentComplete = evt.loaded / evt.total;
-                                                percentComplete = parseInt(percentComplete * 100);
-                                                console.log(percentComplete);
-                                                html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">' + percentComplete + '%</div>';
-                                                if (percentComplete === 100) {
-                                                        html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
-                                                        setTimeout(function () {
-                                                                $('#upload_process').modal('hide');
-                                                        }, 1200);
+                if (check_dup($('#image_name').val())) {
+                        var form_data = new FormData();
+                        form_data.append('file', _files[0]);
+                        form_data.append('image_name', $('#image_name').val());
+                        form_data.append('discription_image', $('#discription_image').val());
+                        form_data.append('subject_id', subject_id);
+                        form_data.append('semester', semester);
+                        console.log(form_data);
+                        $('#upload_process').modal('show');
+                        $.ajax({
+                                xhr: function () {
+                                        var xhr = new window.XMLHttpRequest();
+                                        html = '';
+                                        xhr.upload.addEventListener("progress", function (evt) {
+                                                if (evt.lengthComputable) {
+                                                        $('#file_image').modal('hide');
+                                                        var percentComplete = evt.loaded / evt.total;
+                                                        percentComplete = parseInt(percentComplete * 100);
+                                                        console.log(percentComplete);
+                                                        html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">' + percentComplete + '%</div>';
+                                                        if (percentComplete === 100) {
+                                                                html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
+                                                                setTimeout(function () {
+                                                                        $('#upload_process').modal('hide');
+                                                                }, 1200);
+                                                        }
+                                                        $('#progressupload').html(html);
                                                 }
-                                                $('#progressupload').html(html);
-                                        }
-                                }, false);
+                                        }, false);
 
-                                return xhr;
-                        },
-                        type: "POST",
-                        url: "/" + url[3] + "/Te_media/upload_image_ctl",
-                        data: form_data,
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-                        dataType: "json",
-                        success: function (response) {
-                                show_media();
-                                $('#image_name').val('');
-                                $('#discription_image').val('');
-                                $('#image_file').val('');
-                        }
-                });
+                                        return xhr;
+                                },
+                                type: "POST",
+                                url: "/" + url[3] + "/Te_media/upload_image_ctl",
+                                data: form_data,
+                                contentType: false,
+                                cache: false,
+                                processData: false,
+                                dataType: "json",
+                                success: function (response) {
+                                        show_media();
+                                        $('#image_name').val('');
+                                        $('#discription_image').val('');
+                                        $('#image_file').val('');
+                                }
+                        });
+                }
         });
 
+        // let status = '';
+        function check_dup(name_menu) {
+                for (index = 0; index < check_name.length; index++) {
+                        if (name_menu == check_name[index]['media_show_name']) {
+                                // console.log('dup');
+                                SnackCall('ชื่อไฟล์ซ้ำ')
+                                return false;
+                        } else {
+                                // SnackCall('OK');
+                                // console.log('OK');
+                                status = true;
+                        }
+                }
+                return status;
+        }
+
+        function SnackCall(SnackText) {
+                Snackbar.show({
+                        actionText: 'close',
+                        pos: 'top-center',
+                        actionTextColor: '#4CAF50',
+                        backgroundColor: '#323232',
+                        width: 'auto',
+                        text: SnackText
+                });
+        }
 });

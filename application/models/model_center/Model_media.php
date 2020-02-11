@@ -78,4 +78,19 @@ class Model_media extends CI_Model
                         return false;
                 }
         }
+
+        public function check_name_dup($semester, $subject_id, $video_name)
+        {
+                $this->db->select('*');
+                $this->db->from('media_data');
+                $this->db->where('media_semester', $semester);
+                $this->db->where('media_subject', $subject_id);
+                $this->db->where('media_show_name', $subject_id);
+                $query = $this->db->get();
+                if ($query->num_rows() > 0) {
+                        return false;
+                } else {
+                        return true;
+                }
+        }
 }
