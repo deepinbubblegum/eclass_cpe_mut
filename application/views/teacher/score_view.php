@@ -128,7 +128,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="modal-content">
                                         <div class="modal-header">
                                                 <h5 class="modal-title" id="addFieldLabel">Modal title</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="IconCloseFIELD">
                                                         <span aria-hidden="true">&times;</span>
                                                 </button>
                                         </div>
