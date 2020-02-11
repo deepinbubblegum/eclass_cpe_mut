@@ -25,6 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         $multi_assets_js = array(
                 'jquery_js/jquery-3.4.1.js',
                 'popper_js/popper.js',
+                'jquery_js/jquery-ui.min.js',
                 'bootstrap_js/bootstrap.js',
                 'bootstrap_js/material.js',
                 'snackbar_js/snackbar.min.js',
