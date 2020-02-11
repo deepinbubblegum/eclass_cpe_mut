@@ -222,5 +222,16 @@ class Model_te_add_subject extends CI_Model
                 }
             }
         }
+
+        // $dataMedia = [];
+        $queryMedia = $this->db->query('SELECT * FROM media_data WHERE  media_semester = "'.$SemCopy.'" and media_subject="'.$SubCopy.'" ');
+        if ($queryMedia->num_rows() > 0) {
+            foreach ($queryQuiz->result_array() as $rowMedia) {
+                $this->db->query('INSERT INTO media_data(media_id, media_semester, media_subject, media_show_name, media_detail_txt, media_real_name, media_type, media_index)
+                VALUES("' . $rowMedia['media_id'] . '", "' . $semester . '", "' . $subject_id . '", "' . $rowMedia['media_show_name'] . '" , "' . $rowMedia['media_detail_txt'] . '" ,
+                 "' . $rowMedia['media_real_name'] . '" , "' . $rowMedia['media_type'] . '" , "' . $rowMedia['media_index'] . '"  ) ');
+            }
+        }
     }
+
 }
