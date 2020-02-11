@@ -19,6 +19,55 @@ defined('BASEPATH') or exit('No direct script access allowed');
         // echo assets_js('aegis_js/video_player.js');
         echo assets_js('aegis_js/manage_te/te_media.js');
         ?>
+
+<style>
+                .f34r-bg-n-txt {
+                        background-color: rgba(0, 150, 136, 0.7);
+                        color: white;
+                }
+
+                .f34r-bg-p-txt {
+                        background-color: rgba(153, 204, 102, 1);
+                        color: white;
+                }
+
+                .f34r-bg-o-txt {
+                        background-color: rgba(255, 153, 102, 1);
+                        color: white;
+                }
+
+                .f34r-txt-white {
+                        color: white;
+                }
+
+                .f34r-txt-black {
+                        color: black;
+                }
+
+                .f34r-txt-think {
+                        color: rgba(0, 150, 136, 0.7)
+                }
+
+
+                .placeholder {
+                        border: 40px solid;
+                        background-color: white;
+                        -webkit-box-shadow: 0px 0px 10px #888;
+                        -moz-box-shadow: 0px 0px 10px #888;
+                        box-shadow: 0px 0px 10px #888;
+                }
+
+                .sortableItem {
+                        height: 94px;
+                        /* weight: 94px; */
+                }
+
+                .drag {
+                        margin-top: 1em;
+                }
+
+                /* .sortableItem {cursor: pointer;} */
+        </style>
 </head>
 
 <body>
@@ -50,7 +99,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </nav>
 
                 <div class="container-fluid">
-                        <div class="list-group mt-3 showMenu_vd_Upload text-left" id="accordionOne">
+                        <div class="list-group mt-3 showMenu_vd_Upload text-left DragMenu" id="accordionOne">
 
                         </div>
 

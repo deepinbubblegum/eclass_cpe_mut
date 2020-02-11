@@ -25,7 +25,7 @@ $(document).ready(function () {
                                 for (index = 0; index < response.length; index++) {
                                         if (response[index]['media_type'] == 'video') {
                                                 html += '<div class="expansion-panel list-group-item">' +
-                                                        '<a aria-controls="' + response[index]['media_id'] + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#' + response[index]['media_id'] + '" id="headingOne">' +
+                                                        '<a aria-controls="' + response[index]['media_id'] + '" aria-expanded="true" class="sortableMenu expansion-panel-toggler collapsed" data1="' + response[index].media_id + '" data-toggle="collapse" href="#' + response[index]['media_id'] + '" id="headingOne">' +
                                                         // '<i class="far fa-file-video"></i>' + response[index]['media_show_name'] +
                                                         '<div class="d-flex justify-content-start">' +
                                                         '<span style="font-size: 17px; color: blue;"">' +
@@ -56,7 +56,7 @@ $(document).ready(function () {
                                                         '</div>';
                                         } else if (response[index]['media_type'] == 'audio') {
                                                 html += '<div class="expansion-panel list-group-item">' +
-                                                        '<a aria-controls="' + response[index]['media_id'] + '" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#' + response[index]['media_id'] + '" id="headingTwo">' +
+                                                        '<a aria-controls="' + response[index]['media_id'] + '" aria-expanded="false" class="sortableMenu expansion-panel-toggler collapsed" data1="' + response[index].media_id + '" data-toggle="collapse" href="#' + response[index]['media_id'] + '" id="headingTwo">' +
                                                         // '<i class="far fa-file-audio"></i>' + response[index]['media_show_name'] +
                                                         '<div class="d-flex justify-content-start">' +
                                                         '<span style="font-size: 17px; color: blue;"">' +
@@ -84,7 +84,7 @@ $(document).ready(function () {
                                                         '</div>';
                                         } else {
                                                 html += '<div class="expansion-panel list-group-item">' +
-                                                        '<a aria-controls="' + response[index]['media_id'] + '" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#' + response[index]['media_id'] + '" id="headingThree">' +
+                                                        '<a aria-controls="' + response[index]['media_id'] + '" aria-expanded="false" class="sortableMenu expansion-panel-toggler collapsed" data1="' + response[index].media_id + '" data-toggle="collapse" href="#' + response[index]['media_id'] + '" id="headingThree">' +
                                                         // '<i class="far fa-file-image"></i>' + response[index]['media_show_name'] +
                                                         '<div class="d-flex justify-content-start">' +
                                                         '<span style="font-size: 17px; color: blue;"">' +
@@ -111,6 +111,7 @@ $(document).ready(function () {
                                         }
                                 }
                                 $('#accordionOne').html(html);
+                                sortMenu();
                                 player();
                                 edit_del_init();
                         }
@@ -442,4 +443,36 @@ $(document).ready(function () {
                         text: SnackText
                 });
         }
+
+        function sortMenu() {
+                var sortMenuIDArray = [];
+                var ArraySemester = [];
+                var ArraySubject = [];
+                $(".DragMenu").sortable({
+                    tolerance: 'pointer',
+                    revert: 'invalid',
+                    placeholder: 'p-2 f34r-bg-n-txt sortableMenu placeholder',
+                    forceHelperSize: true,
+                    stop: function() {
+                        $.map($(this).find('a.sortableMenu'), function(el) {
+                            var MenuDowid = $(el).attr('data1');
+                            sortMenuIDArray.push(MenuDowid);
+                            ArraySubject.push(subject_id);
+                            ArraySemester.push(semester);
+                        });
+                        console.log(sortMenuIDArray);
+                        $.ajax({
+                            type: "POST",
+                            url: '/' + url[3] + '/Te_media/SortMenu',
+                            data: { sortMenuIDArray, ArraySemester, ArraySubject },
+                            success: function() {
+                                sortMenuIDArray = [];
+                                ArraySemester = [];
+                                ArraySubject = [];
+                                show_media();
+                            }
+                        });
+                    }
+                });
+            }
 });
