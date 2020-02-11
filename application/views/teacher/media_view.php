@@ -187,7 +187,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                         <div class="modal-header">
-                                                <h5 class="modal-title" id=upload_process_label"> กำลังอัปโหลด</h5>
+                                                <h5 class="modal-title" id="upload_process_label"> กำลังอัปโหลด</h5>
                                         </div>
                                         <div class="modal-body">
                                                 <div id="progressupload"></div>
@@ -202,7 +202,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                         <div class="modal-header">
-                                                <h5 class="modal-title" id=edit_media_label"> แก้ไขรายละเอียด</h5>
+                                                <h5 class="modal-title" id="edit_media_label"> แก้ไขรายละเอียด</h5>
                                         </div>
                                         <div class="modal-body">
                                                 <div class="input-group mb-3">
@@ -232,7 +232,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="modal-dialog">
                                 <div class="modal-content">
                                         <div class="modal-header">
-                                                <h5 class="modal-title" id=delete_media_label"> ต้องการลบ หรือไม่?</h5>
+                                                <h5 class="modal-title" id="delete_media_label"> ต้องการลบ หรือไม่?</h5>
                                         </div>
                                         <div class="modal-body text-left">
                                                 <h5 id="show_delete_tittle" value="">

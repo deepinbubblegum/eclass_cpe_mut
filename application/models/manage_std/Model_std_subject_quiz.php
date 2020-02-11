@@ -9,6 +9,7 @@ class Model_std_subject_quiz extends CI_Model
         $this->db->from('menuQuiz');
         $this->db->where('menuQuizSubject', $subjectId);
         $this->db->where('menuQuizSemester', $semesterId);
+        $this->db->order_by('menuQuizIndex', 'ASC');
         //$this->db->order_by('menuDowId', 'DESC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

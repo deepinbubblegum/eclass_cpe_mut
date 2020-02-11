@@ -9,6 +9,7 @@ class Model_std_subject_vote extends CI_Model
         $this->db->from('menuVote');
         $this->db->where('menuVoteSubject', $subjectId);
         $this->db->where('menuVoteSemester', $semesterId);
+        $this->db->order_by('menuVoteIndex', 'ASC');
         //$this->db->order_by('menuDowId', 'DESC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
