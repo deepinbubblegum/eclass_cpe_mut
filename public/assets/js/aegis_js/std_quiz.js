@@ -40,9 +40,9 @@ $(document).ready(function() {
                         } else if (response[i].menuQuizStatus.substr(1, 1) == '0'){ 
                             disabler1 = disabler2 = '';
                             html +=
-                            '<div class="expansion-panel list-group-item success-color" >' +
-                            '<a aria-controls="collapse' + getMenu[i].menuQuizId + '" aria-expanded="true" class="sortableMenu expansion-panel-toggler collapsed" data1="' + response[i].menuQuizId + '" data-toggle="collapse" href="#collapse' + getMenu[i].menuQuizId + '" id="heading' + getMenu[i].menuQuizId + '">' +
-                            response[i].menuQuizName +
+                            '<div class="expansion-panel list-group-item">' +
+                            '<a aria-controls="collapse' + getMenu[i].menuQuizId + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + getMenu[i].menuQuizId + '">' +
+                            response[i].menuQuizName + disabler1 +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
                             '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
@@ -50,22 +50,26 @@ $(document).ready(function() {
                             '</a>' +
                             '<div aria-labelledby="heading' + getMenu[i].menuQuizId + '" class="collapse" data-parent="#accordionOne" id="collapse' + getMenu[i].menuQuizId + '">' +
                             '<div class="expansion-panel-body">' +
-                            /* --------BTN-------- */
-                            // '<span style="font-size: 1.7em;"><a title="สร้างหัวข้อแบบทดสอบ" id="addInMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
-                            // '<span style="font-size: 1.7em;"><a title="ลบเมนูแบบทดสอบ" id="delMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
-                            // '<span style="font-size: 1.7em;"><a title="แก้ไขเมนูแบบทดสอบ" id="editMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
-                            // '<span style="font-size: 1.7em;"><a title="่ส่งออกคะแนน" id="exportMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-share-square"></a></i></span>&nbsp;' +
-                            // '<span style="font-size: 1.7em;"><a title="ดูคะแนนแบบทดสอบ" id="showScoreMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
-                            /* --------BTN-------- */
-                            '<br>' +
-                            response[i].menuQuizDescription +
-                            '<hr>' +
-                            '<table class="table table-bordered">' +
-                            '<ol id="fieldOlTag-' + response[i].menuQuizId + '">' +
+                            '<h3>' + response[i].menuQuizDescription + '</h3><hr>' +
 
-                            '</ol>' +
-                            '</table>' +
+                            '<span id="headerHere-' + getMenu[i].menuQuizId + '">' +
 
+                            '</span>' +
+
+                            // '<span id="choiceHere-' + getMenu[i].menuQuizId + '">' +
+                            // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                            // '<label class="mt-2">' +
+                            // '<input type="radio" name="test-' + response[i].menuQuizId + '" class="card-input-element d-none" value="1">' +
+                            // '<div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">' +
+                            // '<h5>2 ขา</h5>' +
+                            // '</div>' +
+                            // '</label>' +
+
+                            // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+                            // '</span>' +
+
+                            '<button type="button" class="btn btn-info mt-3" id="btnSend-' + response[i].menuQuizId + '"' + disabler2 + '>บันทึกข้อมูล</button>' +
                             '</div>' +
                             '</div>' +
                             '</div>';
