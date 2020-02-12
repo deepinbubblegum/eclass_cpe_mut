@@ -5,6 +5,9 @@ $(document).ready(function() {
     var randChoice = [];
     var checkMenu = [];
     var menuStatus = [];
+    year = semester.substr(0, 4);
+    part = semester.substr(4, 1);
+    $('#header').text('แบบทดสอบ : ' + subject_id + ' - ' + year + '/' + part);
     selectCheck();
     showMenuQuiz();
     $('#btnModalSave').click(function(e) {
