@@ -35,7 +35,11 @@ class Model_std_subject extends CI_Model
         LEFT JOIN subject ON subsem_subject = subject_id 
         LEFT JOIN subject_student ON subsem_subject = substd_subject 
 <<<<<<< HEAD
+<<<<<<< HEAD
         WHERE substd_stdid = "'.$userID.'" AND substd_semester = "'.$data.'" ');
+=======
+        WHERE subsem_semester = "'.$data.'" AND substd_stdid = "'.$userID.'"  ');
+>>>>>>> parent of 525b38a... Merge pull request #76 from deepinbubblegum/ZUKA_RUNFI
 =======
         WHERE subsem_semester = "'.$data.'" AND substd_stdid = "'.$userID.'"  ');
 >>>>>>> parent of 525b38a... Merge pull request #76 from deepinbubblegum/ZUKA_RUNFI

@@ -41,7 +41,7 @@ $(document).ready(function() {
                             disabler1 = disabler2 = '';
                             html +=
                             '<div class="expansion-panel list-group-item">' +
-                            '<a aria-controls="collapse' + getMenu[i].menuQuizId + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + getMenu[i].menuQuizId + '">' +
+                            '<a aria-controls="collapse' + getMenu[i].menuQuizId + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + getMenu[i].menuQuizId + '" id="heading' + getMenu[i].menuQuizId + '">' +
                             response[i].menuQuizName + disabler1 +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
