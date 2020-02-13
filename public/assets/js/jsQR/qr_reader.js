@@ -195,6 +195,7 @@ $(document).ready(function () {
                                         drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#92FF45");
                                         drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#92FF45");
                                         $('#Ticket').val(code.data);
+                                        $('#floating-lable-label').addClass('is-focused');
                                         $('#key_label').addClass('has-value');
                                         video.pause();
                                         // video.src = "";
