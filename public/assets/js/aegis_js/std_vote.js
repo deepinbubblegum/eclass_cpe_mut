@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    
     year = semester.substr(0, 4);
     part = semester.substr(4, 1);
     $('#header').text('แบบสำรวจ : ' + subject_id + ' - ' + year + '/' + part);
@@ -19,8 +19,12 @@ $(document).ready(function () {
     var editMenuId = '';
     var fieldSaveUrl = '';
     var getField = [];
-    var getUnit = [];
+    var getPoint = [];
+    var studentCount = 0;
+    var studentVoted = 0;
     var SHeadID = '';
+
+    selectStudent();
     showMenuVote();
 
     function showMenuVote() {
@@ -37,7 +41,7 @@ $(document).ready(function () {
                             } else if (response[i].menuVoteStatus == '0'){
                                 html +=
                                     '<div class="expansion-panel list-group-item success-color" >' +
-                                    '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
+                                    '<a aria-controls="collapse' + response[i].menuVoteId + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + response[i].menuVoteId + '" id="heading' + response[i].menuVoteId + '">' +
                                     response[i].menuVoteName +
                                     '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                                     '<span style="color: Dodgerblue;" id="success-icon-' + response[i].menuVoteId + '">' +
@@ -47,8 +51,13 @@ $(document).ready(function () {
                                     '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
                                     '</div>' +
                                     '</a>' +
-                                    '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
-                                    '<div class="expansion-panel-body">' +
+                                    '<div aria-labelledby="heading' + response[i].menuVoteId + '" class="collapse" data-parent="#accordionOne" id="collapse' + response[i].menuVoteId + '">' +
+                                    '<div class="expansion-panel-body">';
+                                    //----  BUTTON  ----
+                                    //html += '<span style="font-size: 1.7em;"><a title="ดูผลสำรวจ" id="showScoreMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-chart-bar"></a></i></span>&nbsp;' ;
+                                    html += '<span id="buttonHere-'+response[i].menuVoteId+'"></span>';
+                                    //----  BUTTON  ----
+                                    html+=
                                     '<br>' +
                                     response[i].menuVoteDescription +
                                     '<hr>' +
@@ -98,12 +107,12 @@ $(document).ready(function () {
         $.ajax({
             url: '/' + url[3] + '/Te_subject_vote/showVoteField/' + subject_id + '-' + semester + '-' + mVoteId,
             dataType: "json",
-            success: function (response) {
+            success: function (response) { 
                 var html = "";
                 if (!getField[mVoteId]) getField[mVoteId] = []
                 getField[mVoteId] = response;
                 if (response.length != undefined) {
-                    for (i = 0; i < response.length; i++) {
+                    for (i = 0; i < response.length; i++) { 
                         // html += '<h4><li class="">' + response[i].choiceVoteText + '</li></h4>' +
                         //     //'<span style="font-size: 1.5em;"><a href="#" title="เพิ่มตัวเลือกแบบสำรวจ" id="addChoiceVote-' + mVoteId + '-' + response[i].choiceVoteId + '"class="f34r-txt-black"><i class="fas fa-plus-square"></i></a></span>&nbsp;' +
                         //     '<ol id="fieldOlTagChild-' + mVoteId + '-' + response[i].choiceVoteId + '">' +
@@ -118,7 +127,11 @@ $(document).ready(function () {
                 } else {
                     html += '<h1>NO DATA</h1>'
                 }
-                $('#fieldOlTag-' + mVoteId).html(html);
+                $('#fieldOlTag-' + mVoteId).html(html); 
+                $.each(getField[mVoteId], function (i, p) {
+                    //console.log(mVoteId, getField[mVoteId][i].choiceVoteId);
+                    showPoint(mVoteId, getField[mVoteId][i].choiceVoteId);
+                });
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
@@ -146,8 +159,9 @@ $(document).ready(function () {
             data: '&semester=' + semester + '&subject=' + subject_id + '&menuId=' + thisMenuId,
             dataType: "json",
             success: function (response) {
-                html = '';
+                html = htmlButton = '';
                 if (response.length != undefined) {
+                    htmlButton += '<span style="font-size: 1.7em;"><a title="ดูผลสำรวจ" id="showScoreMenu-' + thisMenuId + '" href="#" class="f34r-txt-black"><i class="fas fa-chart-bar"></a></i></span>&nbsp;' ;
                     html += '<i title="โหวดเรียบร้อยแล้ว" class="fas fa-check-circle success-color">โหวดเรียบร้อยแล้ว</i>';
                     $('#btnSend-' + thisMenuId).attr("disabled", true);
                     console.log(response[0].pointVoteChoiceVoteId);
@@ -155,6 +169,111 @@ $(document).ready(function () {
                     $('input[name="test-' + thisMenuId + '"]').attr('disabled', true);
                 }
                 $('#success-icon-' + thisMenuId).html(html);
+                $('#buttonHere-' + thisMenuId).html(htmlButton);
+                ////////////////////////////////////////////////////
+                chartCheck = 0;
+                $('#showScoreMenu-' + thisMenuId).click(function (e) {
+                    console.log('#showScoreMenu-' + thisMenuId);
+                    chartCheck++;
+                            if(chartCheck > 1){
+                                char.destroy();
+                            }
+                    $("#showScoreModal").modal('show');
+                    $("#scoreModalLabel").text('ผลสำรวจ');
+                    
+                    //---------------------------------------------------------------
+                    //console.log(getField[thisMenuId]);
+                    //console.log(getField[thisMenuId].choiceVoteText);
+                    if (getField[thisMenuId] != null) {
+                        getName = [];
+                        for (j = 0; j < getField[thisMenuId].length; j++) {
+                            getName[getField[thisMenuId][j].choiceVoteId] = getField[thisMenuId][j].choiceVoteText;
+                        } 
+                    }
+    
+                    var newAName = getName.filter(function (el) {
+                        return el != null;
+                      });
+    
+                    var newAPoint = getPoint[thisMenuId].filter(function (el) {
+                        return el != null;
+                      }); 
+    
+                    char = new Chart(document.getElementById("score_show"), {
+                        "type": "horizontalBar",
+                        "data": {
+                            //"labels": ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Grey"],
+                            "labels": newAName,
+                            "datasets": [{
+                                "label": "People",
+                                "data":  newAPoint,
+                                "fill": false,
+                                "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
+                                    "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
+                                    "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"
+                                ],
+                                "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
+                                    "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"
+                                ],
+                                "borderWidth": 1
+                            }]
+                        },
+                        "options": {
+                            "scales": {
+                                "xAxes": [{
+                                    "ticks": {
+                                        "beginAtZero": true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    studentVoted = 0;
+                    for (p = 0; p < newAPoint.length; p++) {
+                        studentVoted = studentVoted + (newAPoint[p]*1);
+                    }
+                    notVote = (studentCount*1) - (studentVoted*1);
+    
+                    html2 = '<table class="table table-striped mt-2"><tbody>';
+                    html2 += '<tr><td>Student</td> <td>' + studentCount + '</td> <td>People</td> </tr>'; 
+                    html2 += '<tr><td>Voted</td> <td>' + studentVoted + '</td> <td>People</td> </tr>'; 
+                    html2 += '<tr><td>No Vote</td> <td>' + notVote + '</td> <td>People</td> </tr>'; 
+                    html2 += '</tbody></table>'
+                    $('#f34r-here').html(html2);
+                });
+                ////////////////////////////////////////////////////
+            }
+        });
+    }
+
+    function showPoint(menuId, fieldId) {
+        $.ajax({
+            url: '/' + url[3] + '/Std_subject_vote/showPoint/' + subject_id + '-' + semester + '-' + menuId + '-' + fieldId,
+            dataType: "json",
+            success: function (response) {
+                if (!getPoint[menuId]) 
+                getPoint[menuId] = []
+                var html = ""; 
+                if (response.length != undefined) {
+                    //html += '[' + response[0].stdCount + '/' + studentCount + ']';
+                    getPoint[menuId][fieldId] = response[0].stdCount;
+                } else {
+                    html += '<h1>NO DATA</h1>'
+                }
+                $('#fieldOlTagChild-' + menuId + '-' + fieldId).html(html);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Status: " + textStatus + "Error: " + errorThrown);
+            }
+        });
+    }
+
+    function selectStudent() {
+        $.ajax({
+            url: '/' + url[3] + '/Std_subject_vote/getStudent/' + subject_id + '-' + semester,
+            dataType: "json",
+            success: function (response) {
+                studentCount = response[0].studentCount;
             }
         });
     }

@@ -13,6 +13,7 @@ $(document).ready(function () {
     var studentCount = 0;
     var studentVoted = 0;
     var idMenu = 0;
+    var getMenu = [];
     selectStudent();
     showMenuVote();
     var clearPoint = '0';
