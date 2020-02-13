@@ -59,8 +59,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <body>
         <h3 id="overTable">Lecture CPEN1010 25611</h3>
+        <button id="export_table" class="btn btn-outline-primary btn-lg active ml-2" ><i class="far fa-file-excel"></i> ดาวน์โหลดตารางคะแนน</button>
         <div id="tableScoreZone">
-                <table class="table table-hover">
+                <table class="table table-hover" id="table_show">
                         <thead id="theadScoreZone">
                         </thead>
                         <tbody id="tbodyScoreZone">
