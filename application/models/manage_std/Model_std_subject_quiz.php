@@ -5,10 +5,11 @@ class Model_std_subject_quiz extends CI_Model
 {
     public function getMenuQuiz($subjectId, $semesterId)
     {
-        $this->db->select('*');
+        $this->db->select('* , NOW() as tnow');
         $this->db->from('menuQuiz');
         $this->db->where('menuQuizSubject', $subjectId);
         $this->db->where('menuQuizSemester', $semesterId);
+        // $this->db->where('menuQuizTime >', 'NOW()', FALSE);
         $this->db->order_by('menuQuizIndex', 'ASC');
         //$this->db->order_by('menuDowId', 'DESC');
         $query = $this->db->get();
