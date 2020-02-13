@@ -8,11 +8,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta content="initial-scale=1, shrink-to-fit=no, width=device-width" name="viewport">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i|Roboto+Mono:300,400,700|Roboto+Slab:300,400,700" rel="stylesheet">
+                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script>
                 subject_id =  '<?php echo $subject_id; ?>';
                 semester =  '<?php echo $semester; ?>';
         </script>
         <?php echo assets_js('aegis_js/std_vote.js'); ?>
+        
+        <?php
+                $cssChart = array( 
+                        'chart_css/Chart.css',
+                );
+
+                $jsChart = array( 
+                        'chart_js/Chart.js',
+                        'jspdf/jspdf.min.js',
+                        'jspdf/plugin/jspdf.plugin.autotable.min.js',
+                        'jspdf/font/th_sarabun_new/THSarabunNew-normal.js'
+                );
+                echo assets_css($cssChart);
+                echo assets_js($jsChart);
+                ?>
         <style>
                 .f34r-bg-n-txt {
                         background-color: rgba(0, 150, 136, 0.7);
@@ -116,6 +134,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
         </div>
         <!-- End Modal Add -->
+
+        <!-- Graph Modal -->
+        <div id="showScoreModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 id="scoreModalLabel" class="modal-title">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                </button>
+                                        </div>
+                                        <div class="modal-body">
+                                                <div style="width:100%; height:100%;">
+                                                        <canvas id="score_show"></canvas>
+                                                </div>
+                                                <br>
+                                                <div id="f34r-here">
+                                                        <!-- Tables here -->
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" id="download_PDF">Download PDF</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        <!-- Graph Modal -->
 
         <!-- MODAL_ADD_FIELD -->
         <div class="modal fade bd-example-modal-lg" id="addField" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
@@ -222,7 +268,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
                                         <div class="list-group mt-3 showMenuVote" id="accordionOne">
-                                                <div class="expansion-panel list-group-item">
+                                                <!-- <div class="expansion-panel list-group-item">
                                                         <a aria-controls="collapseOne" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseOne" id="headingOne">
                                                                 Vote #1
                                                                 <div class="expansion-panel-icon ml-3 text-black-secondary">
@@ -232,7 +278,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         </a>
                                                         <div aria-labelledby="headingOne" class="collapse" data-parent="#accordionOne" id="collapseOne">
                                                                 <div class="expansion-panel-body text-center">
-                                                                        <h4>ข้อที่ 1 ไก่มีกี่ขา ?</h4>
+                                                                        <h4>ข้อที่ 12 ไก่มีกี่ขา ?</h4>
                                                                         <label class="mt-2">
                                                                                 <input type="radio" name="test" class="card-input-element d-none">
                                                                                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
@@ -287,7 +333,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
                                                                 </div>
                                                         </div>
-                                                </div>
+                                                </div> -->
                                         </div>
                                 </div>
                                 <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">

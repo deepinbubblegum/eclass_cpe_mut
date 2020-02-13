@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 subject_id =  '<?php echo $subject_id; ?>';
                 semester =  '<?php echo $semester; ?>';
         </script>
-<?php
+                <?php
                 $cssChart = array( 
                         'chart_css/Chart.css',
                 );

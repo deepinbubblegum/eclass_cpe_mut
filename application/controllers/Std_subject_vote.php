@@ -20,6 +20,7 @@ class Std_subject_vote extends MY_Controller
     {
         parent::__construct();
         $this->load->model('manage_std/Model_std_subject_vote');
+        $this->load->model('manage_te/Model_te_subject_vote');
     }
 
     public function showMenuVote($sid)
@@ -47,6 +48,33 @@ class Std_subject_vote extends MY_Controller
         $result = $this->Model_std_subject_vote->getVoteField($data['subject_id'], $data['semester'], $data['menuId']);
         echo json_encode($result);
     } 
+
+    public function showPoint($sid)
+    {
+        $str_arr = explode("-", $sid);
+        $data = array(
+            'subject_id' => $str_arr[0],
+            'semester' => $str_arr[1],
+            'menuId' => $str_arr[2],
+            'fieldId' => $str_arr[3],
+        );
+        $result = $this->Model_te_subject_vote->getVotePoint($data['subject_id'], $data['semester'], $data['menuId'], $data['fieldId']);
+        echo json_encode($result);
+    }
+
+    public function getStudent($sid)
+    {
+        $str_arr = explode("-", $sid);
+        $data = array(
+            'subject_id' => $str_arr[0],
+            'semester' => $str_arr[1],
+            //'menuId' => $str_arr[3],
+            //'heading' => 'My Heading',
+            //'message' => 'My Message'
+        );
+        $result = $this->Model_te_subject_vote->getStudent($data['subject_id'], $data['semester']);
+        echo json_encode($result);
+    }
 
     public function selectPoint()
     { 

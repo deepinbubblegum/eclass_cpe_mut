@@ -5,6 +5,7 @@ $(document).ready(function() {
     var randChoice = [];
     var checkMenu = [];
     var menuStatus = [];
+    var getMenu = [];
     selectCheck();
     showMenuQuiz();
     $('#btnModalSave').click(function(e) {
@@ -35,10 +36,11 @@ $(document).ready(function() {
                     for (i = 0; i < response.length; i++) {
                         disabler1 = disabler2 = '';
                         if (response[i].menuQuizStatus.substr(1, 1) == '1') {
-                            disabler1 = '*แบบทดสอบถูกปิดแล้ว';
+                            disabler1 = '<span class="text-danger">- แบบทดสอบถูกปิด -</span>';
                             disabler2 = 'disabled';
-                        } else if (response[i].menuQuizStatus.substr(1, 1) == '0'){ 
-                            disabler1 = disabler2 = '';
+                        }
+                        // } else if (response[i].menuQuizStatus.substr(1, 1) == '0'){ 
+                        //     disabler1 = disabler2 = '';
                             html +=
                             '<div class="expansion-panel list-group-item">' +
                             '<a aria-controls="collapse' + getMenu[i].menuQuizId + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + getMenu[i].menuQuizId + '" id="heading' + getMenu[i].menuQuizId + '">' +
@@ -54,7 +56,7 @@ $(document).ready(function() {
 
                             '<span id="headerHere-' + getMenu[i].menuQuizId + '">' +
 
-                            '</span>' +
+                            '</span>' ;
 
                             // '<span id="choiceHere-' + getMenu[i].menuQuizId + '">' +
                             // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,12 +70,15 @@ $(document).ready(function() {
 
                             // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
                             // '</span>' +
+                            if (getMenu[i].menuQuizStatus.substr(1, 1) == '0'){
+                                html += '<button type="button" class="btn btn-info mt-3" id="btnSend-' + response[i].menuQuizId + '"' + disabler2 + '>บันทึกข้อมูล</button>';
+                            }
 
-                            '<button type="button" class="btn btn-info mt-3" id="btnSend-' + response[i].menuQuizId + '"' + disabler2 + '>บันทึกข้อมูล</button>' +
+                            html += 
                             '</div>' +
                             '</div>' +
                             '</div>';
-                        } 
+                        // } 
 
                         
                     }
