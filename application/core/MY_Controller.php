@@ -62,4 +62,16 @@ class MY_Controller extends CI_Controller
                 $this->load->model('sign_in/Model_user_uses');
                 return $this->Model_user_uses->check_duplicate_model($data_check);
         }
+
+        public function sys_log($u_id = null, $log_head = null, $log_txt = null)
+        {
+                $this->load->model('log/Model_log');
+                $data = array(
+                        'log_userid' => $u_id,
+                        'log_header' => $log_head,
+                        'log_txt' => $log_txt,
+                        'log_time' => date("Y-m-d H:i:s")
+                );
+                $this->Model_log->log_s($data);
+        }
 }

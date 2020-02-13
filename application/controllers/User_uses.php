@@ -47,6 +47,13 @@ class User_uses extends MY_Controller
                                 );
                                 $this->session->set_userdata($newdata);
                         }
+                        
+                        $this->sys_log(
+                                $this->session->ses_id,
+                                'SING_IN',
+                                'UserID :'.$this->session->ses_id. ' , UserStatus' .$this->session->ses_status . ', Activity : Login success'
+                        );
+
                         redirect();
                 } else {
                         show_404();
@@ -56,7 +63,6 @@ class User_uses extends MY_Controller
         public function password_change()
         {
                 $old_password = $this->encryption_pass($this->input->post('old_passwd'));
-
                 $passwd = $this->encryption_pass($this->input->post('passwd'));
                 $res = $this->Model_user_uses->update_password($this->session->ses_status, $this->session->ses_id, $passwd, $old_password);
                 echo $res;
@@ -64,6 +70,11 @@ class User_uses extends MY_Controller
 
         public function sign_out()
         {
+                $this->sys_log(
+                        $this->session->ses_id,
+                        'SING_OUT',
+                        'UserID :'.$this->session->ses_id. ', UserStatus :' .$this->session->ses_status . ', Activity : Logout success'
+                );
                 $this->session->sess_destroy();
                 redirect();
         }
