@@ -186,7 +186,7 @@ $(document).ready(function () {
                     $("#charts-" + i).click(function (e) {
                         //console.log(i);
                         chartCheck++;
-                        if(chartCheck > 1){
+                        if (chartCheck > 1) {
                             char.destroy();
                         }
                         $('#exampleModalLabel').text(getFieldPoint[i].setpoint_mininame);
@@ -240,7 +240,7 @@ $(document).ready(function () {
                         console.log(findSd1, findSd2);
                         console.log(checkPow);
                         console.log(headData);
-                        
+
                         char = new Chart(document.getElementById("score_show"), {
                             "type": "horizontalBar",
                             "data": {
@@ -468,4 +468,66 @@ $(document).ready(function () {
         // filename = $('.modal-title').val();
         // pdf.save(filename + '.pdf');
     });
+
+    $('#export_table').click(function (e) {
+        e.preventDefault();
+        // exportTableToExcel('table_show', subject_id + '_' + semester);
+        $('#export_table').attr('download', subject_id + '_' + semester);
+        tableToExcel('table_show', (subject_id + '_' + semester));
+    });
+
+    // function exportTableToExcel(tableID, filename = '') {    
+    //     var downloadLink;
+    //     var dataType = 'application/vnd.ms-excel';
+    //     var tableSelect = document.getElementById(tableID);
+    //     var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+    //     // Specify file name
+    //     filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+    //     // Create download link element
+    //     downloadLink = document.createElement("a");
+
+    //     document.body.appendChild(downloadLink);
+
+    //     if (navigator.msSaveOrOpenBlob) {
+    //         var blob = new Blob(['\ufeff', tableHTML], {
+    //             type: dataType
+    //         });
+    //         navigator.msSaveOrOpenBlob(blob, filename);
+    //     } else {
+    //         // Create a link to the file
+    //         downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+    //         // Setting the file name
+    //         downloadLink.download = filename;
+
+    //         //triggering the function
+    //         downloadLink.click();
+    //     }
+    // }
+
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,',
+            template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+            base64 = function (s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            },
+            format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) {
+                    return c[p];
+                })
+            }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = {
+                worksheet: name || 'Worksheet',
+                table: table.innerHTML,
+            }
+            var element = document.createElement('a'); 
+            element.setAttribute('href',uri + base64(format(template, ctx)));
+            element.setAttribute('download', name); 
+            element.click(); 
+        }
+    })()
 });
