@@ -15,7 +15,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 subject_id = '<?php echo $subject_id; ?>';
                 semester = '<?php echo $semester; ?>';
         </script>
-        <?php echo assets_js('aegis_js/manage_te/te_quiz.js'); ?>
+        <?php 
+        echo assets_css('bootstrap_css/bootstrap-clockpicker.min.css');
+        echo assets_js('aegis_js/manage_te/te_quiz.js');
+        echo assets_js('bootstrap_js/bootstrap-clockpicker.min.js');
+        ?>
         <style>
                 .f34r-bg-n-txt {
                         background-color: rgba(0, 150, 136, 0.7);
@@ -91,6 +95,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         </div>
                                                 </div>
+
+                                                <div class="row mt-3 mb-3">
+                                                        <div class="col-7">
+                                                                <label for="datePick">
+                                                                        <input class="form-control text-black" name="pickdatelabel" id="datePick" placeholder="Pick a date" type="text">
+                                                                </label>
+                                                        </div>
+                                                        <div class="col">
+                                                                <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                                                                        <input type="text" class="form-control" id="timePick" placeholder="Pick a time">
+                                                                        <span class="input-group-addon">
+                                                                                <span class="glyphicon glyphicon-time"></span>
+                                                                        </span>
+                                                                </div>
+                                                        </div>
+                                                </div>
+
 
                                                 <div class="form-group">
                                                         <label for="Textarea" class="mt-3 mb-3">menuQuizStatus</label>

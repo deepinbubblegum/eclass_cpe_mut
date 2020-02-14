@@ -47,11 +47,11 @@ class User_uses extends MY_Controller
                                 );
                                 $this->session->set_userdata($newdata);
                         }
-                        
+
                         $this->sys_log(
                                 $this->session->ses_id,
                                 'SING_IN',
-                                'UserID :'.$this->session->ses_id. ' , UserStatus' .$this->session->ses_status . ', Activity : Login success'
+                                'UserID :' . $this->session->ses_id . ' , UserStatus' . $this->session->ses_status . ', Activity : Login success'
                         );
 
                         redirect();
@@ -73,7 +73,7 @@ class User_uses extends MY_Controller
                 $this->sys_log(
                         $this->session->ses_id,
                         'SING_OUT',
-                        'UserID :'.$this->session->ses_id. ', UserStatus :' .$this->session->ses_status . ', Activity : Logout success'
+                        'UserID :' . $this->session->ses_id . ', UserStatus :' . $this->session->ses_status . ', Activity : Logout success'
                 );
                 $this->session->sess_destroy();
                 redirect();

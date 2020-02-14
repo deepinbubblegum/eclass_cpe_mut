@@ -189,7 +189,7 @@ class Model_te_subject_quiz extends CI_Model
         // }
     }
 
-    public function insertMenu($semester, $subject, $Header, $Description, $Status)
+    public function insertMenu($semester, $subject, $Header, $Description, $Status, $datetime)
     {
         $maxid = $this->db->query("
             select IFNULL(max(CAST(menuQuizId AS int)),0)+1 as newid
@@ -213,7 +213,8 @@ class Model_te_subject_quiz extends CI_Model
             'menuQuizName' => $Header,
             'menuQuizDescription' => $Description,
             'menuQuizStatus' => $Status,
-            'menuQuizIndex' => $indexMenu
+            'menuQuizIndex' => $indexMenu,
+            'menuQuizTime' => $datetime
         );
 
         $this->db->insert('menuQuiz', $data);
@@ -221,11 +222,12 @@ class Model_te_subject_quiz extends CI_Model
         //$this->db->query('insert into menuQuiz values("' . $semester . '","' . $subject . '","' . $newid . '","' . $Header . '","' . $Description . '" , "'.$StdView.'");');
     }
 
-    public function editMenu($semester, $subject, $Header, $Description, $editID, $menuStatus)
+    public function editMenu($semester, $subject, $Header, $Description, $editID, $menuStatus, $datetime)
     {
         $this->db->set('menuQuizName', $Header);
         $this->db->set('menuQuizDescription', $Description);
         $this->db->set('menuQuizStatus', $menuStatus);
+        $this->db->set('menuQuizTime', $datetime);
         $this->db->where('menuQuizSemester', $semester);
         $this->db->where('menuQuizSubject', $subject);
         $this->db->where('menuQuizId', $editID);

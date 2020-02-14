@@ -17,12 +17,23 @@ $(document).ready(function () {
 
     var goValidate = [
         //TEXTBOX_ID ,NUMBER
-        ['#menuExportMn', 10], 
+        ['#menuExportMn', 10],
         ['#menuExportTxt', 4]
     ];
 
     var clearPoint = '0';
     $('#choiceQuizPoint').val(clearPoint);
+
+    $('input[name^="pickdatelabel"]').pickdate({
+        cancel: 'Clear',
+        closeOnCancel: true,
+        // containerHidden: 'body',
+        format: 'yyyy-mm-dd',
+        formatSubmit: 'yyyy-mm-dd',
+        selectMonths: true,
+        selectYears: true,
+    });
+    $('.clockpicker').clockpicker();
 
     $('#summernote').summernote({
         placeholder: 'รายละเอียดช่องแบบทดสอบ',
@@ -154,6 +165,8 @@ $(document).ready(function () {
 
     $('#btnAddQuiz').click(function (e) {
         e.preventDefault();
+        $('#datePick').val('');
+        $('#timePick').val('')
         $('#Modal').modal('show');
         $('#ModalLabel').text('เพิ่มเมนูแบบทดสอบ');
         $('#summernote').summernote('code', '');
@@ -189,7 +202,8 @@ $(document).ready(function () {
         } else {
             menuStatus += 0
         }
-
+        date = $('#datePick').val();
+        time = $('#timePick').val() + ':00';
         var form_data = new FormData();
         form_data.append('semester', semester);
         form_data.append('subject', subject_id);
@@ -197,6 +211,8 @@ $(document).ready(function () {
         form_data.append('description', description);
         form_data.append('status', menuStatus);
         form_data.append('editID', editMenuId);
+        form_data.append('date', date);
+        form_data.append('time', time);
 
         $.ajax({
             type: "POST",
@@ -225,6 +241,9 @@ $(document).ready(function () {
                 var html = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        if (response[i].menuQuizTime == "0000-00-00 00:00:00") {
+                            response[i].menuQuizTime = "ไม่มี";
+                        }
                         html +=
                             '<div class="expansion-panel list-group-item success-color" >' +
                             '<a aria-controls="collapse' + getMenu[i].menuQuizId + '" aria-expanded="true" class="sortableMenu expansion-panel-toggler collapsed" data1="' + response[i].menuQuizId + '" data-toggle="collapse" href="#collapse' + getMenu[i].menuQuizId + '" id="heading' + getMenu[i].menuQuizId + '">' +
@@ -252,6 +271,11 @@ $(document).ready(function () {
                             '</ol>' +
                             '</table>' +
 
+                            '</div>' +
+                            '<div class="navdrawer-divider"></div>' +
+                            '<div class="d-flex text-muted">' +
+                            '<div class="p-2"> <small class="ml-2 my-1"></small> </div>' +
+                            '<div class="ml-auto p-2"> <small class="mr-2 my-1"> สิ้นสุดเวลาทำแบบทดสอบ : ' + response[i].menuQuizTime + '</small> </div>' +
                             '</div>' +
                             '</div>' +
                             '</div>';
@@ -296,6 +320,13 @@ $(document).ready(function () {
                     $('#editMenu-' + getMenu[i].menuQuizId).click(function (e) {
                         e.preventDefault();
                         $('#Headtext').val(getMenu[i].menuQuizName);
+                        // console.log(getMenu[i].menuQuizTime);
+                        if (getMenu[i].menuQuizTime != null) {
+                            splitData = getMenu[i].menuQuizTime.split(" ");
+                            $('#datePick').val(splitData[0]);
+                            splitTime = splitData[1].split(':');
+                            $('#timePick').val(splitTime[0] + ':' + splitTime[1]);
+                        }
                         // $('#Textarea').val(getMenu[i].menuQuizDescription);
                         $('#summernote').summernote('code', getMenu[i].menuQuizDescription);
                         idMenu = getMenu[i].menuQuizId;
@@ -342,7 +373,7 @@ $(document).ready(function () {
 
     $('#fieldSave').click(function (e) {
         headerQuizName = $('#addFieldHQN').val();
-        if(headerQuizName*1 != 0){
+        if (headerQuizName * 1 != 0) {
             $.ajax({
                 type: "POST",
                 url: fieldSaveUrl,
@@ -361,7 +392,7 @@ $(document).ready(function () {
                     SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
                 }
             });
-        }else{
+        } else {
             SnackCall("โปรดกรอกหัวข้อแบบทดสอบ");
         }
     });
@@ -432,13 +463,13 @@ $(document).ready(function () {
         //console.log(getMId, getHId, '-<');
         qText = $('#choiceQuizText').val();
         qPoint = $('#choiceQuizPoint').val();
-        if(qText*1 != 0){ 
+        if (qText * 1 != 0) {
             saveHeader();
             $('#addChoice').modal('hide');
-        }else{
+        } else {
             SnackCall("โปรดกรอกชื่อตัวเลือก");
         }
-    }); 
+    });
 
     function saveHeader() {
         $.ajax({
@@ -541,7 +572,7 @@ $(document).ready(function () {
         $('#choiceQuizPoint').val(clearPoint);
         $('#choiceQuizText').val("");
     });
- 
+
     var takeThisDel = '';
     var delPid = '';
     var delCid = '';
@@ -612,8 +643,8 @@ $(document).ready(function () {
             revert: 'invalid',
             placeholder: 'p-2 f34r-bg-n-txt sortableMenu placeholder',
             forceHelperSize: true,
-            stop: function() {
-                $.map($(this).find('a.sortableMenu'), function(el) {
+            stop: function () {
+                $.map($(this).find('a.sortableMenu'), function (el) {
                     var MenuDowid = $(el).attr('data1');
                     sortMenuIDArray.push(MenuDowid);
                     ArraySubject.push(subject_id);
@@ -623,8 +654,12 @@ $(document).ready(function () {
                 $.ajax({
                     type: "POST",
                     url: '/' + url[3] + '/Te_subject_quiz/SortMenu',
-                    data: { sortMenuIDArray, ArraySemester, ArraySubject },
-                    success: function() {
+                    data: {
+                        sortMenuIDArray,
+                        ArraySemester,
+                        ArraySubject
+                    },
+                    success: function () {
                         sortMenuIDArray = [];
                         ArraySemester = [];
                         ArraySubject = [];
@@ -633,13 +668,15 @@ $(document).ready(function () {
                 });
             }
         });
-    } 
+    }
     scroll = 0;
     $(document).ajaxStop(function () {
-        if(scroll > 0){
-            $('html, body').animate({scrollTop:$(document).height()}, 'slow');
+        if (scroll > 0) {
+            $('html, body').animate({
+                scrollTop: $(document).height()
+            }, 'slow');
         }
-        validationF34R(goValidate); 
+        validationF34R(goValidate);
         scroll++;
     });
 
@@ -649,7 +686,7 @@ $(document).ready(function () {
         $.each(F34RValidate, function (i, p) {
             $(F34RValidate[i][0]).keypress(function (event) {
                 var ew = event.which;
-                if ($(F34RValidate[i][0]).val().length>=F34RValidate[i][1]){
+                if ($(F34RValidate[i][0]).val().length >= F34RValidate[i][1]) {
                     return false;
                 }
                 if (ew == 32)

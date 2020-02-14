@@ -135,8 +135,9 @@ class Te_subject_quiz extends MY_Controller
         $Header = $this->input->post('header');
         $Description = $this->input->post('description', false);
         $menuStatus = $this->input->post('status');
+        $datetime = $this->input->post('date'). ' '. $this->input->post('time');
         //$User = $this->input->post('dataUser');
-        $this->Model_te_subject_quiz->insertMenu($semester, $subject, $Header, $Description, $menuStatus);
+        $this->Model_te_subject_quiz->insertMenu($semester, $subject, $Header, $Description, $menuStatus, $datetime);
     }
 
     public function editMenuQuiz() ///////////////////////////////////////////////////////////////////////////////
@@ -147,7 +148,8 @@ class Te_subject_quiz extends MY_Controller
         $Description = $this->input->post('description', false);
         $menuStatus = $this->input->post('status');
         $editID = $this->input->post('editID');
-        $this->Model_te_subject_quiz->editMenu($semester, $subject, $Header, $Description, $editID, $menuStatus);
+        $datetime = $this->input->post('date'). ' '. $this->input->post('time');
+        $this->Model_te_subject_quiz->editMenu($semester, $subject, $Header, $Description, $editID, $menuStatus, $datetime);
     }
 
     public function insertFieldQuiz(/*$sid*/)
