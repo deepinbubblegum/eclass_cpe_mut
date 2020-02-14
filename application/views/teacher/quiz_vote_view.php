@@ -78,13 +78,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="modal-content">
                                         <div class="modal-header">
                                                 <h5 class="modal-title" id="ModalLabel">Modal title</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal" id="IconModalClose" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                 </button>
                                         </div>
                                         <div class="modal-body">
                                                 <div class="form-group">
-                                                        <label for="Textarea">หัวข้อแบบทดสอบ</label>
+                                                        <label for="Textarea">หัวข้อเมนูแบบทดสอบ</label>
                                                         <input class="form-control" id="Headtext">
                                                 </div>
 
@@ -114,7 +114,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
                                                 <div class="form-group">
-                                                        <label for="Textarea" class="mt-3 mb-3">menuQuizStatus</label>
+                                                        <label for="Textarea" class="mt-3 mb-3">สถานะเมนูแบบทดสอบ</label>
                                                         <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox00">
                                                                 <label class="custom-control-label" for="checkBox00">สุ่มสลับตัวเลือกแบบทดสอบ</label>
@@ -179,7 +179,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="modal-content">
                                         <div class="modal-header">
                                                 <h5 class="modal-title" id="addFieldLabel">Modal title</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal" id="IconfieldClose" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                 </button>
                                         </div>
@@ -216,11 +216,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <div class="col-md-4 mb-3"> 
                                                         <label for="Textarea">ชื่อช่องคะแนน</label>
                                                         <input class="form-control" id="menuExportTxt">
+                                                        <label id='exportSame' class='text-danger'></label>
                                                         <label for="Textarea">ชื่อย่อช่องคะแนน</label>
                                                         <input class="form-control" id="menuExportMn">
-                                                        <label id='exportSame' class='text-danger'></label>
                                                         <br>
-                                                        <label for="Textarea">ชื่อช่องคะแนน</label>
+                                                        <label for="Textarea">คะแนนเต็ม</label>
                                                         <input class="form-control" id="menuExportMax" value="10">
                                                         <br>
                                                                 <label>ส่งออกคะแนนไปที่เมนูคะแนน</label>

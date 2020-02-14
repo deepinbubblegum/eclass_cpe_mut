@@ -90,7 +90,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="modal-content">
                                         <div class="modal-header">
                                                 <h5 class="modal-title" id="ModalLabel">Modal title</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal" id="IconModalClose" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                 </button>
                                         </div>
@@ -109,7 +109,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 </div>
 
                                                 <div class="form-group">
-                                                        <label for="Textarea" class="mt-3 mb-3">menuVoteStatus</label>
+                                                        <label for="Textarea" class="mt-3 mb-3">สถานะเมนูแบบสำรวจ</label>
                                                         <!-- <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox00">
                                                                 <label class="custom-control-label" for="checkBox00">สุ่มสลับตัวเลือกแบบสำรวจ</label>
@@ -174,13 +174,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="modal-content">
                                         <div class="modal-header">
                                                 <h5 class="modal-title" id="addFieldLabel">Modal title</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal" id="IconfieldClose" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                 </button>
                                         </div>
                                         <div class="modal-body">
                                                 <div class="form-group">
-                                                        <label for="Textarea">headerVoteName</label>
+                                                        <label for="Textarea">ChoiceVoteName</label>
                                                         <input class="form-control" id="addFieldHQN"> 
                                                 </div>
 

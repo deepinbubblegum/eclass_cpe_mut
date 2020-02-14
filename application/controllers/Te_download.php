@@ -102,11 +102,11 @@ class Te_download extends MY_Controller
                 ); 
                 $filePath = '/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName'];
                 if(unlink($filePath)) {
-                        echo 'deleted successfully';
                         $this->Model_te_download->fileDelete($data['subject_id'], $data['semester'], $data['menu_id'], $data['fileName']);
+                        return 'deleted successfully';
                    }
                    else {
-                        echo 'errors occured';
+                        return 'errors occured';
                    }
                 //$getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
                 //force_download($data['fileName'], $getFile);

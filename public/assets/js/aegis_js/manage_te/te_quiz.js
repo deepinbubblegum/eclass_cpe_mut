@@ -34,9 +34,113 @@ $(document).ready(function () {
         selectYears: true,
     });
     $('.clockpicker').clockpicker();
+    /************************************************* Pop Alert **********************************************************/
+
+    var formMenu = ["#Headtext"];
+
+    var popMenu = ["#popupMenu"];
+
+    var popValueMenu = [
+        //[POP_ID,POP_TEXT]
+        ['popupMenu', 'กรุณาระบุหัวข้อเมนูแบบทดสอบ']
+    ];
+
+    function popGenMenu() {
+        for (i = 0; i < popValueMenu.length; i++) {
+            $("<div id='" + popValueMenu[i][0] + "' class=\"text-danger\">*" + popValueMenu[i][1] + "</div>").insertAfter(formMenu[i]);
+        }
+    }
+
+    function hideAllPopMenu() {
+        for (i = 0; i < popMenu.length; i++) {
+            $(popMenu[i]).hide();
+        }
+    }
+
+    popGenMenu();
+    hideAllPopMenu();
+
+
+    var formHeader = ["#addFieldHQN"];
+
+    var popHeader = ["#popupHeader"];
+
+    var popValueHeader = [
+        //[POP_ID,POP_TEXT]
+        ['popupHeader', 'โปรดกรอกหัวข้อแบบทดสอบ']
+    ];
+
+    function popGenHeader() {
+        for (i = 0; i < popValueHeader.length; i++) {
+            $("<div id='" + popValueHeader[i][0] + "' class=\"text-danger\">*" + popValueHeader[i][1] + "</div>").insertAfter(formHeader[i]);
+        }
+    }
+
+    function hideAllPopHeader() {
+        for (i = 0; i < popHeader.length; i++) {
+            $(popHeader[i]).hide();
+        }
+    }
+
+    popGenHeader();
+    hideAllPopHeader();
+
+
+    var formChoice = ["#choiceQuizText"];
+
+    var popChoice = ["#popupChoice"];
+
+    var popValueChoice = [
+        //[POP_ID,POP_TEXT]
+        ['popupChoice', 'โปรดกรอกชื่อตัวเลือก']
+    ];
+
+    function popGenChoice() {
+        for (i = 0; i < popValueChoice.length; i++) {
+            $("<div id='" + popValueChoice[i][0] + "' class=\"text-danger\">*" + popValueChoice[i][1] + "</div>").insertAfter(formChoice[i]);
+        }
+    }
+
+    function hideAllPopChoice() {
+        for (i = 0; i < popChoice.length; i++) {
+            $(popChoice[i]).hide();
+        }
+    }
+
+    popGenChoice();
+    hideAllPopChoice();
+
+
+    var formExport = ["#menuExportTxt", "#menuExportMn", "#menuExportMax"];
+
+    var popExport = ["#popupExportTxt", "#popupExportMn", "#popupExportMax"];
+
+    var popValueExport = [
+        //[POP_ID,POP_TEXT]
+        ['popupExportTxt', 'โปรดกรอกชื่อช่องคะแนน'],
+        ['popupExportMn', 'โปรดกรอกชื่อย่อช่องคะแนน'],
+        ['popupExportMax', 'โปรดกรอกคะแนนเต็ม']
+    ];
+
+    function popGenExport() {
+        for (i = 0; i < popValueExport.length; i++) {
+            $("<div id='" + popValueExport[i][0] + "' class=\"text-danger\">*" + popValueExport[i][1] + "</div>").insertAfter(formExport[i]);
+        }
+    }
+
+    function hideAllPopExport() {
+        for (i = 0; i < popExport.length; i++) {
+            $(popExport[i]).hide();
+        }
+    }
+
+    popGenExport();
+    hideAllPopExport();
+
+    /***********************************************************************************************************/
 
     $('#summernote').summernote({
-        placeholder: 'รายละเอียดช่องแบบทดสอบ',
+        placeholder: 'รายละเอียดเมนูแบบทดสอบ',
         // tabsize: 1,
         height: 250,
         toolbar: [
@@ -102,65 +206,84 @@ $(document).ready(function () {
     }
 
     $('#exportSave').click(function (e) {
-        menuPointId = $('#menuPoint :selected').val();
-        exportText = $('#menuExportTxt').val();
-        exportMini = $('#menuExportMn').val();
-        exportMax = $('#menuExportMax').val();
 
-        exportCheck = false;
+        var result = '';
+        var check = '';
 
-        $.ajax({
-            url: '/' + url[3] + '/Te_subject_point/showPointField/' + subject_id + '-' + semester + '-' + menuPointId,
-            dataType: "json",
-            success: function (response) {
-                if (response.length != undefined) {
-                    for (i = 0; i < response.length; i++) {
-                        if (exportText == response[i].setpoint_mininame) {
-                            $('#exportSame').text('*ชื่อนี้ถูกใช้ไปแล้ว');
-                            exportCheck = false;
-                            break;
-                        } else {
-                            exportCheck = true;
-                        }
-                    }
-                } else {
-                    exportCheck = true;
-                }
+        for (i = 0; i < $(formExport).length; i++) {
+            if ($(formExport[i]).val() == '') {
+                $(popExport[i]).show();
 
-                if (exportCheck == true) {
-                    $.ajax({
-                        type: "POST",
-                        url: '/' + url[3] + '/Te_subject_quiz/exportPoint/',
-                        //data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
-                        data: {
-                            semester: semester,
-                            subject: subject_id,
-                            menuPoint: menuPointId,
-                            menuQuiz: exportMenuQuiz,
-                            exportText: exportText,
-                            exportMini: exportMini,
-                            exportMax: exportMax
-                        },
-                        dataType: "json",
-                        success: function (response) {
-                            if (response != 0) {
-                                SnackCall('ส่งออกข้อมูลสำเร็จ');
-                            } else {
-                                SnackCall('ส่งออกข้อมูลไม่สำเร็จ : ยังไม่มีนักศึกษาทำแบบทดสอบ');
-                            }
-                            $('#exportSame').text('');
-                            $('#exportData').modal('hide');
-                            console.log(response);
-                        }
-                    });
-                }
-
+            } else {
+                $(popExport[i]).hide();
+                result += i;
             }
-        });
+            check += i;
+        }
+
+        if (check == result) {
+            menuPointId = $('#menuPoint :selected').val();
+            exportText = $('#menuExportTxt').val();
+            exportMini = $('#menuExportMn').val();
+            exportMax = $('#menuExportMax').val();
+
+            exportCheck = false;
+
+            $.ajax({
+                url: '/' + url[3] + '/Te_subject_point/showPointField/' + subject_id + '-' + semester + '-' + menuPointId,
+                dataType: "json",
+                success: function (response) {
+                    if (response.length != undefined) {
+                        for (i = 0; i < response.length; i++) {
+                            if (exportText == response[i].setpoint_mininame) {
+                                $('#exportSame').text('*ชื่อนี้ถูกใช้ไปแล้ว');
+                                exportCheck = false;
+                                break;
+                            } else {
+                                exportCheck = true;
+                            }
+                        }
+                    } else {
+                        exportCheck = true;
+                    }
+
+                    if (exportCheck == true) {
+                        $.ajax({
+                            type: "POST",
+                            url: '/' + url[3] + '/Te_subject_quiz/exportPoint/',
+                            //data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
+                            data: {
+                                semester: semester,
+                                subject: subject_id,
+                                menuPoint: menuPointId,
+                                menuQuiz: exportMenuQuiz,
+                                exportText: exportText,
+                                exportMini: exportMini,
+                                exportMax: exportMax
+                            },
+                            dataType: "json",
+                            success: function (response) {
+                                if (response != 0) {
+                                    SnackCall('ส่งออกข้อมูลสำเร็จ');
+                                } else {
+                                    SnackCall('ส่งออกข้อมูลไม่สำเร็จ : ยังไม่มีนักศึกษาทำแบบทดสอบ');
+                                }
+                                $('#exportSame').text('');
+                                $('#exportData').modal('hide');
+                                hideAllPopExport();
+                                console.log(response);
+                            }
+                        });
+                    }
+
+                }
+            });
+        }
     });
 
     $('#exportClose').click(function (e) {
         $('#menuPoint').val(getMenuPoint[0].point_id);
+        hideAllPopExport();
     });
 
     $('#btnAddQuiz').click(function (e) {
@@ -175,6 +298,22 @@ $(document).ready(function () {
         // $('#StartDatePicker').val(todayDate);
         $('#btnModalSave').text('บันทึกข้อมูล');
         iurl = "/" + url[3] + "/Te_subject_quiz/insertMenuQuiz";
+    });
+
+    $('#btnModalClose').click(function (e) {
+        e.preventDefault();
+        $('#Headtext').val("");
+        $('#Textarea').val("");
+        $('#Modal').modal('hide');
+        hideAllPopMenu();
+    });
+
+    $('#IconModalClose').click(function (e) {
+        e.preventDefault();
+        $('#Headtext').val("");
+        $('#Textarea').val("");
+        $('#Modal').modal('hide');
+        hideAllPopMenu();
     });
 
     $('#btnModalSave').click(function (e) {
@@ -214,22 +353,47 @@ $(document).ready(function () {
         form_data.append('date', date);
         form_data.append('time', time);
 
-        $.ajax({
-            type: "POST",
-            url: iurl,
-            // data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&status=' + menuStatus + '&editID=' + editMenuId,
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function () {
-                $('#Headtext').val("");
-                $('#Textarea').val("");
-                $('#Modal').modal('hide');
-                showMenuQuiz();
-                SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
+        var result = '';
+        var check = '';
+
+        for (i = 0; i < $(formMenu).length; i++) {
+            if ($(formMenu[i]).val() == '') {
+                $(popMenu[i]).show();
+
+            } else {
+                $(popMenu[i]).hide();
+                result += i;
             }
-        });
+            check += i;
+        }
+
+        if (check == result) {
+            var form_data = new FormData();
+            form_data.append('semester', semester);
+            form_data.append('subject', subject_id);
+            form_data.append('header', header);
+            form_data.append('description', description);
+            form_data.append('status', menuStatus);
+            form_data.append('editID', editMenuId);
+
+            $.ajax({
+                type: "POST",
+                url: iurl,
+                // data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&status=' + menuStatus + '&editID=' + editMenuId,
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function () {
+                    $('#Headtext').val("");
+                    $('#Textarea').val("");
+                    $('#Modal').modal('hide');
+                    hideAllPopMenu();
+                    showMenuQuiz();
+                    SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
+                }
+            });
+        }
     });
 
     function showMenuQuiz() {
@@ -371,9 +535,37 @@ $(document).ready(function () {
         });
     }
 
+
+    $('#fieldClose').click(function (e) {
+        e.preventDefault();
+        $('#addFieldHQN').val("");
+        hideAllPopHeader();
+    });
+
+    $('#IconfieldClose').click(function (e) {
+        e.preventDefault();
+        $('#addFieldHQN').val("");
+        hideAllPopHeader();
+    });
+
     $('#fieldSave').click(function (e) {
         headerQuizName = $('#addFieldHQN').val();
-        if (headerQuizName * 1 != 0) {
+        // if (headerQuizName * 1 != 0) {
+        var result = '';
+        var check = '';
+
+        for (i = 0; i < $(formHeader).length; i++) {
+            if ($(formHeader[i]).val() == '') {
+                $(popHeader[i]).show();
+
+            } else {
+                $(popHeader[i]).hide();
+                result += i;
+            }
+            check += i;
+        }
+
+        if (check == result) {
             $.ajax({
                 type: "POST",
                 url: fieldSaveUrl,
@@ -392,9 +584,10 @@ $(document).ready(function () {
                     SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
                 }
             });
-        } else {
-            SnackCall("โปรดกรอกหัวข้อแบบทดสอบ");
         }
+        // } else {
+        //     SnackCall("โปรดกรอกหัวข้อแบบทดสอบ");
+        // }
     });
     var SHeadID = '';
 
@@ -459,16 +652,36 @@ $(document).ready(function () {
     }
     editChoice = qText = qPoint = pUrl = '';
 
+
+
     $('#choiceSave').click(function (e) {
         //console.log(getMId, getHId, '-<');
         qText = $('#choiceQuizText').val();
         qPoint = $('#choiceQuizPoint').val();
-        if (qText * 1 != 0) {
-            saveHeader();
-            $('#addChoice').modal('hide');
-        } else {
-            SnackCall("โปรดกรอกชื่อตัวเลือก");
+
+        var result = '';
+        var check = '';
+
+        for (i = 0; i < $(formChoice).length; i++) {
+            if ($(formChoice[i]).val() == '') {
+                $(popChoice[i]).show();
+
+            } else {
+                $(popChoice[i]).hide();
+                result += i;
+            }
+            check += i;
         }
+
+        if (check == result) {
+            saveHeader();
+        }
+        // if (qText * 1 != 0) {
+        //     saveHeader();
+        //     $('#addChoice').modal('hide');
+        // } else {
+        //     SnackCall("โปรดกรอกชื่อตัวเลือก");
+        // }
     });
 
     function saveHeader() {
@@ -571,6 +784,7 @@ $(document).ready(function () {
         e.preventDefault();
         $('#choiceQuizPoint').val(clearPoint);
         $('#choiceQuizText').val("");
+        hideAllPopChoice();
     });
 
     var takeThisDel = '';

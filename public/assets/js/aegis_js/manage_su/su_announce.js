@@ -62,15 +62,15 @@ $(document).ready(function () {
                 //         return false;
                 // }
                 if ($('#summernote').summernote('isEmpty')) {
-                        Snackbar.show({
-                                actionText: 'close',
-                                pos: 'top-center',
-                                actionTextColor: '#da0041',
-                                backgroundColor: '#323232',
-                                width: 'auto',
-                                text: 'กรุณากรอกข้อมูลเนื้อหาประกาศ'
-                        });
-                        return false;
+                        // Snackbar.show({
+                        //         actionText: 'close',
+                        //         pos: 'top-center',
+                        //         actionTextColor: '#da0041',
+                        //         backgroundColor: '#323232',
+                        //         width: 'auto',
+                        //         text: 'กรุณากรอกข้อมูลเนื้อหาประกาศ'
+                        // });
+                        // return false;
                 }
 
                 var form_data = new FormData();
@@ -215,17 +215,17 @@ $(document).ready(function () {
                         $('#Titlename_edit').removeClass('is-invalid');
                 }
 
-                if (content === '') {
-                        Snackbar.show({
-                                actionText: 'close',
-                                pos: 'top-center',
-                                actionTextColor: '#da0041',
-                                backgroundColor: '#323232',
-                                width: 'auto',
-                                text: 'กรุณากรอกข้อมูลเนื้อหาประกาศ'
-                        });
-                        return false;
-                }
+                // if (content === '') {
+                //         Snackbar.show({
+                //                 actionText: 'close',
+                //                 pos: 'top-center',
+                //                 actionTextColor: '#da0041',
+                //                 backgroundColor: '#323232',
+                //                 width: 'auto',
+                //                 text: 'กรุณากรอกข้อมูลเนื้อหาประกาศ'
+                //         });
+                //         return false;
+                // }
 
                 var form_data = new FormData();
                 form_data.append('dataid', dataid);

@@ -125,7 +125,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 &nbsp;&nbsp;เลือกรายวิชา
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('select'); ?>">
+                                <a class="nav-item nav-link" href="<?php echo base_url('select/annouce/'). $subject_id . '-' . $semester; ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-chalkboard"></i></span>
                                         <span style="font-size: 1.2em;">
