@@ -155,28 +155,28 @@ class Model_te_subject_vote extends CI_Model
 
     public function deleteKid($semester, $subject_id, $setIdChild, $setIdParent, $setIdKid)
     {
-        $this->db->where_in('choiceQuizSemester', $semester);
-        $this->db->where_in('choiceQuizSubject', $subject_id);
-        $this->db->where_in('choiceQuizMenuQuizId', $setIdParent);
-        $this->db->where_in('choiceQuizHeadId', $setIdChild);
-        $this->db->where_in('choiceQuizId', $setIdKid);
+        $this->db->where('choiceQuizSemester', $semester);
+        $this->db->where('choiceQuizSubject', $subject_id);
+        $this->db->where('choiceQuizMenuQuizId', $setIdParent);
+        $this->db->where('choiceQuizHeadId', $setIdChild);
+        $this->db->where('choiceQuizId', $setIdKid);
         $this->db->delete('choiceQuiz');
     }
 
     public function deleteField($semester, $subject_id, $setIdChild, $setIdParent)
     {
-        $this->db->where_in('choiceVoteSemester', $semester);
-        $this->db->where_in('choiceVoteSubject', $subject_id);
-        $this->db->where_in('choiceVoteMenuId', $setIdParent);
-        $this->db->where_in('choiceVoteId', $setIdChild);
+        $this->db->where('choiceVoteSemester', $semester);
+        $this->db->where('choiceVoteSubject', $subject_id);
+        $this->db->where('choiceVoteMenuId', $setIdParent);
+        $this->db->where('choiceVoteId', $setIdChild);
         $this->db->delete('choiceVote');
     }
 
     public function deleteMenu($semester, $subject_id, $setIdParent)
     {
-        $this->db->where_in('menuVoteSemester', $semester);
-        $this->db->where_in('menuVoteSubject', $subject_id);
-        $this->db->where_in('menuVoteId', $setIdParent);
+        $this->db->where('menuVoteSemester', $semester);
+        $this->db->where('menuVoteSubject', $subject_id);
+        $this->db->where('menuVoteId', $setIdParent);
         $this->db->delete('menuVote');
     }
 
