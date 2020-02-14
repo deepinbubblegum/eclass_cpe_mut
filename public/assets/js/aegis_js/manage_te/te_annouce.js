@@ -9,6 +9,33 @@ $(document).ready(function () {
     var iurl;
     var idAnnouce;
     ShowDataAnnouce();
+    // hideAllPop();
+
+    var popData = ["#popupHead", "#popupDis"];
+
+    var popValue = [
+        //[POP_ID,POP_TEXT]
+        ['popupHead', 'กรุณาระบุหัวข้อประกาศ'],
+        ['popupDis', 'กรุณาระบุเนื้อหาประกาศ']
+    ];
+
+    var formData = ["#Headtext", "#summernote"];
+
+    function popGen() {
+        for (i = 0; i < popValue.length; i++) {
+            $("<div id='" + popValue[i][0] + "' class=\"text-danger\">*" + popValue[i][1] + "</div>").insertAfter(formData[i]);
+        }
+    }
+
+    function hideAllPop() {
+        for (i = 0; i < popData.length; i++) {
+            $(popData[i]).hide();
+        }
+    }
+
+    popGen();
+    hideAllPop();
+
 
     $('#summernote').summernote({
         dialogsInBody: true,
@@ -132,7 +159,7 @@ $(document).ready(function () {
                                 '<span class="text-left">' + response[i].annouce_name + '</span>' +
                                 '</div>' +
                                 '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
-                                '<i class="collapsed material-icons">keyboard_arrow_down</i>' +
+                                '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
                                 '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
                                 '</div>' +
                                 '</a>' +
@@ -188,6 +215,33 @@ $(document).ready(function () {
     });
 
     $('#save').click(function (e) {
+
+        var result = '';
+        var check = '';
+        var data = '';
+
+        for (i = 0; i < $(formData).length; i++) {
+            if (i == 0) {
+                if ($(formData[0]).val() == '') {
+                    $(popData[0]).show();
+                } else {
+                    $(popData[0]).hide();
+                    result += 0;
+                }
+            }
+
+            if (i == 1) {
+                if ($('#summernote').summernote('isEmpty')) {
+                    $(popData[1]).show();
+                } else {
+                    $(popData[1]).hide();
+                    result += 1;
+                }
+            }
+
+            check += i;
+        }
+
         dataHead = $('#Headtext').val();
         // dataAnnouce = $('#Textarea').val();
         dataAnnouce = $('#summernote').summernote('code');
@@ -204,26 +258,7 @@ $(document).ready(function () {
             txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
         }
 
-        if (dataHead == '') {
-            Snackbar.show({
-                actionText: 'close',
-                pos: 'top-center',
-                actionTextColor: '#FF0000',
-                backgroundColor: '#323232',
-                width: 'auto',
-                text: 'กรุณาใส่ข้อมูลหัวข้อประกาศ'
-            });
-        } else if ($('#summernote').summernote('isEmpty')) {
-            Snackbar.show({
-                actionText: 'close',
-                pos: 'top-center',
-                actionTextColor: '#FF0000',
-                backgroundColor: '#323232',
-                width: 'auto',
-                text: 'กรุณาใส่ข้อมูลเนื้อหาประกาศ'
-            });
-        } else {
-
+        if (check == result) {
             var form_data = new FormData();
             form_data.append('semester', semester);
             form_data.append('subject', subject_id);
@@ -251,6 +286,9 @@ $(document).ready(function () {
                     //     $('#Modal').modal('hide');
                     // };
                     $('#Modal').modal('hide');
+                    for (i = 0; i < $(formData).length; i++) {
+                        $(popData[i]).hide();
+                    }
                     Snackbar.show({
                         actionText: 'close',
                         pos: 'top-center',
@@ -303,6 +341,26 @@ $(document).ready(function () {
         idAnnouce = data_annouce[ivalue].annouce_id;
         $('#ModalDelete').modal('show');
         $('#txtDel').text(data_annouce[ivalue].annouce_name)
+    });
+
+    $('#iconClose').click(function (e) {
+        e.preventDefault();
+        $('#Headtext').val("");
+        $('#EndDatePicker').val("");
+        $('#summernote').summernote('code', '');
+        for (i = 0; i < $(formData).length; i++) {
+            $(popData[i]).hide();
+        }
+    });
+
+    $('#CloseModal').click(function (e) {
+        e.preventDefault();
+        $('#Headtext').val("");
+        $('#EndDatePicker').val("");
+        $('#summernote').summernote('code', '');
+        for (i = 0; i < $(formData).length; i++) {
+            $(popData[i]).hide();
+        }
     });
 
 

@@ -114,6 +114,15 @@ $(document).ready(function () {
                             '<div id="uploadeds_files' + i + '">' +
                             '</div>' +
                             '</div>' +
+
+                            '<div class="navdrawer-divider"></div>' +
+                            '<div class="d-flex text-muted">' +
+                            '<div class="p-2"> <small>ประกาศเมื่อ : ' + response[i].menuUpTimeStart + '</small> </div>' +
+                            '<div class="ml-auto p-2"> <small> กำหนดส่ง : ' + response[i].menuUpTimeEnd + '</small> </div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+
                             '</div>' +
                             '</div>' +
                             '</div>';
@@ -410,6 +419,15 @@ $(document).ready(function () {
                             '</li>' +
                             '</div>' +
                             '</div>' +
+
+                            '<div class="navdrawer-divider"></div>' +
+                            '<div class="d-flex text-muted">' +
+                            '<div class="p-2"> <small>ประกาศเมื่อ : ' + response[i].menuUpTimeStart + '</small> </div>' +
+                            '<div class="ml-auto p-2"> <small> กำหนดส่ง : ' + response[i].menuUpTimeEnd + '</small> </div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+
                             '</div>' +
                             '</div>';
                     }

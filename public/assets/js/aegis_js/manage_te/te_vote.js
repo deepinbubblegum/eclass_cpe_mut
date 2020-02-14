@@ -19,7 +19,7 @@ $(document).ready(function () {
     $('#choiceVotePoint').val(clearPoint);
 
     $('#summernote').summernote({
-        placeholder: 'รายละเอียดเนื้อหาประกาศ',
+        placeholder: 'รายละเอียดเมนูแบบสำรวจ',
         // tabsize: 1,
         height: 250,
         toolbar: [
@@ -35,7 +35,61 @@ $(document).ready(function () {
 
     $('#summernote').summernote('code', '');
 
-    function SnackCall(SnackText){
+    /************************************************* Pop Alert **********************************************************/
+
+    var formMenu = ["#Headtext"];
+
+    var popMenu = ["#popupMenu"];
+
+    var popValueMenu = [
+        //[POP_ID,POP_TEXT]
+        ['popupMenu', 'กรุณาระบุชื่อเมนู']
+    ];
+
+    function popGenMenu() {
+        for (i = 0; i < popValueMenu.length; i++) {
+            $("<div id='" + popValueMenu[i][0] + "' class=\"text-danger\">*" + popValueMenu[i][1] + "</div>").insertAfter(formMenu[i]);
+        }
+    }
+
+    function hideAllPopMenu() {
+        for (i = 0; i < popMenu.length; i++) {
+            $(popMenu[i]).hide();
+        }
+    }
+
+    popGenMenu();
+    hideAllPopMenu();
+
+
+    var formChoice = ["#addFieldHQN"];
+
+    var popChoice = ["#popupChoice"];
+
+    var popValueChoice = [
+        //[POP_ID,POP_TEXT]
+        ['popupChoice', 'กรุณาระบุชื่อตัวเลือก']
+    ];
+
+    function popGenChoice() {
+        for (i = 0; i < popValueChoice.length; i++) {
+            $("<div id='" + popValueChoice[i][0] + "' class=\"text-danger\">*" + popValueChoice[i][1] + "</div>").insertAfter(formChoice[i]);
+        }
+    }
+
+    function hideAllPopChoice() {
+        for (i = 0; i < popChoice.length; i++) {
+            $(popChoice[i]).hide();
+        }
+    }
+
+    popGenChoice();
+    hideAllPopChoice();
+
+    /************************************************* Pop Alert **********************************************************/
+
+
+    function SnackCall(SnackText) {
         Snackbar.show({
             actionText: 'close',
             pos: 'top-center',
@@ -58,6 +112,20 @@ $(document).ready(function () {
         iurl = "/" + url[3] + "/Te_subject_vote/insertMenuVote";
     });
 
+    $('#btnModalClose').click(function (e) {
+        e.preventDefault();
+        $('#Headtext').val("");
+        $('#summernote').summernote('code', '');
+        hideAllPopMenu();
+    });
+
+    $('#IconModalClose').click(function (e) {
+        e.preventDefault();
+        $('#Headtext').val("");
+        $('#summernote').summernote('code', '');
+        hideAllPopMenu();
+    });
+
     $('#btnModalSave').click(function (e) {
         header = $('#Headtext').val();
         // description = $('#Textarea').val();
@@ -68,32 +136,49 @@ $(document).ready(function () {
         } else {
             menuStatus += 0
         }
-        
-        if(header*1 != 0){
-        $.ajax({
-            type: "POST",
-            url: iurl,
-            //data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&status=' + menuStatus + '&editID=' + editMenuId,
-            data:{
-                semester:semester,
-                subject:subject_id,
-                header:header,
-                description:description,
-                status:menuStatus,
-                editID:editMenuId
-            },
-            success: function () {
-                $('#Headtext').val("");
-                // $('#Textarea').val("");
-                $('#summernote').summernote('code', '');
-                $('#Modal').modal('hide');
-                showMenuVote();
-                SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
+
+        // if(header*1 != 0){
+        var result = '';
+        var check = '';
+
+        for (i = 0; i < $(formMenu).length; i++) {
+            if ($(formMenu[i]).val() == '') {
+                $(popMenu[i]).show();
+
+            } else {
+                $(popMenu[i]).hide();
+                result += i;
             }
-        });
-        }else{
-            SnackCall('โปรดกรอกชื่อเมนู');
+            check += i;
         }
+
+        if (check == result) {
+            $.ajax({
+                type: "POST",
+                url: iurl,
+                //data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&status=' + menuStatus + '&editID=' + editMenuId,
+                data: {
+                    semester: semester,
+                    subject: subject_id,
+                    header: header,
+                    description: description,
+                    status: menuStatus,
+                    editID: editMenuId
+                },
+                success: function () {
+                    $('#Headtext').val("");
+                    // $('#Textarea').val("");
+                    $('#summernote').summernote('code', '');
+                    $('#Modal').modal('hide');
+                    hideAllPopMenu();
+                    showMenuVote();
+                    SnackCall("บันทึกข้อมูลเมนูสำเร็จ");
+                }
+            });
+        }
+        // }else{
+        //     SnackCall('โปรดกรอกชื่อเมนู');
+        // }
     });
 
     function selectStudent() {
@@ -158,8 +243,9 @@ $(document).ready(function () {
                     $('#addInMenu-' + getMenu[i].menuVoteId).click(function (e) {
                         SMenuID = getMenu[i].menuVoteId;
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_vote/insertFieldVote';
+                        $('#addFieldHQN').val("");
                         $('#addField').modal('show');
-                        $('#addFieldLabel').text('Create in menu : ' + getMenu[i].menuVoteName);
+                        $('#addFieldLabel').text('เพิ่มตัวเลือก : ' + getMenu[i].menuVoteName);
                         idMenu = i;
                         // $("input[name=PointMulti]").attr('disabled', false);
                     });
@@ -205,23 +291,23 @@ $(document).ready(function () {
             }
         });
     }
-    ajaxCount=0;
+    ajaxCount = 0;
     $(document).ajaxStop(function () {
         ajaxCount++;
         console.log(ajaxCount);
         //if(ajaxCount == 1){
-            //console.log(getPoint[getMenu[i].menuVoteId]);
+        //console.log(getPoint[getMenu[i].menuVoteId]);
         $.each(getMenu, function (i, p) {
             chartCheck = 0;
             $('#showScoreMenu-' + getMenu[i].menuVoteId).click(function (e) {
 
                 chartCheck++;
-                        if(chartCheck > 1){
-                            char.destroy();
-                        }
+                if (chartCheck > 1) {
+                    char.destroy();
+                }
                 $("#showScoreModal").modal('show');
-                $("#scoreModalLabel").text('ผลสำรวจ : '+getMenu[i].menuVoteName);
-                
+                $("#scoreModalLabel").text('ผลสำรวจ : ' + getMenu[i].menuVoteName);
+
                 //---------------------------------------------------------------
                 //console.log(getField[getMenu[i].menuVoteId]);
                 //console.log(getField[getMenu[i].menuVoteId].choiceVoteText);
@@ -229,16 +315,16 @@ $(document).ready(function () {
                     getName = [];
                     for (j = 0; j < getField[getMenu[i].menuVoteId].length; j++) {
                         getName[getField[getMenu[i].menuVoteId][j].choiceVoteId] = getField[getMenu[i].menuVoteId][j].choiceVoteText;
-                    } 
+                    }
                 }
 
                 var newAName = getName.filter(function (el) {
                     return el != null;
-                  });
+                });
 
                 var newAPoint = getPoint[getMenu[i].menuVoteId].filter(function (el) {
                     return el != null;
-                  });
+                });
 
                 console.log(getPoint[getMenu[i].menuVoteId]);
 
@@ -249,7 +335,7 @@ $(document).ready(function () {
                         "labels": newAName,
                         "datasets": [{
                             "label": "People",
-                            "data":  newAPoint,
+                            "data": newAPoint,
                             "fill": false,
                             "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
                                 "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
@@ -273,19 +359,19 @@ $(document).ready(function () {
                 });
                 studentVoted = 0;
                 for (p = 0; p < newAPoint.length; p++) {
-                    studentVoted = studentVoted + (newAPoint[p]*1);
+                    studentVoted = studentVoted + (newAPoint[p] * 1);
                 }
-                notVote = (studentCount*1) - (studentVoted*1);
+                notVote = (studentCount * 1) - (studentVoted * 1);
 
                 html2 = '<table class="table table-striped mt-2"><tbody>';
-                html2 += '<tr><td>Student</td> <td>' + studentCount + '</td> <td>People</td> </tr>'; 
-                html2 += '<tr><td>Voted</td> <td>' + studentVoted + '</td> <td>People</td> </tr>'; 
-                html2 += '<tr><td>No Vote</td> <td>' + notVote + '</td> <td>People</td> </tr>'; 
+                html2 += '<tr><td>Student</td> <td>' + studentCount + '</td> <td>People</td> </tr>';
+                html2 += '<tr><td>Voted</td> <td>' + studentVoted + '</td> <td>People</td> </tr>';
+                html2 += '<tr><td>No Vote</td> <td>' + notVote + '</td> <td>People</td> </tr>';
                 html2 += '</tbody></table>'
                 $('#f34r-here').html(html2);
             });
         });
-    //}
+        //}
     });
 
     $('#download_PDF').click(function (e) {
@@ -354,7 +440,7 @@ $(document).ready(function () {
                     showPoint(mVoteId, getField[mVoteId][i].choiceVoteId);
                     $('#delChoiceVote-' + mVoteId + '-' + getField[mVoteId][i].choiceVoteId).click(function (e) {
                         //console.log('#delField-' + mVoteId + '-' + getField[mVoteId][i].choiceVoteId);
-                        $("#txtDel").text('Field:' + getField[mVoteId][i].choiceVoteText);
+                        $("#txtDel").text('Choice:' + getField[mVoteId][i].choiceVoteText);
                         $("#ModalDelete").modal('show');
                         takeThisDel = "delField";
                         delCid = getField[mVoteId][i].choiceVoteId;
@@ -364,7 +450,7 @@ $(document).ready(function () {
                     });
                     $('#editChoiceVote-' + mVoteId + '-' + getField[mVoteId][i].choiceVoteId).click(function (e) {
                         $('#addFieldHQN').val(getField[mVoteId][i].choiceVoteText);
-                        $('#addFieldLabel').text('Edit Header : ' + getField[mVoteId][i].choiceVoteText);
+                        $('#addFieldLabel').text('แก้ไขตัวเลือก : ' + getField[mVoteId][i].choiceVoteText);
                         $('#addField').modal('show');
                         fieldSaveUrl = '/' + url[3] + '/Te_subject_vote/updateFieldVote';
                         SHeadID = getField[mVoteId][i].choiceVoteId;
@@ -384,9 +470,9 @@ $(document).ready(function () {
             url: '/' + url[3] + '/Te_subject_vote/showPoint/' + subject_id + '-' + semester + '-' + menuId + '-' + fieldId,
             dataType: "json",
             success: function (response) {
-                if (!getPoint[menuId]) 
-                getPoint[menuId] = []
-                var html = ""; 
+                if (!getPoint[menuId])
+                    getPoint[menuId] = []
+                var html = "";
                 if (response.length != undefined) {
                     //html += '[' + response[0].stdCount + '/' + studentCount + ']';
                     getPoint[menuId][fieldId] = response[0].stdCount;
@@ -421,28 +507,59 @@ $(document).ready(function () {
 
     $('#fieldSave').click(function (e) {
         choiceTxt = $('#addFieldHQN').val();
-        if(choiceTxt*1 != 0){
+        // if (choiceTxt * 1 != 0) {
+        var result = '';
+        var check = '';
+
+        for (i = 0; i < $(formChoice).length; i++) {
+            if ($(formChoice[i]).val() == '') {
+                $(popChoice[i]).show();
+
+            } else {
+                $(popChoice[i]).hide();
+                result += i;
+            }
+            check += i;
+        }
+
+        if (check == result) {
             $.ajax({
                 type: "POST",
                 url: fieldSaveUrl,
                 //data: '&semester=' + semester + '&subject_id=' + subject_id + /*|*/ '&choiceTxt=' + choiceTxt + '&menuId=' + SMenuID + '&headId=' + SHeadID,
-                data:{
-                    semester:semester,
-                    subject_id:subject_id,
-                    choiceTxt:choiceTxt,
-                    menuId:SMenuID,
-                    headId:SHeadID
+                data: {
+                    semester: semester,
+                    subject_id: subject_id,
+                    choiceTxt: choiceTxt,
+                    menuId: SMenuID,
+                    headId: SHeadID
                 },
                 success: function () {
                     $('#addFieldHQN').val("");
                     $('#addField').modal('hide');
+                    hideAllPopChoice();
                     showMenuVote();
                     SnackCall("บันทึกข้อมูลตัวเลือกแบบสำรวจสำเร็จ");
                 }
             });
-        }else{
-            SnackCall("โปรดกรอกชื่อตัวเลือก");
         }
+        // } else {
+        //     SnackCall("โปรดกรอกชื่อตัวเลือก");
+        // }
+    });
+
+    $('#fieldClose').click(function (e) {
+        e.preventDefault();
+        $('#addFieldHQN').val("");
+        $('#addField').modal('hide');
+        hideAllPopChoice();
+    });
+
+    $('#IconfieldClose').click(function (e) {
+        e.preventDefault();
+        $('#addFieldHQN').val("");
+        $('#addField').modal('hide');
+        hideAllPopChoice();
     });
 
     /////////////////////////////////////////////////////////
@@ -482,8 +599,8 @@ $(document).ready(function () {
             revert: 'invalid',
             placeholder: 'p-2 f34r-bg-n-txt sortableMenu placeholder',
             forceHelperSize: true,
-            stop: function() {
-                $.map($(this).find('a.sortableMenu'), function(el) {
+            stop: function () {
+                $.map($(this).find('a.sortableMenu'), function (el) {
                     var MenuDowid = $(el).attr('data1');
                     sortMenuIDArray.push(MenuDowid);
                     ArraySubject.push(subject_id);
@@ -493,8 +610,12 @@ $(document).ready(function () {
                 $.ajax({
                     type: "POST",
                     url: '/' + url[3] + '/Te_subject_vote/SortMenu',
-                    data: { sortMenuIDArray, ArraySemester, ArraySubject },
-                    success: function() {
+                    data: {
+                        sortMenuIDArray,
+                        ArraySemester,
+                        ArraySubject
+                    },
+                    success: function () {
                         sortMenuIDArray = [];
                         ArraySemester = [];
                         ArraySubject = [];

@@ -68,7 +68,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="modal-content">
                                 <div class="modal-header">
                                         <h5 class="modal-title" id="addMenuuploadLabel">เพิ่มเมนูดาวน์โหลด</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close" data-dismiss="modal" id="IconClose" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                         </button>
                                 </div>
@@ -86,7 +86,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                 </div>
                                 <div class="modal-footer">
-                                        <button type="button" id="btnModalClose" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                        <button type="button" id="btnModalClose" class="btn btn-secondary" id="btnModalClose" data-dismiss="modal">ปิด</button>
                                         <button type="button" id="btnModalSave" class="btn btn-primary">สร้าง</button>
                                 </div>
                         </div>

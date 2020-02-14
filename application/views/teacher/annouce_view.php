@@ -50,7 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" id="iconClose" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-dark" data-dismiss="modal">ปิด</button>
+                        <button type="button" class="btn btn-dark" id="CloseModal" data-dismiss="modal">ปิด</button>
                         <button type="button" class="btn btn-info" id="save">บันทึกข้อมูล</button>
                     </div>
                 </div>
