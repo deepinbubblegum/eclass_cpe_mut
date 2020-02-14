@@ -5,6 +5,8 @@ $(document).ready(function () {
     $('#header').text('แบบทดสอบ : ' + subject_id + ' - ' + year + '/' + part);
 
     var url = $(location).attr('href').split("/");
+    stdCount = notDone = studentDo = 0;
+    selectStudent();
     selectMenuPoint();
     showMenuQuiz();
     var editMenuId = '';
@@ -14,11 +16,12 @@ $(document).ready(function () {
     var getMenuPoint = [];
     var exportMenuQuiz = '';
     var idMenu = 0;
+    var chartCheck = 0;
 
     var goValidate = [
         //TEXTBOX_ID ,NUMBER
         ['#menuExportMn', 10],
-        ['#menuExportTxt', 4]
+        ['#menuExportTxt', 10]
     ];
 
     var clearPoint = '0';
@@ -235,9 +238,20 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.length != undefined) {
                         for (i = 0; i < response.length; i++) {
-                            if (exportText == response[i].setpoint_mininame) {
-                                $('#exportSame').text('*ชื่อนี้ถูกใช้ไปแล้ว');
+                            if (exportText == response[i].setpoint_fullname) {
+                                // $('#exportSame').text('*ชื่อนี้ถูกใช้ไปแล้ว');
+                                alert('ชื่อช่องคะแนนซ้ำ');
                                 exportCheck = false;
+                                break;
+                            } else {
+                                exportCheck = true;
+                            }
+
+                            if (exportMini == response[i].setpoint_mininame) {
+                                // $('#exportSame').text('*ชื่อนี้ถูกใช้ไปแล้ว');
+                                alert('ชื่อย่อช่องคะแนนซ้ำ');
+                                exportCheck = false;
+                                console.log('same!');
                                 break;
                             } else {
                                 exportCheck = true;
@@ -408,7 +422,7 @@ $(document).ready(function () {
                         footerText = '';
                         if (response[i].menuQuizTime == "0000-00-00 00:00:00") {
                             footerText = "ไม่กำหนดเวลา";
-                        }else{
+                        } else {
                             footerText = response[i].menuQuizTime;
                         }
                         html +=
@@ -529,8 +543,17 @@ $(document).ready(function () {
                         iurl = "/" + url[3] + "/Te_subject_quiz/editMenuQuiz";
                         editMenuId = getMenu[i].menuQuizId;
                     });
+                    chartCheck = 0;
                     $('#showScoreMenu-' + getMenu[i].menuQuizId).click(function (e) {
                         console.log('showScoreMenu-' + getMenu[i].menuQuizId);
+                        chartCheck++;
+                        if (chartCheck > 1) {
+                            char.destroy();
+                        }
+                        $("#showScoreModal").modal('show');
+                        $("#scoreModalLabel").text('คะแนนแบบทดสอบ : ' + getMenu[i].menuQuizName);
+
+                        showScoreQuiz(getMenu[i].menuQuizId);
                         $("#showScoreModal").modal('show');
                     });
                 });
@@ -538,6 +561,125 @@ $(document).ready(function () {
         });
     }
 
+    function showScoreQuiz(idQuiz) {
+        $.ajax({
+            type: "POST",
+            url: '/' + url[3] + '/Te_subject_quiz/showScoreQuiz',
+            //data: '&semester=' + semester + '&subject_id=' + subject_id + '&menuId=' + getMId + '&headId=' + getHId + '&choiceQuizText=' + qText + '&choiceQuizPoint=' + qPoint + '&editId=' + editChoice,
+            data: {
+                semester: semester,
+                subject: subject_id,
+                menuQuiz: idQuiz
+            },
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response != null) {
+                    getSumPoint = [];
+                    getStudent = [];
+                    studentDo = 0;
+                    for (i = 0; i < response.length; i++) {
+                        getSumPoint[i] = response[i].sumPoint;
+                        studentDo++;
+                    }
+                    unique = getSumPoint.filter(onlyUnique);
+                    stdStack = [];
+                    for (i = 0; i < unique.length; i++) { 
+                        stdStack[i] = 0;
+                        for (j = 0; j < response.length; j++) { 
+                            if(unique[i] == response[j].sumPoint){
+                                stdStack[i]++;
+                            }
+                        }
+                    }
+
+                        char = new Chart(document.getElementById("score_show"), {
+                            "type": "horizontalBar",
+                            "data": {
+                                //"labels": ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Grey"],
+                                "labels": unique,
+                                "datasets": [{
+                                    "label": "People",
+                                    "data": stdStack,
+                                    "fill": false,
+                                    "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
+                                        "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
+                                        "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"
+                                    ],
+                                    "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
+                                        "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"
+                                    ],
+                                    "borderWidth": 1
+                                }]
+                            },
+                            "options": {
+                                "scales": {
+                                    "xAxes": [{
+                                        "ticks": {
+                                            "beginAtZero": true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                        notDone = stdCount-studentDo;
+                html2 = '<table class="table table-striped mt-2"><tbody>';
+                html2 += '<tr><td>Student</td> <td>' + stdCount + '</td> <td>People</td> </tr>';
+                html2 += '<tr><td>Already done</td> <td>' + studentDo + '</td> <td>People</td> </tr>';
+                html2 += '<tr><td>Not done yet</td> <td>' + notDone + '</td> <td>People</td> </tr>';
+                html2 += '</tbody></table>'
+                $('#f34r-here').html(html2);
+                }
+            },
+        });
+    }
+
+    function onlyUnique(value, index, self) { 
+        return self.indexOf(value) === index;
+    }
+    
+    // usage example:
+    // var a = ['a', 1, 'a', 2, '1'];
+    // var unique = a.filter( onlyUnique ); // returns ['a', 1, 2, '1']
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $('#download_PDF').click(function (e) {
+        e.preventDefault();
+        // var reportPageHeight = $('#reportPage').innerHeight();
+        // var reportPageWidth = $('#reportPage').innerWidth();
+        var canvas = document.getElementById('score_show');
+        var imgData = canvas.toDataURL("image/png", 1.0);
+        var pdf = new jsPDF("p", "cm", "a4");
+        pdf.setFont('THSarabunNew');
+        var margins = {
+            top: 2.54,
+            bottom: 2.54,
+            left: 2.54
+        };
+        pdf.addImage(imgData, 'PNG', margins.left, margins.top, 16, 8); 
+        
+        pdf.autoTable({
+            // head: [['Name', 'Email', 'Country']],
+            body: [
+                ['Student', stdCount, 'People'],
+                ['Already done', studentDo, 'People'],
+                ['Not done yet', notDone, 'People'],
+            ],
+            startY: 11,
+            margin: margins.left,
+            tableWidth: number = 16
+        });
+        pdf.save("download.pdf");
+
+        // var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
+        // pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
+
+        // console.log(pdfCanvas);
+
+        // filename = $('.modal-title').val();
+        // pdf.save(filename + '.pdf');
+    });
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     $('#fieldClose').click(function (e) {
         e.preventDefault();
@@ -896,6 +1038,16 @@ $(document).ready(function () {
         validationF34R(goValidate);
         scroll++;
     });
+
+    function selectStudent() {
+        $.ajax({
+            url: '/' + url[3] + '/Te_subject_vote/getStudent/' + subject_id + '-' + semester,
+            dataType: "json",
+            success: function (response) {
+                stdCount = response[0].studentCount;
+            }
+        });
+    }
 
     //F34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34RF34R 
 

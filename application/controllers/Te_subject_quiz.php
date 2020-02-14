@@ -76,6 +76,15 @@ class Te_subject_quiz extends MY_Controller
         echo json_encode($result);
     }
 
+    public function showScoreQuiz()
+    { 
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject'); 
+        $menuQuiz = $this->input->post('menuQuiz');
+        $result = $this->Model_te_subject_quiz->showScoreQuiz($semester, $subject, $menuQuiz);
+        echo json_encode($result);
+    } 
+    
     public function showquiz()
     {
         $quiz_std_semester = $this->input->post('semester');

@@ -34,6 +34,27 @@ class Model_te_subject_quiz extends CI_Model
         }
     }
 
+    public function showScoreQuiz($semester, $subject, $menuQuiz){
+        $this->db->select('sum(choiceQuizPoint) as sumPoint ,pointQuizUserId');
+        $this->db->from('pointQuiz ,choiceQuiz');
+        $this->db->where('pointQuizSemester = choiceQuizSemester');
+        $this->db->where('pointQuizSubject = choiceQuizSubject');
+        $this->db->where('pointQuizMenuQuizId = choiceQuizMenuQuizId');
+        $this->db->where('pointQuizSemester', $semester);
+        $this->db->where('pointQuizSubject', $subject);
+        $this->db->where('pointQuizMenuQuizId', $menuQuiz);
+        $this->db->where('pointQuizHeaderQuizId = choiceQuizHeadId');
+        $this->db->where('pointQuizChoiceQuizId = choiceQuizId');
+        $this->db->group_by("pointQuizUserId");
+        $this->db->order_by('sumPoint', 'ASC');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
     public function exportPoint($semester, $subject, $menuPoint, $menuQuiz, $menuName, $menuMiniName, $maxPoint)
     {
         $this->db->select('sum(choiceQuizPoint) as sumPoint ,pointQuizUserId');

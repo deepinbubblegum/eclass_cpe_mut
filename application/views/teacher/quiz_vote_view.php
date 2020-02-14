@@ -15,6 +15,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 subject_id = '<?php echo $subject_id; ?>';
                 semester = '<?php echo $semester; ?>';
         </script>
+        <?php
+                $cssChart = array( 
+                        'chart_css/Chart.css',
+                );
+
+                $jsChart = array( 
+                        'chart_js/Chart.js',
+                        'jspdf/jspdf.min.js',
+                        'jspdf/plugin/jspdf.plugin.autotable.min.js',
+                        'jspdf/font/th_sarabun_new/THSarabunNew-normal.js'
+                );
+                echo assets_css($cssChart);
+                echo assets_js($jsChart);
+                ?>
+                
         <?php 
         echo assets_css('bootstrap_css/bootstrap-clockpicker.min.css');
         echo assets_js('aegis_js/manage_te/te_quiz.js');
