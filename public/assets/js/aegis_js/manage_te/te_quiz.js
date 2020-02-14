@@ -265,10 +265,10 @@ $(document).ready(function () {
                         $.ajax({
                             type: "POST",
                             url: '/' + url[3] + '/Te_subject_quiz/exportPoint/',
-                            //data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
+                            //data: '&semester=' + semester + '&subject_id=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
                             data: {
                                 semester: semester,
-                                subject: subject_id,
+                                subject_id: subject_id,
                                 menuPoint: menuPointId,
                                 menuQuiz: exportMenuQuiz,
                                 exportText: exportText,
@@ -359,7 +359,7 @@ $(document).ready(function () {
         time = $('#timePick').val() + ':00';
         var form_data = new FormData();
         form_data.append('semester', semester);
-        form_data.append('subject', subject_id);
+        form_data.append('subject_id', subject_id);
         form_data.append('header', header);
         form_data.append('description', description);
         form_data.append('status', menuStatus);
@@ -384,7 +384,7 @@ $(document).ready(function () {
         if (check == result) {
             var form_data = new FormData();
             form_data.append('semester', semester);
-            form_data.append('subject', subject_id);
+            form_data.append('subject_id', subject_id);
             form_data.append('header', header);
             form_data.append('description', description);
             form_data.append('status', menuStatus);
@@ -393,7 +393,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: iurl,
-                // data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&status=' + menuStatus + '&editID=' + editMenuId,
+                // data: '&semester=' + semester + '&subject_id=' + subject_id + '&header=' + header + '&description=' + description + '&status=' + menuStatus + '&editID=' + editMenuId,
                 data: form_data,
                 contentType: false,
                 cache: false,
@@ -568,7 +568,7 @@ $(document).ready(function () {
             //data: '&semester=' + semester + '&subject_id=' + subject_id + '&menuId=' + getMId + '&headId=' + getHId + '&choiceQuizText=' + qText + '&choiceQuizPoint=' + qPoint + '&editId=' + editChoice,
             data: {
                 semester: semester,
-                subject: subject_id,
+                subject_id: subject_id,
                 menuQuiz: idQuiz
             },
             dataType: "json",
@@ -958,7 +958,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: '/' + url[3] + '/Te_subject_quiz/delChoice',
-            data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid + '&setIdChild=' + cid + '&setIdKid=' + kid,
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdParent=' + pid + '&setIdChild=' + cid + '&setIdKid=' + kid,
             success: function () {
                 // console.log('Deleted Successfully');
                 SnackCall("ลบตัวเลือกแบบทดสอบสำเร็จ");
@@ -971,7 +971,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: '/' + url[3] + '/Te_subject_quiz/delField',
-            data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid + '&setIdChild=' + cid,
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdParent=' + pid + '&setIdChild=' + cid,
             success: function () {
                 // console.log('Deleted Successfully');
                 SnackCall("ลบตัวหัวข้อแบบทดสอบสำเร็จ");
@@ -984,7 +984,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: '/' + url[3] + '/Te_subject_quiz/delMenu',
-            data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid,
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdParent=' + pid,
             success: function () {
                 // console.log('Deleted Successfully');
                 SnackCall("ลบเมนูแบบทดสอบสำเร็จ");

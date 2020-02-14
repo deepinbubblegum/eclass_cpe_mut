@@ -78,7 +78,7 @@ class Te_subject_vote extends MY_Controller
     public function insertMenuVote() ///////////////////////////////////////////////////////////////////////////////
     {
         $semester = $this->input->post('semester');
-        $subject = $this->input->post('subject');
+        $subject = $this->input->post('subject_id');
         $Header = $this->input->post('header');
         $Description = $this->input->post('description',false);
         $menuStatus = $this->input->post('status');
@@ -110,7 +110,7 @@ class Te_subject_vote extends MY_Controller
     public function editMenuVote()
     {
         $semester = $this->input->post('semester');
-        $subject = $this->input->post('subject');
+        $subject = $this->input->post('subject_id');
         $Header = $this->input->post('header');
         $Description = $this->input->post('description',false);
         $menuStatus = $this->input->post('status');

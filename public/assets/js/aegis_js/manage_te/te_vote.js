@@ -157,10 +157,10 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: iurl,
-                //data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&status=' + menuStatus + '&editID=' + editMenuId,
+                //data: '&semester=' + semester + '&subject_id=' + subject_id + '&header=' + header + '&description=' + description + '&status=' + menuStatus + '&editID=' + editMenuId,
                 data: {
                     semester: semester,
-                    subject: subject_id,
+                    subject_id: subject_id,
                     header: header,
                     description: description,
                     status: menuStatus,
@@ -569,7 +569,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: '/' + url[3] + '/Te_subject_vote/delField',
-            data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid + '&setIdChild=' + cid,
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdParent=' + pid + '&setIdChild=' + cid,
             success: function () {
                 // console.log('Deleted Successfully');
                 showMenuVote();
@@ -582,7 +582,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: '/' + url[3] + '/Te_subject_vote/delMenu',
-            data: '&semester=' + semester + '&subject=' + subject_id + '&setIdParent=' + pid,
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdParent=' + pid,
             success: function () {
                 // console.log('Deleted Successfully');
                 showMenuVote();

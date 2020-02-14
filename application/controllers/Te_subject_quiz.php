@@ -66,7 +66,7 @@ class Te_subject_quiz extends MY_Controller
         // data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
 
         $semester = $this->input->post('semester');
-        $subject = $this->input->post('subject');
+        $subject = $this->input->post('subject_id');
         $menuPoint = $this->input->post('menuPoint');
         $menuQuiz = $this->input->post('menuQuiz');
         $menuName = $this->input->post('exportText');
@@ -79,7 +79,7 @@ class Te_subject_quiz extends MY_Controller
     public function showScoreQuiz()
     { 
         $semester = $this->input->post('semester');
-        $subject = $this->input->post('subject'); 
+        $subject = $this->input->post('subject_id'); 
         $menuQuiz = $this->input->post('menuQuiz');
         $result = $this->Model_te_subject_quiz->showScoreQuiz($semester, $subject, $menuQuiz);
         echo json_encode($result);
@@ -140,7 +140,7 @@ class Te_subject_quiz extends MY_Controller
     public function insertMenuQuiz() ///////////////////////////////////////////////////////////////////////////////
     {
         $semester = $this->input->post('semester');
-        $subject = $this->input->post('subject');
+        $subject = $this->input->post('subject_id');
         $Header = $this->input->post('header');
         $Description = $this->input->post('description', false);
         $menuStatus = $this->input->post('status');
@@ -152,7 +152,7 @@ class Te_subject_quiz extends MY_Controller
     public function editMenuQuiz() ///////////////////////////////////////////////////////////////////////////////
     {
         $semester = $this->input->post('semester');
-        $subject = $this->input->post('subject');
+        $subject = $this->input->post('subject_id');
         $Header = $this->input->post('header');
         $Description = $this->input->post('description', false);
         $menuStatus = $this->input->post('status');
