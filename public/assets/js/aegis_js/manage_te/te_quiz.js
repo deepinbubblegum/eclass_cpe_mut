@@ -405,8 +405,11 @@ $(document).ready(function () {
                 var html = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        footerText = '';
                         if (response[i].menuQuizTime == "0000-00-00 00:00:00") {
-                            response[i].menuQuizTime = "ไม่มี";
+                            footerText = "ไม่กำหนดเวลา";
+                        }else{
+                            footerText = response[i].menuQuizTime;
                         }
                         html +=
                             '<div class="expansion-panel list-group-item success-color" >' +
@@ -439,7 +442,7 @@ $(document).ready(function () {
                             '<div class="navdrawer-divider"></div>' +
                             '<div class="d-flex text-muted">' +
                             '<div class="p-2"> <small class="ml-2 my-1"></small> </div>' +
-                            '<div class="ml-auto p-2"> <small class="mr-2 my-1"> สิ้นสุดเวลาทำแบบทดสอบ : ' + response[i].menuQuizTime + '</small> </div>' +
+                            '<div class="ml-auto p-2"> <small class="mr-2 my-1"> สิ้นสุดเวลาทำแบบทดสอบ : ' + footerText + '</small> </div>' +
                             '</div>' +
                             '</div>' +
                             '</div>';
@@ -485,7 +488,7 @@ $(document).ready(function () {
                         e.preventDefault();
                         $('#Headtext').val(getMenu[i].menuQuizName);
                         // console.log(getMenu[i].menuQuizTime);
-                        if (getMenu[i].menuQuizTime != null) {
+                        if ((getMenu[i].menuQuizTime != null) && (getMenu[i].menuQuizTime != "0000-00-00 00:00:00")) {
                             splitData = getMenu[i].menuQuizTime.split(" ");
                             $('#datePick').val(splitData[0]);
                             splitTime = splitData[1].split(':');

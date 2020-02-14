@@ -34,14 +34,31 @@ $(document).ready(function () {
 
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        disabler1 = disabler2 = '';
-                        if(response[i].tnow > response[i].menuQuizTime){
-                            console.log(response[i].menuQuizName,'Overtime');
+                        footerText = '';
+                        if (response[i].menuQuizTime == "0000-00-00 00:00:00") {
+                            footerText = "ไม่กำหนดเวลา";
+                        }else{
+                            footerText = response[i].menuQuizTime;
                         }
-                        
-                        if ((response[i].menuQuizStatus.substr(1, 1) == '1') || (response[i].tnow > response[i].menuQuizTime)) {
+
+                        disabler1 = disabler2 = '';
+                        if (response[i].tnow > response[i].menuQuizTime) {
+                            console.log(response[i].menuQuizName, 'Overtime');
+                        }
+                        if (response[i].menuQuizStatus.substr(1, 1) == '1') {
                             disabler1 = '<span class="text-danger">- แบบทดสอบถูกปิด -</span>';
                             disabler2 = 'disabled';
+                        }else if (getMenu[i].menuQuizTime != "0000-00-00 00:00:00") {
+                            
+                                // if (response[i].menuQuizName == 'Quiz5') console.log('STAGE 1', response[i].menuQuizStatus.substr(1, 1)); //checked
+                                if (response[i].tnow > response[i].menuQuizTime) {
+                                    // if (response[i].menuQuizName == 'Quiz5') console.log('STAGE 2', getMenu[i].menuQuizTime, response[i].tnow);
+
+                                    // if (response[i].menuQuizName == 'Quiz5') console.log('STAGE 3');
+                                    disabler1 = '<span class="text-danger">- แบบทดสอบถูกปิด(เวลาเกิน) -</span>';
+                                    disabler2 = 'disabled';
+                                }
+                            
                         }
                         // } else if (response[i].menuQuizStatus.substr(1, 1) == '0'){ 
                         //     disabler1 = disabler2 = '';
@@ -74,18 +91,22 @@ $(document).ready(function () {
 
                         // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
                         // '</span>' +
-                        if ((getMenu[i].menuQuizStatus.substr(1, 1) == '0')&&(getMenu[i].tnow < getMenu[i].menuQuizTime)) {
+                        if ((getMenu[i].menuQuizStatus.substr(1, 1) == '0')) {
+                            if ((getMenu[i].tnow < getMenu[i].menuQuizTime) || (getMenu[i].menuQuizTime == '0000-00-00 00:00:00')) {
                             html += '<button type="button" class="btn btn-info mt-3" id="btnSend-' + response[i].menuQuizId + '"' + disabler2 + '>บันทึกข้อมูล</button>';
+                            }
                         }
 
                         html += '</div>';
+                        if ((getMenu[i].menuQuizStatus.substr(1, 1) == '0')) {
+                            if ((getMenu[i].tnow < getMenu[i].menuQuizTime) || (getMenu[i].menuQuizTime == '0000-00-00 00:00:00')) {
 
-                        if ((getMenu[i].menuQuizStatus.substr(1, 1) == '0')&&(getMenu[i].tnow < getMenu[i].menuQuizTime)) {
                             html += '<div class="navdrawer-divider"></div>' +
                                 '<div class="d-flex text-muted">' +
                                 '<div class="p-2"> <small class="ml-2 my-1"></small> </div>' +
-                                '<div class="ml-auto p-2"> <small class="mr-2 my-1"> สิ้นสุดเวลาทำแบบทดสอบ : ' + response[i].menuQuizTime + '</small> </div>' +
+                                '<div class="ml-auto p-2"> <small class="mr-2 my-1"> สิ้นสุดเวลาทำแบบทดสอบ : ' + footerText + '</small> </div>' +
                                 '</div>';
+                            }
                         }
                         html += '</div>' +
                             '</div>';
@@ -99,17 +120,23 @@ $(document).ready(function () {
                     //console.logg(getMenu[i].menuQuizStatus.substr(1, 1), '1-1');
                     //console.logg(getMenu[i].menuQuizStatus.substr(2, 1), '2-1');
                     //console.logg(getMenu[i].menuQuizStatus.substr(3, 1), '3-1');
-                    if ((getMenu[i].menuQuizStatus.substr(1, 1) == '0')&&(getMenu[i].tnow < getMenu[i].menuQuizTime)) { 
-                        menuStatus[getMenu[i].menuQuizId] = getMenu[i].menuQuizStatus;
+                    if ((getMenu[i].menuQuizStatus.substr(1, 1) == '0')) {
+                        if ((getMenu[i].tnow < getMenu[i].menuQuizTime) || (getMenu[i].menuQuizTime == '0000-00-00 00:00:00')) {
+                            menuStatus[getMenu[i].menuQuizId] = getMenu[i].menuQuizStatus;
 
-                        randChoice[getMenu[i].menuQuizId] = '';
-                        if (getMenu[i].menuQuizStatus.substr(0, 1) == '1') { //check rand
-                            randChoice[getMenu[i].menuQuizId] = 'randQuizChoice';
-                        } else {
-                            randChoice[getMenu[i].menuQuizId] = 'showQuizChoice';
+                            randChoice[getMenu[i].menuQuizId] = '';
+                            if (getMenu[i].menuQuizStatus.substr(0, 1) == '1') { //check rand
+                                randChoice[getMenu[i].menuQuizId] = 'randQuizChoice';
+                            } else {
+                                randChoice[getMenu[i].menuQuizId] = 'showQuizChoice';
+                            }
+                            if (getMenu[i].menuQuizStatus.substr(0, 1) == '1') {
+                                console.log('randQuizChoice');
+                            } else {
+                                console.log('showQuizChoice');
+                            }
+                            showHeader(getMenu[i].menuQuizId);
                         }
-                        //if (getMenu[i].menuQuizStatus.substr(0, 1) == '1') { console.log('randQuizChoice'); } else { console.log('showQuizChoice'); }
-                        showHeader(getMenu[i].menuQuizId);
                     }
                     // $('#btnSend-' + getMenu[i].menuQuizId).click(function(e) {
                     //     var test = document.querySelector('input[name="test-' + response[i].menuQuizId + '"]:checked').value;
