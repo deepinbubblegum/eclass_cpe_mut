@@ -87,6 +87,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
 
         <!-- Modal Delete -->
+        <div class="modal fade" id="ModalDeleteFile" tabindex="-1" role="dialog" aria-labelledby="ModalDeleteFile" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 class="modal-title" id="ModalDeleteFile">ยืนยันการลบข้อมูล (<span id="txtDelFile"> </span>)</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                </button>
+                                        </div>
+                                        <div class="modal-body">
+                                                <button type="button" class="btn btn-danger" id="DeleteFile">ลบข้อมูล</button>
+                                                <button type="button" class="btn btn-info" data-dismiss="modal">ปิด</button>
+                                        </div>
+                                        <div class="modal-footer">
+
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!-- End Modal Delete -->
+
+        <!-- Modal Delete -->
         <div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="ModalDelete" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                         <div class="modal-content">

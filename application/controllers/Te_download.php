@@ -100,7 +100,8 @@ class Te_download extends MY_Controller
                         'menu_id' => $str_arr[2],
                         'fileName' => substr($sid, $count),
                 ); 
-                $filePath = '/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName'];
+                $filePath = '/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']; 
+                
                 if(unlink($filePath)) {
                         $this->Model_te_download->fileDelete($data['subject_id'], $data['semester'], $data['menu_id'], $data['fileName']);
                         return 'deleted successfully';

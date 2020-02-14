@@ -194,7 +194,7 @@ $(document).ready(function () {
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].menuUpDescripition +
-                            '<div id="menuDowId-' + response[i].menuUpId + '">' +
+                            '<div id="menuUpId-' + response[i].menuUpId + '">' +
                             '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2">' +
                             '<span class="mr-2 mb-0" style="font-size: 28px;">' +
                             '<i class="fas fa-file-download"></i>' +
@@ -366,17 +366,65 @@ $(document).ready(function () {
                             '</span>' +
                             '<span>' +
                             '<a class="btn btn-success btn-block mr-1 ml-1 mt-1" href="/Te_download/download/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">download</a>' +
-                            '<a class="btn btn-danger btn-block mr-1 ml-1 mt-1" href="/Te_download/delete/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">delete</a>' +
+                            //'<a class="btn btn-danger btn-block mr-1 ml-1 mt-1" id="" href="/Te_download/delete/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">delete</a>' +
+                            '<a class="btn btn-block btn-danger mr-1" id="DelFile-' + getMenu[popUp].menuUpId + '-' + i + '" href="#">delete</a>' +
                             '</span>' +
                             '</li>';
                     }
                 }
-                $('#menuDowId-' + getMenu[popUp].menuUpId).html(html);
+                $('#menuUpId-' + getMenu[popUp].menuUpId).html(html);
+
+                $.each(response, function (i, v) {
+                    $('#DelFile-' + getMenu[popUp].menuUpId + '-' + i).click(function (e) {
+                        DelUrl = '/' + url[3] + '/Te_download/delete/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName;
+                        thisButton = '#DelFile-' + getMenu[popUp].menuUpId + '-' + i; 
+                        $('#txtDelFile').text(response[i].fileName);
+                        $("#ModalDeleteFile").modal('show');
+                    }); 
+                });
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
+    }
+
+    thisButton = '';
+    $('#DeleteFile').click(function () {
+        delFile(DelUrl);
+    });
+    returnTxt = 'ลบสำเร็จ';
+    function delFile(DelUrl) {
+        $.ajax({
+            url: DelUrl,
+            dataType: "json",
+            success: function (response) {
+                console.log(DelUrl);
+                var RemoveFile = DelUrl.split('-')[3];
+                console.log(RemoveFile)
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: returnTxt
+                });
+                $(thisButton).parent().parent().remove();
+            },
+            error: function (response) { 
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: returnTxt
+                });
+                $(thisButton).parent().parent().remove();
+            },
+        });
+        $("#ModalDeleteFile").modal('hide');
     }
 
     $('#btnModalClose').click(function (e) {
