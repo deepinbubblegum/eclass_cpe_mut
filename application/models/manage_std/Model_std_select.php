@@ -35,7 +35,7 @@ class Model_std_select extends CI_Model
     public function Show_Data_Annouce_model($semester,$subject)
     {
         $query = $this->db->query('SELECT * FROM subject_annouce WHERE annouce_semester = "'.$semester.'" AND annouce_subject="'.$subject.'" 
-        AND ( annouce_time_end >= now() or annouce_time_end = "0000-00-00 00:00:00" )  ORDER BY annouce_time_start DESC ');
+        AND ( annouce_time_end >= DATE(now()) or annouce_time_end = "0000-00-00" )  ORDER BY annouce_time_start DESC ');
         return $query->result();
     }
 }
