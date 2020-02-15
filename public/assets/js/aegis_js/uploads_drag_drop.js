@@ -83,13 +83,17 @@ $(document).ready(function () {
                 var html = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        var txtTimeEnd = response[i].menuUpName;
+                        if (response[i].menuUpTimeEnd < response[i].dateNow) {
+                            txtTimeEnd = '<span class="mr-1" style="color:black;"> ' + response[i].menuUpName + '<span class="ml-1" style="color:red;">  (เลยเวลากำหนดส่งแล้ว) </span></span>';
+                        }
                         if (i == 0) {
                             html += '<div class="expansion-panel list-group-item show" >';
                         } else {
                             html += '<div class="expansion-panel list-group-item" >';
                         }
                         html += '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
-                            response[i].menuUpName +
+                            txtTimeEnd +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
                             '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
@@ -133,7 +137,8 @@ $(document).ready(function () {
                 $.each(response, function (i, v) {
                     gen(document.getElementById('dropzone' + i), document.getElementById('FileInput' + i + '[]'), 'FileInput' + i + '[]', i);
                     $('#btnClearAll' + i).click(function (e) {
-                        //upload(0,pos);
+                        // upload(0,pos);
+                        upload(0, i);
                         //$('#btnUpload').hide();
                         //$('#btnClearAll').hide();
                     });
@@ -381,11 +386,12 @@ $(document).ready(function () {
         //$('#btnClearAll').hide();
     }
     showMenufiles();
+
     function showMenufiles() {
         $.ajax({
             url: '/' + url[3] + '/std_upload/showMenuUpload_files/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 getMenu = response;
                 console.log(response);
                 var htmltxt = '';
@@ -444,11 +450,16 @@ $(document).ready(function () {
         $.ajax({
             url: '/' + url[3] + '/std_upload/showDownloadList/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
+                console.log(response);
                 getData = response;
                 var html = "";
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        var std_let = '';
+                        if(response[i].fileTimestamp > response[i].menuUpTimeEnd){
+                            std_let = '<span style="color:red;"> (ส่งช้ากว่ากำหนด) </span>';
+                        }
                         html +=
                             '<li href="#" class="list-group-item d-flex flex-wrap justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
                             '<span class="mr-2 mb-0" style="font-size: 28px;">' + file_ico(response[i].fileType) +
@@ -456,14 +467,14 @@ $(document).ready(function () {
                             '<div class="mt-0">' +
                             '<small class="mr-2 text-black-50" style="font-size: 12px;"> Size : ' + fileSizeCal(response[i].fileSize) + '</small>' +
                             '<small class="mr-2 text-black-50" style="font-size: 12px;"> Type : ' + response[i].fileType + '</small>' +
-                            '<small class="mr-2 text-black-50" style="font-size: 12px;"> Uploaded on : ' + response[i].fileTimestamp + '</small>' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;"> Uploaded on : ' + response[i].fileTimestamp + std_let + '</small>' +
                             '</div>' +
                             '</li>';
                     }
                 }
                 $('#menuDowId-' + getMenu[popUp].menuUpId).html(html);
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });

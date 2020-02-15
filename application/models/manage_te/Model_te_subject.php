@@ -76,7 +76,7 @@ class Model_te_subject extends CI_Model
         } else {
             $query_assist = $this->db->query('SELECT subsem_subject,subject_name,subsem_semester FROM teacher_assist 
             LEFT JOIN subject ON subject_id = teaassist_subject 
-            LEFT JOIN subject_semester ON subsem_subject = teaassist_subject
+            LEFT JOIN subject_semester ON subsem_subject = teaassist_subject  AND subsem_semester = teaassist_semester
             WHERE teaassist_semester = "'.$data.'" AND teaassist_teacherid = "'.$userID.'" AND subject_major = "MUT" ');
             if($query_assist->num_rows() > 0)
             {

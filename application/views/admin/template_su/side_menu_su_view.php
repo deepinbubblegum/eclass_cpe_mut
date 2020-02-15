@@ -113,7 +113,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-chalkboard-teacher"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลระดับอาจารย์
+                                                                        &nbsp;&nbsp;ข้อมูลตำแหน่งวิชาการ
                                                                 </span>
                                                         </a>
                                                         <div class="navdrawer-divider"></div>

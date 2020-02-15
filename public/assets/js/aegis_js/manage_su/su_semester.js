@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var iddata;
     var iurl;
     var datatable;
@@ -11,6 +11,7 @@ $(document).ready(function() {
     // 1.showAllData
     // 2.formAdd
     // 3.modaldel
+    yearNow = new Date().getFullYear() + 543;
 
     //--------------------------------------------START_FUNCTION_GEN--------------------------------------------//
     $('#titleNameTxt').text("จัดการข้อมูลปีการศึกษา");
@@ -101,7 +102,7 @@ $(document).ready(function() {
         for (i = 0; i < inModelValue.length; i++) {
             html += '<div class="col-md-4 mb-3" >' +
                 '<label>' + inModelValue[i][0] + '</label>' +
-                '<input type="text" type="text" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
+                '<input type="number" onKeyPress="if(this.value.length==4) return false;" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
                 '</div>';
         }
         html += '<div class="col-md-4 mb-3" >' +
@@ -139,6 +140,7 @@ $(document).ready(function() {
         $('#TableSort').html(html);
     }
 
+
     //---------------------------------------------END_FUNCTION_GEN---------------------------------------------//
 
     inModelGen();
@@ -156,7 +158,20 @@ $(document).ready(function() {
     $('#semester_Name').parent().hide();
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
-    $('.row_set').click(function() {
+
+    $("#semester_Year").keypress(function (event) {
+        var ew = event.which;
+        if (ew == 101)
+            return false;
+        if (ew == 45)
+            return false;
+        if (ew == 43)
+            return false;
+        // return true;
+    });
+
+
+    $('.row_set').click(function () {
         limit = $(this).attr('value');
         showBtnTxt = limit;
         if (limit == 0) {
@@ -166,33 +181,33 @@ $(document).ready(function() {
         start = 0;
         currentPage = 1;
         // show_data();
-        if($('#SearchName').val() == ""){
+        if ($('#SearchName').val() == "") {
             show_data();
-        }else{
+        } else {
             LimitSearch();
         }
     });
 
-    $('#chevron_right').click(function() {
+    $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
         // show_data();
-        if($('#SearchName').val() == ""){
+        if ($('#SearchName').val() == "") {
             show_data();
-        }else{
+        } else {
             LimitSearch();
         }
     });
 
-    $('#chevron_left').click(function() {
+    $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
         // show_data();
-        if($('#SearchName').val() == ""){
+        if ($('#SearchName').val() == "") {
             show_data();
-        }else{
+        } else {
             LimitSearch();
         }
     });
@@ -218,7 +233,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_semester/Show_Max_Data_ctl",
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -240,7 +255,7 @@ $(document).ready(function() {
             data: "&start=" + start + "&limit=" + limit,
             url: "../Admin_semester/Show_Data_ctl",
             dataType: "json",
-            success: function(datatableear) {
+            success: function (datatableear) {
                 datatable = datatableear;
                 var html = '';
                 var i;
@@ -265,7 +280,7 @@ $(document).ready(function() {
         });
     }
 
-    $('#btnSearch').click(function(e) {
+    $('#btnSearch').click(function (e) {
         e.preventDefault();
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
@@ -275,7 +290,7 @@ $(document).ready(function() {
             url: "../Admin_semester/Show_Max_Data_Search_ctl",
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -298,7 +313,7 @@ $(document).ready(function() {
             url: "../Admin_semester/Search_Show_Data_ctl",
             data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -322,8 +337,7 @@ $(document).ready(function() {
         });
     });
 
-    function LimitSearch()
-    {
+    function LimitSearch() {
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
 
@@ -332,7 +346,7 @@ $(document).ready(function() {
             url: "../Admin_semester/Show_Max_Data_Search_ctl",
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -355,7 +369,7 @@ $(document).ready(function() {
             url: "../Admin_semester/Search_Show_Data_ctl",
             data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -382,7 +396,7 @@ $(document).ready(function() {
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
 
     //--------------------------------------------START_BASIC_TOOLS--------------------------------------------//
-    $(document).keyup(function(e) {
+    $(document).keyup(function (e) {
         if ($('#Modal').is(':visible') == true) {
             if (e.keyCode === 13) $('#btnSave').click(); // enter
             if (e.keyCode === 27) $('#btnClose').click(); // esc
@@ -390,20 +404,20 @@ $(document).ready(function() {
         }
     });
 
-    $('#btnAdd').click(function(e) {
+    $('#btnAdd').click(function (e) {
         e.preventDefault();
         iurl = "../Admin_semester/Add_Data_ctl";
         $('#Modal').find('.modal-title').text(btnAddText);
         $('#Modal').modal('show');
     });
 
-    $('#btnClose').click(function(e) {
+    $('#btnClose').click(function (e) {
         formDataValClr();
         hideAllPop();
         $('#selectAdd').val(datatable[0].semester_part);
     });
 
-    $('#showAllData').on('click', '.item-edit', function() {
+    $('#showAllData').on('click', '.item-edit', function () {
         iddata = $(this).attr('data');
         ivalue = $(this).attr('value');
 
@@ -417,17 +431,35 @@ $(document).ready(function() {
         iurl = '../Admin_semester/Edit_Data_ctl';
     });
 
-    $('#btnSave').click(function(e) {
+    $('#btnSave').click(function (e) {
         e.preventDefault();
+        dataYear = $.trim($('#semester_Year').val());
+        if (dataYear < yearNow) {
+            // alert(dataYear + '<' + yearNow);
+            $('#ConfirmModalTxt').text('ปีที่บันทึกน้อยกว่าปีบัจจุบัน ต้องการบันทึกข้อมูลหรือไม่');
+            $('#modalConfirm').modal('show');
+        } else {
+            AddSemester();
+        }
+        // AddSemester();
+    });
+
+    $('#btnConfirm').click(function (e) {
+        e.preventDefault();
+        $('#modalConfirm').modal('hide');
+        AddSemester();
+    });
+
+    function AddSemester() {
         var result = '';
         var check = '';
         for (i = 0; i < $(formData).length; i++) {
             if ($(formData[i]).val() == '') {
                 $(popData[i]).show();
 
-            } else if($.isNumeric($(formData[1]).val()) == false){
+            } else if ($.isNumeric($(formData[1]).val()) == false) {
                 $(popData[1]).show();
-            }else {
+            } else {
                 $(popData[i]).hide();
                 result += i;
             }
@@ -456,7 +488,7 @@ $(document).ready(function() {
                 type: "POST",
                 url: iurl,
                 data: data + '&org_semester_id=' + iddata,
-                success: function() {
+                success: function () {
                     if (iurl == '../Admin_semester/Edit_Data_ctl') {
                         $('#Modal').modal('hide');
                     }
@@ -472,7 +504,7 @@ $(document).ready(function() {
                         text: txtsnack
                     });
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     Snackbar.show({
                         actionText: 'close',
                         pos: 'top-center',
@@ -484,9 +516,9 @@ $(document).ready(function() {
                 }
             });
         }
-    });
+    }
 
-    $('#btnDel').click(function(e) {
+    $('#btnDel').click(function (e) {
         e.preventDefault();
         $data = selectchb();
         if ($data.length > 0) {
@@ -496,7 +528,7 @@ $(document).ready(function() {
                 data: {
                     $data
                 },
-                success: function(datatable) {
+                success: function (datatable) {
                     show_data();
                     $('#modaldel').modal('hide');
                     Snackbar.show({
@@ -525,13 +557,13 @@ $(document).ready(function() {
 
 
 
-    $('#selectall').change(function() {
+    $('#selectall').change(function () {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
     function selectchb() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function() {
+        $('input[name^=checkitem]:checked').each(function () {
             item.push($(this).val());
         });
         return item;

@@ -10,6 +10,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <?php echo assets_js('aegis_js/manage_su/su_semester.js'); ?>
+
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -78,6 +87,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                         <button type="button" id="btnDel" class="btn btn-primary">ลบ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+
+        <!-- Modal Confirm Year-->
+        <div class="modal fade text-left" id="modalConfirm" tabindex="-1" role="dialog" aria-labelledby="modalConfirm" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="ConfirmModalTxt">MODAL_TITLE</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                        <button type="button" id="btnConfirm" class="btn btn-primary">ยืนยัน</button>
                     </div>
                 </div>
             </div>

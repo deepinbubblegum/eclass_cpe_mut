@@ -156,26 +156,36 @@ $(document).ready(function () {
         // if (re.test(char)) {
         //     event.target.value = chars.join('');
         // }
+        // alert($('#optionSet').val())
         var ew = event.which;
-        if (ew == 32)
-            return true;
-        if (48 <= ew && ew <= 57)
-            return true;
-        if (65 <= ew && ew <= 90)
-            return true;
-        if (97 <= ew && ew <= 122)
-            return true;
-        if (40 <= ew && ew <= 47)
-            return true;
-        if (ew == 35)
-            return true;
-        if (ew == 37)
-            return true;
-        if (ew == 61)
-            return true;
-        if (ew == 58)
-            return true;
-        return false;
+        if ($('#optionSet').val() == 1) {
+            if (ew == 43)
+                return false;
+            if (ew == 45)
+                return false;
+            if (ew == 101)
+                return false;
+        } else {
+            if (ew == 32)
+                return true;
+            if (48 <= ew && ew <= 57)
+                return true;
+            if (65 <= ew && ew <= 90)
+                return true;
+            if (97 <= ew && ew <= 122)
+                return true;
+            if (40 <= ew && ew <= 47)
+                return true;
+            if (ew == 35)
+                return true;
+            if (ew == 37)
+                return true;
+            if (ew == 61)
+                return true;
+            if (ew == 58)
+                return true;
+            return false;
+        }
     });
 
 
@@ -259,6 +269,7 @@ $(document).ready(function () {
     $('#btnModalClose').click(function (e) {
         $('#Headtext').val('');
         $('#Textarea').val('');
+        $('#summernote').summernote('code', '');
         for (i = 0; i < $(formData).length; i++) {
             $(popData[i]).hide();
         }
@@ -718,7 +729,7 @@ $(document).ready(function () {
                     $('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         console.log('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         showPoint(getField[popUp][i].setpoint_setpoint_id, popUp);
-                        $('#model_score_tittle').text(getField[popUp][i].setpoint_mininame);
+                        $('#model_score_tittle').text(getField[popUp][i].setpoint_mininame + ' (คะแนนเต็ม'+ getField[popUp][i].setpoint_maxpoint + ')' );
                         $('#showPoint').modal('show');
                     });
                     $('#addTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
@@ -767,9 +778,20 @@ $(document).ready(function () {
                     });
                     $('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         console.log('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
+                        var typeMulti = '';
                         parentTK = response[i].setpoint_setpoint_id;
                         childTK = response[i].setpoint_id;
-                        $('#mininame').text(getField[popUp][i].setpoint_mininame);
+                        $('#mininame').text(getField[popUp][i].setpoint_mininame + ' (คะแนนเต็ม ' + getField[popUp][i].setpoint_maxpoint + ':');
+                        if(getField[popUp][i].setpoint_multi == 0){
+                            typeMulti = 'กรอกคะแนนได้ครังเดียว)';
+                            $('#ticket_point').val(getField[popUp][i].setpoint_maxpoint);
+                            $('#ticket_point').prop("disabled", true);
+                        }else{
+                            typeMulti = 'กรอกคะแนนได้หลายครั้ง)';
+                            $('#ticket_point').val('');
+                            $('#ticket_point').prop("disabled", false);
+                        }
+                        $('#typeMulti').text(typeMulti);
                         $('#genTicket').modal('show');
                     });
                     $('#delField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
@@ -1013,7 +1035,8 @@ $(document).ready(function () {
     $('#btnConfrimDelPointSTD').click(function (e) {
         delPoint();
         $('#ModalConDel').modal('hide');
-        $('#tr-' + parentField + '-' + childField + '-' + index).addClass('text-danger');
+        // $('#tr-' + parentField + '-' + childField + '-' + index).addClass('text-danger');
+        $('#tr-' + parentField + '-' + childField + '-' + index).remove();
     });
 
     function delPoint() {

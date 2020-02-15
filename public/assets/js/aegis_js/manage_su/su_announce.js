@@ -160,9 +160,14 @@ $(document).ready(function () {
 
                                         $('#edit' + response[i]['anc_id']).click(function (e) {
                                                 e.preventDefault();
+                                                var dateEnd = '';
+                                                $('#set_e_date_edit').val('');
                                                 dataid = $(this).attr('value');
                                                 dataindex = $(this).attr('posi');
                                                 $('#anc_edit_btn').val(dataid);
+                                                if (response[dataindex].e_time != '0000-00-00') {
+                                                        $('#set_e_date_edit').val(response[dataindex].e_time);
+                                                }
                                                 $('#Titlename_edit').val(response[dataindex]['title']);
                                                 // $('#textareacontent_edit').val(response[dataindex]['content']);
                                                 $('#summernoteEdit').summernote('code', unescape(response[dataindex]['content']));
