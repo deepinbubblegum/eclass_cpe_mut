@@ -120,7 +120,7 @@ $(document).ready(function () {
                                                         '<div aria-labelledby="' + response[index]['media_id'] + '" class="collapse" data-parent="#accordionOne" id="' + response[index]['media_id'] + '">' +
                                                         '<div class="expansion-panel-body">' +
                                                         '<p>' + response[index]['media_detail_txt'] + '</p>' +
-                                                        '<video controls crossorigin playsinline>"' +
+                                                        '<video  crossorigin playsinline>"' +
                                                         '<source src="' + window.location.protocol + '//' + window.location.hostname + '/media_uploads/video/souce_video/' + response[index]['media_real_name'] + '" type="video/mp4">' +
                                                         '<center class="mt-2" style="font-size: 18px">' +
                                                         '<a href="' + window.location.protocol + '//' + window.location.hostname + '/media_uploads/video/souce_video/' + response[index]['media_real_name'] + '" download><i class="far fa-arrow-alt-circle-down"></i> Download</a>' +
@@ -267,8 +267,31 @@ $(document).ready(function () {
         });
 
         function player() {
-                Plyr.setup('video');
-                Plyr.setup('audio');
+                var controls = [
+                        'play-large', // ปุ่มเล่นขนาดใหญ่อยู่ตรงกลาง
+                        'restart', // เริ่มเล่นใหม่
+                        'rewind', // กรอกลับตามเวลาค้นหา (ค่าเริ่มต้น 10 วินาที)
+                        'play', // เล่น / หยุดการเล่นชั่วคราว
+                        'fast-forward', // กรอไปข้างหน้าด้วยเวลาค้นหา (ค่าเริ่มต้น 10 วินาที)
+                        'progress', // แถบความคืบหน้าและตัวปรับสำหรับการเล่นและการบัฟเฟอร์
+                        'current-time', // เวลาปัจจุบันของการเล่น
+                        'duration', // ระยะเวลาเต็มของสื่อ
+                        'mute', // สลับปิดเสียง
+                        'volume', // การควบคุมระดับเสียง
+                        // 'captions', // สลับคำอธิบายภาพ
+                        'settings', // เมนูการตั้งค่า
+                        'pip', // ภาพในภาพ (ปัจจุบัน Safari เท่านั้น)
+                        'airplay', // ออกอากาศ (ปัจจุบัน Safari เท่านั้น)
+                        'download', // แสดงปุ่มดาวน์โหลดพร้อมลิงก์ไปยังแหล่งที่มาปัจจุบันหรือ URL ที่กำหนดเองที่คุณระบุในตัวเลือกของคุณ
+                        'fullscreen', // สลับเต็มหน้าจอ
+                ];
+
+                Plyr.setup('video', {
+                        controls
+                });
+                Plyr.setup('audio', {
+                        controls
+                });
         }
 
         // ---------------function video-upload--------------
