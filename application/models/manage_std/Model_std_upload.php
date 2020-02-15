@@ -14,7 +14,7 @@ class Model_std_upload extends CI_Model
 
     public function getMenuUpload($subjectId, $semesterId)
     {
-        $this->db->select('*');
+        $this->db->select('*,NOW() AS dateNow');
         $this->db->from('menuUpload');
         $this->db->where('menuUpSubjectId', $subjectId);
         $this->db->where('menuUpSemesterId', $semesterId);
@@ -63,6 +63,7 @@ class Model_std_upload extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('fileUpload');
+        $this->db->join('menuUpload','fileSemesterId = menuUpSemesterId AND fileSubjectId = menuUpSubjectId AND fileMenuUpId = menuUpId', 'left');
         $this->db->where('fileSubjectId', $subjectId);
         $this->db->where('fileSemesterId', $semesterId);
         $this->db->where('fileMenuUpId', $menuId);

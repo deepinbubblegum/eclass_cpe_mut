@@ -6,6 +6,111 @@ $(document).ready(function () {
     var accordionI = '';
     showMenuPoint();
 
+    /************************************************* Pop Alert **********************************************************/
+
+    var formData = ["#Headtext"];
+
+    var popData = ["#popupHead"];
+
+    var popValue = [
+        //[POP_ID,POP_TEXT]
+        ['popupHead', 'กรุณาระบุหัวข้อเมนูคะแนน']
+    ];
+
+    function popGen() {
+        for (i = 0; i < popValue.length; i++) {
+            $("<div id='" + popValue[i][0] + "' class=\"text-danger\">*" + popValue[i][1] + "</div>").insertAfter(formData[i]);
+        }
+    }
+
+    function hideAllPop() {
+        for (i = 0; i < popData.length; i++) {
+            $(popData[i]).hide();
+        }
+    }
+
+    popGen();
+    hideAllPop();
+
+    var formDataField = ["#addFieldFN", "#addFieldMN", "#addFieldMP"];
+
+    var popDataField = ["#popupFN", "#popupMN", "#popupMP"];
+
+    var popValueField = [
+        //[POP_ID,POP_TEXT]
+        ['popupFN', 'กรุณาระบุชื่อเต็มช่องคะแนน'],
+        ['popupMN', 'กรุณาระบุชื่อย่อช่องคะแนน'],
+        ['popupMP', 'กรุณาระบุรายละเอียดช่องคะแนน']
+    ];
+
+    function popGenField() {
+        for (i = 0; i < popValueField.length; i++) {
+            $("<div id='" + popValueField[i][0] + "' class=\"text-danger\">*" + popValueField[i][1] + "</div>").insertAfter(formDataField[i]);
+        }
+    }
+
+    function hideAllPopField() {
+        for (i = 0; i < popDataField.length; i++) {
+            $(popDataField[i]).hide();
+        }
+    }
+
+    popGenField();
+    hideAllPopField();
+
+    var formDataInsertScore = ["#addTicketP", "#addTicketUID"];
+
+    var popDataInsertScore = ["#popupP", "#popupUID"];
+
+    var popValueInsertScore = [
+        //[POP_ID,POP_TEXT]
+        ['popupP', 'กรุณาระบุคะแนนที่ได้'],
+        ['popupUID', 'กรุณาระบุรหัสนักศึกษา']
+    ];
+
+    function popGenInsertScore() {
+        for (i = 0; i < popValueInsertScore.length; i++) {
+            $("<div id='" + popValueInsertScore[i][0] + "' class=\"text-danger\">*" + popValueInsertScore[i][1] + "</div>").insertAfter(formDataInsertScore[i]);
+        }
+    }
+
+    function hideAllPopInsertScore() {
+        for (i = 0; i < popDataInsertScore.length; i++) {
+            $(popDataInsertScore[i]).hide();
+        }
+    }
+
+    popGenInsertScore();
+    hideAllPopInsertScore();
+
+    var formDataTicket = ["#ticket_discrip", "#ticket_point", "#ticketNumber"];
+
+    var popDataTicket = ["#popup_discrip", "#popup_point", "#popup_Number"];
+
+    var popValueTicket = [
+        //[POP_ID,POP_TEXT]
+        ['popup_discrip', 'กรุณาระบุรายละเอียดใบคะแนน'],
+        ['popup_point', 'กรุณาระบุคะแนนของใบคะแนน'],
+        ['popup_Number', 'กรุณาระบุจำนวนใบคะแนน']
+    ];
+
+    function popGenTicket() {
+        for (i = 0; i < popValueTicket.length; i++) {
+            $("<div id='" + popValueTicket[i][0] + "' class=\"text-danger\">*" + popValueTicket[i][1] + "</div>").insertAfter(formDataTicket[i]);
+        }
+    }
+
+    function hideAllPopTicket() {
+        for (i = 0; i < popDataTicket.length; i++) {
+            $(popDataTicket[i]).hide();
+        }
+    }
+
+    popGenTicket();
+    hideAllPopTicket();
+
+    /***********************************************************************************************************/
+
     $('#summernote').summernote({
         dialogsInBody: true,
         codeviewFilter: false,
@@ -26,15 +131,15 @@ $(document).ready(function () {
 
     $('#summernote').summernote('code', '');
 
-    $("#addFieldMN").keypress(function(event){
+    $("#addFieldMN").keypress(function (event) {
         var ew = event.which;
-        if(ew == 32)
+        if (ew == 32)
             return true;
-        if(48 <= ew && ew <= 57)
+        if (48 <= ew && ew <= 57)
             return true;
-        if(65 <= ew && ew <= 90)
+        if (65 <= ew && ew <= 90)
             return true;
-        if(97 <= ew && ew <= 122)
+        if (97 <= ew && ew <= 122)
             return true;
         return false;
     });
@@ -46,26 +151,37 @@ $(document).ready(function () {
         // if (re.test(char)) {
         //     event.target.value = chars.join('');
         // }
+        // alert($('#optionSet').val())
         var ew = event.which;
-        if (ew == 32)
-            return true;
-        if (48 <= ew && ew <= 57)
-            return true;
-        if (65 <= ew && ew <= 90)
-            return true;
-        if (97 <= ew && ew <= 122)
-            return true;
-        if (40 <= ew && ew <= 47)
-            return true;
-        if (ew == 35)
-            return true;
-        if (ew == 37)
-            return true;
-        if (ew == 61)
-            return true;
-        return false;
+        if ($('#optionSet').val() == 1) {
+            if (ew == 43)
+                return false;
+            if (ew == 45)
+                return false;
+            if (ew == 101)
+                return false;
+        } else {
+            if (ew == 32)
+                return true;
+            if (48 <= ew && ew <= 57)
+                return true;
+            if (65 <= ew && ew <= 90)
+                return true;
+            if (97 <= ew && ew <= 122)
+                return true;
+            if (40 <= ew && ew <= 47)
+                return true;
+            if (ew == 35)
+                return true;
+            if (ew == 37)
+                return true;
+            if (ew == 61)
+                return true;
+            if (ew == 58)
+                return true;
+            return false;
+        }
     });
-
 
     $('#btnAddScore').click(function (e) {
         e.preventDefault();
@@ -87,48 +203,69 @@ $(document).ready(function () {
         description = $('#summernote').summernote('code');
         PointMulti = $("input[name='PointView']:checked").val();
 
-        var form_data = new FormData();
-        form_data.append('semester', semester);
-        form_data.append('subject', subject_id);
-        form_data.append('header', header);
-        form_data.append('description', description);
-        form_data.append('StdView', PointMulti);
-        form_data.append('editID', editMenuId);
+        var result = '';
+        var check = '';
 
-        var txt = '';
-        $.ajax({
-            type: "POST",
-            url: iurl,
-            // data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&StdView=' + PointMulti + '&editID=' + editMenuId,
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function (response) {
-                $('#Headtext').val("");
-                $('#Textarea').val("");
-                $('#Modal').modal('hide');
-                if (response == 0) {
-                    txt = 'มีข้อมูลเมนูคะแนนแล้ว ไม่สามารถสร้างเมนูคะแนนได้';
-                } else {
-                    txt = 'เพิ่มข้อมูลเมนูคะแนนแล้ว';
-                }
-                Snackbar.show({
-                    actionText: 'close',
-                    pos: 'top-center',
-                    actionTextColor: '#4CAF50',
-                    backgroundColor: '#323232',
-                    width: 'auto',
-                    text: txt
-                });
-                showMenuPoint();
+        for (i = 0; i < $(formData).length; i++) {
+            if ($(formData[i]).val() == '') {
+                $(popData[i]).show();
+
+            } else {
+                $(popData[i]).hide();
+                result += i;
             }
-        });
+            check += i;
+        }
+
+        if (check == result) {
+
+            var form_data = new FormData();
+            form_data.append('semester', semester);
+            form_data.append('subject', subject_id);
+            form_data.append('header', header);
+            form_data.append('description', description);
+            form_data.append('StdView', PointMulti);
+            form_data.append('editID', editMenuId);
+
+            var txt = '';
+            $.ajax({
+                type: "POST",
+                url: iurl,
+                // data: '&semester=' + semester + '&subject=' + subject_id + '&header=' + header + '&description=' + description + '&StdView=' + PointMulti + '&editID=' + editMenuId,
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (response) {
+                    $('#Headtext').val("");
+                    $('#Textarea').val("");
+                    $('#Modal').modal('hide');
+                    if (response == 0) {
+                        txt = 'มีข้อมูลเมนูคะแนนแล้ว ไม่สามารถสร้างเมนูคะแนนได้';
+                    } else {
+                        txt = 'เพิ่มข้อมูลเมนูคะแนนแล้ว';
+                    }
+                    Snackbar.show({
+                        actionText: 'close',
+                        pos: 'top-center',
+                        actionTextColor: '#4CAF50',
+                        backgroundColor: '#323232',
+                        width: 'auto',
+                        text: txt
+                    });
+                    showMenuPoint();
+                }
+            });
+        }
     });
 
     $('#btnModalClose').click(function (e) {
         $('#Headtext').val('');
         $('#Textarea').val('');
+        $('#summernote').summernote('code', '');
+        for (i = 0; i < $(formData).length; i++) {
+            $(popData[i]).hide();
+        }
     });
 
     function showMenuPoint() {
@@ -423,6 +560,21 @@ $(document).ready(function () {
         // matchup = fullName.match(/\#/g);
         // console.log(matchup);
 
+        var resultField = '';
+        var checkField = '';
+
+        for (i = 0; i < $(formDataField).length; i++) {
+            if ($(formDataField[i]).val() == '') {
+                $(popDataField[i]).show();
+
+            } else {
+                $(popDataField[i]).hide();
+                resultField += i;
+            }
+            checkField += i;
+        }
+
+
         maxPoint = htmlEncodeF34R(maxPoint);
         fullName = htmlEncodeF34R(fullName);
         miniName = htmlEncodeF34R(miniName);
@@ -441,7 +593,9 @@ $(document).ready(function () {
             //alert('The max point must be larger than zero!');
         }
         console.log(ticket, optionSet);
-        takeField(fullName, miniName, ticket, maxPoint, optionSet, PointMulti);
+        if (checkField == resultField) {
+            takeField(fullName, miniName, ticket, maxPoint, optionSet, PointMulti);
+        }
     });
 
     $('#fieldClose').click(function (e) {
@@ -449,6 +603,9 @@ $(document).ready(function () {
         $('#addFieldMN').val('');
         $('#addFieldTK')[0].checked = false;
         $('#addFieldMP').val('1');
+        for (i = 0; i < $(formDataField).length; i++) {
+            $(popDataField[i]).hide();
+        }
     });
 
     function takeField(fullName, miniName, ticket, maxPoint, optionSet, PointMulti) {
@@ -536,7 +693,8 @@ $(document).ready(function () {
                     $('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         console.log('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         showPoint(getField[popUp][i].setpoint_setpoint_id, popUp);
-                        $('#show_txt_score').text(getField[popUp][i].setpoint_mininame);
+                        // $('#show_txt_score').text(getField[popUp][i].setpoint_mininame);
+                        $('#show_txt_score').text(getField[popUp][i].setpoint_mininame + ' (คะแนนเต็ม' + getField[popUp][i].setpoint_maxpoint + ')');
                         $('#showPoint').modal('show');
                     });
                     $('#addTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
@@ -585,9 +743,20 @@ $(document).ready(function () {
                     });
                     $('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         console.log('#genTicket-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
+                        var typeMulti = '';
                         parentTK = response[i].setpoint_setpoint_id;
                         childTK = response[i].setpoint_id;
-                        $("#mininame").text(getField[popUp][i].setpoint_mininame);
+                        $('#mininame').text(getField[popUp][i].setpoint_mininame + ' (คะแนนเต็ม ' + getField[popUp][i].setpoint_maxpoint + ':');
+                        if (getField[popUp][i].setpoint_multi == 0) {
+                            typeMulti = 'กรอกคะแนนได้ครังเดียว)';
+                            $('#ticket_point').val(getField[popUp][i].setpoint_maxpoint);
+                            $('#ticket_point').prop("disabled", true);
+                        } else {
+                            typeMulti = 'กรอกคะแนนได้หลายครั้ง)';
+                            $('#ticket_point').val('');
+                            $('#ticket_point').prop("disabled", false);
+                        }
+                        $('#typeMulti').text(typeMulti);
                         $('#genTicket').modal('show');
                     });
                     $('#delField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
@@ -627,6 +796,9 @@ $(document).ready(function () {
         $('#ticket_discrip').val('');
         $('#ticketNumber').val('');
         $('#ticket_point').val('');
+        for (i = 0; i < $(formDataTicket).length; i++) {
+            $(popDataTicket[i]).hide();
+        }
     });
 
     $('#genTicketSave').click(function (e) {
@@ -634,19 +806,36 @@ $(document).ready(function () {
         tknb = $('#ticketNumber').val();
         ticket_point = $('#ticket_point').val();
 
-        $.ajax({
-            type: "POST",
-            url: '/' + url[3] + '/Gen_ticket/gen_key',
-            data: '&ticket_discrip=' + discript + '&ticketNumber=' + tknb + '&parentTK=' + parentTK + '&childTK=' + childTK + '&semester=' + semester + '&subject=' + subject_id + '&ticket_point=' + ticket_point,
-            dataType: "json",
-            success: function (response) {
-                console.log(response);
-                if (response) {
-                    gurl = '/Gen_ticket/ticket_and_qrCode/' + response;
-                    window.open(gurl, '_blank');
-                }
-            },
-        });
+        var resultTicket = '';
+        var checkTicket = '';
+
+        for (i = 0; i < $(formDataTicket).length; i++) {
+            if ($(formDataTicket[i]).val() == '') {
+                $(popDataTicket[i]).show();
+
+            } else {
+                $(popDataTicket[i]).hide();
+                resultTicket += i;
+            }
+            checkTicket += i;
+        }
+
+        if (checkTicket == resultTicket) {
+
+            $.ajax({
+                type: "POST",
+                url: '/' + url[3] + '/Gen_ticket/gen_key',
+                data: '&ticket_discrip=' + discript + '&ticketNumber=' + tknb + '&parentTK=' + parentTK + '&childTK=' + childTK + '&semester=' + semester + '&subject=' + subject_id + '&ticket_point=' + ticket_point,
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response) {
+                        gurl = '/Gen_ticket/ticket_and_qrCode/' + response;
+                        window.open(gurl, '_blank');
+                    }
+                },
+            });
+        }
     });
 
     var takeThisDel = '';
@@ -761,7 +950,8 @@ $(document).ready(function () {
     $('#btnConfrimDelPointSTD').click(function (e) {
         delPoint();
         $('#ModalConDel').modal('hide');
-        $('#tr-' + parentField + '-' + childField + '-' + index).addClass('text-danger');
+        // $('#tr-' + parentField + '-' + childField + '-' + index).addClass('text-danger');
+        $('#tr-' + parentField + '-' + childField + '-' + index).remove();
     });
 
     function delPoint() {
@@ -796,38 +986,54 @@ $(document).ready(function () {
             uID = $('#addTicketUID').val();
             tPoint = $('#addTicketP').val();
 
+            var resultInsertScore = '';
+            var checkInsertScore = '';
+
+            for (i = 0; i < $(formDataInsertScore).length; i++) {
+                if ($(formDataInsertScore[i]).val() == '') {
+                    $(popDataInsertScore[i]).show();
+
+                } else {
+                    $(popDataInsertScore[i]).hide();
+                    resultInsertScore += i;
+                }
+                checkInsertScore += i;
+            }
+
             maxstd = 0;
             maxstd = parseFloat(maxstd) + parseFloat(tPoint);
 
-            $.ajax({
-                type: "POST",
-                url: '/' + url[3] + '/Te_subject_point/checkMaxpointSTD',
-                data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&std=' + uID,
-                dataType: "json",
-                success: function (response) {
-                    // console.log(response);
-                    if (response != null) {
-                        for (i = 0; i < response.length; i++) {
-                            // tPoint = tPoint + (response[i].point_std_point*1);
-                            maxstd = parseFloat(maxstd) + parseFloat(response[i].point_std_point);
+            if (checkInsertScore == resultInsertScore) {
+                $.ajax({
+                    type: "POST",
+                    url: '/' + url[3] + '/Te_subject_point/checkMaxpointSTD',
+                    data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&std=' + uID,
+                    dataType: "json",
+                    success: function (response) {
+                        // console.log(response);
+                        if (response != null) {
+                            for (i = 0; i < response.length; i++) {
+                                // tPoint = tPoint + (response[i].point_std_point*1);
+                                maxstd = parseFloat(maxstd) + parseFloat(response[i].point_std_point);
+                            }
+                        }
+
+                        if (maxstd > setMaxPoint) {
+                            Snackbar.show({
+                                actionText: 'close',
+                                pos: 'top-center',
+                                actionTextColor: '#FF0000',
+                                backgroundColor: '#323232',
+                                width: 'auto',
+                                text: 'คะแนนเกินคะแนนสูงสุด'
+                            });
+                            return false
+                        } else {
+                            AddPoint_std(uID, tPoint);
                         }
                     }
-
-                    if (maxstd > setMaxPoint) {
-                        Snackbar.show({
-                            actionText: 'close',
-                            pos: 'top-center',
-                            actionTextColor: '#FF0000',
-                            backgroundColor: '#323232',
-                            width: 'auto',
-                            text: 'คะแนนเกินคะแนนสูงสุด'
-                        });
-                        return false
-                    } else {
-                        AddPoint_std(uID, tPoint);
-                    }
-                }
-            });
+                });
+            }
 
             //if (tPoint > setMaxPoint) tPoint = setMaxPoint;
             //console.log(uID, tPoint, setMaxPoint, subject_id + '-' + semester, setIdParent, setIdChild);
@@ -874,39 +1080,55 @@ $(document).ready(function () {
         uID = $('#addTicketUID').val();
         tPoint = $('#addTicketP').val();
 
+        var resultInsertScore = '';
+        var checkInsertScore = '';
+
+        for (i = 0; i < $(formDataInsertScore).length; i++) {
+            if ($(formDataInsertScore[i]).val() == '') {
+                $(popDataInsertScore[i]).show();
+
+            } else {
+                $(popDataInsertScore[i]).hide();
+                resultInsertScore += i;
+            }
+            checkInsertScore += i;
+        }
+
         maxstd = 0;
         maxstd = parseFloat(maxstd) + parseFloat(tPoint);
 
         // console.log(setIdChild);
-        $.ajax({
-            type: "POST",
-            url: '/' + url[3] + '/Te_subject_point/checkMaxpointSTD',
-            data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&std=' + uID,
-            dataType: "json",
-            success: function (response) {
-                console.log(response);
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        // tPoint = tPoint + (response[i].point_std_point*1);
-                        maxstd = parseFloat(maxstd) + parseFloat(response[i].point_std_point);
+        if (checkInsertScore == resultInsertScore) {
+            $.ajax({
+                type: "POST",
+                url: '/' + url[3] + '/Te_subject_point/checkMaxpointSTD',
+                data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + setIdChild + '&setIdParent=' + setIdParent + '&std=' + uID,
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response != null) {
+                        for (i = 0; i < response.length; i++) {
+                            // tPoint = tPoint + (response[i].point_std_point*1);
+                            maxstd = parseFloat(maxstd) + parseFloat(response[i].point_std_point);
+                        }
+                    }
+
+                    if (maxstd > setMaxPoint) {
+                        Snackbar.show({
+                            actionText: 'close',
+                            pos: 'top-center',
+                            actionTextColor: '#FF0000',
+                            backgroundColor: '#323232',
+                            width: 'auto',
+                            text: 'คะแนนเกินคะแนนสูงสุด'
+                        });
+                        return false
+                    } else {
+                        AddPoint_std(uID, tPoint);
                     }
                 }
-
-                if (maxstd > setMaxPoint) {
-                    Snackbar.show({
-                        actionText: 'close',
-                        pos: 'top-center',
-                        actionTextColor: '#FF0000',
-                        backgroundColor: '#323232',
-                        width: 'auto',
-                        text: 'คะแนนเกินคะแนนสูงสุด'
-                    });
-                    return false
-                } else {
-                    AddPoint_std(uID, tPoint);
-                }
-            }
-        });
+            });
+        }
 
         //if (tPoint > setMaxPoint) tPoint = setMaxPoint;
         // console.log(uID, tPoint, setMaxPoint, subject_id + '-' + semester, setIdParent, setIdChild);

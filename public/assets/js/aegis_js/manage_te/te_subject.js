@@ -239,8 +239,8 @@ $(document).ready(function () {
                         html += //'<a class="card" style="min-width: 300px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../select/subject/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<a class="card" style="min-width: 310px; max-width : 310px;" id="' + response[i].subsem_subject + '" href="../' + url[3] + '/te_select_special/annouce/' + response[i].subsem_subject + '-' + response[i].subsem_semester + '" >' +
                             '<img class="card-img-top" style="min-width: 310px; max-width : 310px; height: 180px;" src="../Img_sem/' + response[i].subsem_semester + response[i].subsem_subject + '.png?t=' + new Date().getTime() + '"onerror="this.src=\'/Img_sem/img_not_found.png\'" alt="Card image cap">' +
-                        '<div class="card-body">' +
-                        '<h5 class="card-title" value="' + response[i].subsem_subject + '" >' + txtSub + '</h5>' +
+                            '<div class="card-body">' +
+                            '<h5 class="card-title" value="' + response[i].subsem_subject + '" >' + txtSub + '</h5>' +
                             '<p class="card-text">' + response[i].subject_name + '</p>' +
                             '</div>' +
                             '<div class="card-footer text-muted">' +
@@ -829,18 +829,20 @@ $(document).ready(function () {
     }
 
     function Copy_Subject() {
-        SemCopy = $("#SemesterCopy_add_option :selected").val();
-        SubCopy = $("#SubjectCopy_add_option :selected").val();
+        if ($('#customSwitchCopy').is(':checked')) {
+            SemCopy = $("#SemesterCopy_add_option :selected").val();
+            SubCopy = $("#SubjectCopy_add_option :selected").val();
 
-        $.ajax({
-            type: "POST",
-            url: "/" + url[3] + '/Teacher_add_subject/Add_SubCopy',
-            data: '&semester=' + data + '&subject_id=' + data2 + '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy,
-            success: function () {
-                $('#Modal_Add_subject').modal('hide');
-            }
-        });
-        $('#Modal_Add_subject').modal('hide');
+            $.ajax({
+                type: "POST",
+                url: "/" + url[3] + '/Teacher_add_subject/Add_SubCopy',
+                data: '&semester=' + data + '&subject_id=' + data2 + '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy,
+                success: function () {
+                    $('#Modal_Add_subject').modal('hide');
+                }
+            });
+            $('#Modal_Add_subject').modal('hide');
+        }
     }
 
     function change_image() {

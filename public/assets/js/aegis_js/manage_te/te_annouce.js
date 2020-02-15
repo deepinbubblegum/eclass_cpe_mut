@@ -186,7 +186,7 @@ $(document).ready(function () {
     $('#Add_annouce').click(function (e) {
         e.preventDefault();
         $('#Modal').modal('show');
-        $('#ModalLabel').text('เพิ่มข้อมูลข่าวสาาร');
+        $('#ModalLabel').text('เพิ่มข้อมูลข่าวสาร');
         todayDate = new Date().toISOString();
         // $('#StartDatePicker').val(todayDate);
         $('#save').text('บันทึกข้อมูล');
@@ -200,7 +200,7 @@ $(document).ready(function () {
         todayDate = new Date().toISOString();
         ivalue = $(this).attr('value');
         $('#Modal').modal('show');
-        $('#ModalLabel').text('แก้ไขข้อมูลข่าวสาาร');
+        $('#ModalLabel').text('แก้ไขข้อมูลข่าวสาร');
         $('#save').text('แก้ไขข้อมูล');
         iurl = "/" + url[3] + "/Te_annouce/Edit_Data_ctl";
         $('#Headtext').val(data_annouce[ivalue].annouce_name);
