@@ -355,18 +355,7 @@ $(document).ready(function () {
         } else {
             menuStatus += 0
         }
-        date = $('#datePick').val();
-        time = $('#timePick').val() + ':00';
-        var form_data = new FormData();
-        form_data.append('semester', semester);
-        form_data.append('subject_id', subject_id);
-        form_data.append('header', header);
-        form_data.append('description', description);
-        form_data.append('status', menuStatus);
-        form_data.append('editID', editMenuId);
-        form_data.append('date', date);
-        form_data.append('time', time);
-
+        
         var result = '';
         var check = '';
 
@@ -382,6 +371,8 @@ $(document).ready(function () {
         }
 
         if (check == result) {
+            date = $('#datePick').val();
+            time = $('#timePick').val() + ':00';
             var form_data = new FormData();
             form_data.append('semester', semester);
             form_data.append('subject_id', subject_id);
@@ -389,6 +380,9 @@ $(document).ready(function () {
             form_data.append('description', description);
             form_data.append('status', menuStatus);
             form_data.append('editID', editMenuId);
+            form_data.append('date', date);
+            form_data.append('time', time);
+
 
             $.ajax({
                 type: "POST",
