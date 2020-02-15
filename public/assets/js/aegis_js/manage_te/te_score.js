@@ -173,6 +173,8 @@ $(document).ready(function () {
             return true;
         if (ew == 61)
             return true;
+        if (ew == 58)
+            return true;
         return false;
     });
 
@@ -772,12 +774,12 @@ $(document).ready(function () {
                     });
                     $('#delField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         //console.log('#delField-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
-                        
+
                         delCid = response[i].setpoint_id;
                         delPid = response[i].setpoint_setpoint_id;
 
                         $("#txtDel").text('Field:' + getField[popUp][i].setpoint_mininame);
-                        
+
                         takeThisDel = "delField";
                         accordionI = popUp;
 
@@ -785,8 +787,8 @@ $(document).ready(function () {
                             toggle: true
                         });
 
-                        showDelPointF(delPid,delCid); 
-                        
+                        showDelPointF(delPid, delCid);
+
                         //delField(response[i].setpoint_id, response[i].setpoint_setpoint_id);
                     });
                 });
@@ -926,32 +928,32 @@ $(document).ready(function () {
     var index;
     var showDelPoint = 0;
 
-    function showDelPointF(childId, parentId){ 
-            console.log('showPoint(' + childId + ',' + parentId + ')');
-            takeThisUrl = '/' + url[3] + '/Te_subject_point/showPoint';
-            $.ajax({
-                type: "POST",
-                url: takeThisUrl,
-                data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + childId + '&setIdParent=' + parentId,
-                dataType: "json",
-                success: function (response) {
-                    if (response.length != undefined) {
-                        showDelPoint = response.length
-                    }else{
-                        showDelPoint = 0;
-                    }
-                    console.log(showDelPoint);
-                    console.log(response);
-                    if(showDelPoint>0){
-                        if(confirm("มีข้อมูลคะแนนอยู่ภายใน : "+showDelPoint+" ข้อมูล")){
-                            $("#ModalDelete").modal('show');
-                        } 
-                    }else{
+    function showDelPointF(childId, parentId) {
+        console.log('showPoint(' + childId + ',' + parentId + ')');
+        takeThisUrl = '/' + url[3] + '/Te_subject_point/showPoint';
+        $.ajax({
+            type: "POST",
+            url: takeThisUrl,
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + childId + '&setIdParent=' + parentId,
+            dataType: "json",
+            success: function (response) {
+                if (response.length != undefined) {
+                    showDelPoint = response.length
+                } else {
+                    showDelPoint = 0;
+                }
+                console.log(showDelPoint);
+                console.log(response);
+                if (showDelPoint > 0) {
+                    if (confirm("มีข้อมูลคะแนนอยู่ภายใน : " + showDelPoint + " ข้อมูล")) {
                         $("#ModalDelete").modal('show');
                     }
-                    
-                },
-            }); 
+                } else {
+                    $("#ModalDelete").modal('show');
+                }
+
+            },
+        });
     }
 
     function showPoint(childId, parentId) {
