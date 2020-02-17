@@ -107,7 +107,6 @@ class Admin_student_data extends MY_Controller
             $spreadsheet = $reader->load($inputFileName);
             $worksheet = $spreadsheet->getActiveSheet();
             $sheet_data = $worksheet->toArray();
-            $success = false;
             $index_ST_CODE = array_search('ST_CODE', $sheet_data[0]);
             $index_TNAME = array_search('TNAME', $sheet_data[0]);
             $index_ENAME = array_search('ENAME', $sheet_data[0]);
