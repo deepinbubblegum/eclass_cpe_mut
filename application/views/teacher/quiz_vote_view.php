@@ -187,6 +187,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
         <!-- Graph Modal -->
 
+        <!-- STD CLEAR -->
+        <div id="clearShowScoreModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <h5 id="clearScoreModalLabel" class="modal-title">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                </button>
+                                        </div>
+                                        <div class="modal-body">
+                                        <button type="button" class="btn btn-danger" id="clearAllBtn">Clear all points</button>
+                                                <div id="clearF34r-here">
+                                                        <!-- Tables here -->
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer"> 
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        <!-- CTD CLEAR -->
+
         <!-- MODAL_ADD_FIELD -->
         <div class="modal fade bd-example-modal-lg" id="addField" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">

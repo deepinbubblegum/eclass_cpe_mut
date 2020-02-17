@@ -708,12 +708,12 @@ $(document).ready(function () {
                             html +=
                                 '<center class="ml-1 mr-1">' +
                                 '<div style="width:94px;height:94px" id="' + response[i].setpoint_setpoint_id + '" id2="' + response[i].setpoint_id + '" class="sortableItem p-2 mb-2 f34r-bg-o-txt" >' + response[i].setpoint_mininame + '<br>' +
-                                //'<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
-                                '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
+                                '<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
+                                '<span style="font-size: 1.3em;"><a href="#" id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-times-circle""></i></a></span>&nbsp;' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
                                 '<br>' +
-                                '<span style="font-size: 1em;"><a href="#" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
-                                '&nbsp;&nbsp;<span style="font-size: 1em;"><a id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
+                                // '<span style="font-size: 1em;"><a href="#" id="editField-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-file-signature"></i></a></span>' +
+                                //'<span style="font-size: 1.5em;"><a id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" href="#" class="f34r-txt-black"><i class="fas fa-times-circle"></i></a></span>' +
                                 '</div>' +
                                 '</center>';
                         }

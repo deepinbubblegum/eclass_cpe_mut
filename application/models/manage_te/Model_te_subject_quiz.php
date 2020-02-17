@@ -55,6 +55,26 @@ class Model_te_subject_quiz extends CI_Model
         }
     }
 
+    public function getVictim($semester, $subject, $menuQuiz){
+        $this->db->select('sum(choiceQuizPoint) as sumPoint ,pointQuizUserId');
+        $this->db->from('pointQuiz ,choiceQuiz');
+        $this->db->where('pointQuizSemester = choiceQuizSemester');
+        $this->db->where('pointQuizSubject = choiceQuizSubject');
+        $this->db->where('pointQuizMenuQuizId = choiceQuizMenuQuizId');
+        $this->db->where('pointQuizSemester', $semester);
+        $this->db->where('pointQuizSubject', $subject);
+        $this->db->where('pointQuizMenuQuizId', $menuQuiz);
+        $this->db->where('pointQuizHeaderQuizId = choiceQuizHeadId');
+        $this->db->where('pointQuizChoiceQuizId = choiceQuizId');
+        $this->db->group_by("pointQuizUserId");
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
     public function exportPoint($semester, $subject, $menuPoint, $menuQuiz, $menuName, $menuMiniName, $maxPoint)
     {
         $this->db->select('sum(choiceQuizPoint) as sumPoint ,pointQuizUserId');
@@ -296,6 +316,23 @@ class Model_te_subject_quiz extends CI_Model
         $this->db->where_in('menuQuizSubject', $subject_id);
         $this->db->where_in('menuQuizId', $setIdParent);
         $this->db->delete('menuQuiz');
+    }
+
+    public function clearAllPoint($semester, $subject_id, $menuQuiz)
+    {
+        $this->db->where('pointQuizSemester', $semester);
+        $this->db->where('pointQuizSubject', $subject_id);
+        $this->db->where('pointQuizMenuQuizId', $menuQuiz);
+        $this->db->delete('pointQuiz');
+    }
+
+    public function clearOnePoint($semester, $subject_id, $menuQuiz, $delUser)
+    {
+        $this->db->where('pointQuizSemester', $semester);
+        $this->db->where('pointQuizSubject', $subject_id);
+        $this->db->where('pointQuizMenuQuizId', $menuQuiz);
+        $this->db->where('pointQuizUserId', $delUser);
+        $this->db->delete('pointQuiz');
     }
 
     public function IndexMenu($sortMenuIDArray, $ArraySemester, $ArraySubject)

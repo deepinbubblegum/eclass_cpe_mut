@@ -196,13 +196,18 @@ $(document).ready(function () {
                         disabler = 'disabled';
                     } else {
                         disabler = '';
-                    }
+                    }  
                     for (i = 0; i < response.length; i++) {
                         html += '<label class="mt-2">' +
                             '<input type="radio" name="test-' + CMenuID + '-' + CHeaderID + '" class="card-input-element d-none" value="' + i + '"' + disabler + '>' +
                             '<div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">' +
-                            '<h5>' + response[i].choiceQuizText + '</h5>' +
-                            '</div>' +
+                            '<h5>' + response[i].choiceQuizText ;
+                           // html += ' ['+response[i].choiceQuizPoint+']';
+                            if (menuStatus[CMenuID].substr(2, 1) == '1') { //check enable
+                                html += '['+response[i].choiceQuizPoint+']';
+                            }
+                            
+                        html += '</h5></div>' +
                             '</label>';
                     }
                 } else {
