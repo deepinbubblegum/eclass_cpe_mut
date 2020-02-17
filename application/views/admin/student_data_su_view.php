@@ -11,6 +11,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <?php
     echo assets_js('aegis_js/manage_su/su_student_data.js');
     ?>
+    <style>
+        .modal-dialog {
+            overflow-y: initial !important
+        }
+
+        .modal-body {
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -68,6 +78,41 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
         <!-- End Modal -->
 
+        <!-- Modal log_csv-->
+        <div class="modal fade text-left" id="log_csv_error" tabindex="-1" role="dialog" aria-labelledby="log_csv_error" aria-hidden="true" data-keyboard="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="header_log"><i class="fas fa-exclamation-triangle"></i> แจ้งเตือนข้อมูลผิดพลาด</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table text-nowrap">
+                            <table class="table mb-0" style="overflow-y: scroll; max-height:85%; margin-top: 50px; margin-bottom:50px;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Error Line</th>
+                                        <th scope="col">ST_CODE</th>
+                                        <th scope="col">TNAME</th>
+                                        <th scope="col">ENAME</th>
+                                        <th scope="col">EMAIL</th>
+                                        <th scope="col">CRSE_CODE</th>
+                                        <th scope="col">Log_error</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='log_error_tr'>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+
         <!-- Modal CSV-->
         <div class="modal fade text-left" id="Modalcsv" tabindex="-1" role="dialog" aria-labelledby="Modalcsv" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -83,7 +128,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <span class="input-group-text">Upload</span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="inputFile" name="inputFile" enctype="multipart/form-data" accept=".csv, text/csv" />
+                                    <input type="file" class="custom-file-input" id="inputFile" name="inputFile" enctype="multipart/form-data" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
                                     <label class="custom-file-label" for="inputFile">Choose file</label>
                                 </div>
                                 <!-- <div class="col-md-4 mb-3">

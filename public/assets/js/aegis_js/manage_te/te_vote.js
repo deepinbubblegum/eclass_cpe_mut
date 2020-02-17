@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     year = semester.substr(0, 4);
     part = semester.substr(4, 1);
-    $('#header').text('แบบสำรวจ : ' + subject_id + ' - ' + year + '/' + part);
+    $('#header').text('โหวต : ' + subject_id + ' - ' + year + '/' + part);
 
     var url = $(location).attr('href').split("/");
     var editMenuId = '';
@@ -20,7 +20,7 @@ $(document).ready(function () {
     $('#choiceVotePoint').val(clearPoint);
 
     $('#summernote').summernote({
-        placeholder: 'รายละเอียดเมนูแบบสำรวจ',
+        placeholder: 'รายละเอียดเมนูโหวต',
         // tabsize: 1,
         height: 250,
         toolbar: [
@@ -104,7 +104,7 @@ $(document).ready(function () {
     $('#btnAddVote').click(function (e) {
         e.preventDefault();
         $('#Modal').modal('show');
-        $('#ModalLabel').text('เพิ่มเมนูแบบสำรวจ');
+        $('#ModalLabel').text('เพิ่มเมนูโหวต');
         //$("#PointView").prop("checked", true);
         //todayDate = new Date().toISOString();
         // $('#StartDatePicker').val(todayDate);
@@ -213,9 +213,9 @@ $(document).ready(function () {
                             '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
                             '<div class="expansion-panel-body">' +
                             /* --------BTN-------- */
-                            '<span style="font-size: 1.7em;"><a title="สร้างตัวเลือกแบบสำรวจ" id="addInMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a title="ลบเมนูแบบสำรวจ" id="delMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
-                            '<span style="font-size: 1.7em;"><a title="แก้ไขเมนูแบบสำรวจ" id="editMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="สร้างตัวเลือกโหวต" id="addInMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-plus-square"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="ลบเมนูโหวต" id="delMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-trash-alt"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="แก้ไขเมนูโหวต" id="editMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="ดูผลสำรวจ" id="showScoreMenu-' + response[i].menuVoteId + '" href="#" class="f34r-txt-black"><i class="fas fa-chart-bar"></a></i></span>&nbsp;' +
                             /* --------BTN-------- */
                             '<br>' +
@@ -281,7 +281,7 @@ $(document).ready(function () {
                         // if (getMenu[i].menuVoteStatus.substring(2, 3) == '1') { $('#checkBox02').prop("checked", true); } else { $('#checkBox03').prop("checked", false); }
                         // if (getMenu[i].menuVoteStatus.substring(3, 4) == '1') { $('#checkBox03').prop("checked", true); } else { $('#checkBox03').prop("checked", false); }
 
-                        $('#ModalLabel').text('แก้ไขเมนูแบบสำรวจ');
+                        $('#ModalLabel').text('แก้ไขเมนูโหวต');
                         $('#save').text('ยืนยันการแก้ไข');
 
                         $('#Modal').modal('show');
@@ -427,9 +427,9 @@ $(document).ready(function () {
                             '</h4>' +
                             '</li>' +
 
-                            //'<span style="font-size: 1.5em;"><a href="#" title="เพิ่มตัวเลือกแบบสำรวจ" id="addChoiceVote-' + mVoteId + '-' + response[i].choiceVoteId + '"class="f34r-txt-black"><i class="fas fa-plus-square"></i></a></span>&nbsp;' +
-                            '<span style="font-size: 1.5em;"><a href="#" title="ลบตัวเลือกแบบสำรวจ" id="delChoiceVote-' + mVoteId + '-' + response[i].choiceVoteId + '"class="f34r-txt-black"><i class="fas fa-minus-square"></i></a></span>&nbsp;' +
-                            '<span style="font-size: 1.5em;"><a href="#" title="แก้ไขตัวเลือกแบบสำรวจ" id="editChoiceVote-' + mVoteId + '-' + response[i].choiceVoteId + '"class="f34r-txt-black"><i class="fas fa-pen"></i></a></span>&nbsp;';
+                            //'<span style="font-size: 1.5em;"><a href="#" title="เพิ่มตัวเลือกโหวต" id="addChoiceVote-' + mVoteId + '-' + response[i].choiceVoteId + '"class="f34r-txt-black"><i class="fas fa-plus-square"></i></a></span>&nbsp;' +
+                            '<span style="font-size: 1.5em;"><a href="#" title="ลบตัวเลือกโหวต" id="delChoiceVote-' + mVoteId + '-' + response[i].choiceVoteId + '"class="f34r-txt-black"><i class="fas fa-minus-square"></i></a></span>&nbsp;' +
+                            '<span style="font-size: 1.5em;"><a href="#" title="แก้ไขตัวเลือกโหวต" id="editChoiceVote-' + mVoteId + '-' + response[i].choiceVoteId + '"class="f34r-txt-black"><i class="fas fa-pen"></i></a></span>&nbsp;';
 
                     }
                 } else {
@@ -540,7 +540,7 @@ $(document).ready(function () {
                     $('#addField').modal('hide');
                     hideAllPopChoice();
                     showMenuVote();
-                    SnackCall("บันทึกข้อมูลตัวเลือกแบบสำรวจสำเร็จ");
+                    SnackCall("บันทึกข้อมูลตัวเลือกโหวตสำเร็จ");
                 }
             });
         }
@@ -573,7 +573,7 @@ $(document).ready(function () {
             success: function () {
                 // console.log('Deleted Successfully');
                 showMenuVote();
-                SnackCall("ลบข้อมูลตัวเลือกแบบสำรวจสำเร็จ");
+                SnackCall("ลบข้อมูลตัวเลือกโหวตสำเร็จ");
             }
         });
     }

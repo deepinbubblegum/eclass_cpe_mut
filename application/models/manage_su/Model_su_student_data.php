@@ -142,9 +142,13 @@ class Model_su_student_data extends CI_Model
 
     public function Add_data_model_csv($arg)
     {
-        $sql_cmd = $this->db->insert_string('student', $arg);
-        $query = str_replace("INSERT INTO", "INSERT IGNORE INTO", $sql_cmd);
-        $this->db->query($query);
+        $this->db->db_debug = false;
+        if (!$this->db->insert('student', $arg)) {
+            $error = $this->db->error();
+            return $error;
+        } else {
+            return false;
+        }
     }
 
     public function Edit_data_model($org_id, $data)

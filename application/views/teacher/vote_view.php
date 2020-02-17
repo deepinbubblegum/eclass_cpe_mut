@@ -96,12 +96,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                         <div class="modal-body">
                                                 <div class="form-group">
-                                                        <label for="Textarea">หัวข้อแบบสำรวจ</label>
+                                                        <label for="Textarea">หัวข้อโหวต</label>
                                                         <input class="form-control" id="Headtext">
                                                 </div>
 
                                                 <div class="form-group">
-                                                        <!-- <label for="Textarea">รายละเอียดช่องแบบสำรวจ</label>
+                                                        <!-- <label for="Textarea">รายละเอียดช่องโหวต</label>
                                                         <textarea class="form-control" id="Textarea" rows="5"></textarea> -->
                                                         <div class="input-group" id="summernote">
 
@@ -109,22 +109,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 </div>
 
                                                 <div class="form-group">
-                                                        <label for="Textarea" class="mt-3 mb-3">สถานะเมนูแบบสำรวจ</label>
+                                                        <label for="Textarea" class="mt-3 mb-3">สถานะเมนูโหวต</label>
                                                         <!-- <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox00">
-                                                                <label class="custom-control-label" for="checkBox00">สุ่มสลับตัวเลือกแบบสำรวจ</label>
+                                                                <label class="custom-control-label" for="checkBox00">สุ่มสลับตัวเลือกโหวต</label>
                                                         </div> -->
                                                         <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox01">
-                                                                <label class="custom-control-label" for="checkBox01">ปิดไม่ให้นักศึกษาทำแบบสำรวจ</label>
+                                                                <label class="custom-control-label" for="checkBox01">ปิดไม่ให้นักศึกษาทำโหวต</label>
                                                         </div>
                                                         <!-- <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox02">
-                                                                <label class="custom-control-label" for="checkBox02">ปิดไม่ให้นักศึกษาดูคะแนนแบบสำรวจ</label>
+                                                                <label class="custom-control-label" for="checkBox02">ปิดไม่ให้นักศึกษาดูคะแนนโหวต</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox03">
-                                                                <label class="custom-control-label" for="checkBox03">ปิดไม่ให้นักศึกษาดูแบบสำรวจที่ทำไปแล้ว</label>
+                                                                <label class="custom-control-label" for="checkBox03">ปิดไม่ให้นักศึกษาดูโหวตที่ทำไปแล้ว</label>
                                                         </div> -->
                                                 </div>
 
@@ -253,7 +253,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span style="font-size: 1.2em;">
                                         <i class="fas fa-chalkboard"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        <!-- &nbsp; แบบสำรวจ -->
+                                        <!-- &nbsp; โหวต -->
                                         &nbsp; <span id="header"></span>
                                 </span>
                         </div>
@@ -261,7 +261,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <button class="btn btn btn-info my-2 my-sm-0" type="submit" id="btnAddVote">
                                         <span style="font-size: 1.1em;">
                                                 <i class="fas fa-plus-circle"></i>
-                                                &nbsp;เพิ่มเมนูแบบสำรวจ
+                                                &nbsp;เพิ่มเมนูโหวต
                                         </span>
                                 </button>
                         </form>
@@ -271,10 +271,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                         <ul class="nav nav-justified nav-tabs mt-3" id="justifiedTab" role="tablist">
                                 <li class="nav-item">
-                                        <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">แบบสำรวจ</a>
+                                        <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">โหวต</a>
                                 </li>
                                 <!-- <li class="nav-item">
-                                        <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">แบบสำรวจ</a>
+                                        <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">โหวต</a>
                                 </li> -->
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">

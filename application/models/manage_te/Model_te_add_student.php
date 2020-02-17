@@ -35,9 +35,16 @@ class Model_te_add_student extends CI_Model
 
         public function Add_data_model_csv($arg)
         {
-                $sql_cmd = $this->db->insert_string('subject_student', $arg);
-                $query = str_replace("INSERT INTO", "INSERT IGNORE INTO", $sql_cmd);
-                $this->db->query($query);
+                // $sql_cmd = $this->db->insert_string('subject_student', $arg);
+                // $query = str_replace("INSERT INTO", "INSERT IGNORE INTO", $sql_cmd);
+                // $this->db->query($query);
+                $this->db->db_debug = false;
+                if (!$this->db->insert('subject_student', $arg)) {
+                    $error = $this->db->error();
+                    return $error;
+                } else {
+                    return false;
+                }
         }
 
         public function Add_data_model($arg)
