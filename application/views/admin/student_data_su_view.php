@@ -83,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="header_log">แจ้งเตือนข้อมูลผิดพลาด</h4>
+                        <h4 class="modal-title" id="header_log"><i class="fas fa-exclamation-triangle"></i> แจ้งเตือนข้อมูลผิดพลาด</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
@@ -92,12 +92,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <thead>
                                     <tr>
                                         <th scope="col">Error Line</th>
-                                        <th scope="col">std_code_id</th>
-                                        <th scope="col">std_Tname</th>
-                                        <th scope="col">std_Ename</th>
-                                        <th scope="col">std_email</th>
-                                        <th scope="col">std_major</th>
-                                        <th scope="col">log_error</th>
+                                        <th scope="col">ST_CODE</th>
+                                        <th scope="col">TNAME</th>
+                                        <th scope="col">ENAME</th>
+                                        <th scope="col">EMAIL</th>
+                                        <th scope="col">CRSE_CODE</th>
+                                        <th scope="col">Log_error</th>
                                     </tr>
                                 </thead>
                                 <tbody id='log_error_tr'>

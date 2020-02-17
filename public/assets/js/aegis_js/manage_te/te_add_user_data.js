@@ -9,6 +9,7 @@ $(document).ready(function() {
     var start = 0;
     var currentPage = 1;
 
+    var csv_upload;
     // 1.showAllData
     // 2.formAdd
     // 3.modaldel
@@ -456,6 +457,7 @@ $(document).ready(function() {
 
     $('#btnUpload').click(function(e) {
         e.preventDefault();
+        csv_upload = '';
         // $permiss = $("#permissionSelectAddcsv :selected").val();
         var snacktxt = '';
         var form_data = new FormData();
@@ -476,6 +478,9 @@ $(document).ready(function() {
                             html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
                             setTimeout(function() {
                                 $('#Modalcsv').modal('hide');
+                                if (csv_upload != '') {
+                                    csv_log_error();
+                                }
                             }, 1200);
                         }
                         $('#progressupload').html(html);
@@ -490,7 +495,9 @@ $(document).ready(function() {
             contentType: false,
             cache: false,
             processData: false,
+            dataType:'json',
             success: function(response) {
+                csv_upload = response;
                 console.log(response);
                 if (response == '<p>upload_invalid_filetype</p>') {
                     snacktxt = 'ไม่สามารถอ่านไฟล์ได้ ' + response;
@@ -559,6 +566,21 @@ $(document).ready(function() {
         //     }
         // });
     });
+
+    function csv_log_error() {
+        html_log = '';
+        for (let index = 0; index < csv_upload.length; index++) {
+            html_log += '<tr>' +
+                '<td>' + csv_upload[index]['line_error'] + '</td>' +
+                '<td>' + csv_upload[index]['substd_stdid'] + '</td>' +
+                '<td>' + csv_upload[index]['substd_sec'] + '</td>' +
+                // '<td>' + csv_upload[index]['std_major'] + '</td>' +
+                '<td>' + csv_upload[index]['log_error'].message + '</td>' +
+                '</tr>'
+        }
+        $('#log_error_tr').html(html_log);
+        $('#log_csv_error').modal('show');
+    }
 
     $('#btnAddcsv').click(function(e) {
         e.preventDefault();

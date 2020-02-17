@@ -9,6 +9,7 @@ $(document).ready(function () {
     var start = 0;
     var currentPage = 1;
 
+    var csv_upload;
     // 1.showAllData
     // 2.formAdd
     // 3.modaldel
@@ -458,10 +459,10 @@ $(document).ready(function () {
             '</li>';
         $('#filedetail').html(html);
     });
-    var csv_upload;
+    
     $('#btnUpload').click(function (e) {
-        csv_upload = '';
         e.preventDefault();
+        csv_upload = '';
         var snacktxt = '';
         var form_data = new FormData();
         form_data.append('file', _files[0]);
