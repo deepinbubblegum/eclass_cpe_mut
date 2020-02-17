@@ -355,7 +355,7 @@ $(document).ready(function () {
         } else {
             menuStatus += 0
         }
-        
+
         var result = '';
         var check = '';
 
@@ -436,6 +436,7 @@ $(document).ready(function () {
                             '<span style="font-size: 1.7em;"><a title="แก้ไขเมนูแบบทดสอบ" id="editMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-edit"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="่ส่งออกคะแนน" id="exportMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-share-square"></a></i></span>&nbsp;' +
                             '<span style="font-size: 1.7em;"><a title="ดูคะแนนแบบทดสอบ" id="showScoreMenu-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a title="ดูคะแนนนักศึกษา" id="showStdPoint-' + response[i].menuQuizId + '" href="#" class="f34r-txt-black"><i class="fas fa-clipboard-list"></a></i></span>&nbsp;' +
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].menuQuizDescription +
@@ -487,7 +488,7 @@ $(document).ready(function () {
                         takeThisDel = 'delMenu';
                         delPid = getMenu[i].menuQuizId;
                         $("#txtDel").text('Menu:' + getMenu[i].menuQuizName);
-                        $("#ModalDelete").modal('show');
+                        $("#stdCountCV").modal('show');
                         // pointId = getMenu[i].menuQuizId;
                         // $('#addField').modal('show');
                         // $('#addFieldLabel').text('Create in menu : ' + getMenu[i].menuQuizName);
@@ -537,6 +538,15 @@ $(document).ready(function () {
                         iurl = "/" + url[3] + "/Te_subject_quiz/editMenuQuiz";
                         editMenuId = getMenu[i].menuQuizId;
                     });
+
+                    $('#showStdPoint-' + getMenu[i].menuQuizId).click(function (e) {
+                        // $('#studentPointModal').modal('show');
+                        $("#clearScoreModalLabel").text('คะแนนนักศึกษา : ' + getMenu[i].menuQuizName);
+                        $('#clearShowScoreModal').modal('show');
+                        thisMenuQuiz = getMenu[i].menuQuizId;
+                        showPoint(thisMenuQuiz);
+                    });
+
                     chartCheck = 0;
                     $('#showScoreMenu-' + getMenu[i].menuQuizId).click(function (e) {
                         console.log('showScoreMenu-' + getMenu[i].menuQuizId);
@@ -552,6 +562,85 @@ $(document).ready(function () {
                     });
                 });
             }
+        });
+    }
+
+    $('#clearAllBtn').click(function (e) {
+        if (confirm("ต้องการลบคะแนนทั้งหมดหรือไม่?")) {
+            $.ajax({
+                type: "POST",
+                url: '/' + url[3] + '/Te_subject_quiz/clearPoint',
+                data: '&semester=' + semester + '&subject_id=' + subject_id + '&menuQuiz=' + thisMenuQuiz,
+                success: function () {
+                    // console.log('Deleted Successfully');
+                    SnackCall("ลบคะแนนทั้งหมดสำเร็จ"); 
+                    $("#clearShowScoreModal").modal('hide');
+                    showMenuQuiz();
+                }
+            });
+        }
+    });
+
+    function delThisUser(delThisQuiz, delThisUser) {
+        $.ajax({
+            type: "POST",
+            url: '/' + url[3] + '/Te_subject_quiz/onePoint',
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&menuQuiz=' + delThisQuiz + '&delThisUser=' + delThisUser,
+            success: function () {
+                // console.log('Deleted Successfully');
+                SnackCall("ลบคะแนนสำเร็จ");
+                showMenuQuiz();
+            }
+        });
+    }
+
+    function showPoint(menuQuizId) {
+        takeThisUrl = '/' + url[3] + '/Te_subject_quiz/victimPoint';
+        $.ajax({
+            type: "POST",
+            url: takeThisUrl,
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&menuQuizId=' + menuQuizId,
+            dataType: "json",
+            success: function (response) {
+                //console.log(response + '<- This is showPoint response');
+                html = '';
+                if (response.length != undefined) {
+                    console.log('victim');
+                    console.log(response);
+                    html += '<table class="table">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th scope="col">Student Id</th>' +
+                        '<th scope="col">Point</th>' +
+                        '<th scope="col">Option</th>' +
+                        '</tr>' +
+                        '</thead>';
+
+                    html += '<tbody>';
+                    for (i = 0; i < response.length; i++) {
+                        html += '<tr>' +
+                            '<td>' + response[i].pointQuizUserId + '</td>' +
+                            '<td>' + response[i].sumPoint + '</td>' +
+                            '<td><button type="button" id="btnDelPoint-' + menuQuizId + '-' + response[i].pointQuizUserId + '" class="btn btn-danger px-3"><i class="fas fa-eraser" aria-hidden="true"></i></button></td>' +
+                            '</tr>';
+                    }
+                    html += '</tbody>';
+                } else {
+                    html = '<label>NO DATA</label>';
+                }
+                $('#clearF34r-here').html(html);
+
+                //if(false)
+                $.each(response, function (i, p) {
+                    $('#btnDelPoint-' + menuQuizId + '-' + response[i].pointQuizUserId).click(function (e) {
+                        if (confirm("ต้องการลบคะแนนของ " + response[i].pointQuizUserId + " หรือไม่")) {
+                            delThisUser(menuQuizId, response[i].pointQuizUserId);
+                            $('#btnDelPoint-' + menuQuizId + '-' + response[i].pointQuizUserId).parent().parent().hide();
+                        }
+                    });
+                });
+
+            },
         });
     }
 
@@ -578,60 +667,60 @@ $(document).ready(function () {
                     }
                     unique = getSumPoint.filter(onlyUnique);
                     stdStack = [];
-                    for (i = 0; i < unique.length; i++) { 
+                    for (i = 0; i < unique.length; i++) {
                         stdStack[i] = 0;
-                        for (j = 0; j < response.length; j++) { 
-                            if(unique[i] == response[j].sumPoint){
+                        for (j = 0; j < response.length; j++) {
+                            if (unique[i] == response[j].sumPoint) {
                                 stdStack[i]++;
                             }
                         }
                     }
 
-                        char = new Chart(document.getElementById("score_show"), {
-                            "type": "horizontalBar",
-                            "data": {
-                                //"labels": ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Grey"],
-                                "labels": unique,
-                                "datasets": [{
-                                    "label": "People",
-                                    "data": stdStack,
-                                    "fill": false,
-                                    "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
-                                        "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
-                                        "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"
-                                    ],
-                                    "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
-                                        "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"
-                                    ],
-                                    "borderWidth": 1
+                    char = new Chart(document.getElementById("score_show"), {
+                        "type": "horizontalBar",
+                        "data": {
+                            //"labels": ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Grey"],
+                            "labels": unique,
+                            "datasets": [{
+                                "label": "People",
+                                "data": stdStack,
+                                "fill": false,
+                                "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
+                                    "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
+                                    "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"
+                                ],
+                                "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
+                                    "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"
+                                ],
+                                "borderWidth": 1
+                            }]
+                        },
+                        "options": {
+                            "scales": {
+                                "xAxes": [{
+                                    "ticks": {
+                                        "beginAtZero": true
+                                    }
                                 }]
-                            },
-                            "options": {
-                                "scales": {
-                                    "xAxes": [{
-                                        "ticks": {
-                                            "beginAtZero": true
-                                        }
-                                    }]
-                                }
                             }
-                        });
-                        notDone = stdCount-studentDo;
-                html2 = '<table class="table table-striped mt-2"><tbody>';
-                html2 += '<tr><td>Student</td> <td>' + stdCount + '</td> <td>People</td> </tr>';
-                html2 += '<tr><td>Already done</td> <td>' + studentDo + '</td> <td>People</td> </tr>';
-                html2 += '<tr><td>Not done yet</td> <td>' + notDone + '</td> <td>People</td> </tr>';
-                html2 += '</tbody></table>'
-                $('#f34r-here').html(html2);
+                        }
+                    });
+                    notDone = stdCount - studentDo;
+                    html2 = '<table class="table table-striped mt-2"><tbody>';
+                    html2 += '<tr><td>Student</td> <td>' + stdCount + '</td> <td>People</td> </tr>';
+                    html2 += '<tr><td>Already done</td> <td>' + studentDo + '</td> <td>People</td> </tr>';
+                    html2 += '<tr><td>Not done yet</td> <td>' + notDone + '</td> <td>People</td> </tr>';
+                    html2 += '</tbody></table>'
+                    $('#f34r-here').html(html2);
                 }
             },
         });
     }
 
-    function onlyUnique(value, index, self) { 
+    function onlyUnique(value, index, self) {
         return self.indexOf(value) === index;
     }
-    
+
     // usage example:
     // var a = ['a', 1, 'a', 2, '1'];
     // var unique = a.filter( onlyUnique ); // returns ['a', 1, 2, '1']
@@ -650,8 +739,8 @@ $(document).ready(function () {
             bottom: 2.54,
             left: 2.54
         };
-        pdf.addImage(imgData, 'PNG', margins.left, margins.top, 16, 8); 
-        
+        pdf.addImage(imgData, 'PNG', margins.left, margins.top, 16, 8);
+
         pdf.autoTable({
             // head: [['Name', 'Email', 'Country']],
             body: [
@@ -673,7 +762,7 @@ $(document).ready(function () {
         // filename = $('.modal-title').val();
         // pdf.save(filename + '.pdf');
     });
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     $('#fieldClose').click(function (e) {
         e.preventDefault();

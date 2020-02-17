@@ -61,6 +61,37 @@ class Te_subject_quiz extends MY_Controller
         echo json_encode($result);
     }
 
+    public function clearPoint()
+    {
+        // data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
+
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject_id'); 
+        $menuQuiz = $this->input->post('menuQuiz'); 
+        $result = $this->Model_te_subject_quiz->clearAllPoint($semester, $subject, $menuQuiz);
+        echo json_encode($result);
+    }
+
+    public function onePoint()
+    {
+        // data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
+
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject_id'); 
+        $menuQuiz = $this->input->post('menuQuiz'); 
+        $User = $this->input->post('delThisUser'); 
+        $result = $this->Model_te_subject_quiz->clearOnePoint($semester, $subject, $menuQuiz, $User);
+        echo json_encode($result);
+    }
+
+    public function victimPoint(){
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject_id'); 
+        $menuQuiz = $this->input->post('menuQuizId'); 
+        $result = $this->Model_te_subject_quiz->getVictim($semester, $subject, $menuQuiz);
+        echo json_encode($result); 
+    }
+
     public function exportPoint()
     {
         // data: '&semester=' + semester + '&subject=' + subject_id + '&menuPoint=' + menuPointId + '&menuQuiz=' + exportMenuQuiz + '&exportText=' + exportText + '&exportMax=' + exportMax,
