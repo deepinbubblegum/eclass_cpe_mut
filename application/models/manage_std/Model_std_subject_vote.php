@@ -80,4 +80,41 @@ class Model_std_subject_vote extends CI_Model
         );
         $this->db->insert('pointVote', $data);
     }
+
+    public function refreshed($semester, $subject, $menuId){ 
+        $this->db->select('choiceVoteId ,choiceVoteText');
+        $this->db->from('choiceVote');
+        $this->db->where('choiceVoteSemester', $semester);
+        $this->db->where('choiceVoteSubject', $subject);
+        $this->db->where('choiceVoteMenuId', $menuId);
+        $this->db->order_by('cast(choiceVoteId as int)', 'ASC');
+        $query0 = $this->db->get();
+        if ($query0->num_rows() > 0) {
+            $this->db->select('pointVoteChoiceVoteId ,COUNT(pointVoteUserId) as countStd');
+            $this->db->from('pointVote');
+            $this->db->where('pointVoteSemester', $semester);
+            $this->db->where('pointVoteSubject', $subject);
+            $this->db->where('pointVoteMenuVoteId', $menuId);
+            $this->db->group_by('pointVoteChoiceVoteId'); 
+            $this->db->order_by('cast(pointVoteChoiceVoteId as int)', 'ASC');
+            $query1 = $this->db->get();
+            if ($query1->num_rows() > 0) {
+                $this->db->select('count(substd_stdid) as studentCount');
+                $this->db->from('subject_student');
+                $this->db->where('substd_semester', $semester);
+                $this->db->where('substd_subject', $subject);
+                $query2 = $this->db->get();
+                if ($query2->num_rows() > 0) {
+                    $mold = array($query0->result(), $query1->result(), $query2->result());
+                    return $mold;
+                } else {
+                    return 2;
+                }
+            } else {
+                return 1;
+            }
+        } else {
+            return 0;
+        }
+    } 
 }

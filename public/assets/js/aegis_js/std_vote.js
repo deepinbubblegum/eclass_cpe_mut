@@ -26,6 +26,7 @@ $(document).ready(function () {
 
     selectStudent();
     showMenuVote();
+    
 
     function showMenuVote() {
         $.ajax({
@@ -151,6 +152,68 @@ $(document).ready(function () {
         ajaxCount++;
     });
 
+    // function refresherRecipe(){
+
+    // } 
+
+    function refresher(subject_id,semester,menuId){ 
+        /////////////////////////////
+        // interRefresh = setInterval(function(){
+        //////////////////////////////
+        $.ajax({
+            type: "POST",
+            url: '/' + url[3] + '/Std_subject_vote/refresherOrb/',
+            dataType: "json",
+            data: {
+                semester: semester,
+                subject: subject_id,
+                menuId: menuId
+            },
+            success: function (response) { 
+                console.log('REFRESH')
+                console.log(response);
+                console.log('REFRESH')
+                if (response.length != undefined) { 
+                    rfhStudentMax = response[2][0].studentCount;
+                    rfhChoiceText = [];
+                    rfhStdVote = [];
+                    rfhSum = 0
+
+                    for (i = 0; i < response[0].length; i++) {  
+                        rfhChoiceText[i] = response[0][i].choiceVoteText;
+                    }
+
+                    for (i = 0; i < response[1].length; i++) {  
+                        rfhStdVote[i] = response[1][i].countStd; 
+                        rfhSum += response[1][i].countStd*1;
+                    }
+
+                    console.log(rfhStdVote);
+
+                        notVote = (rfhStudentMax*1) - (rfhSum*1);
+
+                        char.data.labels = rfhChoiceText;
+                        char.data.datasets[0].data = rfhStdVote;
+                        // char.addData(rfhStdVote);
+                        char.update();
+                        $("#studentCount").text(rfhStudentMax);
+                        $("#studentVoted").text(rfhStudentMax );
+                        $("#notVote").text(notVote);
+
+                    // for (j = 0; j < rfhStdVote.length; j++) {  
+                            
+                    // }
+                    console.log(rfhChoiceText);
+                    console.log(rfhStdVote);
+                } 
+            }
+        });
+        /////////////////////////////
+        // }
+        // ,2000);  
+        /////////////////////////////
+    }
+
     function selectPoint(thisMenuId) {
         //console.log('selectPoint(thisMenuId)', thisMenuId);
         $.ajax({
@@ -158,7 +221,8 @@ $(document).ready(function () {
             url: '/' + url[3] + '/Std_subject_vote/selectPoint',
             data: '&semester=' + semester + '&subject=' + subject_id + '&menuId=' + thisMenuId,
             dataType: "json",
-            success: function (response) {
+            success: function (response) { 
+                
                 html = htmlButton = '';
                 if (response.length != undefined) {
                     htmlButton += '<span style="font-size: 1.7em;"><a title="ดูผลสำรวจ" id="showScoreMenu-' + thisMenuId + '" href="#" class="f34r-txt-black"><i class="fas fa-chart-bar"></a></i></span>&nbsp;' ;
@@ -176,7 +240,8 @@ $(document).ready(function () {
                     console.log('#showScoreMenu-' + thisMenuId);
                     chartCheck++;
                             if(chartCheck > 1){
-                                char.destroy();
+                                char.destroy(); 
+                                clearInterval(interRefresh);
                             }
                     $("#showScoreModal").modal('show');
                     $("#scoreModalLabel").text('ผลสำรวจ');
@@ -193,12 +258,15 @@ $(document).ready(function () {
     
                     var newAName = getName.filter(function (el) {
                         return el != null;
-                      });
-    
+                    });
+     
                     var newAPoint = getPoint[thisMenuId].filter(function (el) {
                         return el != null;
-                      }); 
+                    }); 
     
+                      console.log(newAName);
+                      console.log(newAPoint);
+                      console.log('--------');
                     char = new Chart(document.getElementById("score_show"), {
                         "type": "horizontalBar",
                         "data": {
@@ -235,11 +303,19 @@ $(document).ready(function () {
                     notVote = (studentCount*1) - (studentVoted*1);
     
                     html2 = '<table class="table table-striped mt-2"><tbody>';
-                    html2 += '<tr><td>Student</td> <td>' + studentCount + '</td> <td>People</td> </tr>'; 
-                    html2 += '<tr><td>Voted</td> <td>' + studentVoted + '</td> <td>People</td> </tr>'; 
-                    html2 += '<tr><td>No Vote</td> <td>' + notVote + '</td> <td>People</td> </tr>'; 
+                    html2 += '<tr><td>Student</td><td><span id="studentCount">' + studentCount + '</span></td><td>People</td> </tr>'; 
+                    html2 += '<tr><td>Voted</td><td><span id="studentVoted">' + studentVoted + '</span></td><td>People</td> </tr>'; 
+                    html2 += '<tr><td>No Vote</td><td><span id="notVote">' + notVote + '</span></td><td>People</td> </tr>'; 
                     html2 += '</tbody></table>'
                     $('#f34r-here').html(html2);
+
+                    //var Refresh = setInterval(refresher(subject_id,semester,thisMenuId), 1000); 
+                    // refresher(subject_id,semester,thisMenuId);
+
+                    interRefresh = setInterval(function(){
+                        refresher(subject_id,semester,thisMenuId);
+                    },2000);
+
                 });
                 ////////////////////////////////////////////////////
             }

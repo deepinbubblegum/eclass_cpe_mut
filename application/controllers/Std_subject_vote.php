@@ -98,4 +98,12 @@ class Std_subject_vote extends MY_Controller
         $result = $this->Model_std_subject_vote->insertPoint($semester, $subject, $menuId, $choiceId, $userId);
         // echo json_encode($result);
     }
+
+    public Function refresherOrb(){
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject');
+        $menuId = $this->input->post('menuId');
+        $result = $this->Model_std_subject_vote->refreshed($semester, $subject, $menuId);
+        echo json_encode($result);
+    }
 }
