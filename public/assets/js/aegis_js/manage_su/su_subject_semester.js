@@ -1,4 +1,27 @@
 $(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['admin_side_Anc', 'admin_side_faculty', 'admin_side_major', "admin_side_semester", "admin_side_subject", "admin_side_subsem", "admin_side_student", "admin_side_teacher", "admin_side_admin", "admin_side_teamaj", "admin_side_teasub", "admin_side_degree"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    var Navbar_highlight = ['admin_Anc', 'admin_faculty', 'admin_major', "admin_semester", "admin_subject", "admin_subsem", "admin_student", "admin_teacher", "admin_admin", "admin_teamaj", "admin_teasub", "admin_degree"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("admin_side_subsem");
+    element.classList.add("bg-danger");
+    var element = document.getElementById("admin_subsem");
+    element.classList.add("bg-danger");
+    /******************************************************************** */
+
+
     var iddata;
     var iurl;
     var dataSubJoin;
@@ -247,9 +270,9 @@ $(document).ready(function () {
         start = 0;
         currentPage = 1;
         //show_data();
-        if($('#SearchName').val() == ""){
+        if ($('#SearchName').val() == "") {
             show_data();
-        }else{
+        } else {
             LimitSearch();
         }
     });
@@ -259,9 +282,9 @@ $(document).ready(function () {
         start = start + (limit * 1);
         currentPage++;
         //show_data();
-        if($('#SearchName').val() == ""){
+        if ($('#SearchName').val() == "") {
             show_data();
-        }else{
+        } else {
             LimitSearch();
         }
     });
@@ -271,9 +294,9 @@ $(document).ready(function () {
         start = start - limit;
         currentPage--;
         //show_data();
-        if($('#SearchName').val() == ""){
+        if ($('#SearchName').val() == "") {
             show_data();
-        }else{
+        } else {
             LimitSearch();
         }
     });
@@ -436,8 +459,7 @@ $(document).ready(function () {
         });
     });
 
-    function LimitSearch()
-    {
+    function LimitSearch() {
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
 
@@ -665,7 +687,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: "../Admin_subject_semester/Show_Sort_ctl",
-            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit, 
+            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit,
             dataType: "json",
             success: function (response) {
                 dataSubSemester = response;

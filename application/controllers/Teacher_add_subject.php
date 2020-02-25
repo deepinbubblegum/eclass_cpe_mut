@@ -102,11 +102,18 @@ class Teacher_add_subject extends MY_Controller
         $this->Model_te_add_subject->Edit_NoSubject_Join($semester_edit, $subject_edit);
     }
 
+    public function getOnwer_teacher()
+    {
+        $user = $this->session->userdata('ses_id');
+        $result = $this->Model_te_add_subject->getOnwer_teacher_model($user);
+        echo json_encode($result);
+    }
+
     public function getSubjectCopy()
     {
         $semester = $this->input->post('semester');
         $te_id = $this->session->userdata('ses_id');
-        $result = $this->Model_te_add_subject->SubjectCopy($semester,$te_id);
+        $result = $this->Model_te_add_subject->SubjectCopy($semester, $te_id);
         echo json_encode($result);
     }
 
@@ -118,6 +125,89 @@ class Teacher_add_subject extends MY_Controller
         $SubCopy = $this->input->post('SubCopy');
         $te_id = $this->session->userdata('ses_id');
         $this->Model_te_add_subject->Add_Data_Subject_Copy($semester, $subject_id, $SemCopy, $SubCopy, $te_id);
+    }
+
+    public function Preview_Anc()
+    {
+        $SemCopy = $this->input->post('SemCopy');
+        $SubCopy = $this->input->post('SubCopy');
+        $result = $this->Model_te_add_subject->Preview_Anc_model($SemCopy, $SubCopy);
+        echo json_encode($result);
+    }
+
+    public function Preview_HeadScore()
+    {
+        $SemCopy = $this->input->post('SemCopy');
+        $SubCopy = $this->input->post('SubCopy');
+        $result = $this->Model_te_add_subject->Preview_HeadScore_model($SemCopy, $SubCopy);
+        echo json_encode($result);
+    }
+
+    public function Preview_Score()
+    {
+        $SemCopy = $this->input->post('SemCopy');
+        $SubCopy = $this->input->post('SubCopy');
+        $socre_id = $this->input->post('score_id');
+        $result = $this->Model_te_add_subject->Preview_Score_model($SemCopy, $SubCopy, $socre_id);
+        echo json_encode($result);
+    }
+
+    public function Preview_HeadDownload()
+    {
+        $SemCopy = $this->input->post('SemCopy');
+        $SubCopy = $this->input->post('SubCopy');
+        $result = $this->Model_te_add_subject->Preview_HeadDownload_model($SemCopy, $SubCopy);
+        echo json_encode($result);
+    }
+
+    public function Preview_Dow()
+    {
+        $SemCopy = $this->input->post('SemCopy');
+        $SubCopy = $this->input->post('SubCopy');
+        $dow_id = $this->input->post('dow_id');
+        $result = $this->Model_te_add_subject->Preview_Dow_model($SemCopy, $SubCopy, $dow_id);
+        echo json_encode($result);
+    }
+
+    public function Preview_upload()
+    {
+        $SemCopy = $this->input->post('SemCopy');
+        $SubCopy = $this->input->post('SubCopy');
+        $result = $this->Model_te_add_subject->Preview_upload_model($SemCopy, $SubCopy);
+        echo json_encode($result);
+    }
+
+    public function Preview_media()
+    {
+        $SemCopy = $this->input->post('SemCopy');
+        $SubCopy = $this->input->post('SubCopy');
+        $result = $this->Model_te_add_subject->Preview_media_model($SemCopy, $SubCopy);
+        echo json_encode($result);
+    }
+
+    public function Preview_HeadQuiz()
+    {
+        $SemCopy = $this->input->post('SemCopy');
+        $SubCopy = $this->input->post('SubCopy');
+        $result = $this->Model_te_add_subject->Preview_HeadQuiz_model($SemCopy, $SubCopy);
+        echo json_encode($result);
+    }
+
+    public function Preview_Quiz()
+    {
+        $SemCopy = $this->input->post('SemCopy');
+        $SubCopy = $this->input->post('SubCopy');
+        $Quiz_id = $this->input->post('Quiz_id');
+        $result = $this->Model_te_add_subject->Preview_Quiz_model($SemCopy, $SubCopy, $Quiz_id);
+        echo json_encode($result);
+    }
+
+    public function Preview_vote()
+    {
+        $SemCopy = $this->input->post('SemCopy');
+        $SubCopy = $this->input->post('SubCopy');
+        $result = $this->Model_te_add_subject->Preview_vote_model($SemCopy, $SubCopy);
+        echo json_encode($result);
     }
     
 }

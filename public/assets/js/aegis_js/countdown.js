@@ -36,7 +36,7 @@ function setup() {
 		'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
 	);
 	displayToday = document.getElementById('displaytoday');
-	displayToday.innerText = "วัน" + thday[Today.getDay()] + "ที่ " + Today.getDate() + " " + thmonth[Today.getMonth()] + " พ.ศ." + (0 + Today.getFullYear() + 543);
+	displayToday.innerText = "วัน" + thday[Today.getDay()] + "ที่ " + Today.getDate() + " " + thmonth[Today.getMonth()] + " พ.ศ. " + (0 + Today.getFullYear() + 543);
 
 	cal_persenttime = (Sum_time / start_time) * 100;
 	if (flagtimer) {

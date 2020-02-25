@@ -12,6 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <?php
     echo assets_js('aegis_js/manage_su/su_teacher.js');
     ?>
+
 </head>
 
 <body>

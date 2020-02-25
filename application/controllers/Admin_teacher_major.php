@@ -24,22 +24,28 @@ class Admin_teacher_major extends MY_Controller
 
     public function Add_Data_ctl()
     {
-        $data = array(
-            'teamaj_teacherid' => $this->input->post('teacher_id'),
-            'teamaj_majorid' => $this->input->post('major_id'),
-        );
-        $this->Model_su_teacher_major->Add_data_model($data);
+        // $data = array(
+        //     'teamaj_teacherid' => $this->input->post('teacher_id'),
+        //     'teamaj_majorid' => $this->input->post('major_id'),
+        // );
+        $teacher =  $this->input->post('data1');
+        $major = $this->input->post('arr_major');
+        $result = $this->Model_su_teacher_major->Add_data_model($teacher, $major);
+        echo json_encode($result);
     }
 
     public function Edit_Data_ctl()
     {
-        $org_teacher = $this->input->post('org_teacher');
-        $org_major = $this->input->post('org_major');
-        $data = array(
-            'teamaj_teacherid' => $this->input->post('teacher_id'),
-            'teamaj_majorid' => $this->input->post('major_id'),
-        );
-        $this->Model_su_teacher_major->Edit_data_model($org_teacher, $org_major, $data);
+        $org_teacher = $this->input->post('iddata');
+        // $org_major = $this->input->post('org_major');
+        // $data = array(
+        //     'teamaj_teacherid' => $this->input->post('teacher_id'),
+        //     'teamaj_majorid' => $this->input->post('major_id'),
+        // );
+        $teacher =  $this->input->post('data1');
+        $major = $this->input->post('arr_major');
+        $result = $this->Model_su_teacher_major->Edit_data_model($org_teacher, $teacher, $major);
+        echo json_encode($result);
     }
 
     public function Delete_Data_ctl()
@@ -76,6 +82,12 @@ class Admin_teacher_major extends MY_Controller
         $start = $this->input->post('start');
         $limit = $this->input->post('limit');
         $result = $this->Model_su_teacher_major->Show_Sort_model($data, $sort, $start, $limit);
+        echo json_encode($result);
+    }
+
+    public function Show_MajorAll_Data_ctl()
+    {
+        $result = $this->Model_su_teacher_major->Show_MajorAll_Data_model();
         echo json_encode($result);
     }
 }

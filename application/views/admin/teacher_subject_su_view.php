@@ -49,7 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="saveModalTxt">SAVE_MODAL_TITLE</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" id="IconClose" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <form id="formAdd">
                         <!--EDIT_FORM_ADD -->
@@ -59,6 +59,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <!-- inModelGen(); -->
                                 </div>
                             </form>
+                            <div class="form-group">
+                                <label for="List_Subject">อาจารย์ประจำวิชา</label>
+                                <select multiple class="form-control" id="List_Subject">
+
+                                </select>
+                            </div>
                         </div>
                     </form>
                     <div class="modal-footer">

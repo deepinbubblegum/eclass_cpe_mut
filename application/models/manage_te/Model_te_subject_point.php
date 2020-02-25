@@ -275,4 +275,34 @@ class Model_te_subject_point extends CI_Model
             return 0;
         }
     }
+
+    public function GetAll_std_modal($semester,$subject)
+    {
+        $this->db->select('*');
+        $this->db->from('subject_student');
+        $this->db->where('substd_semester', $semester);
+        $this->db->where('substd_subject', $subject);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function CheckMaxEditField_modal($semester, $subject, $point_id, $point_setpoint_id)
+    {
+        $this->db->select('*');
+        $this->db->from('subject_point_student');
+        $this->db->where('point_std_semester', $semester);
+        $this->db->where('point_std_subject', $subject);
+        $this->db->where('point_std_id', $point_id);
+        $this->db->where('point_std_setpoint_id', $point_setpoint_id);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
 }

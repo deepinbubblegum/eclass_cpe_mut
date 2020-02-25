@@ -1,4 +1,27 @@
 $(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['admin_side_Anc', 'admin_side_faculty', 'admin_side_major', "admin_side_semester", "admin_side_subject", "admin_side_subsem", "admin_side_student", "admin_side_teacher", "admin_side_admin", "admin_side_teamaj", "admin_side_teasub", "admin_side_degree"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    var Navbar_highlight = ['admin_Anc', 'admin_faculty', 'admin_major', "admin_semester", "admin_subject", "admin_subsem", "admin_student", "admin_teacher", "admin_admin", "admin_teamaj", "admin_teasub", "admin_degree"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("admin_side_faculty");
+    element.classList.add("bg-danger");
+    var element = document.getElementById("admin_faculty");
+    element.classList.add("bg-danger");
+    /******************************************************************** */
+
+
     var iddata;
     var iurl;
     var datatable;
@@ -239,8 +262,8 @@ $(document).ready(function () {
         console.log(result, check);
         if (check == result) {
             e.preventDefault();
-            
-            FormData = $('#formAdd').find('input:text').each(function(){
+
+            FormData = $('#formAdd').find('input:text').each(function () {
                 $(this).val($.trim($(this).val()));
             });
             // data = $('#formAdd').serialize();
@@ -265,7 +288,7 @@ $(document).ready(function () {
                 url: iurl,
                 data: data,
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     formDataValClr();
                     show_data();
@@ -278,7 +301,7 @@ $(document).ready(function () {
                         text: txtsnack
                     });
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     // console.log(XMLHttpRequest);
                     Snackbar.show({
                         actionText: 'close',
@@ -305,7 +328,7 @@ $(document).ready(function () {
                     $data
                 },
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     $('#modaldel').modal('hide');
                     show_data();

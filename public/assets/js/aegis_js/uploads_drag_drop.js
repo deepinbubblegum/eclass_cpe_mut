@@ -1,5 +1,26 @@
 $(document).ready(function () {
 
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['side_Anc', 'side_score', 'side_uploads', "side_downloads", "side_media", "side_quiz", "side_vote"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-info");
+    }
+
+    var Navbar_highlight = ['Anc', 'score', 'uploads', "downloads", "media", "quiz", "vote"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-info");
+    }
+
+    // $('#score').classList.add(".bg-info");
+    var element = document.getElementById("uploads");
+    element.classList.add("bg-info");
+    var element = document.getElementById("side_uploads");
+    element.classList.add("bg-info");
+    /******************************************************************** */
+
     year = semester.substr(0, 4);
     part = semester.substr(4, 1);
     $('#header').text('งานที่มอบหมาย : ' + subject_id + ' - ' + year + '/' + part);
@@ -457,7 +478,7 @@ $(document).ready(function () {
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
                         var std_let = '';
-                        if(response[i].fileTimestamp > response[i].menuUpTimeEnd){
+                        if (response[i].fileTimestamp > response[i].menuUpTimeEnd) {
                             std_let = '<span style="color:red;"> (ส่งช้ากว่ากำหนด) </span>';
                         }
                         html +=

@@ -1,5 +1,28 @@
 $(document).ready(function () {
 
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['admin_side_Anc', 'admin_side_faculty', 'admin_side_major', "admin_side_semester", "admin_side_subject", "admin_side_subsem", "admin_side_student", "admin_side_teacher", "admin_side_admin", "admin_side_teamaj", "admin_side_teasub", "admin_side_degree"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    var Navbar_highlight = ['admin_Anc', 'admin_faculty', 'admin_major', "admin_semester", "admin_subject", "admin_subsem", "admin_student", "admin_teacher", "admin_admin", "admin_teamaj", "admin_teasub", "admin_degree"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("admin_side_teasub");
+    element.classList.add("bg-danger");
+    var element = document.getElementById("admin_teasub");
+    element.classList.add("bg-danger");
+    /******************************************************************** */
+
+
+
     var iurl;
     var datatable;
     var semesterdata;
@@ -8,6 +31,8 @@ $(document).ready(function () {
     var data_select_semester;
     var iddata;
     var iddata2;
+
+    var dataAll_teacher;
 
     var limit = 10;
     var start = 0;
@@ -31,11 +56,12 @@ $(document).ready(function () {
         //[VALUE,TEXT]
         ['teasub_subjectid', 'รหัสวิชาวิชา'],
         ['subject_name', 'ชื่อวิชา'],
-        ['teasub_teacherid', 'อาจารย์'],
+        ['teasub_teacherid', 'รหัสอาจารย์'],
+        ['teacher_Tname', 'ชื่ออาจารย์'],
     ];
 
     //head of table
-    var theadGenValue = ['รหัสวิชา', 'ชื่อวิชา', 'อาจารย์', 'ตัวเลือก'];
+    var theadGenValue = ['อาจารย์', 'ชื่อวิชา', 'รหัสวิชา', 'ตัวเลือก'];
 
     var Sort = [
         ['subject_id', 'ASC', 'รหัสวิชา A > Z'],
@@ -68,26 +94,40 @@ $(document).ready(function () {
     function inModelGen() {
         var html = '';
         html += '<div class="form-row" >';
-        html += '<div class="col-md-4 mb-3" >' +
+        html += '<div class="col-md-6 mb-3" >' +
             '<label>คณะ</label>' +
             '<select id="selectAddFaculty" class="form-control">' +
             '</select>' +
             '</div>';
-        html += '<div class="col-md-4 mb-3" >' +
+        html += '<div class="col-md-6 mb-3" >' +
             '<label>สาขา</label>' +
             '<select id="selectAddMajor" class="form-control">' +
             '</select>' +
             '</div>';
-        html += '<div class="col-md-4 mb-3" >' +
+
+        html += '</div>';
+
+        html += '<div class="form-row" >';
+        html += '<div class="col-md-6 mb-3" >' +
             '<label>วิชา</label>' +
             '<select id="selectAddSubject" class="form-control">' +
             '</select>' +
             '</div>';
-        html += '<div class="col-md-4 mb-3" >' +
+        html += '<div class="col-md-6 mb-3" >' +
             '<label>อาจารย์</label>' +
             '<select id="selectAddTeacher" class="form-control">' +
             '</select>' +
             '</div>';
+        html += '<span class="ml-1 mr-1" style="font-size: 1.5rem;" id="IconAdd_Teacher">' +
+            '<span style="color: #ff4081;">' +
+            '<a><i class="fas fa-plus-circle"></i></a>' +
+            '</span>' +
+            '</span>' +
+            '<span class="ml-1 mr-1" style="font-size: 1.5rem;" id="IconDel_Teacher">' +
+            '<span style="color: #ff4081;">' +
+            '<a><i class="fas fa-minus-circle"></i></a>' +
+            '</span>' +
+            '</span>';
         html += '</div>';
         $('#inModelBody').html(html);
         $.ajax({
@@ -137,10 +177,27 @@ $(document).ready(function () {
     dropPag();
     dropSearch();
     theadGen();
-    show_data();
+    // show_data();
+    show_all_teacher();
     ShowSort();
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
+
+    $('#selectAddFaculty').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#selectAddMajor').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#selectAddSubject').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#selectAddTeacher').select2({
+        theme: 'bootstrap4',
+    });
 
     $('.row_set').click(function () {
         limit = $(this).attr('value');
@@ -152,9 +209,10 @@ $(document).ready(function () {
         start = 0;
         currentPage = 1;
         // show_data();
-        if($('#SearchName').val() == ""){
-            show_data();
-        }else{
+        if ($('#SearchName').val() == "") {
+            // show_data();
+            show_all_teacher();
+        } else {
             LimitSearch();
         }
     });
@@ -164,9 +222,10 @@ $(document).ready(function () {
         start = start + (limit * 1);
         currentPage++;
         // show_data();
-        if($('#SearchName').val() == ""){
-            show_data();
-        }else{
+        if ($('#SearchName').val() == "") {
+            // show_data();
+            show_all_teacher();
+        } else {
             LimitSearch();
         }
     });
@@ -176,9 +235,10 @@ $(document).ready(function () {
         start = start - limit;
         currentPage--;
         // show_data();
-        if($('#SearchName').val() == ""){
-            show_data();
-        }else{
+        if ($('#SearchName').val() == "") {
+            // show_data();
+            show_all_teacher();
+        } else {
             LimitSearch();
         }
     });
@@ -208,6 +268,17 @@ $(document).ready(function () {
     }
 
     //--------------------------------------------START_CANT_TOUCH_THIS--------------------------------------------//
+
+    function show_all_teacher() {
+        $.ajax({
+            url: "../Admin_teacher_subject/Show_All_teacher_ctl",
+            dataType: "json",
+            success: function (response) {
+                dataAll_teacher = response;
+                show_data();
+            }
+        });
+    }
 
     function show_data() {
         $.ajax({
@@ -250,7 +321,14 @@ $(document).ready(function () {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
-                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>';
+                        // '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                        for (m = 0; m < dataAll_teacher.length; m++) {
+                            if (response[i].subject_id == dataAll_teacher[m].teasub_subjectid) {
+                                html += dataAll_teacher[m].de_Tname + dataAll_teacher[m].teacher_Tname + '<br>';
+                            }
+                        }
+                        html += '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
@@ -310,7 +388,14 @@ $(document).ready(function () {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
-                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>';
+                        // '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                        for (m = 0; m < dataAll_teacher.length; m++) {
+                            if (response[i].subject_id == dataAll_teacher[m].teasub_subjectid) {
+                                html += dataAll_teacher[m].de_Tname + dataAll_teacher[m].teacher_Tname + '<br>';
+                            }
+                        }
+                        html += '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
@@ -321,9 +406,8 @@ $(document).ready(function () {
             }
         });
     });
-    
-    function LimitSearch()
-    {
+
+    function LimitSearch() {
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
 
@@ -369,7 +453,14 @@ $(document).ready(function () {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
-                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>';
+                        // '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                        for (m = 0; m < dataAll_teacher.length; m++) {
+                            if (response[i].subject_id == dataAll_teacher[m].teasub_subjectid) {
+                                html += dataAll_teacher[m].de_Tname + dataAll_teacher[m].teacher_Tname + '<br>';
+                            }
+                        }
+                        html += '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
@@ -382,7 +473,6 @@ $(document).ready(function () {
     }
 
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
-
 
     $('#btnAdd').click(function (e) {
         e.preventDefault();
@@ -499,6 +589,57 @@ $(document).ready(function () {
         });
     }
 
+    $('#IconAdd_Teacher').click(function (e) {
+        e.preventDefault();
+        data = $("#selectAddSubject :selected").val();
+        data2 = $("#selectAddTeacher :selected").val();
+        data2_txt = $("#selectAddTeacher :selected").text();
+        // alert(data2);
+        chk = 0;
+        if (data2 !== '') {
+            if ($('#List_Subject').has('option').length > 0) {
+                $("#List_Subject > option").each(function () {
+                    if (this.value == data2) {
+                        Snackbar.show({
+                            actionText: 'close',
+                            pos: 'top-center',
+                            actionTextColor: '#FF0000',
+                            backgroundColor: '#323232',
+                            width: 'auto',
+                            text: 'อาจารย์คนนี้ถูกเพิ่มแล้ว'
+                        });
+                        chk = 1;
+                    }
+                });
+                if (chk != 1) {
+                    $('#List_Subject').append('<option value="' + data2 + '"> ' + data2_txt + ' </option>');
+                }
+            } else {
+                $('#List_Subject').append('<option value="' + data2 + '"> ' + data2_txt + ' </option>');
+            }
+        }
+    });
+
+    $('#IconDel_Teacher').click(function (e) {
+        e.preventDefault();
+        if (typeof $('#List_Subject :selected').val() != "undefined") {
+            // alert($('#List_Subject_Edit :selected').val());
+            teacher_id = $('#List_Subject :selected').val();
+            // $('#List_Subject_Edit option[value="' + subid + '"]').remove();
+            $('#List_Subject').find('option[value=' + teacher_id + ']').remove();
+        } else {
+            Snackbar.show({
+                actionText: 'close',
+                pos: 'top-center',
+                actionTextColor: '#FF0000',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'กรุณาเลือกอาจารย์ที่ต้องการลบ'
+            });
+        }
+    });
+
+
     $('#btnSave').click(function (e) {
         e.preventDefault();
         if (iurl == "../Admin_teacher_subject/Add_Data_ctl") {
@@ -508,19 +649,58 @@ $(document).ready(function () {
             txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
             txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
         }
-        data = $("#selectAddSubject :selected").val();
-        data2 = $("#selectAddTeacher :selected").val();
+        arr_teacher = [];
+        $("#List_Subject option").each(function () {
+            arr_teacher.push(this.value);
+        });
+
+        if (typeof arr_teacher !== 'undefined' && arr_teacher.length > 0) {
+            Add_tracher_subject(arr_teacher);
+        } else {
+            Snackbar.show({
+                actionText: 'close',
+                pos: 'top-center',
+                actionTextColor: '#FF0000',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'กรุณาเลือกอาจารย์ประจำวิชา'
+            });
+        }
+    });
+
+    function Add_tracher_subject(arr_teacher) {
+        data_subject = $("#selectAddSubject :selected").val();
+        // data2 = $("#selectAddTeacher :selected").val();
         $.ajax({
             type: "POST",
             url: iurl,
-            data: '&subject=' + data + '&teacher=' + data2 + '&org_subject=' + iddata + '&org_teacher=' + iddata2,
+            // data: '&subject=' + data + '&teacher=' + data2 + '&org_subject=' + iddata + '&org_teacher=' + iddata2,
+            data: {
+                data_subject,
+                arr_teacher,
+                iddata,
+                iddata2
+            },
             success: function (response) {
                 // document.getElementById("selectAddSemester").value = datatable[0].id;
                 // document.getElementById("selectAddSubject").value = datatable[0].subject_id;
-                show_data();
+                // show_data();
+                show_all_teacher();
+                $("#List_Subject").empty();
                 if (iurl != "../Admin_teacher_subject/Add_Data_ctl") {
                     $('#Modal').modal('hide');
                 };
+
+                if (response == 1) {
+                    txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
+                } else if (response == 0) {
+                    txtsnack = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: มีข้อมูลอยู่ในระบบแล้ว )';
+                } else if (response == 2) {
+                    txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
+                } else if (response == -2) {
+                    txtsnack = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: มีข้อมูลอยู่ในระบบแล้ว ) ';
+                }
+
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -541,9 +721,10 @@ $(document).ready(function () {
                 });
             }
         });
-    });
+    }
 
     $('#showAllData').on('click', '.item-edit', function () {
+        $("#List_Subject").empty();
         iddata = $(this).attr('data');
         iddata2 = $(this).attr('data2');
         iddata3 = $(this).attr('data3');
@@ -627,6 +808,12 @@ $(document).ready(function () {
                 $('#selectAddSubject').val(iddata);
             }
         });
+        /**************************************************************/
+        for (m = 0; m < dataAll_teacher.length; m++) {
+            if (iddata == dataAll_teacher[m].teasub_subjectid) {
+                $('#List_Subject').append('<option value="' + dataAll_teacher[m].teacher_code_id + '"> ' + dataAll_teacher[m].de_Tname + dataAll_teacher[m].teacher_Tname + '</option>');
+            }
+        }
     }
 
     $('#btnDel').click(function (e) {
@@ -643,7 +830,8 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $('#modaldel').modal('hide');
-                    show_data();
+                    // show_data();
+                    show_all_teacher();
                     Snackbar.show({
                         actionText: 'close',
                         pos: 'top-center',
@@ -694,7 +882,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: "../Admin_teacher_subject/Show_Sort_ctl",
-            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit, 
+            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit,
             dataType: "json",
             success: function (response) {
                 datatable = response;
@@ -712,7 +900,14 @@ $(document).ready(function () {
                             '</div>' +
                             '</th>' +
                             '<td>' + response[i].subject_name + '</td>' +
-                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>';
+                        // '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                        for (m = 0; m < dataAll_teacher.length; m++) {
+                            if (response[i].subject_id == dataAll_teacher[m].teasub_subjectid) {
+                                html += dataAll_teacher[m].de_Tname + dataAll_teacher[m].teacher_Tname + '<br>';
+                            }
+                        }
+                        html += '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].subject_id + '" data2="' + response[i].teacher_code_id + '" data3="' + response[i].subject_major + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
@@ -720,6 +915,16 @@ $(document).ready(function () {
                 $('#showAllData').html(html);
             }
         });
+    });
+
+    $('#btnClose').click(function (e) {
+        e.preventDefault();
+        $("#List_Subject").empty();
+    });
+
+    $('#IconClose').click(function (e) {
+        e.preventDefault();
+        $("#List_Subject").empty();
     });
 
 });

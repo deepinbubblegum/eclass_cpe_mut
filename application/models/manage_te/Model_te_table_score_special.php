@@ -23,7 +23,7 @@ class Model_te_table_score_special extends CI_Model
         $View = $StdView->row()->View;
 
         if ($View == 1) {
-            $query = $this->db->query('SELECT std_code_id FROM student
+            $query = $this->db->query('SELECT std_code_id, std_Tname FROM student
             LEFT JOIN subject_point_student ON std_code_id = point_std_user_id
             WHERE point_std_semester = "'. $semester.'" AND point_std_subject = "'.$subject_id.'" GROUP BY std_code_id ');
             if ($query->num_rows() > 0) {

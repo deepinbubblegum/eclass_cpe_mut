@@ -27,7 +27,8 @@ $(document).ready(function() {
                     pointData = response;
                     html +=
                         '<tr>' +
-                        '<th scope="col">Student ID</th>';
+                        '<th scope="col">Student ID</th>'+
+                        '<th scope="col">Student Name</th>';
                     for (i = 0; i < response.length; i++) {
                         html += '<th scope="col"><a id="charts-' + i + '" >' + response[i].setpoint_mininame + '</a>';
                         if (response[i].setpoint_option == '1') {
@@ -121,6 +122,7 @@ $(document).ready(function() {
                     for (i = 0; i < response.length; i++) {
                         html += '<tr>';
                         html += '<th scope="col">' + response[i].substd_stdid + '</th>';
+                        html += '<th scope="col" class="text-nowrap">' + response[i].std_Tname + '</th>';
                         for (j = 0; j < pointData.length; j++) {
                             html += '<th id="point-' + response[i].substd_stdid + '-' + pointData[j].setpoint_setpoint_id + '">0</th>';
                         }

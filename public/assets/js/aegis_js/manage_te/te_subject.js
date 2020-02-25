@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+
     var a;
     var datatable_semester;
     var datasubject;
@@ -530,6 +531,7 @@ $(document).ready(function () {
 
 
     var semesterCopy;
+    var owner;
 
     $('#customSwitchCopy').change(function (e) {
         e.preventDefault();
@@ -552,7 +554,8 @@ $(document).ready(function () {
                     }
                     $('#SemesterCopy_add_option').html(html);
                     semesterCopy = $("#SemesterCopy_add_option :selected").val();
-                    Subject_Copy();
+                    // Subject_Copy();
+                    Owner_teacher();
                 }
             });
         } else {
@@ -564,9 +567,21 @@ $(document).ready(function () {
     $('#SemesterCopy_add_option').change(function (e) {
         e.preventDefault();
         semesterCopy = $("#SemesterCopy_add_option :selected").val();
-        Subject_Copy();
+        // Subject_Copy();
+        Owner_teacher();
     });
 
+    function Owner_teacher() {
+        $.ajax({
+            type: "POST",
+            url: "/" + url[3] + "/Teacher_add_subject/getOnwer_teacher",
+            dataType: "json",
+            success: function (response) {
+                owner = response;
+                Subject_Copy();
+            }
+        });
+    }
 
     function Subject_Copy() {
         $.ajax({
@@ -579,7 +594,12 @@ $(document).ready(function () {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].subject_id + '" >' + response[i].subject_name + '  (' + response[i].subject_id + ') </option>';
+                        for (j = 0; j < owner.length; j++) {
+                            if (response[i].subject_id == owner[j].teasub_subjectid) {
+                                html += '<option value="' + response[i].subject_id + '" >' + response[i].subject_name + '  (' + response[i].subject_id + ') </option>';
+                            }
+                        }
+
                     }
                 }
                 $('#SubjectCopy_add_option').html(html);
@@ -867,6 +887,204 @@ $(document).ready(function () {
         }
     }
 
+    var HeadScore;
+    var HeadDow;
+    var HeadQuiz;
+
+    $('#btnPreview').click(function (e) {
+        e.preventDefault();
+        SemCopy = $("#SemesterCopy_add_option :selected").val();
+        SemCopyText = $("#SemesterCopy_add_option :selected").text();
+        SubCopy = $("#SubjectCopy_add_option :selected").val();
+        SubCopyText = $("#SubjectCopy_add_option :selected").text();
+        if (SemCopyText != '' && SubCopyText != '') {
+            /*Annouce*/
+            $.ajax({
+                type: "POST",
+                url: "/" + url[3] + '/Teacher_add_subject/Preview_Anc',
+                data: '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy,
+                dataType: "json",
+                success: function (responseAnc) {
+                    var html = '';
+                    if (responseAnc != null) {
+                        for (i = 0; i < responseAnc.length; i++) {
+                            html += 'หัวข้อประกาศ : ' + responseAnc[i].annouce_name + '<br>';
+                        }
+                    }
+                    $('#Preview_Anc').html(html);
+                }
+            });
+
+            HeadScore = '';
+            $.ajax({
+                type: "POST",
+                url: "/" + url[3] + '/Teacher_add_subject/Preview_HeadScore',
+                data: '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy,
+                dataType: "json",
+                success: function (responseHeadScore) {
+                    var html = '';
+                    if (responseHeadScore != null) {
+                        HeadScore = responseHeadScore;
+                        for (i = 0; i < responseHeadScore.length; i++) {
+                            html += 'หัวข้อเมนูคะแนน : ' + responseHeadScore[i].point_name + '<div id="PV_HeadScore' + responseHeadScore[i].point_id + '"> </div> <br>';
+                        }
+                    }
+                    $('#Preview_score').html(html);
+                    $.each(HeadScore, function (x) {
+                        score_id = HeadScore[x].point_id;
+                        $.ajax({
+                            type: "POST",
+                            url: "/" + url[3] + '/Teacher_add_subject/Preview_Score',
+                            data: '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy + '&score_id=' + HeadScore[x].point_id ,
+                            dataType: "json",
+                            success: function (responsesubScore) {
+                                var html = '';
+                                if (responsesubScore != null) {
+                                    for (i = 0; i < responsesubScore.length; i++) {
+                                        html += responsesubScore[i].setpoint_mininame + ' : ';
+                                    }
+                                }
+                                $('#PV_HeadScore'+HeadScore[x].point_id).html(html);
+                            }
+                        });
+                    });
+                }
+            });
+
+            HeadDow = '';
+            $.ajax({
+                type: "POST",
+                url: "/" + url[3] + '/Teacher_add_subject/Preview_HeadDownload',
+                data: '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy,
+                dataType: "json",
+                success: function (responseHeadDow) {
+                    var html = '';
+                    if (responseHeadDow != null) {
+                        HeadDow = responseHeadDow;
+                        for (i = 0; i < responseHeadDow.length; i++) {
+                            html += 'หัวข้อเมนูจัดการไฟล์ : ' + responseHeadDow[i].menuDowName + '<div id="PV_HeadDownload' + responseHeadDow[i].menuDowId + '"> </div> <br>';
+                        }
+                    }
+                    $('#Preview_download').html(html);
+                    $.each(HeadDow, function (x) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/" + url[3] + '/Teacher_add_subject/Preview_Dow',
+                            data: '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy + '&dow_id=' + HeadDow[x].menuDowId ,
+                            dataType: "json",
+                            success: function (responseDow) {
+                                var html = '';
+                                if (responseDow != null) {
+                                    for (i = 0; i < responseDow.length; i++) {
+                                        html += '- ' + responseDow[i].fileName + ' <br> ';
+                                    }
+                                }
+                                $('#PV_HeadDownload'+HeadDow[x].menuDowId).html(html);
+                            }
+                        });
+                    });
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/" + url[3] + '/Teacher_add_subject/Preview_upload',
+                data: '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy,
+                dataType: "json",
+                success: function (responseUp) {
+                    var html = '';
+                    if (responseUp != null) {
+                        for (i = 0; i < responseUp.length; i++) {
+                            html += 'หัวข้อเมนูงานที่มอบหมาย : ' + responseUp[i].menuUpName + '<br>';
+                        }
+                    }
+                    $('#Preview_upload').html(html);
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/" + url[3] + '/Teacher_add_subject/Preview_media',
+                data: '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy,
+                dataType: "json",
+                success: function (responseMedia) {
+                    var html = '';
+                    if (responseMedia != null) {
+                        for (i = 0; i < responseMedia.length; i++) {
+                            html += 'ไฟล์ : ' + responseMedia[i].media_show_name + '<br>';
+                        }
+                    }
+                    $('#Preview_media').html(html);
+                }
+            });
+
+            HeadQuiz = '';
+            $.ajax({
+                type: "POST",
+                url: "/" + url[3] + '/Teacher_add_subject/Preview_HeadQuiz',
+                data: '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy,
+                dataType: "json",
+                success: function (responseHeadQuiz) {
+                    var html = '';
+                    if (responseHeadQuiz != null) {
+                        HeadQuiz = responseHeadQuiz;
+                        for (i = 0; i < responseHeadQuiz.length; i++) {
+                            html += 'หัวข้อเมนูแบบทดสอบ : ' + responseHeadQuiz[i].menuQuizName + '<div id="PV_HeadQuiz' + responseHeadQuiz[i].menuQuizId + '"> </div> <br>';
+                        }
+                    }
+                    $('#Preview_quiz').html(html);
+                    $.each(HeadQuiz, function (x) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/" + url[3] + '/Teacher_add_subject/Preview_Quiz',
+                            data: '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy + '&Quiz_id=' + HeadQuiz[x].menuQuizId ,
+                            dataType: "json",
+                            success: function (responseQuiz) {
+                                var html = '';
+                                if (responseQuiz != null) {
+                                    for (i = 0; i < responseQuiz.length; i++) {
+                                        html += '- ' + responseQuiz[i].headerQuizName + ' <br> ';
+                                    }
+                                }
+                                $('#PV_HeadQuiz'+HeadQuiz[x].menuQuizId).html(html);
+                            }
+                        });
+                    });
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/" + url[3] + '/Teacher_add_subject/Preview_vote',
+                data: '&SemCopy=' + SemCopy + '&SubCopy=' + SubCopy,
+                dataType: "json",
+                success: function (responseVote) {
+                    var html = '';
+                    if (responseVote != null) {
+                        for (i = 0; i < responseVote.length; i++) {
+                            html += 'หัวข้อโหวต : ' + responseVote[i].menuVoteName + '<br>';
+                        }
+                    }
+                    $('#Preview_vote').html(html);
+                }
+            });
+           
+
+            $("#ModalPreviewTitle").text('รายละเอียดวิชาที่คัดลอก | ' + SemCopyText + " : " + SubCopy);
+            $('#ModalPreview').modal('show');
+        } else {
+            Snackbar.show({
+                actionText: 'close',
+                pos: 'top-center',
+                actionTextColor: '#4CAF50',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'กรุณาเลือกวิชาที่ต้องการคัดลอก'
+            });
+        }
+
+    });
+
     // =========================== ADD IMG ========================
     $('#start_crop').click(function (e) {
         e.preventDefault();
@@ -938,5 +1156,6 @@ $(document).ready(function () {
         // show image cropped
         cropped.src = imgSrc;
     });
+
 
 });

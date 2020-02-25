@@ -1,5 +1,27 @@
 $(document).ready(function () {
 
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['side_Anc', 'side_score', 'side_uploads', "side_downloads", "side_media", "side_quiz", "side_vote", "side_pointRequest", "side_add_permission", "side_add_teacher_assist", "side_add_student"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-primary-light");
+    }
+
+    var Navbar_highlight = ['Anc', 'score', 'uploads', "downloads", "media", "quiz", "vote", "pointRequest", "add_permission", "add_teacher_assist", "add_student"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-primary-light");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("downloads");
+    element.classList.add("bg-primary-light");
+    var element = document.getElementById("side_downloads");
+    element.classList.add("bg-primary-light");
+    /******************************************************************** */
+
+
     year = semester.substr(0, 4);
     part = semester.substr(4, 1);
     $('#header').text('งานที่มอบหมาย : ' + subject_id + ' - ' + year + '/' + part);
@@ -38,9 +60,9 @@ $(document).ready(function () {
 
     $('#summernote').summernote('code', '');
 
-    var formData = ["#CMenudownload" , "#datePick" , "#timePick" ];
+    var formData = ["#CMenudownload", "#datePick", "#timePick"];
 
-    var popData = ["#popupHead" , "#popupDate", "#popupTime"];
+    var popData = ["#popupHead", "#popupDate", "#popupTime"];
 
     var popValue = [
         //[POP_ID,POP_TEXT]
@@ -377,10 +399,10 @@ $(document).ready(function () {
                 $.each(response, function (i, v) {
                     $('#DelFile-' + getMenu[popUp].menuUpId + '-' + i).click(function (e) {
                         DelUrl = '/' + url[3] + '/Te_download/delete/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName;
-                        thisButton = '#DelFile-' + getMenu[popUp].menuUpId + '-' + i; 
+                        thisButton = '#DelFile-' + getMenu[popUp].menuUpId + '-' + i;
                         $('#txtDelFile').text(response[i].fileName);
                         $("#ModalDeleteFile").modal('show');
-                    }); 
+                    });
                 });
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -394,6 +416,7 @@ $(document).ready(function () {
         delFile(DelUrl);
     });
     returnTxt = 'ลบสำเร็จ';
+
     function delFile(DelUrl) {
         $.ajax({
             url: DelUrl,
@@ -412,7 +435,7 @@ $(document).ready(function () {
                 });
                 $(thisButton).parent().parent().remove();
             },
-            error: function (response) { 
+            error: function (response) {
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -439,7 +462,7 @@ $(document).ready(function () {
         menuUpdate = 0;
     });
 
-    $('#IconClose').click(function(e){
+    $('#IconClose').click(function (e) {
         $('#CMenudownload').val('');
         $('#datePick').val('');
         $('#timePick').val('')

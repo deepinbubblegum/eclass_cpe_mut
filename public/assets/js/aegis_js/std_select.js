@@ -1,4 +1,24 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['side_Anc', 'side_score', 'side_uploads', "side_downloads", "side_media", "side_quiz", "side_vote"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-info");
+    }
+
+    var Navbar_highlight = ['Anc', 'score', 'uploads', "downloads", "media", "quiz", "vote"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-info");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("Anc");
+    element.classList.add("bg-info");
+    var element = document.getElementById("side_Anc");
+    element.classList.add("bg-info");
+    /******************************************************************** */
 
     year = semester.substr(0, 4);
     part = semester.substr(4, 1);
@@ -16,7 +36,7 @@ $(document).ready(function() {
             dataType: "json",
             // url: '/' + url[3] + '/Std_select/Show_Data_ctl/' + subject_id + '-' + semester,
             // dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 var html = '';
                 var i;

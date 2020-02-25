@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         &nbsp;&nbsp;เลือกรายวิชา
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('te_select/annouce/') . $subject_id . '-' . $semester; ?>">
+                                                        <a class="nav-item nav-link" id="side_Anc" href="<?php echo base_url('te_select/annouce/') . $subject_id . '-' . $semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-chalkboard"></i></span>
                                                                 <span style="font-size: 1.2em;">
@@ -52,7 +52,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <?php
                                                         if (substr($bit, 3, 1) == 1 || $bit == 0) {
-                                                                echo '<a class="nav-item nav-link" id="score" href="'; 
+                                                                echo '<a class="nav-item nav-link" id="side_score" href="'; 
                                                                 echo base_url('te_select/score/') . $subject_id . '-' . $semester .'">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star-half-alt"></i></span>
@@ -65,12 +65,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <?php
                                                         if (substr($bit, 2, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="uploads" href=" ';
+                                                                echo '<a class="nav-item nav-link" id="side_uploads" href=" ';
                                                                 echo base_url('te_select/uploads/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-upload"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ไฟล์ประกอบการสอน
+                                                                        &nbsp;&nbsp;จัดการไฟล์
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -78,7 +78,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <?php
                                                         if (substr($bit, 1, 1) == 1 || $bit == 0) {
-                                                                echo '<a class="nav-item nav-link" id="downloads" href=" ';
+                                                                echo '<a class="nav-item nav-link" id="side_downloads" href=" ';
                                                                 echo base_url('te_select/downloads/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-download"></i></span>
@@ -91,7 +91,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <?php
                                                         if (substr($bit, 0, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="media" href="';
+                                                                echo '<a class="nav-item nav-link" id="side_media" href="';
                                                                 echo base_url("te_select/media/") . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-play"></i></span>
@@ -104,7 +104,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <?php
                                                         if (substr($bit, 5, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="quiz" href="';
+                                                                echo '<a class="nav-item nav-link" id="side_quiz" href="';
                                                                 echo base_url('te_select/quiz/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
@@ -116,7 +116,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         ?>
                                                         <?php
                                                         if (substr($bit, 4, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="vote" href="';
+                                                                echo '<a class="nav-item nav-link" id="side_vote" href="';
                                                                 echo base_url('te_select/vote/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
@@ -138,7 +138,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <?php
                                                         if (substr($bit, 6, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="pointRequest" href="';
+                                                                echo '<a class="nav-item nav-link" id="side_pointRequest" href="';
                                                                 echo base_url('te_select/point_request/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star"></i></span>
@@ -154,7 +154,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <?php
                                                         if (substr($bit, 7, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="add_permission" href="';
+                                                                echo '<a class="nav-item nav-link" id="side_add_permission" href="';
                                                                 echo base_url('te_select/add_permission/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-user-shield"></i></span>
@@ -167,7 +167,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <?php
                                                         if (substr($bit, 8, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="add_teacher_assist" href="';
+                                                                echo '<a class="nav-item nav-link" id="side_add_teacher_assist" href="';
                                                                 echo base_url('te_select/add_teacher_assist/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></span>
@@ -180,7 +180,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                         <?php
                                                         if (substr($bit, 9, 1) == '1' || $bit == '0') {
-                                                                echo '<a class="nav-item nav-link" id="add_student" href="';
+                                                                echo '<a class="nav-item nav-link" id="side_add_student" href="';
                                                                 echo base_url('te_select/add_student/') . $subject_id . '-' . $semester . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></span>

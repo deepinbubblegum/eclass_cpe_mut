@@ -10,6 +10,12 @@ class Admin_teacher_subject extends MY_Controller
         $this->load->model('manage_su/Model_su_teacher_subject');
     }
 
+    public function Show_All_teacher_ctl()
+    {
+        $result = $this->Model_su_teacher_subject->Show_All_teacher_model();
+        echo json_encode($result);
+    }
+
     public function Show_Max_Data_ctl()
     {
         $result = $this->Model_su_teacher_subject->Show_Max_Data_model();
@@ -45,22 +51,23 @@ class Admin_teacher_subject extends MY_Controller
         //     'teasub_teacherid' => $this->input->post('teacher')
         // );
         // $this->Model_su_teacher_subject->Add_data_model($data);
-        $subject = $this->input->post('subject');
-        $teacher = $this->input->post('teacher');
-        $this->Model_su_teacher_subject->Add_data_model($subject, $teacher);
+        $subject = $this->input->post('data_subject');
+        $teacher = $this->input->post('arr_teacher');
+        $result = $this->Model_su_teacher_subject->Add_data_model($subject, $teacher);
+        echo json_encode($result);
     }
 
     public function Edit_Data_ctl()
     {
-        $org_subject = $this->input->post('org_subject');
-        $org_teacher = $this->input->post('org_teacher');
-        $subject = $this->input->post('subject');
-        $teacher = $this->input->post('teacher');
+        $org_subject = $this->input->post('iddata');
+        // $org_teacher = $this->input->post('org_teacher');
+        $subject = $this->input->post('data_subject');
+        $teacher = $this->input->post('arr_teacher');
         // $data = array(
         //     'teasub_subjectid' => $this->input->post('subject'),
         //     'teasub_teacherid' => $this->input->post('teacher')
         // );
-        $this->Model_su_teacher_subject->Edit_data_model($org_subject, $org_teacher, $subject, $teacher);
+        $this->Model_su_teacher_subject->Edit_data_model($org_subject, $subject, $teacher);
     }
 
     public function Delete_Data_ctl()

@@ -19,9 +19,10 @@ class Model_te_add_student extends CI_Model
                         $limit = null;
                         $start = null;
                 }
-                $this->db->select('substd_stdid, std_Tname, std_Ename, substd_subject, substd_sec');
+                $this->db->select('substd_stdid, std_Tname, std_Ename, substd_subject, substd_sec, std_major, major_name');
                 $this->db->from('subject_student');
                 $this->db->join('student', 'substd_stdid = std_code_id', 'left');
+                $this->db->join('major', 'std_major = major_id', 'left');
                 $this->db->where('substd_subject', $arg);
                 $this->db->where('substd_semester',$arg2);
                 $this->db->limit($limit, $start);
@@ -63,9 +64,10 @@ class Model_te_add_student extends CI_Model
 
         public function Show_Max_Search_Data_model($keyword, $type, $subject_id, $semester)
         {
-                $this->db->select('substd_stdid, std_Tname, std_Ename, substd_subject, substd_sec');
+                $this->db->select('substd_stdid, std_Tname, std_Ename, substd_subject, substd_sec, std_major, major_name');
                 $this->db->from('subject_student');
                 $this->db->join('student', 'substd_stdid = std_code_id', 'left');
+                $this->db->join('major', 'std_major = major_id', 'left');
                 if ($type != null) {
                         if ($type == 'substd_stdid') {
                                 $searchData = 'substd_stdid';
@@ -93,9 +95,10 @@ class Model_te_add_student extends CI_Model
 
         public function Search_data_model($keyword, $type, $subject_id, $semester, $start, $limit)
         {
-                $this->db->select('substd_stdid, std_Tname, std_Ename, substd_subject, substd_sec');
+                $this->db->select('substd_stdid, std_Tname, std_Ename, substd_subject, substd_sec, std_major, major_name');
                 $this->db->from('subject_student');
                 $this->db->join('student', 'substd_stdid = std_code_id', 'left');
+                $this->db->join('major', 'std_major = major_id', 'left');
                 if ($type != null) {
                         if ($type == 'substd_stdid') {
                                 $searchData = 'substd_stdid';

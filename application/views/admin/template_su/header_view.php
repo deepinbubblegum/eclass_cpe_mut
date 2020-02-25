@@ -21,7 +21,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 'chart_css/Chart.css',
                 'aegis_css/su.css',
                 'snackbar_css/snackbar.min.css',
-                'summernote_css/summernote-bs4.min.css'
+                'bootstrap_css/select2.min.css',
+                'bootstrap_css/select2-bootstrap4.min.css'
         );
 
         $multi_assets_js = array(
@@ -34,6 +35,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 'aegis_js/user_uses.js',
                 'aegis_js/langSwitching.js',
                 'summernote_js/summernote-bs4.min.js',
+                'bootstrap_js/select2.full.min.js',
                 // 'summernote/dist/summernote-bs4.min.js'
         );
         echo assets_css($multi_assets_css);
@@ -129,63 +131,63 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 &nbsp;&nbsp;แผงควบคุม
                                         </span>
                                 </a> -->
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/announce'); ?>">
+                                <a class="nav-item nav-link" id="admin_Anc" href="<?php echo base_url('admin/announce'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-bullhorn"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ประกาศ
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/faculty'); ?>">
+                                <a class="nav-item nav-link" id="admin_faculty" href="<?php echo base_url('admin/faculty'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-tree"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ข้อมูลคณะ
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/major'); ?>">
+                                <a class="nav-item nav-link" id="admin_major" href="<?php echo base_url('admin/major'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fab fa-pagelines"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ข้อมูลสาขา
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/semester'); ?>">
+                                <a class="nav-item nav-link" id="admin_semester" href="<?php echo base_url('admin/semester'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-clipboard-list"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ข้อมูลปีการศึกษา
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/subject'); ?>">
+                                <a class="nav-item nav-link" id="admin_subject" href="<?php echo base_url('admin/subject'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-book"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ข้อมูลวิชา
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/subsemester'); ?>">
+                                <a class="nav-item nav-link" id="admin_subsem" href="<?php echo base_url('admin/subsemester'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-book-open"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ข้อมูลวิชาประจำเทอม
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/student_data'); ?>">
+                                <a class="nav-item nav-link" id="admin_student" href="<?php echo base_url('admin/student_data'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-barcode"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ข้อมูลนักศึกษา
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_data'); ?>">
+                                <a class="nav-item nav-link" id="admin_teacher" href="<?php echo base_url('admin/teacher_data'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-barcode"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ข้อมูลอาจารย์
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/admin_data'); ?>">
+                                <a class="nav-item nav-link" id="admin_admin" href="<?php echo base_url('admin/admin_data'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-users"></i></span>
                                         <span style="font-size: 1.2em;">
@@ -199,21 +201,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 &nbsp;&nbsp;ข้อมูลระดับสิทธิ์
                                         </span>
                                 </a> -->
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_major_data'); ?>">
+                                <a class="nav-item nav-link" id="admin_teamaj" href="<?php echo base_url('admin/teacher_major_data'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-chalkboard-teacher"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ข้อมูลอาจารย์ประจำสาขา
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_subject'); ?>">
+                                <a class="nav-item nav-link" id="admin_teasub" href="<?php echo base_url('admin/teacher_subject'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-chalkboard-teacher"></i></span>
                                         <span style="font-size: 1.2em;">
                                                 &nbsp;&nbsp;ข้อมูลอาจารย์ประจำวิชา
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('admin/teacher_degree'); ?>">
+                                <a class="nav-item nav-link" id="admin_degree" href="<?php echo base_url('admin/teacher_degree'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-chalkboard-teacher"></i></span>
                                         <span style="font-size: 1.2em;">
