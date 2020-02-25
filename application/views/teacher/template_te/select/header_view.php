@@ -348,6 +348,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         echo '<div class="mb-3 mt-2">สถานะ : '.$this->session->ses_statustext.'</div>';
                                         if (isset($this->session->ses_tname)) {
                                                 echo '<a href="' . base_url('teacher') . '"><button type="button" id="" class="btn btn-info btn-lg btn-block">หน้าจัดการอาจารย์</button></a>';
+                                                echo '<button type="button" id="te_user" class="btn btn-primary btn-lg btn-block mt-2">รายละเอียดบัญชีผู้ใช้งาน</button>';
                                                 echo '<div class="navdrawer-divider mt-3"></div>';
                                                 echo '<a href="' . base_url('user_uses/sign_out') . '"><button type="button" class="btn btn-danger btn-lg btn-block">ออกจากระบบ</button></a>';
                                         } else {
@@ -380,6 +381,64 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                 </div>
         </div>
+
+        <?php
+        if (isset($this->session->ses_tname)) {
+                echo assets_js('aegis_js/setting_user.js');
+                echo '<div class="modal fade bd-example-modal-lg" id="te_user_setting" tabindex="-1" role="dialog" aria-labelledby="te_user_setting" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h5 class="modal-title">รายละเอียดบัญชีผู้ใช้งาน </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item">
+                                                        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">รายละเอียดบัญชีผู้ใช้</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">ตั้งค่ารหัสผู้ใช้</a>
+                                                </li>
+                                        </ul>
+                                        <div class="tab-content" id="myTabContent">
+                                                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                        <div class="ml-2 mb-2 mt-2">รหัส : ' . $this->session->ses_id . '</div>
+                                                        <div class="ml-2 mb-2 mt-2">ชื่อ : ' . $this->session->ses_THdegree . $this->session->ses_tname . '</div>
+                                                        <div class="ml-2 mb-3 mt-2">สถานะ : ' . $this->session->ses_statustext . '</div>
+                                                        <div class="ml-2 mb-3 mt-2">สังกัดสาขา :
+                                                                <span  id="techer_major_show">
+                                                                </span>
+                                                        </div>
+                                                </div>
+                                                <div class="tab-pane fade mt-4 ml-2" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                                        <div class="form-group">
+                                                                <label for="label_old_passwd">รหัสผู้ใช้เดิม</label>
+                                                                <input type="password" class="form-control" id="old_passwd">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                                <label for="label_passwd">รหัสผู้ใช้ใหม่</label>
+                                                                <input type="password" class="form-control" id="Passwd">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                                <label for="label_passwd_ck">ยืนยัน รหัสผู้ใช้ใหม่</label>
+                                                                <input type="password" class="form-control" id="Passwd_ck">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                                <button type="button" id="save_changes" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                </div>';
+        }
+        ?>
 </body>
 
 
