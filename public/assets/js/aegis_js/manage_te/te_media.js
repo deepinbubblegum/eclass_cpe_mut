@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+        var check_flag = false;
 
         /******************************* highlight Navbar ************************************* */
         var Navbar_Side_highlight = ['side_Anc', 'side_score', 'side_uploads', "side_downloads", "side_media", "side_quiz", "side_vote", "side_pointRequest", "side_add_permission", "side_add_teacher_assist", "side_add_student"];
@@ -316,11 +317,37 @@ $(document).ready(function () {
                 });
         }
 
+        function getExtension(filename) {
+                var parts = filename.split('.');
+                return parts[parts.length - 1];
+        }
+
+        function isfile(filename) {
+                var ext = getExtension(filename);
+                switch (ext.toLowerCase()) {
+                        case 'm4v':
+                        case 'mp4':
+                        case 'mp3':
+                        case 'mp4':
+                        case 'jpg':
+                        case 'gif':
+                        case 'bmp':
+                        case 'png':
+                                check_flag = true;
+                                return true;
+                }
+                return false;
+        }
+
         // ---------------function video-upload--------------
         $('#video_file').change(function (e) {
                 e.preventDefault();
                 html = '';
                 _files = $(this)[0].files;
+                let exts = isfile(_files[0].name);
+                if (!exts) {
+                        check_flag = false;
+                }
                 // console.log(_files[0].name);
                 $(this).next("label").text(_files[0].name);
         });
@@ -328,6 +355,14 @@ $(document).ready(function () {
         $('#btn_save_video').click(function (e) {
                 e.preventDefault();
                 console.log('OK');
+                if (check_flag == false) {
+                        Snackbar.show({
+                                text: 'กรุณาเลือกไฟล์ใหม่ให้ถูกต้อง',
+                                pos: 'top-center',
+                                showAction: false,
+                        });
+                        return false;
+                }
                 for (index = 0; index < check_name.length; index++) {
                         if ($('#video_name').val() == check_name[index]['media_show_name']) {
                                 console.log('dup');
@@ -410,6 +445,10 @@ $(document).ready(function () {
                 e.preventDefault();
                 html = '';
                 _files = $(this)[0].files;
+                let exts = isfile(_files[0].name);
+                if (!exts) {
+                        check_flag = false;
+                }
                 // console.log(_files[0].name);
                 $(this).next("label").text(_files[0].name);
         });
@@ -417,6 +456,14 @@ $(document).ready(function () {
         $('#btn_save_audio').click(function (e) {
                 e.preventDefault();
                 // console.log('OK');
+                if (check_flag == false) {
+                        Snackbar.show({
+                                text: 'กรุณาเลือกไฟล์ใหม่ให้ถูกต้อง',
+                                pos: 'top-center',
+                                showAction: false,
+                        });
+                        return false;
+                }
                 for (index = 0; index < check_name.length; index++) {
                         if ($('#audio_name').val() == check_name[index]['media_show_name']) {
                                 console.log('dup');
@@ -498,6 +545,10 @@ $(document).ready(function () {
                 e.preventDefault();
                 html = '';
                 _files = $(this)[0].files;
+                let exts = isfile(_files[0].name);
+                if (!exts) {
+                        check_flag = false;
+                }
                 // console.log(_files[0].name);
                 $(this).next("label").text(_files[0].name);
         });
@@ -511,6 +562,14 @@ $(document).ready(function () {
 
         $('#btn_save_image').click(function (e) {
                 e.preventDefault();
+                if (check_flag == false) {
+                        Snackbar.show({
+                                text: 'กรุณาเลือกไฟล์ใหม่ให้ถูกต้อง',
+                                pos: 'top-center',
+                                showAction: false,
+                        });
+                        return false;
+                }
                 // console.log('OK');
                 for (index = 0; index < check_name.length; index++) {
                         if ($('#image_name').val() == check_name[index]['media_show_name']) {
