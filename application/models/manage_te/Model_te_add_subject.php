@@ -87,6 +87,16 @@ class Model_te_add_subject extends CI_Model
         $this->db->query('DELETE FROM subject_coop WHERE subcoop_semester = "' . $semester_edit . '" AND subcoop_mainsub = "' . $subject_edit . '" ');
     }
 
+    public function getOnwer_teacher_model($user)
+    {
+        $query = $this->db->query('SELECT * FROM teacher_subject WHERE teasub_teacherid = "'.$user.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
     public function SubjectCopy($semester, $te_id)
     {
         $query = $this->db->query('SELECT subsem_semester , subject_id , subject_name , subsem_teacher FROM subject_semester 
@@ -232,4 +242,106 @@ class Model_te_add_subject extends CI_Model
              }
          }
     }
+
+
+    public function Preview_Anc_model($SemCopy, $SubCopy)
+    {
+        $query = $this->db->query('SELECT * FROM subject_annouce WHERE annouce_semester = "'.$SemCopy.'" AND annouce_subject = "'.$SubCopy.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Preview_HeadScore_model($SemCopy, $SubCopy)
+    {
+        $query = $this->db->query('SELECT * FROM subject_point WHERE point_semester = "'.$SemCopy.'" AND point_subject = "'.$SubCopy.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Preview_Score_model($SemCopy, $SubCopy, $socre_id)
+    {
+        $query = $this->db->query('SELECT * FROM subject_setpoint WHERE setpoint_semester = "'.$SemCopy.'" AND setpoint_subject = "'.$SubCopy.'" AND setpoint_id = "'.$socre_id.'" ORDER BY CAST(setpoint_index AS int) ASC ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Preview_HeadDownload_model($SemCopy, $SubCopy)
+    {
+        $query = $this->db->query('SELECT * FROM menuDownload WHERE menuDowSemesterId = "'.$SemCopy.'" AND menuDowSubjectId = "'.$SubCopy.'" ORDER BY CAST(menuDowIndex AS int) ASC ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Preview_Dow_model($SemCopy, $SubCopy, $dow_id)
+    {
+        $query = $this->db->query('SELECT * FROM fileDownload WHERE fileSemesterId = "'.$SemCopy.'" AND fileSubjectId = "'.$SubCopy.'" AND fileMenuDowId = "'.$dow_id.'" ORDER BY CAST(fileIndex AS int) ASC ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Preview_upload_model($SemCopy, $SubCopy)
+    {
+        $query = $this->db->query('SELECT * FROM menuUpload WHERE menuUpSemesterId = "'.$SemCopy.'" AND menuUpSubjectId = "'.$SubCopy.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Preview_media_model($SemCopy, $SubCopy)
+    {
+        $query = $this->db->query('SELECT * FROM media_data WHERE media_semester = "'.$SemCopy.'" AND media_subject = "'.$SubCopy.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Preview_HeadQuiz_model($SemCopy, $SubCopy)
+    {
+        $query = $this->db->query('SELECT * FROM menuQuiz WHERE menuQuizSemester = "'.$SemCopy.'" AND menuQuizSubject = "'.$SubCopy.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Preview_Quiz_model($SemCopy, $SubCopy, $Quiz_id)
+    {
+        $query = $this->db->query('SELECT * FROM headerQuiz WHERE headerQuizSemester = "'.$SemCopy.'" AND headerQuizSubject = "'.$SubCopy.'" AND headerQuizMenuQuizId = "'.$Quiz_id.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
+    public function Preview_vote_model($SemCopy, $SubCopy)
+    {
+        $query = $this->db->query('SELECT * FROM menuVote WHERE menuVoteSemester = "'.$SemCopy.'" AND menuVoteSubject = "'.$SubCopy.'" ');
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
 }

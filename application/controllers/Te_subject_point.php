@@ -241,4 +241,22 @@ class Te_subject_point extends MY_Controller
         $result = $this->Model_te_subject_point->checkMaxpointSTD_modal($point_std_semester,$point_std_subject,$point_std_id,$point_std_setpoint_id,$point_std_user_id);
         echo json_encode($result); 
     }
+
+    public function CheckMaxEditField()
+    {
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject_id');
+        $point_id = $this->input->post('pointId');
+        $point_setpoint_id = $this->input->post('pointIdChild');
+        $result = $this->Model_te_subject_point->CheckMaxEditField_modal($semester, $subject, $point_id, $point_setpoint_id);
+        echo json_encode($result); 
+    }
+
+    public function GetAll_std()
+    {
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject_id');
+        $result = $this->Model_te_subject_point->GetAll_std_modal($semester,$subject);
+        echo json_encode($result); 
+    }
 }

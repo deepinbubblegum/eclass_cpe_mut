@@ -1,4 +1,27 @@
 $(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['side_Anc', 'side_score', 'side_uploads', "side_downloads", "side_media", "side_quiz", "side_vote"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-info");
+    }
+
+    var Navbar_highlight = ['Anc', 'score', 'uploads', "downloads", "media", "quiz", "vote"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-info");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("quiz");
+    element.classList.add("bg-info");
+    var element = document.getElementById("side_quiz");
+    element.classList.add("bg-info");
+    /******************************************************************** */
+
+
     var url = $(location).attr('href').split("/");
     var getField = [];
     var getUnit = [];
@@ -37,7 +60,7 @@ $(document).ready(function () {
                         footerText = '';
                         if (response[i].menuQuizTime == "0000-00-00 00:00:00") {
                             footerText = "ไม่กำหนดเวลา";
-                        }else{
+                        } else {
                             footerText = response[i].menuQuizTime;
                         }
 
@@ -48,17 +71,17 @@ $(document).ready(function () {
                         if (response[i].menuQuizStatus.substr(1, 1) == '1') {
                             disabler1 = '<span class="text-danger">- แบบทดสอบถูกปิด -</span>';
                             disabler2 = 'disabled';
-                        }else if (getMenu[i].menuQuizTime != "0000-00-00 00:00:00") {
-                            
-                                // if (response[i].menuQuizName == 'Quiz5') console.log('STAGE 1', response[i].menuQuizStatus.substr(1, 1)); //checked
-                                if (response[i].tnow > response[i].menuQuizTime) {
-                                    // if (response[i].menuQuizName == 'Quiz5') console.log('STAGE 2', getMenu[i].menuQuizTime, response[i].tnow);
+                        } else if (getMenu[i].menuQuizTime != "0000-00-00 00:00:00") {
 
-                                    // if (response[i].menuQuizName == 'Quiz5') console.log('STAGE 3');
-                                    disabler1 = '<span class="text-danger">- แบบทดสอบถูกปิด(เวลาเกิน) -</span>';
-                                    disabler2 = 'disabled';
-                                }
-                            
+                            // if (response[i].menuQuizName == 'Quiz5') console.log('STAGE 1', response[i].menuQuizStatus.substr(1, 1)); //checked
+                            if (response[i].tnow > response[i].menuQuizTime) {
+                                // if (response[i].menuQuizName == 'Quiz5') console.log('STAGE 2', getMenu[i].menuQuizTime, response[i].tnow);
+
+                                // if (response[i].menuQuizName == 'Quiz5') console.log('STAGE 3');
+                                disabler1 = '<span class="text-danger">- แบบทดสอบถูกปิด(เวลาเกิน) -</span>';
+                                disabler2 = 'disabled';
+                            }
+
                         }
                         // } else if (response[i].menuQuizStatus.substr(1, 1) == '0'){ 
                         //     disabler1 = disabler2 = '';
@@ -93,7 +116,7 @@ $(document).ready(function () {
                         // '</span>' +
                         if ((getMenu[i].menuQuizStatus.substr(1, 1) == '0')) {
                             if ((getMenu[i].tnow < getMenu[i].menuQuizTime) || (getMenu[i].menuQuizTime == '0000-00-00 00:00:00')) {
-                            html += '<button type="button" class="btn btn-info mt-3" id="btnSend-' + response[i].menuQuizId + '"' + disabler2 + '>บันทึกข้อมูล</button>';
+                                html += '<button type="button" class="btn btn-info mt-3" id="btnSend-' + response[i].menuQuizId + '"' + disabler2 + '>บันทึกข้อมูล</button>';
                             }
                         }
 
@@ -101,11 +124,11 @@ $(document).ready(function () {
                         if ((getMenu[i].menuQuizStatus.substr(1, 1) == '0')) {
                             if ((getMenu[i].tnow < getMenu[i].menuQuizTime) || (getMenu[i].menuQuizTime == '0000-00-00 00:00:00')) {
 
-                            html += '<div class="navdrawer-divider"></div>' +
-                                '<div class="d-flex text-muted">' +
-                                '<div class="p-2"> <small class="ml-2 my-1"></small> </div>' +
-                                '<div class="ml-auto p-2"> <small class="mr-2 my-1"> สิ้นสุดเวลาทำแบบทดสอบ : ' + footerText + '</small> </div>' +
-                                '</div>';
+                                html += '<div class="navdrawer-divider"></div>' +
+                                    '<div class="d-flex text-muted">' +
+                                    '<div class="p-2"> <small class="ml-2 my-1"></small> </div>' +
+                                    '<div class="ml-auto p-2"> <small class="mr-2 my-1"> สิ้นสุดเวลาทำแบบทดสอบ : ' + footerText + '</small> </div>' +
+                                    '</div>';
                             }
                         }
                         html += '</div>' +
@@ -196,17 +219,17 @@ $(document).ready(function () {
                         disabler = 'disabled';
                     } else {
                         disabler = '';
-                    }  
+                    }
                     for (i = 0; i < response.length; i++) {
                         html += '<label class="mt-2">' +
                             '<input type="radio" name="test-' + CMenuID + '-' + CHeaderID + '" class="card-input-element d-none" value="' + i + '"' + disabler + '>' +
                             '<div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">' +
-                            '<h5>' + response[i].choiceQuizText ;
-                           // html += ' ['+response[i].choiceQuizPoint+']';
-                            if (menuStatus[CMenuID].substr(2, 1) == '1') { //check enable
-                                html += '['+response[i].choiceQuizPoint+']';
-                            }
-                            
+                            '<h5>' + response[i].choiceQuizText;
+                        // html += ' ['+response[i].choiceQuizPoint+']';
+                        if (menuStatus[CMenuID].substr(2, 1) == '1') { //check enable
+                            html += '[' + response[i].choiceQuizPoint + ']';
+                        }
+
                         html += '</h5></div>' +
                             '</label>';
                     }

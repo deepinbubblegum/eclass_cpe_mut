@@ -1,4 +1,27 @@
 $(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['admin_side_Anc', 'admin_side_faculty', 'admin_side_major', "admin_side_semester", "admin_side_subject", "admin_side_subsem", "admin_side_student", "admin_side_teacher", "admin_side_admin", "admin_side_teamaj", "admin_side_teasub", "admin_side_degree"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    var Navbar_highlight = ['admin_Anc', 'admin_faculty', 'admin_major', "admin_semester", "admin_subject", "admin_subsem", "admin_student", "admin_teacher", "admin_admin", "admin_teamaj", "admin_teasub", "admin_degree"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("admin_side_student");
+    element.classList.add("bg-danger");
+    var element = document.getElementById("admin_student");
+    element.classList.add("bg-danger");
+    /******************************************************************** */
+
+
     var iddata;
     var iurl;
     var datatable;
@@ -198,6 +221,14 @@ $(document).ready(function () {
     hideAllPop();
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
+
+    $('#facultySelectAdd').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#majorSelectAdd').select2({
+        theme: 'bootstrap4',
+    });
 
     $('.row_set').click(function () {
         limit = $(this).attr('value');
@@ -459,7 +490,7 @@ $(document).ready(function () {
             '</li>';
         $('#filedetail').html(html);
     });
-    
+
     $('#btnUpload').click(function (e) {
         e.preventDefault();
         csv_upload = '';
@@ -498,7 +529,7 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             processData: false,
-            dataType:'json',
+            dataType: 'json',
             success: function (response) {
                 csv_upload = response;
                 console.log(response);
@@ -699,6 +730,7 @@ $(document).ready(function () {
         $('#std_email').val(datatable[ivalue].std_email);
         console.log(datatable[ivalue].major_id, datatable[ivalue].major_name);
         $('#facultySelectAdd').val(datatable[ivalue].faculty_id);
+        // $('#facultySelectAdd').find('option[value="'+datatable[ivalue].faculty_id+'"]').attr('selected','selected');
         getMajor();
         $('#majorSelectAdd').val(datatable[ivalue].major_id);
         $('#Modal').modal('show');

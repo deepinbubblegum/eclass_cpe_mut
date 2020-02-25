@@ -42,6 +42,7 @@ class Model_te_table_score extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('subject_student');
+        $this->db->join('student', 'substd_stdid = std_code_id', 'left');
         $this->db->where('substd_subject', $subject_id);
         $this->db->where('substd_semester', $semester);
         //$this->db->order_by('menuDowId', 'DESC');
@@ -61,6 +62,7 @@ class Model_te_table_score extends CI_Model
         if ($View == 1) {
             $this->db->select('*');
             $this->db->from('subject_student');
+            $this->db->join('student', 'substd_stdid = std_code_id', 'left');
             $this->db->where('substd_subject', $subject_id);
             $this->db->where('substd_semester', $semester);
             //$this->db->order_by('menuDowId', 'DESC');
@@ -74,6 +76,7 @@ class Model_te_table_score extends CI_Model
         else{
             $this->db->select('*');
             $this->db->from('subject_student');
+            $this->db->join('student', 'substd_stdid = std_code_id', 'left');
             $this->db->where('substd_subject', $subject_id);
             $this->db->where('substd_semester', $semester);
             $this->db->where('substd_stdid', $UserId);

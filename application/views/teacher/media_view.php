@@ -91,7 +91,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="dropdown-menu dropdown-menu-right">
                                         <!-- Dropdown menu links -->
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#file_video"><i class="far fa-file-video"></i> เพิ่มวิดีโอ</a>
-                                        <div class="dropdown-divider"></div>
+                                        <!-- <div class="dropdown-divider"></div> -->
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#file_audio"><i class="far fa-file-audio"></i> เพิ่มเสียง</a>
                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#file_image"><i class="far fa-file-image"></i> เพิ่มรูปภาพ</a>
                                 </div>

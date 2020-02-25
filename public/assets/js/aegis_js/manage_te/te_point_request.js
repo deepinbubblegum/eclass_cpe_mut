@@ -9,9 +9,25 @@ $(document).ready(function () {
     var dataStdPoint = '';
     ShowMenu();
 
-    function Read() {
-
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['side_Anc', 'side_score', 'side_uploads', "side_downloads", "side_media", "side_quiz", "side_vote", "side_pointRequest", "side_add_permission", "side_add_teacher_assist", "side_add_student"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-primary-light");
     }
+
+    var Navbar_highlight = ['Anc', 'score', 'uploads', "downloads", "media", "quiz", "vote", "pointRequest", "add_permission", "add_teacher_assist", "add_student"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-primary-light");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("pointRequest");
+    element.classList.add("bg-primary-light");
+    var element = document.getElementById("side_pointRequest");
+    element.classList.add("bg-primary-light");
+    /******************************************************************** */
 
     function ShowMenu() {
         $.ajax({

@@ -1,4 +1,27 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['admin_side_Anc', 'admin_side_faculty', 'admin_side_major', "admin_side_semester", "admin_side_subject", "admin_side_subsem", "admin_side_student", "admin_side_teacher", "admin_side_admin", "admin_side_teamaj", "admin_side_teasub", "admin_side_degree"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    var Navbar_highlight = ['admin_Anc', 'admin_faculty', 'admin_major', "admin_semester", "admin_subject", "admin_subsem", "admin_student", "admin_teacher", "admin_admin", "admin_teamaj", "admin_teasub", "admin_degree"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("admin_side_major");
+    element.classList.add("bg-danger");
+    var element = document.getElementById("admin_major");
+    element.classList.add("bg-danger");
+    /******************************************************************** */
+
+
     var iddata;
     var iurl;
     var datatable;
@@ -117,7 +140,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_faculty/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -169,7 +192,11 @@ $(document).ready(function() {
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
-    $('.row_set').click(function() {
+    $('#selectAdd').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('.row_set').click(function () {
         limit = $(this).attr('value');
         showBtnTxt = limit;
         if (limit == 0) {
@@ -178,34 +205,34 @@ $(document).ready(function() {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        if($('#SearchName').val() == ""){
+        if ($('#SearchName').val() == "") {
             show_data();
-        }else{
+        } else {
             LimitSearch();
         }
-        
+
     });
 
-    $('#chevron_right').click(function() {
+    $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
         // show_data();
-        if($('#SearchName').val() == ""){
+        if ($('#SearchName').val() == "") {
             show_data();
-        }else{
+        } else {
             LimitSearch();
         }
     });
 
-    $('#chevron_left').click(function() {
+    $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
         // show_data();
-        if($('#SearchName').val() == ""){
+        if ($('#SearchName').val() == "") {
             show_data();
-        }else{
+        } else {
             LimitSearch();
         }
     });
@@ -230,7 +257,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_major/Show_Max_Data_ctl",
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -252,7 +279,7 @@ $(document).ready(function() {
             data: "&start=" + start + "&limit=" + limit,
             url: "../Admin_major/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 datatable = response;
                 var html = '';
                 var i;
@@ -277,7 +304,7 @@ $(document).ready(function() {
         });
     }
 
-    $('#btnSearch').click(function(e) {
+    $('#btnSearch').click(function (e) {
         e.preventDefault();
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
@@ -287,7 +314,7 @@ $(document).ready(function() {
             url: "../Admin_major/Show_Max_Data_Search_ctl",
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -309,7 +336,7 @@ $(document).ready(function() {
             url: "../Admin_major/Search_Show_Data_ctl",
             data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 datatable = response;
                 var html = '';
                 var i;
@@ -334,8 +361,7 @@ $(document).ready(function() {
         });
     });
 
-    function LimitSearch()
-    {
+    function LimitSearch() {
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
 
@@ -344,7 +370,7 @@ $(document).ready(function() {
             url: "../Admin_major/Show_Max_Data_Search_ctl",
             data: "&data=" + data + "&search=" + data2,
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -366,7 +392,7 @@ $(document).ready(function() {
             url: "../Admin_major/Search_Show_Data_ctl",
             data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 datatable = response;
                 var html = '';
                 var i;
@@ -394,7 +420,7 @@ $(document).ready(function() {
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
 
     //--------------------------------------------START_BASIC_TOOLS--------------------------------------------//
-    $(document).keyup(function(e) {
+    $(document).keyup(function (e) {
         if ($('#Modal').is(':visible') == true) {
             if (e.keyCode === 13) $('#btnSave').click(); // enter
             if (e.keyCode === 27) $('#btnClose').click(); // esc
@@ -402,7 +428,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#btnAdd').click(function(e) {
+    $('#btnAdd').click(function (e) {
         e.preventDefault();
         iurl = '../Admin_major/Add_Data_ctl';
 
@@ -411,13 +437,13 @@ $(document).ready(function() {
 
     });
 
-    $('#btnClose').click(function(e) {
+    $('#btnClose').click(function (e) {
         formDataValClr();
         hideAllPop();
         $('#selectAdd').val(datatable[0].faculty_id);
     });
 
-    $('#showAllData').on('click', '.item-edit', function() {
+    $('#showAllData').on('click', '.item-edit', function () {
         iddataEncode = $(this).attr('data');
         iddata = encodeURIComponent(iddataEncode);
         ivalue = $(this).attr('value');
@@ -432,7 +458,7 @@ $(document).ready(function() {
         iurl = '../Admin_major/Edit_Data_ctl';
     });
 
-    $('#btnSave').click(function(e) {
+    $('#btnSave').click(function (e) {
         e.preventDefault();
         var result = '';
         var check = '';
@@ -475,7 +501,7 @@ $(document).ready(function() {
                     faculty_id: data2,
                     org_id: iddata
                 },
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     formDataValClr();
                     show_data();
@@ -488,7 +514,7 @@ $(document).ready(function() {
                         text: txtsnack
                     });
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     Snackbar.show({
                         actionText: 'close',
                         pos: 'top-center',
@@ -502,7 +528,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#btnDel').click(function(e) {
+    $('#btnDel').click(function (e) {
         e.preventDefault();
         $data = selectchb();
         if ($data.length > 0) {
@@ -512,7 +538,7 @@ $(document).ready(function() {
                 data: {
                     $data
                 },
-                success: function(response) {
+                success: function (response) {
                     $('#modaldel').modal('hide');
                     show_data();
                     Snackbar.show({
@@ -538,13 +564,13 @@ $(document).ready(function() {
         }
     });
 
-    $('#selectall').change(function() {
+    $('#selectall').change(function () {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
     function selectchb() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function() {
+        $('input[name^=checkitem]:checked').each(function () {
             item.push($(this).val());
         });
         return item;

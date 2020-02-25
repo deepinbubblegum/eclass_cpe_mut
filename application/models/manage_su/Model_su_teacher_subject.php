@@ -7,6 +7,7 @@ class Model_su_teacher_subject extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('teacher_subject');
+        $this->db->group_by('teasub_subjectid');
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -22,6 +23,7 @@ class Model_su_teacher_subject extends CI_Model
         $this->db->join('subject', 'teacher_subject.teasub_subjectid = subject.subject_id', 'left');
         $this->db->join('teacher', 'teacher_subject.teasub_teacherid = teacher.teacher_code_id', 'left');
         $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
+        $this->db->group_by('subject_id');
         $this->db->order_by("subject_id", "asc");
         $this->db->order_by("de_grade", "asc");
         $this->db->order_by("teacher_Tname", "asc");
@@ -67,31 +69,73 @@ class Model_su_teacher_subject extends CI_Model
     public function Add_data_model($subject, $teacher)
     {
         // $this->db->insert('teacher_subject', $data);
-        $major = $this->db->query('SELECT subject_major FROM subject WHERE subject_id = "'.$subject.'" ');
-        $chkMajor = $major->row()->subject_major;
-        $this->db->query('INSERT INTO teacher_subject VALUES("'.$subject.'" , "'.$teacher.'", "'.$chkMajor.'")');
+        // $major = $this->db->query('SELECT subject_major FROM subject WHERE subject_id = "'.$subject.'" ');
+        // $chkMajor = $major->row()->subject_major;
+        // $this->db->query('INSERT INTO teacher_subject VALUES("'.$subject.'" , "'.$teacher.'", "'.$chkMajor.'")');
+        $check = $this->db->query('SELECT * FROM teacher_subject WHERE teasub_subjectid = "' . $subject . '"');
+        if ($check->num_rows() > 0) {
+            return 0;
+        } else {
+            $major = $this->db->query('SELECT subject_major FROM subject WHERE subject_id = "' . $subject . '" ');
+            $chkMajor = $major->row()->subject_major;
+            $count = count($teacher);
+            for ($i = 0; $i < $count; $i++) {
+                $this->db->query('INSERT INTO teacher_subject VALUES("' . $subject . '" , "' . $teacher[$i] . '", "' . $chkMajor . '")');
+            }
+            return 1;
+        }
     }
 
 
-    public function Edit_data_model($org_subject, $org_teacher, $subject, $teacher)
+    public function Edit_data_model($org_subject, $subject, $teacher)
     {
-        $major = $this->db->query('SELECT subject_major FROM subject WHERE subject_id = "'.$subject.'" ');
-        $chkMajor = $major->row()->subject_major;
-        $data = array(
-            'teasub_subjectid' => $subject,
-            'teasub_teacherid' => $teacher,
-            'teasub_major' => $chkMajor,
-        );
-        $this->db->where('teasub_subjectid', $org_subject);
-        $this->db->where('teasub_teacherid', $org_teacher);
-        $this->db->update('teacher_subject', $data);
+        // $major = $this->db->query('SELECT subject_major FROM subject WHERE subject_id = "'.$subject.'" ');
+        // $chkMajor = $major->row()->subject_major;
+        // $data = array(
+        //     'teasub_subjectid' => $subject,
+        //     'teasub_teacherid' => $teacher,
+        //     'teasub_major' => $chkMajor,
+        // );
+        // $this->db->where('teasub_subjectid', $org_subject);
+        // $this->db->where('teasub_teacherid', $org_teacher);
+        // $this->db->update('teacher_subject', $data);
+
+        /**********************/
+        if ($org_subject != $subject) {
+            $check = $this->db->query('SELECT * FROM teacher_subject WHERE teasub_subjectid = "' . $subject . '"');
+            if ($check->num_rows() > 0) {
+                return -2;
+            } else {
+                $this->db->query('DELETE FROM teacher_subject WHERE teasub_subjectid = "' . $subject . '"');
+
+                $major = $this->db->query('SELECT subject_major FROM subject WHERE subject_id = "' . $subject . '" ');
+                $chkMajor = $major->row()->subject_major;
+
+                $count = count($teacher);
+                for ($i = 0; $i < $count; $i++) {
+                    $this->db->query('INSERT INTO teacher_subject VALUES("' . $subject . '" , "' . $teacher[$i] . '", "' . $chkMajor . '")');
+                }
+                return 2;
+            }
+        } else {
+            $this->db->query('DELETE FROM teacher_subject WHERE teasub_subjectid = "' . $subject . '" ');
+
+            $major = $this->db->query('SELECT subject_major FROM subject WHERE subject_id = "' . $subject . '" ');
+            $chkMajor = $major->row()->subject_major;
+
+            $count = count($teacher);
+            for ($i = 0; $i < $count; $i++) {
+                $this->db->query('INSERT INTO teacher_subject VALUES("' . $subject . '" , "' . $teacher[$i] . '", "' . $chkMajor . '")');
+            }
+            return 2;
+        }
     }
 
 
     public function Delete_Data_model($data_subject, $data_teacher)
     {
         $this->db->where_in('teasub_subjectid', $data_subject);
-        $this->db->where_in('teasub_teacherid', $data_teacher);
+        // $this->db->where_in('teasub_teacherid', $data_teacher);
         $this->db->delete('teacher_subject');
     }
 
@@ -110,6 +154,7 @@ class Model_su_teacher_subject extends CI_Model
             $this->db->or_like('subject_id', $keyword);
             $this->db->or_like('teacher_Ename', $keyword);
         }
+        $this->db->group_by('subject_id');
         $this->db->order_by("subject_id", "asc");
         $this->db->order_by("de_grade", "asc");
         $this->db->order_by("teacher_Tname", "asc");
@@ -135,7 +180,9 @@ class Model_su_teacher_subject extends CI_Model
             $this->db->or_like('subject_name', $keyword);
             $this->db->or_like('subject_id', $keyword);
             $this->db->or_like('teacher_Ename', $keyword);
+            $this->db->or_like('teacher_Tname', $keyword);
         }
+        $this->db->group_by('subject_id');
         $this->db->order_by("subject_id", "asc");
         $this->db->order_by("de_grade", "asc");
         $this->db->order_by("teacher_Tname", "asc");
@@ -201,6 +248,7 @@ class Model_su_teacher_subject extends CI_Model
         $this->db->join('subject', 'teacher_subject.teasub_subjectid = subject.subject_id', 'left');
         $this->db->join('teacher', 'teacher_subject.teasub_teacherid = teacher.teacher_code_id', 'left');
         $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
+        $this->db->group_by('subject_id');
         $this->db->order_by($data, $sort);
         $this->db->limit($limit, $start);
         $query = $this->db->get();
@@ -211,4 +259,19 @@ class Model_su_teacher_subject extends CI_Model
         }
     }
 
+    public function Show_All_teacher_model()
+    {
+        $this->db->select('*');
+        $this->db->from('teacher_subject');
+        $this->db->join('teacher', 'teacher_subject.teasub_teacherid = teacher.teacher_code_id', 'left');
+        $this->db->join('degree', 'teacher.teacher_degree = degree.de_id', 'left');
+        $this->db->order_by("de_grade", "asc");
+        $this->db->order_by("teacher_Tname", "asc");
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
 }

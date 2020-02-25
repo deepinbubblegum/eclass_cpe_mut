@@ -35,6 +35,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         max-width: 100%;
                 }
         </style>
+
 </head>
 
 <body>
@@ -150,6 +151,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                                                         </select>
                                                                 </div>
+
+                                                                <div class="col-sm mb-1">
+                                                                        <button type="button" id="btnPreview" class="btn btn-primary btn-sm mt-4">ดูรายการคัดลอก</button>
+                                                                </div>
                                                         </div>
 
                                                         <div class="form-row mt-3" id="Class_Join">
@@ -197,6 +202,70 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
         </div>
         <!-- End Modal -->
+
+
+        <!-- Modal Preview Copy -->
+        <div class="modal fade" id="ModalPreview" tabindex="-1" role="dialog" aria-labelledby="ModalPreviewTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h5 class="modal-title" id="ModalPreviewTitle">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                        <u class="mb-2">เมนูประกาศ</u>
+                                        <div id="Preview_Anc">
+                                                
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+
+                                        <u class="mb-2">เมนูคะแนน</u>
+                                        <div id="Preview_score">
+                                                
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+
+                                        <u class="mb-2">เมนูจัดการไฟล์</u>
+                                        <div id="Preview_download">
+                                                
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+
+                                        <u class="mb-2">เมนูงานที่มอบหมาย</u>
+                                        <div id="Preview_upload">
+                                                
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+
+                                        <u class="mb-2">เมนูสื่อสารสนเทศ</u>
+                                        <div id="Preview_media">
+                                                
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+
+                                        <u class="mb-2">เมนูแบบทดสอบ</u>
+                                        <div id="Preview_quiz">
+                                                
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+
+                                        <u class="mb-2">เมนูโหวต</u>
+                                        <div id="Preview_vote">
+                                                
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                </div>
+                        </div>
+                </div>
+        </div>
+        <!-- End Modal Preview Copy -->
+
 
         <!-- Modal -->
         <div class="modal fade" id="progress_wait_img" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="progress_wait_imgLabel" aria-hidden="true">

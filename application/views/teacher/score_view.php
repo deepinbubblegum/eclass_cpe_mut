@@ -196,6 +196,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
         <!-- End MODAL_ADD_FIELD -->
 
+
+        <!-- Modal Confirm Edit Field -->
+        <div class="modal fade" id="CheckEditFieldModal" tabindex="-1" role="dialog" aria-labelledby="CheckEditFieldModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h5 class="modal-title" id="CheckEditFieldModalLabel">แจ้งเตือนช่องคะแนนเต็ม</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                        มีนักศึกษาคะแนนมากกว่าคะแนนเต็มที่แก้ไข ต้องการทำรายต่อไปหรือไม่
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> ยกเลิก </button>
+                                        <button type="button" id="btnConEditField" class="btn btn-primary"> บันทึก </button>
+                                </div>
+                        </div>
+                </div>
+        </div>
+        <!-- End Modal Confirm Edit Field -->
+
+
         <!-- MODAL_GEN_TICKET -->
         <div class="modal fade bd-example-modal-lg" id="genTicket" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">

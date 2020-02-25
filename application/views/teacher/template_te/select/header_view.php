@@ -135,7 +135,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 &nbsp;&nbsp;เลือกรายวิชา
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('te_select/annouce/') . $subject_id . '-' . $semester; ?>">
+                                <a class="nav-item nav-link" id="Anc" href="<?php echo base_url('te_select/annouce/') . $subject_id . '-' . $semester; ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-chalkboard"></i></span>
                                         <span style="font-size: 1.2em;">
@@ -162,7 +162,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-upload"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ไฟล์ประกอบการสอน
+                                                                        &nbsp;&nbsp;จัดการไฟล์
                                                                 </span>
                                                                 </a>';
                                 }
