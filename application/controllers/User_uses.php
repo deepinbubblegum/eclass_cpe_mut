@@ -19,6 +19,8 @@ class User_uses extends MY_Controller
                                         'ses_id' => $sign_status[0]['std_code_id'],
                                         'ses_tname' => $sign_status[0]['std_Tname'],
                                         'ses_ename' => $sign_status[0]['std_Ename'],
+                                        'ses_THdegree' => '',
+                                        'ses_ENdegree' => '',
                                         'ses_mojor_id' => $sign_status[0]['std_major'],
                                         'ses_status' => 'student',
                                         'ses_statustext' => 'นักศึกษา'
