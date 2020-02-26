@@ -78,23 +78,26 @@ and pointQuizMenuQuizId = choiceQuizMenuQuizId
 and pointQuizHeaderQuizId = choiceQuizHeadId 
 and pointQuizChoiceQuizId = choiceQuizId  
 */
-    public function getScore($subjectId, $semesterId, $userId)
+    public function getScore($subject,$semester,$menuId,$userId)
     {
         //$this->db->select('choiceQuizMenuQuizId, choiceQuizHeadId, choiceQuizId, choiceQuizPoint');
         $this->db->select('*');
-        $this->db->from('pointQuiz, choiceQuiz');
-        //$this->db->from('pointQuiz');
+        $this->db->from('pointQuiz');
+        // $this->db->from('pointQuiz, choiceQuiz');
 
 
-        $this->db->where('pointQuizSubject = choiceQuizSubject');
-        $this->db->where('pointQuizSemester = choiceQuizSemester');
-        $this->db->where('pointQuizMenuQuizId = choiceQuizMenuQuizId');
-        $this->db->where('pointQuizHeaderQuizId = choiceQuizHeadId');
-        $this->db->where('pointQuizChoiceQuizId = choiceQuizId');
+        // $this->db->where('pointQuizSubject = choiceQuizSubject');
+        // $this->db->where('pointQuizSemester = choiceQuizSemester');
+        // $this->db->where('pointQuizMenuQuizId = choiceQuizMenuQuizId');
+        // $this->db->where('pointQuizHeaderQuizId = choiceQuizHeadId');
+        // $this->db->where('pointQuizChoiceQuizId = choiceQuizId');
 
-        $this->db->where('pointQuizSubject ', $subjectId);
-        $this->db->where('pointQuizSemester', $semesterId);
+        $this->db->where('pointQuizSubject ', $subject);
+        $this->db->where('pointQuizSemester', $semester);
+        $this->db->where('pointQuizMenuQuizId', $menuId);
         $this->db->where('pointQuizUserId ', $userId);
+
+        $this->db->order_by('cast(pointQuizHeaderQuizId as int)', 'ASC'); 
 
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

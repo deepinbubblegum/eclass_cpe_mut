@@ -90,6 +90,9 @@ $(document).ready(function () {
                             '<a aria-controls="collapse' + getMenu[i].menuQuizId + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + getMenu[i].menuQuizId + '" id="heading' + getMenu[i].menuQuizId + '">' +
                             response[i].menuQuizName + disabler1 +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
+                            '<span style="color: Dodgerblue;" id="success-icon-' + response[i].menuQuizId + '">' +
+
+                            '</span>' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
                             '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
                             '</div>' +
@@ -222,7 +225,7 @@ $(document).ready(function () {
                     }
                     for (i = 0; i < response.length; i++) {
                         html += '<label class="mt-2">' +
-                            '<input type="radio" name="test-' + CMenuID + '-' + CHeaderID + '" class="card-input-element d-none" value="' + i + '"' + disabler + '>' +
+                            '<input type="radio" name="test-' + CMenuID + '-' + CHeaderID + '" class="card-input-element d-none" value="' + response[i].choiceQuizId + '"' + disabler + '>' +
                             '<div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">' +
                             '<h5>' + response[i].choiceQuizText;
                         // html += ' ['+response[i].choiceQuizPoint+']';
@@ -255,13 +258,11 @@ $(document).ready(function () {
     ajaxCount = 0;
     $(document).ajaxStop(function () {
         //console.log('AJAX HAS BEEN STOPPED-' + ajaxCount);
-        if (ajaxCount <= 0) {
-            showScore();
+        if (ajaxCount <= 0) { 
             $.each(getMenu, function (i, p) {
-
                 for (f34r = 0; f34r < checkMenu.length; f34r++) {
                     if (checkMenu[f34r].pointQuizMenuQuizId * 1 == getMenu[i].menuQuizId * 1) {
-                        $('#btnSend-' + getMenu[i].menuQuizId).parent().parent().parent().hide();
+                        showScore(getMenu[i].menuQuizId);
                     }
                 }
 
@@ -277,8 +278,9 @@ $(document).ready(function () {
                         //test = document.querySelector('input[name="test-' + getMenu[i].menuQuizId + '-' + getField[getMenu[i].menuQuizId][j].headerQuizId + '"]:checked').value;
                         radioElement = document.querySelector('input[name="test-' + getMenu[i].menuQuizId + '-' + getField[getMenu[i].menuQuizId][j].headerQuizId + '"]:checked');
                         if (radioElement != null) {
-                            k = radioElement.value;
-                            getPoint[j] = getUnit[getMenu[i].menuQuizId][getField[getMenu[i].menuQuizId][j].headerQuizId][k].choiceQuizId;
+                            // k = radioElement.value;
+                            // getPoint[j] = getUnit[getMenu[i].menuQuizId][getField[getMenu[i].menuQuizId][j].headerQuizId][k].choiceQuizId;
+                            getPoint[j] = radioElement.value;
                         }
                         //console.log(getPoint[j]);
 
@@ -292,13 +294,15 @@ $(document).ready(function () {
                         return getPoint == '-1';
                     });
                     if (result.length > 0) {
-                        if (confirm('ท่านยังทำไม่ครบทุกข้อ จะยืนยันการส่งหรือไม่?')) {
-                            //console.log('saved');
-                            f34check = true;
-                        } else {
-                            //console.log('close');
-                            f34check = false;
-                        }
+                        // if (confirm('ท่านยังทำไม่ครบทุกข้อ จะยืนยันการส่งหรือไม่?')) {
+                        //     //console.log('saved');
+                        //     f34check = true;
+                        // } else {
+                        //     //console.log('close');
+                        //     f34check = false;
+                        // }
+                        alert('ท่านยังทำไม่ครบทุกข้อ');
+                        f34check = false;
                     } else {
                         f34check = true;
                     }
@@ -315,7 +319,7 @@ $(document).ready(function () {
                             data: '&semester=' + semester + '&subject=' + subject_id + '&menuId=' + getMenu[i].menuQuizId + '&headId=' + getChoice + '&pointId=' + getPoint,
                             success: function () {
                                 alert('บันทึกสำเร็จ');
-                                $('#btnSend-' + getMenu[i].menuQuizId).parent().parent().parent().hide();
+                                showScore(getMenu[i].menuQuizId);
                             },
                             error: function () {
                                 alert('บันทึกไม่สำเร็จ');
@@ -329,16 +333,27 @@ $(document).ready(function () {
         ajaxCount++;
     });
 
-    function showScore() {
+    function showScore(thisMenuId) {
         $.ajax({
-            url: '/' + url[3] + '/Std_subject_quiz/showScore/' + subject_id + '-' + semester,
+            type: "POST",
+            url: '/' + url[3] + '/Std_subject_quiz/showScore',
+            data: '&semester=' + semester + '&subject=' + subject_id + '&menuId=' + thisMenuId,
             dataType: "json",
             success: function (response) {
-                //console.log('showScore');
-                //console.log(response);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //console.log("Status: " + textStatus + "Error: " + errorThrown);
+                console.log('showScore');
+                console.log(response);
+                html = '';
+                if (response.length != undefined) {
+                    html += '<i title="ทำควิซเรียบร้อยแล้ว" class="fas fa-check-circle success-color">ทำควิซเรียบร้อยแล้ว</i>';
+                    $('#btnSend-' + thisMenuId).attr("disabled", true);
+
+                    for (i = 0; i < response.length; i++) {  
+                        $('input[name="test-' + thisMenuId +'-'+response[i].pointQuizHeaderQuizId+ '"][value="' + response[i].pointQuizChoiceQuizId + '"]').attr('checked', true);
+                        $('input[name="test-' + thisMenuId +'-'+response[i].pointQuizHeaderQuizId+ '"]').attr('disabled', true);
+                    }
+
+                }
+                $('#success-icon-' + thisMenuId).html(html);
             }
         });
     }

@@ -86,15 +86,21 @@ class Std_subject_quiz extends MY_Controller
         echo json_encode($result);
     }
 
-    public function showScore($sid)
+    public function showScore()
     {
-        $str_arr = explode("-", $sid);
-        $data = array(
-            'subject_id' => $str_arr[0],
-            'semester' => $str_arr[1],
-            'user_id' => $this->session->ses_id,
-        );
-        $result = $this->Model_std_subject_quiz->getScore($data['subject_id'], $data['semester'], $data['user_id']);
+        // $str_arr = explode("-", $sid);
+        // $data = array(
+        //     'subject_id' => $str_arr[0],
+        //     'semester' => $str_arr[1],
+        //     'user_id' => $this->session->ses_id,
+        // );
+        $subject = $this->input->post('subject');
+        $semester = $this->input->post('semester');
+        $menuId = $this->input->post('menuId'); 
+        $userId = $this->session->ses_id;
+
+        // $result = $this->Model_std_subject_quiz->getScore($data['subject_id'], $data['semester'], $data['user_id']);
+        $result = $this->Model_std_subject_quiz->getScore($subject,$semester,$menuId,$userId);
         echo json_encode($result);
     }
 
