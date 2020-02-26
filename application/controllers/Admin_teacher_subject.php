@@ -67,7 +67,8 @@ class Admin_teacher_subject extends MY_Controller
         //     'teasub_subjectid' => $this->input->post('subject'),
         //     'teasub_teacherid' => $this->input->post('teacher')
         // );
-        $this->Model_su_teacher_subject->Edit_data_model($org_subject, $subject, $teacher);
+        $result = $this->Model_su_teacher_subject->Edit_data_model($org_subject, $subject, $teacher);
+        echo json_encode($result);
     }
 
     public function Delete_Data_ctl()
