@@ -179,7 +179,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">อัปโหลดไฟล์</a>
                                 </li>
                                 <li class="nav-item">
-                                        <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">ไฟล์อัปโหลดแล้ว</a>
+                                        <a aria-controls="uploaded" aria-selected="false" class="nav-link" data-toggle="tab" href="#uploaded" id="uploaded-tab" role="tab">ไฟล์อัปโหลดแล้ว</a>
                                 </li>
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">
@@ -187,7 +187,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <div class="list-group mt-3 showMenuUpload DragMenu" id="accordionOne">
                                         </div>
                                 </div>
-                                <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
+                                <div aria-labelledby="uploaded-tab" class="tab-pane fade" id="uploaded" role="tabpanel">
                                         <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
                                                 <div class="list-group mt-3 showUploaded DragMenu" id="accordionTwo">
                                                 </div>
