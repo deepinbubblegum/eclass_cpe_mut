@@ -94,6 +94,7 @@ class Te_uploaded extends MY_Controller
             'menu_id' => $str_arr[2],
             'fileName' => substr($sid, $count),
         );
+        @ob_end_clean(); //fix bug mp4 file by cereal
         $getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Downloads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
         force_download($data['fileName'], $getFile);
     }
