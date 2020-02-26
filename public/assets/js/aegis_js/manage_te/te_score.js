@@ -760,7 +760,7 @@ $(document).ready(function () {
                         if (response[i].setpoint_option == '1') {
                             html +=
                                 '<center class="ml-1 mr-1">' +
-                                '<div style="width:94px;height:94px" id="' + response[i].setpoint_setpoint_id + '" id2="' + response[i].setpoint_id + '" class="sortableItem p-2 mb-2 f34r-bg-n-txt" >' + response[i].setpoint_mininame + '<br>' +
+                                '<div id="' + response[i].setpoint_setpoint_id + '" id2="' + response[i].setpoint_id + '" class="sortableItem score-box p-2 mb-2 f34r-bg-n-txt" >' + response[i].setpoint_mininame + '<br>' +
                                 '<span style="font-size: 1.5em;"><a href="#" title="ดูคะแนน" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" title="เพิ่มคะแนน" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.5em;"><a href="#" title="สร้างใบคะแนน" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
@@ -772,7 +772,7 @@ $(document).ready(function () {
                         } else if (response[i].setpoint_option == '2') {
                             html +=
                                 '<center class="ml-1 mr-1">' +
-                                '<div style="width:94px;height:94px" id="' + response[i].setpoint_setpoint_id + '" id2="' + response[i].setpoint_id + '" class="sortableItem p-2 mb-2 f34r-bg-p-txt" >' + response[i].setpoint_mininame + '<br>' +
+                                '<div id="' + response[i].setpoint_setpoint_id + '" id2="' + response[i].setpoint_id + '" class="sortableItem score-box p-2 mb-2 f34r-bg-p-txt" >' + response[i].setpoint_mininame + '<br>' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 // '<span style="font-size: 1.5em;"><a href="#" id="addTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-star-half-alt"></i></a></span>&nbsp;' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +
@@ -784,7 +784,7 @@ $(document).ready(function () {
                         } else if (response[i].setpoint_option == '3') {
                             html +=
                                 '<center class="ml-1 mr-1">' +
-                                '<div style="width:94px;height:94px" id="' + response[i].setpoint_setpoint_id + '" id2="' + response[i].setpoint_id + '" class="sortableItem p-2 mb-2 f34r-bg-o-txt" >' + response[i].setpoint_mininame + '<br>' +
+                                '<div id="' + response[i].setpoint_setpoint_id + '" id2="' + response[i].setpoint_id + '" class="sortableItem score-box p-2 mb-2 f34r-bg-o-txt" >' + response[i].setpoint_mininame + '<br>' +
                                 '<span style="font-size: 1.5em;"><a href="#" id="viewPoint-' + popUp + '-' + response[i].setpoint_setpoint_id + '"class="f34r-txt-black"><i class="fas fa-clipboard-list"></i></a></span>&nbsp;' +
                                 '<span style="font-size: 1.3em;"><a href="#" id="delField-' + popUp + '-' + response[i].setpoint_setpoint_id + '" class="f34r-txt-black"><i class="fas fa-times-circle""></i></a></span>&nbsp;' +
                                 //'<span style="font-size: 1.5em;"><a href="#" id="genTicket-' + popUp + '-' + response[i].setpoint_setpoint_id + '"  class="f34r-txt-black"><i class="fas fa-ticket-alt"></i></a></span>' +

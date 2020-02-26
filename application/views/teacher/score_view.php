@@ -46,15 +46,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                 .placeholder {
                         border: 40px solid;
+                        height: 94px;
                         background-color: white;
                         -webkit-box-shadow: 0px 0px 10px #888;
                         -moz-box-shadow: 0px 0px 10px #888;
                         box-shadow: 0px 0px 10px #888;
-                }
 
-                .sortableItem {
-                        height: 94px;
-                        /* width: 100%; */
                 }
 
                 .drag {
@@ -66,6 +63,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 input::-webkit-inner-spin-button {
                         -webkit-appearance: none;
                         margin: 0;
+                }
+
+                .score-box {
+                        width: 94px;
+                        height: 94px;
+                        cursor: move;
+                }
+
+                @media only screen and (max-width: 600px) {
+                        .score-box {
+                                margin-left: 5px;
+                                min-width: 220px;
+                                height: 94px;
+                                cursor: move;
+                        }
                 }
         </style>
 
