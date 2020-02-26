@@ -103,7 +103,7 @@ class Std_subject_vote extends MY_Controller
         $semester = $this->input->post('semester');
         $subject = $this->input->post('subject');
         $menuId = $this->input->post('menuId');
-        $result = $this->Model_std_subject_vote->refreshed($semester, $subject, $menuId);
+        $result = $this->Model_std_subject_vote->refreshed02($semester, $subject, $menuId);
         echo json_encode($result);
     }
 }

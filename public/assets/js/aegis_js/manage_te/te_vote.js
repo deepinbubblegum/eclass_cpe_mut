@@ -36,6 +36,8 @@ $(document).ready(function () {
     var studentVoted = 0;
     var idMenu = 0;
     var getMenu = [];
+    rfhStudentMax = rfhSum = notVote = ''; 
+
     selectStudent();
     showMenuVote();
     var clearPoint = '0';
@@ -318,15 +320,16 @@ $(document).ready(function () {
     $(document).ajaxStop(function () {
         ajaxCount++;
         console.log(ajaxCount);
-        //if(ajaxCount == 1){
+        if(ajaxCount == 1){
         //console.log(getPoint[getMenu[i].menuVoteId]);
         $.each(getMenu, function (i, p) {
             chartCheck = 0;
             $('#showScoreMenu-' + getMenu[i].menuVoteId).click(function (e) {
-
                 chartCheck++;
                 if (chartCheck > 1) {
                     char.destroy();
+                    clearInterval(interRefresh);
+                    console.log('doThing');
                 }
                 $("#showScoreModal").modal('show');
                 $("#scoreModalLabel").text('ผลสำรวจ : ' + getMenu[i].menuVoteName);
@@ -387,15 +390,74 @@ $(document).ready(function () {
                 notVote = (studentCount * 1) - (studentVoted * 1);
 
                 html2 = '<table class="table table-striped mt-2"><tbody>';
-                html2 += '<tr><td>Student</td> <td>' + studentCount + '</td> <td>People</td> </tr>';
-                html2 += '<tr><td>Voted</td> <td>' + studentVoted + '</td> <td>People</td> </tr>';
-                html2 += '<tr><td>No Vote</td> <td>' + notVote + '</td> <td>People</td> </tr>';
-                html2 += '</tbody></table>'
+                    html2 += '<tr><td>Student</td><td><span id="studentCount">' + studentCount + '</span></td><td>People</td> </tr>'; 
+                    html2 += '<tr><td>Voted</td><td><span id="studentVoted">' + studentVoted + '</span></td><td>People</td> </tr>'; 
+                    html2 += '<tr><td>No Vote</td><td><span id="notVote">' + notVote + '</span></td><td>People</td> </tr>'; 
+                    html2 += '</tbody></table>'
                 $('#f34r-here').html(html2);
+
+                interRefresh = setInterval(function(){
+                    refresher(subject_id,semester,getMenu[i].menuVoteId);
+                },2000);
             });
         });
-        //}
+        }
     });
+
+    function refresher(subject_id,semester,menuId){ 
+        /////////////////////////////
+        // interRefresh = setInterval(function(){
+        //////////////////////////////
+        $.ajax({
+            type: "POST",
+            url: '/' + url[3] + '/Std_subject_vote/refresherOrb/',
+            dataType: "json",
+            data: {
+                semester: semester,
+                subject: subject_id,
+                menuId: menuId
+            },
+            success: function (response) { 
+                console.log('REFRESH')
+                console.log(response);
+                console.log('REFRESH')
+                if (response.length != undefined) { 
+                    rfhStudentMax = response[1][0].studentCount;
+                    rfhChoiceText = [];
+                    rfhStdVote = [];
+                    rfhSum = 0
+
+                    for (i = 0; i < response[0].length; i++) {  
+                        rfhChoiceText[i] = response[0][i].choiceVoteText;
+                        rfhStdVote[i] = response[0][i].countStd;
+                        rfhSum += response[0][i].countStd*1;
+                    } 
+
+                    console.log(rfhStdVote);
+
+                        notVote = (rfhStudentMax*1) - (rfhSum*1);
+
+                        char.data.labels = rfhChoiceText;
+                        char.data.datasets[0].data = rfhStdVote;
+                        // char.addData(rfhStdVote);
+                        char.update();
+                        $("#studentCount").text(rfhStudentMax);
+                        $("#studentVoted").text(rfhSum);
+                        $("#notVote").text(notVote);
+
+                    // for (j = 0; j < rfhStdVote.length; j++) {  
+                            
+                    // }
+                    console.log(rfhChoiceText);
+                    console.log(rfhStdVote);
+                } 
+            }
+        });
+        /////////////////////////////
+        // }
+        // ,2000);  
+        /////////////////////////////
+    }
 
     $('#download_PDF').click(function (e) {
         e.preventDefault();
@@ -414,8 +476,8 @@ $(document).ready(function () {
         pdf.autoTable({
             // head: [['Name', 'Email', 'Country']],
             body: [
-                ['Student', studentCount, 'People'],
-                ['Voted', studentVoted, 'People'],
+                ['Student', rfhStudentMax, 'People'],
+                ['Voted', rfhSum, 'People'],
                 ['No Vote', notVote, 'People'],
             ],
             startY: 11,

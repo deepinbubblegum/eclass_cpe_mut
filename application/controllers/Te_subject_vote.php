@@ -19,6 +19,7 @@ class Te_subject_vote extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('manage_std/Model_std_subject_vote');
         $this->load->model('manage_te/Model_te_subject_vote');
     }
 
@@ -156,6 +157,14 @@ class Te_subject_vote extends MY_Controller
         $ArraySemester = $this->input->post('ArraySemester[]');
         $ArraySubject = $this->input->post('ArraySubject[]');
         $this->Model_te_subject_vote->IndexMenu($sortMenuIDArray, $ArraySemester, $ArraySubject);
+    }
+
+    public Function refresherOrb(){
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject');
+        $menuId = $this->input->post('menuId');
+        $result = $this->Model_std_subject_vote->refreshed02($semester, $subject, $menuId);
+        echo json_encode($result);
     }
 
 }

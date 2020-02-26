@@ -45,6 +45,7 @@ $(document).ready(function () {
     var studentCount = 0;
     var studentVoted = 0;
     var SHeadID = '';
+    rfhStudentMax = rfhSum = notVote = ''; 
 
     selectStudent();
     showMenuVote();
@@ -196,19 +197,16 @@ $(document).ready(function () {
                 console.log(response);
                 console.log('REFRESH')
                 if (response.length != undefined) { 
-                    rfhStudentMax = response[2][0].studentCount;
+                    rfhStudentMax = response[1][0].studentCount;
                     rfhChoiceText = [];
                     rfhStdVote = [];
                     rfhSum = 0
 
                     for (i = 0; i < response[0].length; i++) {  
                         rfhChoiceText[i] = response[0][i].choiceVoteText;
-                    }
-
-                    for (i = 0; i < response[1].length; i++) {  
-                        rfhStdVote[i] = response[1][i].countStd; 
-                        rfhSum += response[1][i].countStd*1;
-                    }
+                        rfhStdVote[i] = response[0][i].countStd;
+                        rfhSum += response[0][i].countStd*1;
+                    } 
 
                     console.log(rfhStdVote);
 
@@ -219,7 +217,7 @@ $(document).ready(function () {
                         // char.addData(rfhStdVote);
                         char.update();
                         $("#studentCount").text(rfhStudentMax);
-                        $("#studentVoted").text(rfhStudentMax );
+                        $("#studentVoted").text(rfhSum);
                         $("#notVote").text(notVote);
 
                     // for (j = 0; j < rfhStdVote.length; j++) {  

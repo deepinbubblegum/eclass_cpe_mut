@@ -81,7 +81,7 @@ class Model_std_subject_vote extends CI_Model
         $this->db->insert('pointVote', $data);
     }
 
-    public function refreshed($semester, $subject, $menuId){ 
+    public function refreshed01($semester, $subject, $menuId){ 
         $this->db->select('choiceVoteId ,choiceVoteText');
         $this->db->from('choiceVote');
         $this->db->where('choiceVoteSemester', $semester);
@@ -116,5 +116,34 @@ class Model_std_subject_vote extends CI_Model
         } else {
             return 0;
         }
+    } 
+
+    public function refreshed02($semester, $subject, $menuId){  
+        $this->db->select('choiceVoteId ,choiceVoteText,COUNT(pointVoteUserId) as countStd');
+        $this->db->from('choiceVote');
+
+        $this->db->join('pointVote', 'pointVoteSemester = choiceVoteSemester and pointVoteSubject = choiceVoteSubject and pointVoteMenuVoteId = choiceVoteMenuId and choiceVoteId = pointVoteChoiceVoteId', 'left');
+
+        $this->db->where('choiceVoteSemester', $semester);
+        $this->db->where('choiceVoteSubject', $subject);
+        $this->db->where('choiceVoteMenuId', $menuId);
+        $this->db->group_by('choiceVoteId'); 
+        $this->db->order_by('cast(choiceVoteId as int)', 'ASC');
+        $query1 = $this->db->get();
+        if ($query1->num_rows() > 0) {
+            $this->db->select('count(substd_stdid) as studentCount');
+            $this->db->from('subject_student');
+            $this->db->where('substd_semester', $semester);
+            $this->db->where('substd_subject', $subject);
+            $query2 = $this->db->get();
+            if ($query2->num_rows() > 0) {
+                $mold = array($query1->result(), $query2->result());
+                return $mold;
+            } else {
+                return 2;
+            }
+        } else {
+            return 1;
+        } 
     } 
 }
