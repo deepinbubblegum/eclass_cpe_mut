@@ -74,7 +74,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 @media only screen and (max-width: 600px) {
                         .score-box {
                                 margin-left: 5px;
-                                min-width: 220px;
+                                min-width: 210px;
                                 height: 94px;
                                 cursor: move;
                         }
