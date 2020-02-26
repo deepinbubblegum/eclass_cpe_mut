@@ -53,5 +53,5 @@ $route['default_controller'] = 'Welcome';
 $route['^en/(.+)$'] = "$1";
 $route['^th/(.+)$'] = "$1";
 $route['^(en|th)$'] = $route['default_controller'];
-$route['404_override'] = '';
+$route['404_override'] = 'notfound';
 $route['translate_uri_dashes'] = FALSE;
