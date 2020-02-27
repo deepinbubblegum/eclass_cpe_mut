@@ -457,13 +457,18 @@ $(document).ready(function () {
     $('#btnSave').click(function (e) {
         e.preventDefault();
         dataYear = $.trim($('#semester_Year').val());
-        if (dataYear < yearNow) {
-            // alert(dataYear + '<' + yearNow);
-            $('#ConfirmModalTxt').text('ปีที่บันทึกน้อยกว่าปีบัจจุบัน ต้องการบันทึกข้อมูลหรือไม่');
-            $('#modalConfirm').modal('show');
-        } else {
+        if(dataYear != ''){
+            if (dataYear < yearNow) {
+                // alert(dataYear + '<' + yearNow);
+                    $('#ConfirmModalTxt').text('ปีที่บันทึกน้อยกว่าปีบัจจุบัน ต้องการบันทึกข้อมูลหรือไม่');
+                    $('#modalConfirm').modal('show');
+            } else {
+                AddSemester();
+            }
+        }else{
             AddSemester();
         }
+        
         // AddSemester();
     });
 
