@@ -330,7 +330,6 @@ $(document).ready(function () {
         }
 
         var form_data = new FormData();
-
         for (i = 0; i < checked.length; i++) {
             ty = getFile[pos][checked[i]].name.split(".");
             var str = new String(getFile[pos][checked[i]].name).replace('.' + ty[ty.length - 1], "");
@@ -346,8 +345,14 @@ $(document).ready(function () {
             }
 
             data = "&data1=" + str /*getFile[checked[i]].name.replace(" ", "-")*/ + "&data2=" + getFile[pos][checked[i]].size + "&data3=../uploads/file/" + subject_id + semester + "&data4=" + type + "&data5=" + getMenu[pos].menuUpId + "&data6=" + subject_id + "&data7=" + semester /*+ "&getFile=" + arr*/ ;
-
             form_data.append('file[]', getFile[pos][checked[i]]);
+            form_data.append('data1',str);
+            form_data.append('data2',getFile[pos][checked[i]].size);
+            form_data.append('data3','../uploads/file/'+ subject_id + semester);
+            form_data.append('data4',type);
+            form_data.append('data5',getMenu[pos].menuUpId);
+            form_data.append('data6',subject_id);
+            form_data.append('data7',semester);
             $.ajax({
                 type: "POST",
                 url: '/' + url[3] + '/Std_upload/Upload',
@@ -374,6 +379,7 @@ $(document).ready(function () {
                             html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%"></div>Complete';
                             setTimeout(function () {
                                 $('#progress_modal').modal('hide');
+                                showMenufiles();
                             }, 1200);
                         }
                         $('#progressupload').html(html);
@@ -419,7 +425,7 @@ $(document).ready(function () {
 
         nameCollector[pos] = [];
         upload(0, pos);
-        showMenufiles();
+        // showMenufiles();
         //$('#btnUpload').hide();
         //$('#btnClearAll').hide();
     }
