@@ -295,7 +295,24 @@ $(document).ready(function () {
 
                     $('#btnUpload' + i).click(function (e) {
                         e.preventDefault();
-                        uploadBtn(i)
+                        // uploadBtn(i)
+                        var chkTxt = '';
+                        $("#uploadeds_files" + i).each(function (index) {
+                            chkTxt += $(this).text();
+                        });
+
+                        if(chkTxt !== ''){
+                            uploadBtn(i);
+                        }else{
+                            Snackbar.show({
+                                actionText: 'close',
+                                pos: 'top-center',
+                                actionTextColor: '#f44336',
+                                backgroundColor: '#323232',
+                                width: 'auto',
+                                text: 'กรุณาเลือกไฟล์ที่ต้องการอัปโหลด'
+                            });
+                        }
                     });
 
                     $('#delMenu-' + getMenu[i].menuDowId).click(function (e) {

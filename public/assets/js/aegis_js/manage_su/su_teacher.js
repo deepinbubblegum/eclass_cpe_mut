@@ -110,17 +110,17 @@ $(document).ready(function () {
                 '<input type="text" type="text" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
                 '</div>';
         }
+        html += '<div class="col-md-4 mb-3" id="degreeSelect">' +
+            '<label>ระดับอาจารย์</label>' +
+            '<select id="degreeSelectAdd" class="form-control"></select>' +
+            '</div>';
         html += '<div class="col-md-4 mb-3" id="facultySelect">' +
             '<label>คณะ</label>' +
             '<select id="facultySelectAdd" class="form-control"></select>' +
             '</div>';
-        html += '<div class="col-md-4 mb-3" id="majorSelect">' +
+        html += '<div class="col-md-8 mb-3" id="majorSelect">' +
             '<label>สาขา</label>' +
             '<select id="majorSelectAdd" class="form-control"></select>' +
-            '</div>';
-        html += '<div class="col-md-4 mb-3" id="degreeSelect">' +
-            '<label>ระดับอาจารย์</label>' +
-            '<select id="degreeSelectAdd" class="form-control"></select>' +
             '</div>';
         // html += '<div class="col-md-4 mb-3" >' +
         //     '<label>Permission</label>' +
@@ -472,6 +472,9 @@ $(document).ready(function () {
         document.getElementById('teacher_Ename').value = "";
         document.getElementById('teacher_email').value = "";
         document.getElementById('teacher_username').value = "";
+        for (i = 0; i < $(formData).length; i++) {
+            $(popData[i]).hide();
+        }
     });
 
     $(document).on('keyup', function (e) {
