@@ -142,9 +142,6 @@ class Std_upload extends MY_Controller
                         $this->Model_std_upload->insertUpload($database);
                     } 
                 } 
-                
-
-
         }
 
         public function showMenuUpload_files($sid)
