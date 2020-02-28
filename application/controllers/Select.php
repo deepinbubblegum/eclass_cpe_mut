@@ -6,6 +6,9 @@ class select extends MY_Controller
         public function __construct()
         {
                 parent::__construct();
+                if ($this->session->ses_status != 'teacher' && $this->session->ses_status != 'admin' && $this->session->ses_status != 'student') {
+                        redirect();
+                }
                 $this->load->model('manage_te/Model_te_annouce');
                 $this->load->model('manage_te/Model_te_subject');
         }
@@ -19,10 +22,9 @@ class select extends MY_Controller
                         'heading' => 'My Heading',
                         'message' => 'My Message'
                 );
-                if ($this->Model_te_subject->check_subject_semester($data))
-                {
+                if ($this->Model_te_subject->check_subject_semester($data)) {
                         return $data;
-                }else{
+                } else {
                         show_404();
                 }
         }
@@ -116,10 +118,9 @@ class select extends MY_Controller
                         'semester' => $str_arr[1],
                         'point_id' => $str_arr[2]
                 );
-                if ($this->Model_te_subject->check_subject_semester($data))
-                {
+                if ($this->Model_te_subject->check_subject_semester($data)) {
                         $this->load->view('student/score_table', $data);
-                }else{
+                } else {
                         show_404();
                 }
         }

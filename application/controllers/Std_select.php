@@ -6,6 +6,9 @@ class Std_select extends MY_Controller
         public function __construct()
         {
             parent::__construct(); 
+            if ($this->session->ses_status != 'student') {
+                redirect();
+            }
             $this->load->model('manage_std/Model_std_select');
         }
 
