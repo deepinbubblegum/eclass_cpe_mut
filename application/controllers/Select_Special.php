@@ -6,6 +6,9 @@ class Select_Special extends MY_Controller
         public function __construct()
         {
                 parent::__construct();
+                if ($this->session->ses_status != 'teacher' && $this->session->ses_status != 'admin' && $this->session->ses_status != 'student') {
+                        redirect();
+                }
                 $this->load->model('manage_te/Model_te_annouce');
                 $this->load->model('manage_te/Model_te_subject');
         }
