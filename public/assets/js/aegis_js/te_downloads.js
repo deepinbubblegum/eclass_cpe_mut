@@ -389,7 +389,7 @@ $(document).ready(function () {
                             '<span>' +
                             '<a class="btn btn-success btn-block mr-1 ml-1 mt-1" href="/Te_download/download/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">download</a>' +
                             //'<a class="btn btn-danger btn-block mr-1 ml-1 mt-1" id="" href="/Te_download/delete/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">delete</a>' +
-                            '<a class="btn btn-block btn-danger mr-1" id="DelFile-' + getMenu[popUp].menuUpId + '-' + i + '" href="#">delete</a>' +
+                            '<a class="btn btn-block btn-danger mr-1 ml-1 mt-1" id="DelFile-' + getMenu[popUp].menuUpId + '-' + i + '" href="#">delete</a>' +
                             '</span>' +
                             '</li>';
                     }

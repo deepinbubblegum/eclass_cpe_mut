@@ -21,21 +21,27 @@ class Std_upload extends MY_Controller
                 parent::__construct();
                 $this->load->model('manage_std/Model_std_upload');
         }
-
         public function Upload(/*$sid*/)
         {
+                // $result = $this->check_late($this->input->post('data7'),$this->input->post('data6'),$this->input->post('data5'));
+                // if($result){
+                //         $late = 1;
+                // }else{
+                //         $late = 0;
+                // }
                 //$data2 = convertData($sid);
-                $data = array(
-                        "fileName" => $this->input->post('data1'),
-                        "fileSize" => $this->input->post('data2'),
-                        //"filePath" => $this->input->post('data3'),
-                        "fileType" => $this->input->post('data4'),
-                        "fileMenuUpId" => $this->input->post('data5'),
-                        "fileUserId" => $this->session->ses_id,
-                        "fileSubjectId" => $this->input->post('data6'),
-                        "fileSemesterId" => $this->input->post('data7'),
-                        "fileTimestamp" => date("Y-m-d H:i:s")
-                );    
+                // $data = array(
+                //         "fileName" => $this->session->ses_id.'_'.$this->input->post('data1'),
+                //         "fileSize" => $this->input->post('data2'),
+                //         //"filePath" => $this->input->post('data3'),
+                //         "fileType" => $this->input->post('data4'),
+                //         "fileMenuUpId" => $this->input->post('data5'),
+                //         "fileUserId" => $this->session->ses_id,
+                //         "fileSubjectId" => $this->input->post('data6'),
+                //         "fileSemesterId" => $this->input->post('data7'),
+                //         "fileTimestamp" => date("Y-m-d H:i:s"),
+                //         "fileLate" => $late
+                // );    
                 // fileSubjectId char(10) NOT NULL,
                 // fileSemesterId char(5) NOT NULL, 
                 // fileMenuUpId char(10) NOT NULL,
@@ -44,7 +50,7 @@ class Std_upload extends MY_Controller
                 // fileType varchar(255),
                 // filePath varchar(255) NOT NULL,
                 
-                $this->Model_std_upload->insertUpload($data);
+               
         }
 
         public function showMenuUpload($sid)
@@ -69,7 +75,6 @@ class Std_upload extends MY_Controller
 
         public function UploadFile($sid)
         {
-                
                 $str_arr = explode("-", $sid);
                 $data2 = array(
                         'subject_id' => $str_arr[0],
@@ -81,44 +86,62 @@ class Std_upload extends MY_Controller
                  
                 $result = $this->check_late($data2['semester'],$data2['subject_id'],$data2['menuId']);
                 if($result){
-                        $dir ='/Eclass/uploads/file/'.$data2['semester'].$data2['subject_id'].'/'.'Uploads/'.$data2['menuId'];
+                        $dir ='/Eclass/uploads/file/'.$data2['semester'].$data2['subject_id'].'/'.'Uploads/'.$data2['menuId'].'/'.$this->session->ses_id;
+                        if (!is_dir($dir)) {
+                                mkdir($dir, 0700, true); 
+                                chmod($dir, 0700); 
+                        }
+                        $late = 0;
                 }else{
-                        $dir ='/Eclass/uploads/file/'.$data2['semester'].$data2['subject_id'].'/'.'Uploads/'.$data2['menuId'].'/late';
+                        $dir ='/Eclass/uploads/file/'.$data2['semester'].$data2['subject_id'].'/'.'Uploads/'.$data2['menuId'].'/late'.'/'.$this->session->ses_id;
+                        if (!is_dir($dir)) {
+                                mkdir($dir, 0700, true); 
+                                chmod($dir, 0700);
+                        }
+                        $late = 1;
                 }
                 //$config['upload_path'] = '/Eclass/uploads/file/25611CPEN1010/Uploads/';
                 //echo $data2['semester'].$data2['subject_id'];
-
-                if (!is_dir($dir)) {
-                        mkdir($dir, 0700, true); 
-                        chmod($dir, 0700); 
-                }
                 $config['upload_path'] = $dir;
                 $config['allowed_types'] = '*';
                 $config['max_filename'] = '255';
                 $config['max_size'] = '2147483648'; //2 GB  
-                $config['overwrite'] = TRUE;
-
+                $config['overwrite'] = false;
                 $this->load->library('upload', $config); 
                 $count = count($_FILES['file']['name']);
                 for ($i = 0; $i < $count; $i++) {
                     //$udata = null;
                     $pseudo_field_name = '_psuedo_'. 'file' .'_'. $i;
                     $_FILES[$pseudo_field_name] = array(
-                        'name' => str_replace(" ","_",$_FILES['file']['name'][$i]),
+                        'name' => $this->session->ses_id.'_'.str_replace(" ","_",$_FILES['file']['name'][$i]),
                         'size' => $_FILES['file']['size'][$i], 
                         'type' => $_FILES['file']['type'][$i],
                         'tmp_name' => $_FILES['file']['tmp_name'][$i],
                         'error' => $_FILES['file']['error'][$i]
                     );
 
-                    
                     if ( ! $this->upload->do_upload($pseudo_field_name) ) {
+                        //     echo $pseudo_field_name;
                         $this->upload->display_errors();
                     } else {
-                        $this->upload->data(); 
+                        $upload_data = $this->upload->data();
+                        $file_name = $upload_data['file_name'];
+                        // echo $file_name;
+                        $database = array(
+                                "fileName" => $file_name,
+                                "fileSize" => $this->input->post('data2'),
+                                //"filePath" => $this->input->post('data3'),
+                                "fileType" => $this->input->post('data4'),
+                                "fileMenuUpId" => $this->input->post('data5'),
+                                "fileUserId" => $this->session->ses_id,
+                                "fileSubjectId" => $this->input->post('data6'),
+                                "fileSemesterId" => $this->input->post('data7'),
+                                "fileTimestamp" => date("Y-m-d H:i:s"),
+                                "fileLate" => $late
+                        );
+                        $this->Model_std_upload->insertUpload($database);
                     } 
                 } 
-                
         }
 
         public function showMenuUpload_files($sid)

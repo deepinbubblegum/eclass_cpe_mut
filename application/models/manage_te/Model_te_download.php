@@ -85,4 +85,45 @@ class Model_te_download extends CI_Model
         $this->db->delete('menuUpload');
     }
 
+    public function check_file_late($fileSemesterId, $fileSubjectId, $fileMenuUpId, $fileName)
+    {
+        $this->db->select('fileLate');
+        $this->db->from('fileUpload');
+        $this->db->where('fileSemesterId', $fileSemesterId);
+        $this->db->where('fileSubjectId', $fileSubjectId);
+        $this->db->where('fileMenuUpId', $fileMenuUpId);
+        $this->db->where('fileName', $fileName);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            $row = $query->row_array();
+            return $row['fileLate'];
+        }
+    }
+
+    public function update_path_time_end($semester, $subject_id, $editId)
+    {
+        $this->db->select('menuUpTimeEnd');
+        $this->db->from('menuUpload');
+        $this->db->where('menuUpSemesterId', $semester);
+        $this->db->where('menuUpSubjectId', $subject_id);
+        $this->db->where('menuUpId', $editId);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            $row = $query->row_array();
+            return $row['menuUpTimeEnd'];
+        }
+    }
+
+    public function update_status_late($fileSemesterId, $fileSubjectId, $fileMenuUpId, $fileName, $filelate)
+    {
+        $data = array(
+            'fileLate' => $filelate
+        );
+        $this->db->where('fileSemesterId', $fileSemesterId);
+        $this->db->where('fileSubjectId', $fileSubjectId);
+        $this->db->where('fileMenuUpId', $fileMenuUpId);
+        $this->db->where('fileName', $fileName);
+        $this->db->update('fileUpload', $data);
+    }
+
 }
