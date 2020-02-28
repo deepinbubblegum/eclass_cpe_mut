@@ -52,6 +52,21 @@ $(document).ready(function () {
     Teacher_Owner_Subject();
     getTeacherSP();
 
+    /*--------------------------------------------------------------------------------------------------------------------------*/
+
+    $('#SelectFacultyAdd').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#SelectMajorAdd').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#SelectSubjectAdd').select2({
+        theme: 'bootstrap4',
+    });
+
+
     var dataMenu;
     var dataTeacherOwner = '';
 
@@ -286,7 +301,7 @@ $(document).ready(function () {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                        html += '<option value="' + response[i].major_id + '">('+ response[i].major_id + ') ' + response[i].major_name + '</option>';
                     }
                 }
                 $('#SelectMajorAdd').html(html);
@@ -301,12 +316,14 @@ $(document).ready(function () {
 
     function select_subject_add() {
         $data = $('#SelectMajorAdd :selected').val();
+        data2 = encodeURIComponent($data);
+        
         subjectoption = [];
         subjectoptiontxt = [];
         $.ajax({
             type: 'POST',
             url: "/" + url[3] + "/Te_special_point/ShowSubject",
-            data: '&major=' + $data,
+            data: '&major=' + data2,
             dataType: "json",
             success: function (response) {
                 var html = '';

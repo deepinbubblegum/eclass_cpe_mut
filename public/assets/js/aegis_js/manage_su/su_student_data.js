@@ -628,6 +628,45 @@ $(document).ready(function () {
         });
     }
 
+    function getFacultyEdit(Fa_id) {
+        $.ajax({
+            url: "../Admin_student_data/Show_Data_faculty",
+            dataType: "json",
+            success: function (response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
+                    }
+                }
+                $('#facultySelectAdd').html(html);
+                $('#facultySelectAdd').val(Fa_id);
+            }
+        });
+    }
+
+    function getMajorEdit(major_id) {
+        facultySelect = $('#facultySelectAdd :selected').val();
+        $.ajax({
+            type: "POST",
+            url: "../Admin_student_data/Show_Data_Major",
+            data: '&facultySelect=' + $('#facultySelectAdd :selected').val(),
+            dataType: "json",
+            success: function (response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                    }
+                }
+                $('#majorSelectAdd').html(html);
+                $('#majorSelectAdd').val(major_id);
+            }
+        });
+    }
+
     $('#btnAdd').click(function (e) {
         e.preventDefault();
         iurl = '../Admin_student_data/Add_Data_ctl';
@@ -728,10 +767,11 @@ $(document).ready(function () {
         $('#std_Tname').val(datatable[ivalue].std_Tname);
         $('#std_Ename').val(datatable[ivalue].std_Ename);
         $('#std_email').val(datatable[ivalue].std_email);
-        console.log(datatable[ivalue].major_id, datatable[ivalue].major_name);
+        console.log(datatable[ivalue].faculty_id, datatable[ivalue].major_id);
         $('#facultySelectAdd').val(datatable[ivalue].faculty_id);
+        getFacultyEdit(datatable[ivalue].faculty_id);
         // $('#facultySelectAdd').find('option[value="'+datatable[ivalue].faculty_id+'"]').attr('selected','selected');
-        getMajor();
+        getMajorEdit(datatable[ivalue].major_id);
         $('#majorSelectAdd').val(datatable[ivalue].major_id);
         $('#Modal').modal('show');
         $('#Modal').find('.modal-title').text('แก้ไขข้อมูลผู้ใช้งาน');

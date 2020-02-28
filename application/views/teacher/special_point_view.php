@@ -13,6 +13,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
         semester = '<?php echo $semester; ?>';
     </script>
     <?php
+    echo assets_css('bootstrap_css/select2.min.css');
+    echo assets_css('bootstrap_css/select2-bootstrap4.min.css');
+    echo assets_js('bootstrap_js/select2.full.min.js');
+
     echo assets_css('bootstrap_css/bootstrap-clockpicker.min.css');
     echo assets_js('aegis_js/manage_te/te_point_special.js');
     echo assets_js('bootstrap_js/bootstrap-clockpicker.min.js');

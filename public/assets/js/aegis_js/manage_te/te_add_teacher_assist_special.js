@@ -190,6 +190,16 @@ $(document).ready(function() {
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
+    
+    $('#selectAddTeacher').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#selectAddPermission').select2({
+        theme: 'bootstrap4',
+    });
+
+
     $('.row_set').click(function() {
         limit = $(this).attr('value');
         showBtnTxt = limit;

@@ -546,7 +546,7 @@ $(document).ready(function () {
         if (data2Encode !== '') {
             if ($('#List_Major').has('option').length > 0) {
                 $("#List_Major > option").each(function () {
-                    if (this.value == data2) {
+                    if (this.value == data2Encode) {
                         Snackbar.show({
                             actionText: 'close',
                             pos: 'top-center',
@@ -559,10 +559,10 @@ $(document).ready(function () {
                     }
                 });
                 if (chk != 1) {
-                    $('#List_Major').append('<option value="' + data2 + '"> ' + data2text + ' </option>');
+                    $('#List_Major').append('<option value="' + data2Encode + '"> ' + data2text + ' </option>');
                 }
             } else {
-                $('#List_Major').append('<option value="' + data2 + '"> ' + data2text + ' </option>');
+                $('#List_Major').append('<option value="' + data2Encode + '"> ' + data2text + ' </option>');
             }
         }
     });
@@ -573,7 +573,7 @@ $(document).ready(function () {
             // alert($('#List_Major_Edit :selected').val());
             major_id = $('#List_Major :selected').val();
             // $('#List_Major_Edit option[value="' + subid + '"]').remove();
-            $('#List_Major').find('option[value=' + major_id + ']').remove();
+            $('#List_Major').find('option[value="' + major_id + '"]').remove();
         } else {
             Snackbar.show({
                 actionText: 'close',
@@ -613,7 +613,8 @@ $(document).ready(function () {
 
             arr_major = [];
             $("#List_Major option").each(function () {
-                arr_major.push(this.value);
+                value_id =  encodeURIComponent(this.value);
+                arr_major.push(value_id);
             });
 
             if (typeof arr_major !== 'undefined' && arr_major.length > 0) {
