@@ -98,7 +98,7 @@ class Te_download extends MY_Controller
                         $filePath = '/Eclass/uploads/file/'
                                 . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['userID'] . '/' . $data['fileName'];
                 }
-
+                @ob_end_clean();
                 // $getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
                 force_download($data['fileName'], file_get_contents($filePath));
         }
