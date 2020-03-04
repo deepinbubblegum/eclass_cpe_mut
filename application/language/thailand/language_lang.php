@@ -68,5 +68,9 @@ $lang = array(
         'te_increase_assis_level' => 'เพิ่มระดับสิทธิ์อาจารย์ผู้ช่วย',
         'add_assis_professor' => 'เพิ่มอาจารย์ผู้ช่วย',
         'add_std_to_sub' => 'เพิ่มนักศึกษาในวิชา',
-        'exchang_point' => 'แลกคะแนน'
+        'exchang_point' => 'แลกคะแนน',
+        'admin_info' => 'ข้อมูลผู้ดูแลระบบ',
+        'te_barnch_info' => 'ข้อมูลอาจารย์ประจำสาขา',
+        'te_sub_info' => 'ข้อมูลอาจารย์ประจำวิชา',
+        'info_academic' => 'ข้อมูลตำแหน่งวิชาการ'
 );
