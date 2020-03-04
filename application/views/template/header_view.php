@@ -169,7 +169,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 ?>
                                 <div class="navdrawer-divider"></div>
                                 <a href="">
-                                        <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?= lang('sign_in'); ?></p>
+                                        <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?= lang('web_manual') ?></p>
                                 </a>
                         </nav>
                 </div>
