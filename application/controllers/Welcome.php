@@ -6,8 +6,7 @@ class Welcome extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->lang->load('header');
-		$this->lang->load('welcome');
+		$this->lang->load('language');
 	}
 
 	public function index()

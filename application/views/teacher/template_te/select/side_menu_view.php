@@ -39,14 +39,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-arrow-left"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เลือกรายวิชา
+                                                                        &nbsp;&nbsp;<?=lang('choose_courses')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" id="side_Anc" href="<?php echo base_url('te_select/annouce/') . $subject_id . '-' . $semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-chalkboard"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ประกาศถึงนักศึกษา
+                                                                        &nbsp;&nbsp;<?=lang('announce_students')?>
                                                                 </span>
                                                         </a>
 
@@ -57,7 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star-half-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;คะแนน
+                                                                        &nbsp;&nbsp;'.lang('score').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -70,7 +70,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-upload"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;จัดการไฟล์
+                                                                        &nbsp;&nbsp;'.lang('file_manager').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -83,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-download"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;งานที่มอบหมาย
+                                                                        &nbsp;&nbsp;'.lang('assignment').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -96,7 +96,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-play"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;สื่อสารสนเทศ
+                                                                        &nbsp;&nbsp;'.lang('information_media').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -109,7 +109,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;แบบทดสอบ
+                                                                        &nbsp;&nbsp;'.lang('quiz').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -121,7 +121,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;โหวต
+                                                                        &nbsp;&nbsp;'.lang('vote').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -132,7 +132,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-stopwatch"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;นาฬิกาจับเวลา
+                                                                        &nbsp;&nbsp;<?=lang('stopwatch')?>
                                                                 </span>
                                                         </a>
 
@@ -143,7 +143,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;นักศึกษาขอแลกคะแนน
+                                                                        &nbsp;&nbsp;'.lang('std_req_point').'
                                                                 </span>
                                                                 <span class="badge badge-primary badge-pill" id="txtReadSide"> </span>
                                                                 </a>';
@@ -159,7 +159,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-user-shield"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เพิ่มระดับสิทธิ์อาจารย์ผู้ช่วย
+                                                                        &nbsp;&nbsp;'.lang('te_increase_assis_level').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -172,7 +172,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เพิ่มอาจารย์ผู้ช่วย
+                                                                        &nbsp;&nbsp;'.lang('add_assis_professor').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -185,7 +185,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เพิ่มนักศึกษาในวิชา
+                                                                        &nbsp;&nbsp;'.lang('add_std_to_sub').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -214,7 +214,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                         </a> -->
                                                         <a href="">
-                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>
+                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?=lang('web_manual')?></p>
                                                         </a>
                                                 </nav>
                                         </div>

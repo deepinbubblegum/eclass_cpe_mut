@@ -89,8 +89,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <button type="button" class="btn btn-sm btn-outline-light btn-toggler-sm" aria-controls="navdrawer-right" aria-expanded="false" aria-label="Toggle Navdrawer" data-target="#navdrawer-right" data-toggle="navdrawer">
                                 <?php
                                 if (isset($this->session->ses_id)) {
+                                        ($this->session->lang == 'en') ? $name_user = $this->session->ses_ename : $name_user = $this->session->ses_tname;
                                         echo  '<a class="title_message">
-                                                <span style="font-size: 1.2em;">' . $this->session->ses_tname . '</span>
+                                                <span style="font-size: 1.2em;">' . $name_user . '</span>
                                                 &nbsp;
                                                 </a>
                                                 <span style="font-size: 1.5em;">
@@ -116,7 +117,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="navdrawer-header">
                                 <div class="navbar-brand px-0">
                                         <span style="font-size: 1.1em;">
-                                                <i class="fas fa-th-list"></i></span>&nbsp;&nbsp;&nbsp;เมนู
+                                                <i class="fas fa-th-list"></i></span>&nbsp;&nbsp;&nbsp;<?=lang('menu')?>
                                 </div>
 
                         </div>
@@ -125,26 +126,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="far fa-address-card"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;เพิ่มวิชาสอนประจำเทอม
+                                                &nbsp;&nbsp;<?=lang('add_courses_for_term')?>
                                         </span>
                                 </a>
                                 <a class="nav-item nav-link" href="<?php echo base_url('teacher'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="far fa-address-book"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;รายวิชาสอน
+                                                &nbsp;&nbsp;<?=lang('teaching_course')?>
                                         </span>
                                 </a>
                                 <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-stopwatch"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;นาฬิกาจับเวลา
+                                                &nbsp;&nbsp;<?=lang('stopwatch')?>
                                         </span>
                                 </a>
                                 <div class="navdrawer-divider"></div>
                                 <a href="">
-                                        <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>
+                                        <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?=lang('web_manual')?></p>
                                 </a>
                         </nav>
                 </div>
@@ -163,7 +164,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         } else {
                                                 echo '<span style="font-size: 1.1em;">
                                                 <i class="fas fa-sign-in-alt"></i>
-                                                </span>&nbsp;&nbsp;ลงชื่อเข้าใช้';
+                                                </span>&nbsp;&nbsp;'.lang('sign_in').'';
                                         }
                                         ?>
                                 </div>
@@ -172,33 +173,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="container">
                                         <?php
                                         if (isset($this->session->ses_tname)) {
-                                                echo '<div class="mb-2 mt-2">รหัส : ' . $this->session->ses_id . '</div>';
-                                                echo '<div class="mb-2 mt-2">ชื่อ : ' . $this->session->ses_THdegree . $this->session->ses_tname . '</div>';
-                                                echo '<div class="mb-3 mt-2">สถานะ : ' . $this->session->ses_statustext . '</div>';
-                                                echo '<button type="button" id="te_user" class="btn btn-primary btn-lg btn-block">รายละเอียดบัญชีผู้ใช้งาน</button>';
-                                                echo '<button type="button" id="Signout_btn" class="btn btn-danger btn-lg btn-block">ออกจากระบบ</button>';
+                                                echo '<div class="mb-2 mt-2">'.lang('id').' : ' . $this->session->ses_id . '</div>';
+                                                echo '<div class="mb-2 mt-2">'.lang('name').' : ' . $this->session->ses_THdegree . $this->session->ses_tname . '</div>';
+                                                echo '<div class="mb-3 mt-2">'.lang('status').' : ' . $this->session->ses_statustext . '</div>';
+                                                echo '<button type="button" id="te_user" class="btn btn-primary btn-lg btn-block">'.lang('account_details').'</button>';
+                                                echo '<button type="button" id="Signout_btn" class="btn btn-danger btn-lg btn-block">'.lang('sign_out').'</button>';
                                         } else {
                                                 echo '<form id="sigin_form">
                                                 <div class="form-group">
                                                 <div class="floating-label">
-                                                <label for="Username"><i class="fas fa-lock"></i>&nbsp;&nbsp;ชื่อผู้ใช้</label>
-                                                <input aria-describedby="UsernameHelp" class="form-control" id="Username" name="Username" placeholder=" ชื่อผู้ใช้ หรือ ID" type="text" autocomplete="off">
+                                                <label for="Username"><i class="fas fa-lock"></i>&nbsp;&nbsp;'.lang('username').'</label>
+                                                <input aria-describedby="UsernameHelp" class="form-control" id="Username" name="Username" placeholder=" '.lang('username_or_id').'" type="text" autocomplete="off">
                                                 <div class="invalid-feedback">
-                                                        *กรุณาลงชื่อเข้าใช้งาน
+                                                        '.lang('please_sign_in').'
                                                 </div>
                                                 </div>
                                                 </div>
                                                 <div class="form-group">
                                                         <div class="floating-label">
-                                                                <label for="Password"><i class="fas fa-key"></i>&nbsp;&nbsp;รหัสผู้ใช้</label>
-                                                                <input aria-describedby="PasswordHelp" class="form-control" id="Password" name="Password" placeholder=" รหัสผู้ใช้ หรือ Password" type="Password" autocomplete="off">
+                                                                <label for="Password"><i class="fas fa-key"></i>&nbsp;&nbsp;'.lang('user_pass').'</label>
+                                                                <input aria-describedby="PasswordHelp" class="form-control" id="Password" name="Password" placeholder=" '.lang('passuser_or_password').'" type="Password" autocomplete="off">
                                                                 <div class="invalid-feedback">
-                                                                        *กรุณากรอกรหัส
+                                                                        '.lang('please_enter_the_code').'
                                                                 </div>
                                                         </div>
                                                 </div>
                                                 </form>
-                                                <button type="button" id="Signin_btn" class="btn btn-primary btn-lg btn-block">ลงชื่อเข้าใช้</button>';
+                                                <button type="button" id="Signin_btn" class="btn btn-primary btn-lg btn-block">'.lang('sign_in').'</button>';
                                         }
                                         ?>
                                 </div>
@@ -215,7 +216,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                                 <div class="modal-header">
-                                        <h5 class="modal-title">รายละเอียดบัญชีผู้ใช้งาน </h5>
+                                        <h5 class="modal-title">'.lang('account_details').' </h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                         </button>
@@ -223,39 +224,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="modal-body">
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                 <li class="nav-item">
-                                                        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">รายละเอียดบัญชีผู้ใช้</a>
+                                                        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">'.lang('account_details').'</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">ตั้งค่ารหัสผู้ใช้</a>
+                                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">'.lang('set_user_id').'</a>
                                                 </li>
                                         </ul>
                                         <div class="tab-content" id="myTabContent">
                                                 <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                                        <div class="ml-2 mb-2 mt-2">รหัส : ' . $this->session->ses_id . '</div>
-                                                        <div class="ml-2 mb-2 mt-2">ชื่อ : ' . $this->session->ses_THdegree . $this->session->ses_tname . '</div>
-                                                        <div class="ml-2 mb-3 mt-2">สถานะ : ' . $this->session->ses_statustext . '</div>
-                                                        <div class="ml-2 mb-3 mt-2">สังกัดสาขา :
+                                                        <div class="ml-2 mb-2 mt-2">'.lang('id').' : ' . $this->session->ses_id . '</div>
+                                                        <div class="ml-2 mb-2 mt-2">'.lang('name').' : ' . $this->session->ses_THdegree . $this->session->ses_tname . '</div>
+                                                        <div class="ml-2 mb-3 mt-2">'.lang('status').' : ' . $this->session->ses_statustext . '</div>
+                                                        <div class="ml-2 mb-3 mt-2">'.lang('brance_with').' :
                                                                 <span  id="techer_major_show">
                                                                 </span>
                                                         </div>
                                                 </div>
                                                 <div class="tab-pane fade mt-4 ml-2" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                                         <div class="form-group">
-                                                                <label for="label_old_passwd">รหัสผู้ใช้เดิม</label>
+                                                                <label for="label_old_passwd">'.lang('old_password').'</label>
                                                                 <input type="password" class="form-control" id="old_passwd">
                                                         </div>
 
                                                         <div class="form-group">
-                                                                <label for="label_passwd">รหัสผู้ใช้ใหม่</label>
+                                                                <label for="label_passwd">'.lang('password').'</label>
                                                                 <input type="password" class="form-control" id="Passwd">
                                                         </div>
 
                                                         <div class="form-group">
-                                                                <label for="label_passwd_ck">ยืนยัน รหัสผู้ใช้ใหม่</label>
+                                                                <label for="label_passwd_ck">'.lang('confirm_new_passwd').'</label>
                                                                 <input type="password" class="form-control" id="Passwd_ck">
                                                         </div>
                                                         <div class="modal-footer">
-                                                                <button type="button" id="save_changes" class="btn btn-primary">Save changes</button>
+                                                                <button type="button" id="save_changes" class="btn btn-primary">'.lang('save_changes').'</button>
                                                         </div>
                                                 </div>
                                         </div>

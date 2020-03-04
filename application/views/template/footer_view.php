@@ -29,7 +29,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="modal-dialog" role="document">
                         <div class="modal-content">
                                 <div class="modal-header">
-                                        <h5 class="modal-title" id="modal_ticketLabel">กรอกรหัสคะแนน</h5>
+                                        <h5 class="modal-title" id="modal_ticketLabel"><?=lang('enter_the_score_code')?></h5>
                                         <!-- data-dismiss="modal" -->
                                         <button type="button" class="close" id="qr_close" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -46,19 +46,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 </div>
                                                 <div class="form-group position-relative mt-1">
                                                         <div class="floating-label" id="floating-lable-label">
-                                                                <label for="Ticket"><i class="fas fa-hashtag"></i>&nbsp;&nbsp;รหัสใบงาน</label>
+                                                                <label for="Ticket"><i class="fas fa-hashtag"></i>&nbsp;&nbsp;<?=lang('ticket_code')?></label>
                                                                 <input aria-describedby="TicketHelp" class="form-control" id="Ticket" name="Ticket" placeholder=" XXXX-XXXX-XXXX-XXXX" type="text" maxlength="24" autocomplete="off">
-                                                                <span class="form-clear d-none"><i class="material-icons">clear</i></span>
+                                                                <span class="form-clear d-none"><i class="material-icons"><?=lang('clear')?></i></span>
                                                                 <div id='txtShowReturn'>
-                                                                        *กรุณากรอกรหัสใบงาน
+                                                                        <?=lang('pls_en_the_tick_code')?>
                                                                 </div>
                                                         </div>
                                                 </div>
                                         </form>
                                 </div>
                                 <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" id="btn_start_reader">QR Code Scan</button>
-                                        <button type="button" class="btn btn-primary" id="btnTicketSave">บันทึก</button>
+                                        <button type="button" class="btn btn-secondary" id="btn_start_reader"><?=lang('QR_Code_Scan')?></button>
+                                        <button type="button" class="btn btn-primary" id="btnTicketSave"><?=lang('save')?></button>
                                 </div>
                         </div>
                 </div>

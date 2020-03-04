@@ -22,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-home"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;หน้าแรก
+                                                                        &nbsp;&nbsp;<?=lang('home_page')?>
                                                                 </span>
                                                         </a>
                                                         <?php
@@ -31,7 +31,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-atlas"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;รายวิชา
+                                                                        &nbsp;&nbsp;'.lang('course').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         <span style="font-size: 1.5em;">
                                                                                 <i class="fas fa-tachometer-alt"></i></span>
                                                                         <span style="font-size: 1.2em;">
-                                                                                &nbsp;&nbsp;พิมพ์บาร์โค้ด
+                                                                                &nbsp;&nbsp;'.lang('print_barcode').'
                                                                         </span>
                                                                         </a>';
                                                         }
@@ -51,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-stopwatch"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;นาฬิกาจับเวลา
+                                                                        &nbsp;&nbsp;<?=lang('stopwatch')?>
                                                                 </span>
                                                         </a>
                                                         <?php
@@ -61,14 +61,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         <span style="font-size: 1.5em;">
                                                                                 <i class="fas fa-ticket-alt"></i></span>
                                                                         <span style="font-size: 1.2em;">
-                                                                                &nbsp;&nbsp;กรอกรหัสคะแนน
+                                                                                &nbsp;&nbsp;'.lang('enter_the_score_code').'
                                                                         </span>
                                                                 </a>';
                                                         }
                                                         ?>
                                                         <div class="navdrawer-divider"></div>
                                                         <a href="">
-                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>
+                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?=lang('web_manual')?></p>
                                                         </a>
                                                 </nav>
                                         </div>
