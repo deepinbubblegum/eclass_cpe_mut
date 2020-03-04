@@ -7,6 +7,7 @@ class MY_Controller extends CI_Controller
         {
                 parent::__construct();
                 $this->changeLang();
+                $this->lang->load('language');
         }
 
         public function changeLang()

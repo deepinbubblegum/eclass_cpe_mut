@@ -22,28 +22,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-arrow-left"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เลือกรายวิชา
+                                                                        &nbsp;&nbsp;<?=lang('choose_courses')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('Select_Special/annouce/').$subject_id.'-'.$semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-chalkboard"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ประกาศถึงนักศึกษา
+                                                                        &nbsp;&nbsp;<?=lang('announce_students')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('Select_Special/score/').$subject_id.'-'.$semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star-half-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;คะแนน
+                                                                        &nbsp;&nbsp;<?=lang('score')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('Select_Special/score_special/').$subject_id.'-'.$semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star-half-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;แลกคะแนนพิเศษ
+                                                                        &nbsp;&nbsp;<?=lang('score_spc')?>
                                                                 </span>
                                                         </a>
 
@@ -51,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-stopwatch"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;นาฬิกาจับเวลา
+                                                                        &nbsp;&nbsp;<?=lang('stopwatch')?>
                                                                 </span>
                                                         </a>
                                                         <div class="navdrawer-divider"></div>
@@ -59,12 +59,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-ticket-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;กรอกรหัสคะแนน
+                                                                        &nbsp;&nbsp;<?lang('enter_the_score_code')?>
                                                                 </span>
                                                         </a>
                                                         <div class="navdrawer-divider"></div>
                                                         <a href="">
-                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>
+                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?=lang('web_manual')?></p>
                                                         </a>
                                                 </nav>
                                         </div>

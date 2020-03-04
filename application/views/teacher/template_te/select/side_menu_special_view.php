@@ -37,14 +37,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-arrow-left"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เลือกรายวิชา
+                                                                        &nbsp;&nbsp;<?=lang('choose_courses')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('Te_select_special/annouce/') . $subject_id . '-' . $semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-chalkboard"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ประกาศถึงนักศึกษา
+                                                                        &nbsp;&nbsp;<?=lang('announce_students')?>
                                                                 </span>
                                                         </a>
 
@@ -55,7 +55,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star-half-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;คะแนน
+                                                                        &nbsp;&nbsp;'.lang('score').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -69,7 +69,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star-half-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;แลกคะแนน
+                                                                        &nbsp;&nbsp;'.lang('exchang_point').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -80,7 +80,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-stopwatch"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;นาฬิกาจับเวลา
+                                                                        &nbsp;&nbsp;<?=lang('stopwatch')?>
                                                                 </span>
                                                         </a>
                                                         <div class="navdrawer-divider" id="line"></div>
@@ -92,7 +92,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-user-shield"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เพิ่มระดับสิทธิ์อาจารย์ผู้ช่วย
+                                                                        &nbsp;&nbsp;'.lang('te_increase_assis_level').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -105,7 +105,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เพิ่มอาจารย์ผู้ช่วย
+                                                                        &nbsp;&nbsp;'.lang('add_assis_professor').'
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -134,7 +134,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                         </a> -->
                                                         <a href="">
-                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>
+                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?=lang('web_manual')?></p>
                                                         </a>
                                                 </nav>
                                         </div>

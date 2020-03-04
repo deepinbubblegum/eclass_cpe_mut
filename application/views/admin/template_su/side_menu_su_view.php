@@ -28,70 +28,70 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-bullhorn"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ประกาศ
+                                                                        &nbsp;&nbsp;<?=lang('announcement')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" id="admin_side_faculty" href="<?php echo base_url('admin/faculty'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-tree"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลคณะ
+                                                                        &nbsp;&nbsp;<?=lang('faculty_info')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" id="admin_side_major" href="<?php echo base_url('admin/major'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fab fa-pagelines"></i></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลสาขา
+                                                                        &nbsp;&nbsp;<?=lang('branch_info')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" id="admin_side_semester" href="<?php echo base_url('admin/semester'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-clipboard-list"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลปีการศึกษา
+                                                                        &nbsp;&nbsp;<?=lang('semester_info')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" id="admin_side_subject" href="<?php echo base_url('admin/subject'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-book"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลวิชา
+                                                                        &nbsp;&nbsp;<?=lang('subject_info')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" id="admin_side_subsem" href="<?php echo base_url('admin/subsemester'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-book-open"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลวิชาประจำเทอม
+                                                                        &nbsp;&nbsp;<?=lang('term_sub_of_sem_info')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" id="admin_side_student" href="<?php echo base_url('admin/student_data'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-tachometer-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลนักศึกษา
+                                                                        &nbsp;&nbsp;<?=lang('student_info')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" id="admin_side_teacher" href="<?php echo base_url('admin/teacher_data'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลอาจารย์
+                                                                        &nbsp;&nbsp;<?=lang('teacher_info')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" id="admin_side_admin" href="<?php echo base_url('admin/admin_data'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลผู้ดูแลระบบ
+                                                                        &nbsp;&nbsp;<?=lang('admin_info')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" id="admin_side_teamaj" href="<?php echo base_url('admin/teacher_major_data'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลอาจารย์ประจำสาขา
+                                                                        &nbsp;&nbsp;<?=lang('te_barnch_info')?>
                                                                 </span>
                                                         </a>
                                                         <!-- <a class="nav-item nav-link" id="admin_Anc" href="<?php echo base_url('admin/permission'); ?>">
@@ -106,19 +106,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-chalkboard-teacher"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลอาจารย์ประจำวิชา
+                                                                        &nbsp;&nbsp;<?=lang('te_sub_info')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" id="admin_side_degree" href="<?php echo base_url('admin/teacher_degree'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-chalkboard-teacher"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ข้อมูลตำแหน่งวิชาการ
+                                                                        &nbsp;&nbsp;<?=lang('info_academic')?>
                                                                 </span>
                                                         </a>
                                                         <div class="navdrawer-divider"></div>
                                                         <a href="">
-                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>
+                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i></i>&nbsp;<?=lang('web_manual')?></p>
                                                         </a>
                                                 </nav>
                                         </div>
