@@ -138,9 +138,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox01">
                                                                 <label class="custom-control-label" for="checkBox01">ปิดไม่ให้นักศึกษาทำแบบทดสอบ</label>
                                                         </div>
-                                                        <div class="custom-control custom-checkbox" hidden>
+                                                        <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox02">
-                                                                <label class="custom-control-label" for="checkBox02">ปิดไม่ให้นักศึกษาดูคะแนนแบบทดสอบ</label>
+                                                                <label class="custom-control-label" for="checkBox02">เฉลยแบบทดสอบ</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox" hidden>
                                                                 <input type="checkbox" class="custom-control-input" id="checkBox03">
