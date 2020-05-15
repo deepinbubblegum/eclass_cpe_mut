@@ -67,7 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         }
                                                         ?>
 
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('course'); ?>">
+                                                        <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-book-open"></i></span>
                                                                 <span style="font-size: 1.2em;">
@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                         </a>
 
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('services'); ?>">
+                                                        <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                 <i class="fas fa-hand-holding-heart"></i></span>
                                                                 <span style="font-size: 1.2em;">
@@ -83,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                         </a>
 
-                                                        <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('personnel'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-user-tie"></i></span>
                                                                 <span style="font-size: 1.2em;">
@@ -91,7 +91,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                         </a>
 
-                                                        <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('about_us'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-users"></i></span>
                                                                 <span style="font-size: 1.2em;">
