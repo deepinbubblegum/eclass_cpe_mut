@@ -31,14 +31,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         &nbsp;&nbsp;<?=lang('announcement')?>
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" id="admin_side_Anc_course" href="<?php echo base_url('admin/announce'); ?>">
+                                                        <a class="nav-item nav-link" id="admin_side_Anc_course" href="<?php echo base_url('admin/course'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-book-open"></i></span>
                                                                 <span style="font-size: 1.2em;">
                                                                         &nbsp;&nbsp;<?=lang('course')?>
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" id="admin_side_Anc_services" href="<?php echo base_url('admin/announce'); ?>">
+                                                        <a class="nav-item nav-link" id="admin_side_Anc_services" href="<?php echo base_url('admin/services'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-hand-holding-heart"></i></span>
                                                                 <span style="font-size: 1.2em;">
