@@ -168,7 +168,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 }
                                 ?>
 
-                                <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                <a class="nav-item nav-link" href="<?php echo base_url('course'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-book-open"></i></span>
                                         <span style="font-size: 1.2em;">
