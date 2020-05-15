@@ -118,27 +118,27 @@ class Admin extends MY_Controller
         $this->load->view('admin/template_su/footer_su_view');
     }
 
+    public function announce_personnel()
+    {
+        $this->load->view('admin/template_su/header_view');
+        $this->load->view('admin/template_su/side_menu_su_view');
+        $this->load->view('admin/announce_su_personnel_view');
+        $this->load->view('admin/template_su/footer_su_view');
+    }
+
+    public function announce_about_us()
+    {
+        $this->load->view('admin/template_su/header_view');
+        $this->load->view('admin/template_su/side_menu_su_view');
+        $this->load->view('admin/announce_su_about_us_view');
+        $this->load->view('admin/template_su/footer_su_view');
+    }
+
     public function teacher_degree()
     {
         $this->load->view('admin/template_su/header_view');
         $this->load->view('admin/template_su/side_menu_su_view');
         $this->load->view('admin/teacher_degree_su_view');
-        $this->load->view('admin/template_su/footer_su_view');
-    }
-
-    public function course()
-    {
-        $this->load->view('admin/template_su/header_view');
-        $this->load->view('admin/template_su/side_menu_su_view');
-        $this->load->view('admin/announce_course_view');
-        $this->load->view('admin/template_su/footer_su_view');
-    }
-
-    public function services()
-    {
-        $this->load->view('admin/template_su/header_view');
-        $this->load->view('admin/template_su/side_menu_su_view');
-        $this->load->view('admin/announce_services_view');
         $this->load->view('admin/template_su/footer_su_view');
     }
 }
