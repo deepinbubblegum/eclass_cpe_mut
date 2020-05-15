@@ -167,6 +167,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 </a>';
                                 }
                                 ?>
+
+                                <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                        <span style="font-size: 1.5em;">
+                                                <i class="fas fa-book-open"></i></span>
+                                        <span style="font-size: 1.2em;">
+                                                &nbsp;&nbsp;<?php echo lang('course') ?>
+                                        </span>
+                                </a>
+
+                                <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                        <span style="font-size: 1.5em;">
+                                                <i class="fas fa-hand-holding-heart"></i></span>
+                                        <span style="font-size: 1.2em;">
+                                                &nbsp;&nbsp;<?php echo lang('services') ?>
+                                        </span>
+                                </a>
+
+                                <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                        <span style="font-size: 1.5em;">
+                                                <i class="fas fa-user-tie"></i></span>
+                                        <span style="font-size: 1.2em;">
+                                                &nbsp;&nbsp;<?php echo lang('personnel') ?>
+                                        </span>
+                                </a>
+
+                                <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                        <span style="font-size: 1.5em;">
+                                                <i class="fas fa-users"></i></span>
+                                        <span style="font-size: 1.2em;">
+                                                &nbsp;&nbsp;<?php echo lang('about_us') ?>
+                                        </span>
+                                </a>
+
                                 <div class="navdrawer-divider"></div>
                                 <a href="">
                                         <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?= lang('web_manual') ?></p>
@@ -257,7 +290,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">' . lang('account_details') . '</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">'.lang('set_user_id').'</a>
+                                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">' . lang('set_user_id') . '</a>
                                                 </li>
                                         </ul>
                                         <div class="tab-content" id="myTabContent">
@@ -266,7 +299,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <div class="ml-2 mb-2 mt-2">' . lang('name') . ' : ' . $this->session->ses_THdegree . $this->session->ses_tname . '</div>
                                                         <div class="ml-2 mb-3 mt-2">' . lang('status') . ' : ' . $this->session->ses_statustext . '</div>';
         if ($this->session->ses_status == 'teacher' || $this->session->ses_status == 'admin') {
-                echo '<div class="ml-2 mb-3 mt-2">'.lang('brance_with').' :
+                echo '<div class="ml-2 mb-3 mt-2">' . lang('brance_with') . ' :
                                                                         <span  id="techer_major_show">
                                                                         </span>
                                                                 </div>';
@@ -274,21 +307,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
         echo '</div>
                                                 <div class="tab-pane fade mt-4 ml-2" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                                         <div class="form-group">
-                                                                <label for="label_old_passwd">'.lang('old_password').'</label>
+                                                                <label for="label_old_passwd">' . lang('old_password') . '</label>
                                                                 <input type="password" class="form-control" id="old_passwd">
                                                         </div>
 
                                                         <div class="form-group">
-                                                                <label for="label_passwd">'.lang('password').'</label>
+                                                                <label for="label_passwd">' . lang('password') . '</label>
                                                                 <input type="password" class="form-control" id="Passwd">
                                                         </div>
 
                                                         <div class="form-group">
-                                                                <label for="label_passwd_ck">'.lang('confirm_new_passwd').'</label>
+                                                                <label for="label_passwd_ck">' . lang('confirm_new_passwd') . '</label>
                                                                 <input type="password" class="form-control" id="Passwd_ck">
                                                         </div>
                                                         <div class="modal-footer">
-                                                                <button type="button" id="save_changes" class="btn btn-primary">'.lang('save_changes').'</button>
+                                                                <button type="button" id="save_changes" class="btn btn-primary">' . lang('save_changes') . '</button>
                                                         </div>
                                                 </div>
                                         </div>
