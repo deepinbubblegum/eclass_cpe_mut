@@ -1,0 +1,41 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Model_su_services extends CI_Model
+{
+        public function announce_id_auto_model()
+        {
+                $query = $this->db->query('SELECT CONCAT("ANC-",LPAD(SUBSTRING(IFNULL(MAX(anc_id), "0"), 5,6)+1, 6,"0")) as anc_id FROM announce_services;');
+                if ($query->num_rows() > 0) {
+                        $row = $query->row_array();
+                        return $row['anc_id'];
+                }
+        }
+        
+        public function announce_add_model($args)
+        {
+                $this->db->insert('announce_services', $args);
+        }
+
+        public function announce_showdata_model()
+        {
+                $query = $this->db->query('SELECT anc_id, title, content, e_time FROM announce_services ORDER BY s_time DESC');
+                if ($query->num_rows() > 0) {
+                        return $query->result();
+                } else {
+                        return 0;
+                }
+        }
+
+        public function announce_del_model($args)
+        {
+                $this->db->where_in('anc_id', $args);
+                $this->db->delete('announce_services');
+        }
+
+        public function announce_edit_model($arg, $arg2)
+        { 
+                $this->db->where('anc_id', $arg);
+                $this->db->update('announce_services', $arg2);
+        }
+}
