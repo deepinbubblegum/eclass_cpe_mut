@@ -72,5 +72,9 @@ $lang = array(
         'admin_info' => 'Administrator Info',
         'te_barnch_info' => 'ข้อมูลอาจารย์ประจำสาขา',
         'te_sub_info' => 'Course info',
-        'info_academic' => 'ข้อมูลตำแหน่งวิชาการ'
+        'info_academic' => 'ข้อมูลตำแหน่งวิชาการ',
+        'course' => 'Course',
+        'services' => 'Services',
+        'personnel' => 'Personnel',
+        'about_us' => 'About us'
 );

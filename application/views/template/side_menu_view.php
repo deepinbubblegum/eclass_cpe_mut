@@ -22,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-home"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;<?=lang('home_page')?>
+                                                                        &nbsp;&nbsp;<?= lang('home_page') ?>
                                                                 </span>
                                                         </a>
                                                         <?php
@@ -31,7 +31,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-atlas"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;'.lang('course').'
+                                                                        &nbsp;&nbsp;' . lang('course') . '
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         <span style="font-size: 1.5em;">
                                                                                 <i class="fas fa-tachometer-alt"></i></span>
                                                                         <span style="font-size: 1.2em;">
-                                                                                &nbsp;&nbsp;'.lang('print_barcode').'
+                                                                                &nbsp;&nbsp;' . lang('print_barcode') . '
                                                                         </span>
                                                                         </a>';
                                                         }
@@ -51,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-stopwatch"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;<?=lang('stopwatch')?>
+                                                                        &nbsp;&nbsp;<?= lang('stopwatch') ?>
                                                                 </span>
                                                         </a>
                                                         <?php
@@ -61,14 +61,47 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         <span style="font-size: 1.5em;">
                                                                                 <i class="fas fa-ticket-alt"></i></span>
                                                                         <span style="font-size: 1.2em;">
-                                                                                &nbsp;&nbsp;'.lang('enter_the_score_code').'
+                                                                                &nbsp;&nbsp;' . lang('enter_the_score_code') . '
                                                                         </span>
                                                                 </a>';
                                                         }
                                                         ?>
+
+                                                        <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-book-open"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;<?= lang('course') ?>
+                                                                </span>
+                                                        </a>
+
+                                                        <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                <i class="fas fa-hand-holding-heart"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;<?= lang('services') ?>
+                                                                </span>
+                                                        </a>
+
+                                                        <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-user-tie"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;<?= lang('personnel') ?>
+                                                                </span>
+                                                        </a>
+
+                                                        <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-users"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;<?= lang('about_us') ?>
+                                                                </span>
+                                                        </a>
+
                                                         <div class="navdrawer-divider"></div>
                                                         <a href="">
-                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?=lang('web_manual')?></p>
+                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?= lang('web_manual') ?></p>
                                                         </a>
                                                 </nav>
                                         </div>
