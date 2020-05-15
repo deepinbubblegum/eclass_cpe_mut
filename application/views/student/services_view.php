@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<?php echo assets_js('aegis_js/course.js'); ?>
+	<?php echo assets_js('aegis_js/services.js'); ?>
 </head>
 
 <body>
@@ -16,9 +16,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<nav class="navbar navbar-light " style="max-height: auto; min-width: 335px; background-color: #dadfe4;">
 			<div class="navbar-brand" href="#">
 				<span style="font-size: 1.2em;">
-					<i class="fas fa-book-open"></i></span>
+				<i class="fas fa-hand-holding-heart"></i></span>
 				<span style="font-size: 0.8em;">
-					&nbsp;หลักสูตร
+					&nbsp;เซอร์วิส
 				</span>
 			</div>
 			<!-- <form class="form-inline">

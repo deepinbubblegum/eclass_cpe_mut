@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 </span>
                                                         </a>
 
-                                                        <a class="nav-item nav-link" href="<?php echo base_url(''); ?>">
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('services'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                 <i class="fas fa-hand-holding-heart"></i></span>
                                                                 <span style="font-size: 1.2em;">

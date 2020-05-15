@@ -21,9 +21,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <nav class="navbar navbar-light " style="max-height: auto; min-width: 335px; background-color: #dadfe4;">
                         <div class="navbar-brand" href="#">
                                 <span style="font-size: 1.2em;">
-                                        <i class="fas fa-chalkboard"></i></span>
+                                        <i class="fas fa-book-open"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        &nbsp; ประกาศ
+                                        &nbsp; หลักสูตร
                                 </span>
                         </div>
                         <!-- <form class="form-inline">
