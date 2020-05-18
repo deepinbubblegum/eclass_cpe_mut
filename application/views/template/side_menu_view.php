@@ -47,17 +47,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         </a>';
                                                         }
                                                         ?>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
-                                                                <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-stopwatch"></i></span>
-                                                                <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;<?= lang('stopwatch') ?>
-                                                                </span>
-                                                        </a>
                                                         <?php
                                                         if ($this->session->ses_status == 'student') {
-                                                                echo '<div class="navdrawer-divider"></div>
-                                                                <a class="nav-item nav-link" id="ticket" data-toggle="modal" data-target="#modal_ticket">
+                                                                echo '<a class="nav-item nav-link" id="ticket" data-toggle="modal" data-target="#modal_ticket">
                                                                         <span style="font-size: 1.5em;">
                                                                                 <i class="fas fa-ticket-alt"></i></span>
                                                                         <span style="font-size: 1.2em;">
@@ -67,11 +59,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         }
                                                         ?>
 
+                                                        <div class="navdrawer-divider"></div>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('course'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-book-open"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;<?= lang('course') ?>
+                                                                        &nbsp;&nbsp;<?= lang('course_ann') ?>
                                                                 </span>
                                                         </a>
 
@@ -98,8 +91,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         &nbsp;&nbsp;<?= lang('about_us') ?>
                                                                 </span>
                                                         </a>
-
                                                         <div class="navdrawer-divider"></div>
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-stopwatch"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;<?= lang('stopwatch') ?>
+                                                                </span>
+                                                        </a>
                                                         <a href="">
                                                                 <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?= lang('web_manual') ?></p>
                                                         </a>

@@ -143,7 +143,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-book-open"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;<?= lang('course') ?>
+                                                &nbsp;&nbsp;<?= lang('course_ann') ?>
                                         </span>
                                 </a>
                                 <a class="nav-item nav-link" id="admin_Anc_services" href="<?php echo base_url('admin/services'); ?>">
