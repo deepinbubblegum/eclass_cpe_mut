@@ -160,6 +160,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 }
                                 ?>
 
+                                <div class="navdrawer-divider"></div>
                                 <a class="nav-item nav-link" href="<?php echo base_url('course'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-book-open"></i></span>
@@ -168,8 +169,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </span>
                                 </a>
 
-                                <div class="navdrawer-divider"></div>
-                                
                                 <a class="nav-item nav-link" href="<?php echo base_url('services'); ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-hand-holding-heart"></i></span>
