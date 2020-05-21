@@ -94,15 +94,16 @@ $(document).ready(function () {
 
         const video = document.createElement("video");
         const canvasElement = document.getElementById('qr_canvas');
-        const canvas = canvasElement.getContext("2d", {
+        const canvas = canvasElement.getContext("webgl",{
                 desynchronized: true,
+                preserveDrawingBuffer: true
         });
         // const button = document.getElementById('button');
         const select = document.getElementById('select_camera');
         let currentStream;
         var flag = 0;
 
-        if (ctx.getContextAttributes().desynchronized) {
+        if (canvas.getContextAttributes().desynchronized) {
                 console.log('Low latency canvas supported. Yay!');
         } else {
                 console.log('Low latency canvas not supported. Boo!');
@@ -195,7 +196,7 @@ $(document).ready(function () {
                         canvasElement.hidden = false;
                         canvasElement.height = video.videoHeight;
                         canvasElement.width = video.videoWidth;
-                        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+                        canvas.drawImage(video.canvas, 0, 0, canvasElement.width, canvasElement.height);
                         var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
                         var code = jsQR(imageData.data, imageData.width, imageData.height, {
                                 inversionAttempts: "dontInvert",
