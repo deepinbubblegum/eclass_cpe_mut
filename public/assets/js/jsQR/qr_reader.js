@@ -94,11 +94,19 @@ $(document).ready(function () {
 
         const video = document.createElement("video");
         const canvasElement = document.getElementById('qr_canvas');
-        const canvas = canvasElement.getContext("2d");
+        const canvas = canvasElement.getContext("2d", {
+                desynchronized: true,
+        });
         // const button = document.getElementById('button');
         const select = document.getElementById('select_camera');
         let currentStream;
         var flag = 0;
+
+        if (ctx.getContextAttributes().desynchronized) {
+                console.log('Low latency canvas supported. Yay!');
+        } else {
+                console.log('Low latency canvas not supported. Boo!');
+        }
 
         $('#Ticket').val('');
         // $('#select_camera').hide();
@@ -139,7 +147,12 @@ $(document).ready(function () {
                 if (typeof currentStream !== 'undefined') {
                         stopMediaTracks(currentStream);
                 }
-                const videoConstraints = {frameRate: { ideal: 60, min: 10 }};
+                const videoConstraints = {
+                        frameRate: {
+                                ideal: 60,
+                                min: 10
+                        }
+                };
                 if (select.value === '') {
                         videoConstraints.facingMode = 'environment';
                 } else {
