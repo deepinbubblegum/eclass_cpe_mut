@@ -139,7 +139,7 @@ $(document).ready(function () {
                 if (typeof currentStream !== 'undefined') {
                         stopMediaTracks(currentStream);
                 }
-                const videoConstraints = {};
+                const videoConstraints = {frameRate: { ideal: 10, max: 15 }};
                 if (select.value === '') {
                         videoConstraints.facingMode = 'environment';
                 } else {
