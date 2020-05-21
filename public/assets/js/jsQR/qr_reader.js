@@ -94,9 +94,9 @@ $(document).ready(function () {
 
         const video = document.createElement("video");
         const canvasElement = document.getElementById('qr_canvas');
-        const canvas = canvasElement.getContext("webgl",{
-                desynchronized: true,
-                preserveDrawingBuffer: true
+        const canvas = canvasElement.getContext("2d",{
+                // desynchronized: true,
+                preserveDrawingBuffer: false
         });
         // const button = document.getElementById('button');
         const select = document.getElementById('select_camera');
@@ -151,7 +151,7 @@ $(document).ready(function () {
                 const videoConstraints = {
                         frameRate: {
                                 ideal: 60,
-                                min: 10
+                                min: 25
                         }
                 };
                 if (select.value === '') {
@@ -196,7 +196,7 @@ $(document).ready(function () {
                         canvasElement.hidden = false;
                         canvasElement.height = video.videoHeight;
                         canvasElement.width = video.videoWidth;
-                        canvas.drawImage(video.canvas, 0, 0, canvasElement.width, canvasElement.height);
+                        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
                         var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
                         var code = jsQR(imageData.data, imageData.width, imageData.height, {
                                 inversionAttempts: "dontInvert",
