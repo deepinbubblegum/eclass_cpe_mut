@@ -325,15 +325,13 @@ $(document).ready(function () {
         //         });
 
 
+
+
         var video;
-        // var takePhotoButton;
-        var toggleFullScreenButton;
         var switchCameraButton;
         var amountOfCameras = 0;
         var currentFacingMode = 'environment';
 
-        // this function counts the amount of video inputs
-        // it replaces DetectRTC that was previously implemented.
         function deviceCount() {
                 return new Promise(function (resolve) {
                         var videoInCount = 0;
@@ -361,11 +359,7 @@ $(document).ready(function () {
                 });
         }
 
-        // check if mediaDevices is supported
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia && navigator.mediaDevices.enumerateDevices) {
-                // first we call getUserMedia to trigger permissions
-                // we need this before deviceCount, otherwise Safari doesn't return all the cameras
-                // we need to have the number in order to display the switch front/back button
                 navigator.mediaDevices
                         .getUserMedia({
                                 audio: false,
@@ -379,13 +373,11 @@ $(document).ready(function () {
                                 deviceCount().then(function (deviceCount) {
                                         amountOfCameras = deviceCount;
 
-                                        // init the UI and the camera stream
                                         initCameraUI();
                                         initCameraStream();
                                 });
                         })
                         .catch(function (error) {
-                                //https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
                                 if (error === 'PermissionDeniedError') {
                                         alert('Permission denied. Please refresh and give permission.');
                                 }
@@ -398,49 +390,22 @@ $(document).ready(function () {
 
         function initCameraUI() {
                 video = document.getElementById('video');
-
-                toggleFullScreenButton = document.getElementById('toggleFullScreenButton');
                 switchCameraButton = document.getElementById('switchCameraButton');
-
                 // -- switch camera part
                 if (amountOfCameras > 1) {
-                        switchCameraButton.style.display = 'block';
-
                         switchCameraButton.addEventListener('click', function () {
-                                if (currentFacingMode === 'environment') currentFacingMode = 'user';
-                                else currentFacingMode = 'environment';
+                                if (currentFacingMode === 'environment') {
+                                        currentFacingMode = 'user';
+                                        console.log('user');
+                                } else {
+                                        currentFacingMode = 'environment'
+                                        console.log('environment');
+                                };
 
                                 initCameraStream();
                         });
                 }
 
-
-                window.addEventListener(
-                        'orientationchange',
-                        function () {
-                                // iOS doesn't have screen.orientation, so fallback to window.orientation.
-                                // screen.orientation will
-                                if (screen.orientation) angle = screen.orientation.angle;
-                                else angle = window.orientation;
-
-                                var guiControls = document.getElementById('gui_controls').classList;
-                                var vidContainer = document.getElementById('vid_container').classList;
-
-                                if (angle == 270 || angle == -90) {
-                                        guiControls.add('left');
-                                        vidContainer.add('left');
-                                } else {
-                                        if (guiControls.contains('left')) guiControls.remove('left');
-                                        if (vidContainer.contains('left')) vidContainer.remove('left');
-                                }
-
-                                //0   portrait-primary
-                                //180 portrait-secondary device is down under
-                                //90  landscape-primary  buttons at the right
-                                //270 landscape-secondary buttons at the left
-                        },
-                        false,
-                );
         }
 
         function initCameraStream() {
@@ -474,7 +439,7 @@ $(document).ready(function () {
                         .catch(handleError);
 
                 function handleSuccess(stream) {
-                        window.stream = stream; // make stream available to browser console
+                        window.stream = stream;
                         video.srcObject = stream;
 
                         if (constraints.video.facingMode) {
@@ -495,6 +460,5 @@ $(document).ready(function () {
                         console.error('getUserMedia() error: ', error);
                 }
         }
-
 
 });
