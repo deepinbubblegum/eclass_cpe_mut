@@ -358,7 +358,7 @@ $(document).ready(function () {
                 preserveDrawingBuffer: false
         });
         var flag = 0;
-
+        var camera_more = false;
         var video;
         var switchCameraButton;
         var amountOfCameras = 0;
@@ -407,7 +407,7 @@ $(document).ready(function () {
                         $('#Ticket').val('');
                         console.log('ON');
                 } else {
-                        
+
                         qr_reader_stop();
                         flag = 0;
                         console.log('OFF');
@@ -436,7 +436,6 @@ $(document).ready(function () {
 
         function qr_reader_start() {
                 $('#video').show(500);
-                $('#switchCameraButton').show(500);
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia && navigator.mediaDevices.enumerateDevices) {
                         navigator.mediaDevices
                                 .getUserMedia({
@@ -517,17 +516,20 @@ $(document).ready(function () {
                 switchCameraButton = document.getElementById('switchCameraButton');
                 // -- switch camera part
                 if (amountOfCameras > 1) {
-                        switchCameraButton.addEventListener('click', function () {
-                                if (currentFacingMode === 'environment') {
-                                        currentFacingMode = 'user';
-                                        console.log('user');
-                                } else {
-                                        currentFacingMode = 'environment'
-                                        console.log('environment');
-                                };
+                        $('#switchCameraButton').show(500);
+                        if (flag == 0) {
+                                switchCameraButton.addEventListener('click', function () {
+                                        if (currentFacingMode === 'environment') {
+                                                currentFacingMode = 'user';
+                                                console.log('user');
+                                        } else {
+                                                currentFacingMode = 'environment'
+                                                console.log('environment');
+                                        };
 
-                                initCameraStream();
-                        });
+                                        initCameraStream();
+                                });
+                        }
                 }
 
         }

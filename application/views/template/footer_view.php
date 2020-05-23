@@ -45,7 +45,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <div id="video_overlay"></div>
                                                 </div>
                                                 <div id="gui_controls">
-                                                        <button id="switchCameraButton" name="switch Camera" type="button" aria-pressed="false">switch Camera</button>
+                                                        <button id="switchCameraButton" class="btn btn-primary btn-lg btn-block" name="switch Camera" type="button" aria-pressed="false">
+                                                        <i class="fas fa-exchange-alt">&nbsp;&nbsp;</i>switch Camera
+                                                        </button>
                                                         <!-- <button id="takePhotoButton" name="take Photo" type="button"></button> -->
                                                         <!-- <button id="toggleFullScreenButton" name="toggle FullScreen" type="button" aria-pressed="false"></button> -->
                                                 </div>
