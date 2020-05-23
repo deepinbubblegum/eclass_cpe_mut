@@ -1,6 +1,11 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var url = $(location).attr('href').split("/");
-    $('#btnTicketSave').click(function(e) {
+    var camera_use = false;
+    $("#btn_start_reader").click(function () {
+        camera_use = true;
+    });
+    
+    $('#btnTicketSave').click(function (e) {
         ticket = $('#Ticket').val();
         takeThisUrl = '/' + url[3] + '/Std_ticket/getTicket';
         $.ajax({
@@ -8,7 +13,7 @@ $(document).ready(function() {
             url: takeThisUrl,
             data: '&ticket=' + ticket,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 $('#txtShowReturn').removeClass();
                 if (response == '0') {
                     //console.log('IF 0');
@@ -19,6 +24,9 @@ $(document).ready(function() {
                     $('#txtShowReturn').addClass('text-success');
                     $('#txtShowReturn').text('สำเร็จ');
                     $('#Ticket').val('');
+                    if (camera_use) {
+                        $("#btn_start_reader").click();
+                    }
                 } else if (response == '-1') {
                     //console.log('IF -1');
                     $('#txtShowReturn').addClass('text-danger');
