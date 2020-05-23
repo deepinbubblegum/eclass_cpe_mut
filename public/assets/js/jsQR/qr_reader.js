@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
         function bootstrapClearButton() {
                 $('.position-relative :input').on('keydown focus', function () {
                         if ($(this).val().length > 0) {
@@ -12,9 +11,33 @@ $(document).ready(function () {
                 });
                 $('.form-clear').on('click', function () {
                         $(this).addClass('d-none').prevAll(':input').val('');
+                        $('#floating-lable-label').removeClass('has-value');
                 });
         }
         bootstrapClearButton();
+
+        function key_rex(arg) {
+                re = /([A-Z^0-9]{4})([A-Z^0-9]{4})([A-Z^0-9]{4})([A-Z^0-9]{4})([A-Z^0-9]{4})/g;
+                result = arg.replace(re, "$1-$2-$3-$4-$5");
+                console.log('regex = ' + result);
+                return result;
+        }
+
+        $('#Ticket').keypress(function (e) {
+                key_txt = $('#Ticket').val().toUpperCase();
+                $('#Ticket').val(key_rex(key_txt));
+        });
+
+        $('#Ticket').keyup(function (e) {
+                $('#Ticket').val($('#Ticket').val().toUpperCase());
+                noOfTxt = $('#Ticket').val().replace(/-/gi, "").length;
+                if (e.keyCode != 8) { //back space
+                        if (noOfTxt != 0 && noOfTxt % 4 == 0 && noOfTxt < 20) {
+                                $('#Ticket').val($('#Ticket').val() + '-');
+                        }
+                }
+        });
+
 
         // $('#qr_canvas').hide();
         // var video = document.createElement("video");
@@ -23,6 +46,7 @@ $(document).ready(function () {
         // var localstream;
         // var flag = 0;
         // $('#Ticket').val('');
+
         // function qr_reader_start() {
         //         $('#qr_canvas').show(500);
 
@@ -324,8 +348,16 @@ $(document).ready(function () {
         //                 console.log(e)
         //         });
 
-
-
+        $('#qr_canvas').hide();
+        $('#video').hide();
+        $('#switchCameraButton').hide();
+        var video = document.createElement("video");
+        var canvasElement = document.getElementById("qr_canvas");
+        var canvas = canvasElement.getContext("2d", {
+                desynchronized: true,
+                preserveDrawingBuffer: false
+        });
+        var flag = 0;
 
         var video;
         var switchCameraButton;
@@ -349,7 +381,6 @@ $(document).ready(function () {
                                                         console.log('videocam: ' + device.label);
                                                 }
                                         });
-
                                         resolve(videoInCount);
                                 })
                                 .catch(function (err) {
@@ -359,33 +390,126 @@ $(document).ready(function () {
                 });
         }
 
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia && navigator.mediaDevices.enumerateDevices) {
-                navigator.mediaDevices
-                        .getUserMedia({
-                                audio: false,
-                                video: true,
-                        })
-                        .then(function (stream) {
-                                stream.getTracks().forEach(function (track) {
-                                        track.stop();
+        function drawLine(begin, end, color) {
+                canvas.beginPath();
+                canvas.moveTo(begin.x, begin.y);
+                canvas.lineTo(end.x, end.y);
+                canvas.lineWidth = 4;
+                canvas.strokeStyle = color;
+                canvas.stroke();
+        }
+
+        $('#btn_start_reader').click(function (e) {
+                e.preventDefault();
+                flag++;
+                if (flag == 1) {
+                        qr_reader_start();
+                        $('#Ticket').val('');
+                        console.log('ON');
+                } else {
+                        
+                        qr_reader_stop();
+                        flag = 0;
+                        console.log('OFF');
+                }
+        });
+
+        function qr_reader_stop() {
+                video.pause();
+                stream.getTracks().forEach(function (track) {
+                        track.stop();
+                });
+                $('#qr_canvas').hide();
+                $('#video').hide();
+                $('#switchCameraButton').hide();
+        }
+
+        $('#qr_close').click(function (e) {
+                $('#video').hide();
+                e.preventDefault();
+                if (flag == 1) {
+                        qr_reader_stop();
+                }
+                $("#modal_ticket").modal('hide');
+                $('#switchCameraButton').hide();
+        });
+
+        function qr_reader_start() {
+                $('#video').show(500);
+                $('#switchCameraButton').show(500);
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia && navigator.mediaDevices.enumerateDevices) {
+                        navigator.mediaDevices
+                                .getUserMedia({
+                                        audio: false,
+                                        video: true,
+                                })
+                                .then(function (stream) {
+                                        stream.getTracks().forEach(function (track) {
+                                                track.stop();
+                                        });
+                                        deviceCount().then(function (deviceCount) {
+                                                amountOfCameras = deviceCount;
+                                                initCameraUI();
+                                                initCameraStream();
+                                        });
+                                        requestAnimationFrame(tick);
+                                })
+                                .catch(function (error) {
+                                        if (error === 'PermissionDeniedError') {
+                                                alert('Permission denied. Please refresh and give permission.');
+                                        }
+
+                                        console.error('getUserMedia() error: ', error);
                                 });
+                } else {
+                        alert('Mobile camera is not supported by browser, or there is no camera detected/connected');
+                }
 
-                                deviceCount().then(function (deviceCount) {
-                                        amountOfCameras = deviceCount;
+        }
 
-                                        initCameraUI();
-                                        initCameraStream();
-                                });
-                        })
-                        .catch(function (error) {
-                                if (error === 'PermissionDeniedError') {
-                                        alert('Permission denied. Please refresh and give permission.');
-                                }
-
-                                console.error('getUserMedia() error: ', error);
+        function tick() {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                        canvasElement.hidden = false;
+                        canvasElement.height = video.videoHeight;
+                        canvasElement.width = video.videoWidth;
+                        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+                        var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+                        var code = jsQR(imageData.data, imageData.width, imageData.height, {
+                                inversionAttempts: "dontInvert",
                         });
-        } else {
-                alert('Mobile camera is not supported by browser, or there is no camera detected/connected');
+                        if (code) {
+                                console.log(code.data);
+                                if (code.data.length == 24) {
+                                        drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#92FF45");
+                                        drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#92FF45");
+                                        drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#92FF45");
+                                        drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#92FF45");
+                                        $('#Ticket').val(code.data);
+                                        $('#floating-lable-label').addClass('has-value');
+                                        video.pause();
+                                        $('#video').hide();
+                                        // video.src = "";
+                                        stream.getTracks().forEach(function (track) {
+                                                track.stop();
+                                        });
+                                        $('#qr_canvas').show();
+                                        // console.log("Vid off");
+                                        // ok_qr();
+                                        // canvasElement.hidden = true;
+                                        return;
+                                }
+                        }
+                }
+                requestAnimationFrame(tick);
+        }
+
+        function drawLine(begin, end, color) {
+                canvas.beginPath();
+                canvas.moveTo(begin.x, begin.y);
+                canvas.lineTo(end.x, end.y);
+                canvas.lineWidth = 4;
+                canvas.strokeStyle = color;
+                canvas.stroke();
         }
 
         function initCameraUI() {
@@ -460,5 +584,8 @@ $(document).ready(function () {
                         console.error('getUserMedia() error: ', error);
                 }
         }
+
+
+
 
 });

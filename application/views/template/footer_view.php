@@ -27,7 +27,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body>
         <!-- <video id="video" autoplay playsinline></video> -->
         <!-- Modal ticket-->
-        <div class="modal fade text-left" id="modal_ticket" tabindex="-1" role="dialog" aria-labelledby="modal_ticketLabel" aria-hidden="true">
+        <div class="modal fade text-left" id="modal_ticket" tabindex="-1" role="dialog" aria-labelledby="modal_ticketLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog" role="document">
                         <div class="modal-content">
                                 <div class="modal-header">
@@ -39,7 +39,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                                 <div class="modal-body">
                                         <form>
-                                                <!-- <canvas class="mx-auto" id="qr_canvas" style="border: 1px solid rgb(14, 168, 234); width: 100%; height: 100%;"></canvas> -->
+                                                <canvas class="mx-auto" id="qr_canvas"></canvas>
                                                 <div id="vid_container">
                                                         <video id="video" autoplay playsinline></video>
                                                         <div id="video_overlay"></div>
