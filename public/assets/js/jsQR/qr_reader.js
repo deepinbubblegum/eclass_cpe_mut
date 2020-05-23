@@ -358,7 +358,6 @@ $(document).ready(function () {
                 preserveDrawingBuffer: false
         });
         var flag = 0;
-        var camera_more = false;
         var video;
         var switchCameraButton;
         var amountOfCameras = 0;
@@ -409,7 +408,7 @@ $(document).ready(function () {
                 } else {
 
                         qr_reader_stop();
-                        flag = 0;
+                        // flag = 0;
                         console.log('OFF');
                 }
         });
@@ -419,6 +418,7 @@ $(document).ready(function () {
                 stream.getTracks().forEach(function (track) {
                         track.stop();
                 });
+                flag = 0;
                 $('#qr_canvas').hide();
                 $('#video').hide();
                 $('#switchCameraButton').hide();
@@ -464,13 +464,13 @@ $(document).ready(function () {
                         alert('Mobile camera is not supported by browser, or there is no camera detected/connected');
                 }
 
-        }
+        };
 
         function tick() {
                 if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                        canvasElement.hidden = false;
-                        canvasElement.height = video.videoHeight;
-                        canvasElement.width = video.videoWidth;
+                        // canvasElement.hidden = false;
+                        // canvasElement.height = video.videoHeight;
+                        // canvasElement.width = video.videoWidth;
                         canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
                         var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
                         var code = jsQR(imageData.data, imageData.width, imageData.height, {
@@ -487,14 +487,13 @@ $(document).ready(function () {
                                         $('#floating-lable-label').addClass('has-value');
                                         video.pause();
                                         $('#video').hide();
-                                        // video.src = "";
-                                        stream.getTracks().forEach(function (track) {
-                                                track.stop();
-                                        });
+                                        video.src = "";
+                                        qr_reader_stop();
                                         $('#qr_canvas').show();
                                         // console.log("Vid off");
                                         // ok_qr();
                                         // canvasElement.hidden = true;
+                                        $('#qr_canvas').hide(800);
                                         return;
                                 }
                         }
@@ -519,6 +518,7 @@ $(document).ready(function () {
                         $('#switchCameraButton').show(500);
                         if (flag == 1) {
                                 switchCameraButton.addEventListener('click', function () {
+                                        $('#switchCameraButton').hide(500);
                                         if (currentFacingMode === 'environment') {
                                                 currentFacingMode = 'user';
                                                 console.log('user');
@@ -526,7 +526,6 @@ $(document).ready(function () {
                                                 currentFacingMode = 'environment'
                                                 console.log('environment');
                                         };
-
                                         initCameraStream();
                                 });
                         }
@@ -567,7 +566,9 @@ $(document).ready(function () {
                 function handleSuccess(stream) {
                         window.stream = stream;
                         video.srcObject = stream;
-
+                        if(amountOfCameras > 1){
+                                $('#switchCameraButton').show(500);
+                        }
                         if (constraints.video.facingMode) {
                                 if (constraints.video.facingMode === 'environment') {
                                         switchCameraButton.setAttribute('aria-pressed', true);
