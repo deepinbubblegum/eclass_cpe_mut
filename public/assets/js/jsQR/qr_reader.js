@@ -565,7 +565,7 @@ $(document).ready(function () {
                 // -- switch camera part
                 if (amountOfCameras > 1) {
                         $('#switchCameraButton').show(500);
-                        if (flag == 1) {
+                        // if (flag == 1) {
                                 switchCameraButton.addEventListener('click', function () {
                                         $('#switchCameraButton').hide(500);
                                         if (currentFacingMode === 'environment') {
@@ -577,7 +577,7 @@ $(document).ready(function () {
                                         };
                                         initCameraStream();
                                 });
-                        }
+                        // }
                 }
 
         }
