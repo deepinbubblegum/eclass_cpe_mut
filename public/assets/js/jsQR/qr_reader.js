@@ -517,7 +517,7 @@ $(document).ready(function () {
                 // -- switch camera part
                 if (amountOfCameras > 1) {
                         $('#switchCameraButton').show(500);
-                        if (flag == 0) {
+                        if (flag == 1) {
                                 switchCameraButton.addEventListener('click', function () {
                                         if (currentFacingMode === 'environment') {
                                                 currentFacingMode = 'user';
