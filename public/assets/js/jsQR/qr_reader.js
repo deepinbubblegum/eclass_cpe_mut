@@ -20,9 +20,9 @@ $(document).ready(function () {
                         $('#txtShowReturn').addClass('text-success');
                         $('#txtShowReturn').text('สำเร็จ');
                         $('#Ticket').val('');
-                        // if (use_camera) {
-                        //     $("#btn_start_reader").click();
-                        // }
+                        if (use_camera) {
+                            $("#btn_start_reader").click();
+                        }
                     } else if (response == '-1') {
                         //console.log('IF -1');
                         $('#txtShowReturn').addClass('text-danger');
