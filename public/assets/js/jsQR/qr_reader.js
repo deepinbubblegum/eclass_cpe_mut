@@ -20,9 +20,9 @@ $(document).ready(function () {
                         $('#txtShowReturn').addClass('text-success');
                         $('#txtShowReturn').text('สำเร็จ');
                         $('#Ticket').val('');
-                        if (use_camera) {
-                            $("#btn_start_reader").click();
-                        }
+                        // if (use_camera) {
+                        //     $("#btn_start_reader").click();
+                        // }
                     } else if (response == '-1') {
                         //console.log('IF -1');
                         $('#txtShowReturn').addClass('text-danger');
@@ -564,7 +564,7 @@ $(document).ready(function () {
                 switchCameraButton = document.getElementById('switchCameraButton');
                 // -- switch camera part
                 if (amountOfCameras > 1) {
-                        $('#switchCameraButton').show(500);
+                        // $('#switchCameraButton').show(500);
                         // if (flag == 1) {
                                 switchCameraButton.addEventListener('click', function () {
                                         $('#switchCameraButton').hide(500);
@@ -616,7 +616,7 @@ $(document).ready(function () {
                         window.stream = stream;
                         video.srcObject = stream;
                         if(amountOfCameras > 1){
-                                $('#switchCameraButton').show(500);
+                                // $('#switchCameraButton').show(500);
                         }
                         if (constraints.video.facingMode) {
                                 if (constraints.video.facingMode === 'environment') {
