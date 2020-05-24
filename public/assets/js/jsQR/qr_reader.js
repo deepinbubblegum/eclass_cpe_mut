@@ -567,9 +567,6 @@ $(document).ready(function () {
                         $('#switchCameraButton').show(500);
                         // if (flag == 1) {
                                 switchCameraButton.addEventListener('click', function () {
-                                        stream.getTracks().forEach(function (track) {
-                                                track.stop();
-                                        });
                                         $('#switchCameraButton').hide(500);
                                         if (currentFacingMode === 'environment') {
                                                 currentFacingMode = 'user';
@@ -639,8 +636,4 @@ $(document).ready(function () {
                         console.error('getUserMedia() error: ', error);
                 }
         }
-
-
-
-
 });
