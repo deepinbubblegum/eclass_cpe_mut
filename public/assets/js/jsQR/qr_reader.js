@@ -566,10 +566,10 @@ $(document).ready(function () {
                 if (amountOfCameras > 1) {
                         $('#switchCameraButton').show(500);
                         // if (flag == 1) {
-                                stream.getTracks().forEach(function (track) {
-                                        track.stop();
-                                });
                                 switchCameraButton.addEventListener('click', function () {
+                                        stream.getTracks().forEach(function (track) {
+                                                track.stop();
+                                        });
                                         $('#switchCameraButton').hide(500);
                                         if (currentFacingMode === 'environment') {
                                                 currentFacingMode = 'user';
