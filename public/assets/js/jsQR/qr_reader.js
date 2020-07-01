@@ -564,8 +564,8 @@ $(document).ready(function () {
                 switchCameraButton = document.getElementById('switchCameraButton');
                 // -- switch camera part
                 if (amountOfCameras > 1) {
-                        $('#switchCameraButton').show(500);
-                        if (flag == 1) {
+                        // $('#switchCameraButton').show(500);
+                        // if (flag == 1) {
                                 switchCameraButton.addEventListener('click', function () {
                                         $('#switchCameraButton').hide(500);
                                         if (currentFacingMode === 'environment') {
@@ -577,7 +577,7 @@ $(document).ready(function () {
                                         };
                                         initCameraStream();
                                 });
-                        }
+                        // }
                 }
 
         }
@@ -616,7 +616,7 @@ $(document).ready(function () {
                         window.stream = stream;
                         video.srcObject = stream;
                         if(amountOfCameras > 1){
-                                $('#switchCameraButton').show(500);
+                                // $('#switchCameraButton').show(500);
                         }
                         if (constraints.video.facingMode) {
                                 if (constraints.video.facingMode === 'environment') {
