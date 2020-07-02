@@ -174,6 +174,17 @@ class Admin_student_data extends MY_Controller
         $this->Model_su_student_data->Delete_Data_model($data);
     }
 
+    public function Passwdre_Data_ctl()
+    {
+        $this->load->model('sign_in/Model_user_uses');
+        $data = $this->input->post('$data[]');
+        foreach ($data as $value) {
+            $passwd = $this->encryption_pass($value);
+            $this->Model_user_uses->reset_passwd($value, $passwd);
+        }
+        echo json_encode(true);
+    }
+
     public function Show_Max_Search_Data_ctl()
     {
         $keyword = $this->input->post('data');

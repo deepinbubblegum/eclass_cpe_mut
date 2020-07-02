@@ -167,4 +167,10 @@ class Model_user_uses extends CI_Model
                 }
                 return false;
         }
+
+        public function reset_passwd($ID, $IDcyp){
+                $this->db->where('std_code_id', $ID);
+                $this->db->update('student', array('std_password' => $IDcyp));
+                return true;
+        }
 }

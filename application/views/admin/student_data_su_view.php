@@ -171,6 +171,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
         <!-- End Modal -->
 
+        <!-- Modal reset-->
+                <div class="modal fade text-left" id="modelreset" tabindex="-1" role="dialog" aria-labelledby="modelreset" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="reset">คืนค่ารหัสผ่านเริ่มต้น</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <!-- <div class="modal-body">
+                        <p id="datauserlist"></p>
+                    </div> -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                        <button type="button" id="btnReset" class="btn btn-primary">รีเซ็ตรหัสผ่าน</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+
+
         <div class="container-fluid mt-3" style="max-height: auto; min-width: 335px;">
 
             <div class="card mt-3 text-left">
@@ -190,6 +211,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div aria-labelledby="cardTableDrop2" class="dropdown-menu dropdown-menu-right menu">
                                 <a class="dropdown-item" id="btnAdd">เพิ่มข้อมูล</a>
                                 <a class="dropdown-item" id="btnAddcsv">เพิ่มข้อมูล (File csv)</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" id="resetPasswd">รีเซ็ตรหัสผ่าน (เริ่มต้น)</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" data-toggle="modal" data-target="#modaldel">ลบข้อมูล</a>
                             </div>
