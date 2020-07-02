@@ -78,7 +78,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                     </div>
                                     <button class="btn btn-success my-1" id="btnUpload">Upload</button>
-                                    <button class="btn btn-success my-1" id="btnClearAll">Clear All</button>
+                                    <button class="btn btn-danger my-1" id="btnClearAll">Clear All</button>
                                     <div id="uploadeds_files">
                                     </div>
                                 </div>

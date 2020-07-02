@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://eclass.mes.mut.ac.th/';
-
+$config['base_url'] = 'https://eclass.mes.mut.ac.th/';
+// $config['base_url'] = 'https://www.cpe.mut.ac.th/';
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -136,7 +136,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -158,7 +158,7 @@ $config['composer_autoload'] = FALSE;
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-@\=\!ก-ฮะาิีุูเะแำไใๆ่้๊๋ั็์ึื()\#';
 
 /*
 |--------------------------------------------------------------------------
@@ -381,7 +381,7 @@ $config['encryption_password'] = '7x33gv3a4dfc';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 9000000000;
-$config['sess_save_path'] = NULL;
+$config['sess_save_path'] = '/Eclass/tmp/Session';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 180000000000;
 $config['sess_regenerate_destroy'] = FALSE;

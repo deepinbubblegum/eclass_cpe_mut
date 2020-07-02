@@ -13,6 +13,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
         semester = '<?php echo $semester; ?>';
     </script>
     <?php
+    echo assets_css('bootstrap_css/select2.min.css');
+    echo assets_css('bootstrap_css/select2-bootstrap4.min.css');
+    echo assets_js('bootstrap_js/select2.full.min.js');
+
     echo assets_js('aegis_js/manage_te/te_add_teacher_assist.js');
     ?>
 </head>
@@ -140,7 +144,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardTableDrop2" type="button"><i class="material-icons">more_vert</i></button>
                             <div aria-labelledby="cardTableDrop2" class="dropdown-menu dropdown-menu-right menu">
                                 <a class="dropdown-item" id="btnAdd">Add</a>
-                                <a class="dropdown-item" id="btnAddcsv">Add (File csv)</a>
+                                <!-- <a class="dropdown-item" id="btnAddcsv">Add (File csv)</a> -->
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" data-toggle="modal" data-target="#modaldel">Delete</a>
                             </div>

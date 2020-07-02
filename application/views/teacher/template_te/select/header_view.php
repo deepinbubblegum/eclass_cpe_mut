@@ -8,34 +8,46 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>eclass : มหาวิทยาลัยเทคโนโลยีมหานคร</title>
+        <title><?=lang('title')?></title>
         <?php
         $multi_assets_css = array(
                 'bootstrap_css/material.css',
                 'bootstrap_css/material_pugin.css',
                 '../fontawesome/css/all.css',
                 'aegis_css/cpe-mes.css',
-                'aegis_css/font_Mitr.css',
+                // 'aegis_css/font_Mitr.css',
+                'aegis_css/font_sarabun.css',
                 'aegis_css/material-font-icon.css',
                 'aegis_css/te.css',
-                'snackbar_css/snackbar.min.css'
+                'snackbar_css/snackbar.min.css',
+                'summernote_css/summernote-bs4.min.css',
         );
 
         $multi_assets_js = array(
                 'jquery_js/jquery-3.4.1.js',
                 'popper_js/popper.js',
+                'jquery_js/jquery-ui.min.js',
                 'bootstrap_js/bootstrap.js',
                 'bootstrap_js/material.js',
                 'snackbar_js/snackbar.min.js',
                 'aegis_js/user_uses.js',
-                'aegis_js/langSwitching.js'
+                'aegis_js/langSwitching.js',
+                'summernote_js/summernote-bs4.min.js',   
         );
         echo assets_css($multi_assets_css);
         echo assets_js($multi_assets_js);
+
+        $bitSide = $this->session->userdata('ses_permission');
         ?>
+
+        <!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.js"></script> -->
+
+        <?php echo assets_js('aegis_js/manage_te/te_read_point_request.js'); ?>
+
 </head>
 
-<body class="bg-light h-100" style="font-family: 'Mitr', sans-serif;">
+<body class="bg-light h-100" style="font-family: 'Sarabun', sans-serif;">
         <div class="navbar w-100 sticky-top navbar-dark navbar-full doc-navbar-default mainnavbar" style="min-width: 375px; width:100%;">
                 <!-- ปุ่มด้านซ้าย -->
 
@@ -84,8 +96,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <button type="button" class="btn btn-sm btn-outline-light btn-toggler-sm" aria-controls="navdrawer-right" aria-expanded="false" aria-label="Toggle Navdrawer" data-target="#navdrawer-right" data-toggle="navdrawer">
                                 <?php
                                 if (isset($this->session->ses_id)) {
+                                        ($this->session->lang == 'en') ? $name_user = $this->session->ses_ename : $name_user = $this->session->ses_tname;
                                         echo  '<a class="title_message">
-                                                <span style="font-size: 1.2em;">' . $this->session->ses_tname . ' </span>
+                                                <span style="font-size: 1.2em;">' . $name_user . ' </span>
                                                 &nbsp;
                                                 </a>
                                                 <span style="font-size: 1.5em;">
@@ -93,7 +106,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 </span>';
                                 } else {
                                         echo  '<a class="title_message">
-                                                <span style="font-size: 1.2em;">ลงชื่อเข้าใช้ </span>
+                                                <span style="font-size: 1.2em;">'.lang('sign_in').' </span>
                                                 &nbsp;
                                                 </a>
                                                 <span style="font-size: 1.5em;">
@@ -111,7 +124,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="navdrawer-header">
                                 <div class="navbar-brand px-0">
                                         <span style="font-size: 1.1em;">
-                                                <i class="fas fa-th-list"></i></span>&nbsp;&nbsp;&nbsp;เมนู
+                                                <i class="fas fa-th-list"></i></span>&nbsp;&nbsp;&nbsp;<?=lang('menu')?>
                                 </div>
 
                         </div>
@@ -120,67 +133,174 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-arrow-left"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;เลือกรายวิชา
+                                                &nbsp;&nbsp;<?=lang('choose_courses')?>
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('te_select/annouce/').$subject_id.'-'.$semester; ?>">
+                                <a class="nav-item nav-link" id="Anc" href="<?php echo base_url('te_select/annouce/') . $subject_id . '-' . $semester; ?>">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-chalkboard"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;ประกาศถึงนักศึกษา
+                                                &nbsp;&nbsp;<?=lang('announce_students')?>
                                         </span>
                                 </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('te_select/score/').$subject_id.'-'.$semester; ?>">
-                                        <span style="font-size: 1.5em;">
-                                                <i class="fas fa-star-half-alt"></i></span>
-                                        <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;คะแนน
-                                        </span>
-                                </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('te_select/downloads/').$subject_id.'-'.$semester; ?>">
-                                        <span style="font-size: 1.5em;">
-                                                <i class="fas fa-download"></i></span>
-                                        <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;อับโหลด
-                                        </span>
-                                </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('te_select/uploads/').$subject_id.'-'.$semester; ?>">
-                                        <span style="font-size: 1.5em;">
-                                                <i class="fas fa-upload"></i></span>
-                                        <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;ดาวน์โหลด 
-                                        </span>
-                                </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('select/videos/').$subject_id.'-'.$semester; ?>">
-                                        <span style="font-size: 1.5em;">
-                                                <i class="fas fa-play"></i></span>
-                                        <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;วิดีโอ
-                                        </span>
-                                </a>
-                                <a class="nav-item nav-link" href="<?php echo base_url('te_select/quiz_vote/').$subject_id.'-'.$semester; ?>">
-                                        <span style="font-size: 1.5em;">
-                                                <i class="fas fa-poll"></i></span>
-                                        <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;แบบทดสอบ & โหวต
-                                        </span>
-                                </a>
+                                <?php
+                                if (substr($bitSide, 3, 1) == 1 || $bitSide == 0) {
+                                        echo '<a class="nav-item nav-link" id="score" href="';
+                                        echo base_url('te_select/score/') . $subject_id . '-' . $semester . '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-star-half-alt"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;'.lang('score').'
+                                                                </span>
+                                                                </a>';
+                                }
+                                ?>
+
+                                <?php
+                                if (substr($bitSide, 2, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="uploads" href=" ';
+                                        echo base_url('te_select/uploads/') . $subject_id . '-' . $semester . '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-upload"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;'.lang('file_manager').'
+                                                                </span>
+                                                                </a>';
+                                }
+                                ?>
+
+                                <?php
+                                if (substr($bitSide, 1, 1) == 1 || $bitSide == 0) {
+                                        echo '<a class="nav-item nav-link" id="downloads" href=" ';
+                                        echo base_url('te_select/downloads/') . $subject_id . '-' . $semester . '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-download"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;'.lang('assignment').'
+                                                                </span>
+                                                                </a>';
+                                }
+                                ?>
+
+                                <?php
+                                if (substr($bitSide, 0, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="media" href="';
+                                        echo base_url("te_select/media/") . $subject_id . '-' . $semester . '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-play"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;'.lang('information_media').'
+                                                                </span>
+                                                                </a>';
+                                }
+                                ?>
+
+                                <?php
+                                if (substr($bitSide, 5, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="quiz" href="';
+                                        echo base_url('te_select/quiz/') . $subject_id . '-' . $semester . '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-poll"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;'.lang('quiz').'
+                                                                </span>
+                                                                </a>';
+                                }
+                                ?>
+                                <?php
+                                if (substr($bitSide, 4, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="vote" href="';
+                                        echo base_url('te_select/vote/') . $subject_id . '-' . $semester . '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-poll"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;'.lang('vote').'
+                                                                </span>
+                                                                </a>';
+                                }
+                                ?>
+
                                 <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-stopwatch"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;นาฬิกาจับเวลา
+                                                &nbsp;&nbsp;<?=lang('stopwatch')?>
                                         </span>
                                 </a>
-                                <div class="navdrawer-divider"></div>
 
-                                <a class="nav-item nav-link" href="<?php echo base_url('te_select/add_student/').$subject_id.'-'.$semester; ?>">
+                                <?php
+                                if (substr($bitSide, 6, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="pointRequest" href="';
+                                        echo base_url('te_select/point_request/') . $subject_id . '-' . $semester . '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-star"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;'.lang('std_req_point').'
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill" id="txtRead"> </span>
+                                                                </a>';
+                                }
+                                ?>
+
+                                <div class="navdrawer-divider" id="line"></div>
+
+                                <?php
+                                if (substr($bitSide, 7, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="add_permission" href="';
+                                        echo base_url('te_select/add_permission/') . $subject_id . '-' . $semester . '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-user-shield"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;'.lang('te_increase_assis_level').'
+                                                                </span>
+                                                                </a>';
+                                }
+                                ?>
+
+                                <?php
+                                if (substr($bitSide, 8, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="add_teacher_assist" href="';
+                                        echo base_url('te_select/add_teacher_assist/') . $subject_id . '-' . $semester . '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-users"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;'.lang('add_assis_professor').'
+                                                                </span>
+                                                                </a>';
+                                }
+                                ?>
+
+                                <?php
+                                if (substr($bitSide, 9, 1) == '1' || $bitSide == '0') {
+                                        echo '<a class="nav-item nav-link" id="add_student" href="';
+                                        echo base_url('te_select/add_student/') . $subject_id . '-' . $semester . '">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-users"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;'.lang('add_std_to_sub').'
+                                                                </span>
+                                                                </a>';
+                                }
+                                ?>
+
+                                <!-- <a class="nav-item nav-link" href="<?php //echo base_url('te_select/quiz/').$subject_id.'-'.$semester; 
+                                                                        ?>">
                                         <span style="font-size: 1.5em;">
-                                        <i class="fas fa-users"></i></span>
+                                                <i class="fas fa-poll"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;เพิ่มนักศึกษาในวิชา
+                                                &nbsp;&nbsp;แบบทดสอบ
                                         </span>
                                 </a>
+                                <a class="nav-item nav-link" href="<?php //echo base_url('te_select/vote/').$subject_id.'-'.$semester; 
+                                                                        ?>">
+                                        <span style="font-size: 1.5em;">
+                                                <i class="fas fa-poll"></i></span>
+                                        <span style="font-size: 1.2em;">
+                                                &nbsp;&nbsp;โหวต
+                                        </span>
+                                </a> -->
+
+
                                 <!-- <a class="nav-item nav-link" href="#">
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-user-tie"></i></span>
@@ -197,7 +317,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </a> -->
                                 <div class="navdrawer-divider"></div>
                                 <a href="">
-                                        <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>
+                                        <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?=lang('web_manual')?></p>
                                 </a>
                         </nav>
                 </div>
@@ -216,7 +336,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         } else {
                                                 echo '<span style="font-size: 1.1em;">
                                                 <i class="fas fa-sign-in-alt"></i>
-                                                </span>&nbsp;&nbsp;ลงชื่อเข้าใช้';
+                                                </span>&nbsp;&nbsp;'.lang('sign_in').'';
                                         }
                                         ?>
                                 </div>
@@ -224,31 +344,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <nav class="navdrawer-nav">
                                 <div class="container">
                                         <?php
+                                        echo '<div class="mb-2 mt-2">'.lang('id').' : '.$this->session->ses_id.'</div>';
+                                        echo '<div class="mb-2 mt-2">'.lang('name').' : '.$this->session->ses_THdegree.$this->session->ses_tname.'</div>';
+                                        echo '<div class="mb-3 mt-2">'.lang('status').' : '.$this->session->ses_statustext.'</div>';
                                         if (isset($this->session->ses_tname)) {
-                                                        echo '<a href="' . base_url('teacher') . '"><button type="button" id="" class="btn btn-info btn-lg btn-block">หน้าจัดการอาจารย์</button></a>';
-                                                        echo '<div class="navdrawer-divider mt-3"></div>';
-                                                echo '<a href="' . base_url('user_uses/sign_out') . '"><button type="button" class="btn btn-danger btn-lg btn-block">ออกจากระบบ</button></a>';
+                                                echo '<a href="' . base_url('teacher') . '"><button type="button" id="" class="btn btn-info btn-lg btn-block">'.lang('manager_page').'</button></a>';
+                                                echo '<button type="button" id="te_user" class="btn btn-primary btn-lg btn-block mt-2">'.lang('account_details').'</button>';
+                                                echo '<div class="navdrawer-divider mt-3"></div>';
+                                                echo '<a href="' . base_url('user_uses/sign_out') . '"><button type="button" class="btn btn-danger btn-lg btn-block">'.lang('sign_out').'</button></a>';
                                         } else {
                                                 echo '<div class="form-group">
                                                                 <div class="floating-label">
-                                                                <label for="Username"><i class="fas fa-lock"></i>&nbsp;&nbsp;ชื่อผู้ใช้</label>
-                                                                <input aria-describedby="UsernameHelp" class="form-control" id="Username" name="Username" placeholder=" ชื่อผู้ใช้ หรือ ID" type="text" autocomplete="off">
+                                                                <label for="Username"><i class="fas fa-lock"></i>&nbsp;&nbsp;'.lang('username').'</label>
+                                                                <input aria-describedby="UsernameHelp" class="form-control" id="Username" name="Username" placeholder=" '.lang('username_or_id').'" type="text" autocomplete="off">
                                                                 <div class="invalid-feedback">
-                                                                        *กรุณาลงชื่อเข้าใช้งาน
+                                                                        '.lang('please_sign_in').'
                                                                 </div>
                                                         </div>
                                                 </div>
                                                 
                                                 <div class="form-group">
                                                         <div class="floating-label">
-                                                                <label for="Password"><i class="fas fa-key"></i>&nbsp;&nbsp;รหัสผู้ใช้</label>
-                                                                <input aria-describedby="PasswordHelp" class="form-control" id="Password" name="Password" placeholder=" รหัสผู้ใช้ หรือ Password" type="Password" autocomplete="off">
+                                                                <label for="Password"><i class="fas fa-key"></i>&nbsp;&nbsp;'.lang('user_pass').'</label>
+                                                                <input aria-describedby="PasswordHelp" class="form-control" id="Password" name="Password" placeholder=" '.lang('passuser_or_password').'" type="Password" autocomplete="off">
                                                                 <div class="invalid-feedback">
-                                                                        *กรุณากรอกรหัส
+                                                                        '.lang('please_enter_the_code').'
                                                                 </div>
                                                         </div>
                                                 </div>
-                                                <button type="button" id="Signin_btn" class="btn btn-primary btn-lg btn-block">ลงชื่อเข้าใช้</button>';
+                                                <button type="button" id="Signin_btn" class="btn btn-primary btn-lg btn-block">'.lang('sign_in').'</button>';
                                         }
                                         ?>
                                 </div>
@@ -258,6 +382,64 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                 </div>
         </div>
+
+        <?php
+        if (isset($this->session->ses_tname)) {
+                echo assets_js('aegis_js/setting_user.js');
+                echo '<div class="modal fade bd-example-modal-lg" id="te_user_setting" tabindex="-1" role="dialog" aria-labelledby="te_user_setting" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h5 class="modal-title">'.lang('account_details').' </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item">
+                                                        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">'.lang('account_details').'</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">'.lang('set_user_id').'</a>
+                                                </li>
+                                        </ul>
+                                        <div class="tab-content" id="myTabContent">
+                                                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                        <div class="ml-2 mb-2 mt-2">'.lang('id').' : ' . $this->session->ses_id . '</div>
+                                                        <div class="ml-2 mb-2 mt-2">'.lang('name').' : ' . $this->session->ses_THdegree . $this->session->ses_tname . '</div>
+                                                        <div class="ml-2 mb-3 mt-2">'.lang('status').' : ' . $this->session->ses_statustext . '</div>
+                                                        <div class="ml-2 mb-3 mt-2">'.lang('brance_with').' :
+                                                                <span  id="techer_major_show">
+                                                                </span>
+                                                        </div>
+                                                </div>
+                                                <div class="tab-pane fade mt-4 ml-2" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                                        <div class="form-group">
+                                                                <label for="label_old_passwd">'.lang('old_password').'</label>
+                                                                <input type="password" class="form-control" id="old_passwd">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                                <label for="label_passwd">'.lang('password').'</label>
+                                                                <input type="password" class="form-control" id="Passwd">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                                <label for="label_passwd_ck">'.lang('confirm_new_passwd').'</label>
+                                                                <input type="password" class="form-control" id="Passwd_ck">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                                <button type="button" id="save_changes" class="btn btn-primary">'.lang('save_changes').'</button>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                </div>';
+        }
+        ?>
 </body>
 
 

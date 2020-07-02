@@ -1,4 +1,27 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['admin_side_Anc', 'admin_side_Anc_course', 'admin_side_Anc_services', 'admin_side_Anc_personnel', 'admin_side_Anc_about_us', 'admin_side_Anc_course', 'admin_side_Anc_services', 'admin_side_Anc_personnel', 'admin_side_Anc_about_us', 'admin_side_faculty', 'admin_side_major', "admin_side_semester", "admin_side_subject", "admin_side_subsem", "admin_side_student", "admin_side_teacher", "admin_side_admin", "admin_side_teamaj", "admin_side_teasub", "admin_side_degree"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    var Navbar_highlight = ['admin_Anc', 'admin_Anc_course', 'admin_Anc_services', 'admin_Anc_personnel', 'admin_Anc_about_us', 'admin_Anc_course', 'admin_Anc_services', 'admin_Anc_personnel', 'admin_Anc_about_us', 'admin_faculty', 'admin_major', "admin_semester", "admin_subject", "admin_subsem", "admin_student", "admin_teacher", "admin_admin", "admin_teamaj", "admin_teasub", "admin_degree"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("admin_side_semester");
+    element.classList.add("bg-danger");
+    var element = document.getElementById("admin_semester");
+    element.classList.add("bg-danger");
+    /******************************************************************** */
+
+
     var iddata;
     var iurl;
     var datatable;
@@ -11,6 +34,7 @@ $(document).ready(function() {
     // 1.showAllData
     // 2.formAdd
     // 3.modaldel
+    yearNow = new Date().getFullYear() + 543;
 
     //--------------------------------------------START_FUNCTION_GEN--------------------------------------------//
     $('#titleNameTxt').text("จัดการข้อมูลปีการศึกษา");
@@ -30,11 +54,11 @@ $(document).ready(function() {
         //[VALUE,TEXT]
         ['semester_year', 'ปี'],
         ['semester_part', 'เทอม'],
-        ['semester_name', 'ชื่อ']
+        ['semester_name', 'ปีการศึกษา']
     ];
 
     //head of table
-    var theadGenValue = ['Semester_year', 'Semester_part', 'Semester_name', 'Option'];
+    var theadGenValue = ['ปี', 'เทอม', 'ปีการศึกษา', 'ตัวเลือก'];
 
     var formData = ["#semester_ID", "#semester_Year", "#semester_Part", "#semester_Name"];
 
@@ -42,7 +66,7 @@ $(document).ready(function() {
         //['TEXT','ID','NAME','HOLDER']
         ['Semester_ID', 'semester_ID', 'semester_ID', 'ID'],
         ['Semester_Name', 'semester_Name', 'semester_Name', 'Name'],
-        ['Semester_Year', 'semester_Year', 'semester_Year', 'Year'],
+        ['ปีการศึกษา', 'semester_Year', 'semester_Year', 'ปี'],
     ];
 
     var popData = ["#popupID", "#popupYear"];
@@ -51,6 +75,11 @@ $(document).ready(function() {
         //[POP_ID,POP_TEXT]
         ['popupID', 'กรุณาระบุไอดี'],
         ['popupYear', 'กรุณาระบุปี']
+    ];
+
+    var Sort = [
+        ['semester_year', 'ASC', 'ปีการศึกษา น้อย > มาก'],
+        ['semester_year', 'DESC', 'ปีการศึกษา มาก > น้อย']
     ];
 
     function formDataValClr() {
@@ -96,11 +125,11 @@ $(document).ready(function() {
         for (i = 0; i < inModelValue.length; i++) {
             html += '<div class="col-md-4 mb-3" >' +
                 '<label>' + inModelValue[i][0] + '</label>' +
-                '<input type="text" type="text" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
+                '<input type="number" onKeyPress="if(this.value.length==4) return false;" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
                 '</div>';
         }
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Part</label>' +
+            '<label>เทอม</label>' +
             '<select id="selectAdd" class="form-control">';
         for (i = 1; i <= 3; i++) {
             html += '<option value="' + i + '">' + i + '</option>';
@@ -126,6 +155,15 @@ $(document).ready(function() {
         $('#tableHead').html(html);
     }
 
+    function ShowSort() {
+        var html = '';
+        for (i = 0; i < Sort.length; i++) {
+            html += ' <a class="dropdown-item" id="sortDrop" href="#" data-1="' + Sort[i][0] + '" data-2="' + Sort[i][1] + '">' + Sort[i][2] + '</a>';
+        }
+        $('#TableSort').html(html);
+    }
+
+
     //---------------------------------------------END_FUNCTION_GEN---------------------------------------------//
 
     inModelGen();
@@ -134,6 +172,7 @@ $(document).ready(function() {
     dropSearch();
     theadGen();
     show_data();
+    ShowSort();
 
     popGen();
     hideAllPop();
@@ -142,7 +181,20 @@ $(document).ready(function() {
     $('#semester_Name').parent().hide();
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
-    $('.row_set').click(function() {
+
+    $("#semester_Year").keypress(function (event) {
+        var ew = event.which;
+        if (ew == 101)
+            return false;
+        if (ew == 45)
+            return false;
+        if (ew == 43)
+            return false;
+        // return true;
+    });
+
+
+    $('.row_set').click(function () {
         limit = $(this).attr('value');
         showBtnTxt = limit;
         if (limit == 0) {
@@ -151,21 +203,36 @@ $(document).ready(function() {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        show_data();
+        // show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
     });
 
-    $('#chevron_right').click(function() {
+    $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
-        show_data();
+        // show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
     });
 
-    $('#chevron_left').click(function() {
+    $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
-        show_data();
+        // show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
     });
 
     function disableArrow(start, pageMax) {
@@ -189,7 +256,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_semester/Show_Max_Data_ctl",
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -211,7 +278,7 @@ $(document).ready(function() {
             data: "&start=" + start + "&limit=" + limit,
             url: "../Admin_semester/Show_Data_ctl",
             dataType: "json",
-            success: function(datatableear) {
+            success: function (datatableear) {
                 datatable = datatableear;
                 var html = '';
                 var i;
@@ -227,7 +294,7 @@ $(document).ready(function() {
                             '</th>' +
                             '<td id="">' + datatableear[i].semester_part + '</td>' +
                             '<td id="">' + datatableear[i].semester_name + '</td>' +
-                            '<td><a data="' + datatableear[i].semester_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            '<td><a data="' + datatableear[i].semester_id + '" value="' + i + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -236,16 +303,40 @@ $(document).ready(function() {
         });
     }
 
-    $('#btnSearch').click(function(e) {
+    $('#btnSearch').click(function (e) {
         e.preventDefault();
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_semester/Show_Max_Data_Search_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+
         $.ajax({
             type: "POST",
             url: "../Admin_semester/Search_Show_Data_ctl",
-            data: "&data=" + data + "&search=" + data2,
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -260,7 +351,7 @@ $(document).ready(function() {
                             '</th>' +
                             '<td>' + response[i].semester_part + '</td>' +
                             '<td>' + response[i].semester_name + '</td>' +
-                            '<td><a data="' + response[i].semester_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            '<td><a data="' + response[i].semester_id + '" value="' + i + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -269,10 +360,66 @@ $(document).ready(function() {
         });
     });
 
+    function LimitSearch() {
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_semester/Show_Max_Data_Search_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_semester/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox" >' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].semester_id + '" id="' + response[i].semester_id + '">' +
+                            '<label class="custom-control-label" for="' + response[i].semester_id + '"> ' + response[i].semester_year + ' </label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].semester_part + '</td>' +
+                            '<td>' + response[i].semester_name + '</td>' +
+                            '<td><a data="' + response[i].semester_id + '" value="' + i + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            },
+        });
+    }
+
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
 
     //--------------------------------------------START_BASIC_TOOLS--------------------------------------------//
-    $(document).keyup(function(e) {
+    $(document).keyup(function (e) {
         if ($('#Modal').is(':visible') == true) {
             if (e.keyCode === 13) $('#btnSave').click(); // enter
             if (e.keyCode === 27) $('#btnClose').click(); // esc
@@ -280,20 +427,20 @@ $(document).ready(function() {
         }
     });
 
-    $('#btnAdd').click(function(e) {
+    $('#btnAdd').click(function (e) {
         e.preventDefault();
         iurl = "../Admin_semester/Add_Data_ctl";
         $('#Modal').find('.modal-title').text(btnAddText);
         $('#Modal').modal('show');
     });
 
-    $('#btnClose').click(function(e) {
+    $('#btnClose').click(function (e) {
         formDataValClr();
         hideAllPop();
         $('#selectAdd').val(datatable[0].semester_part);
     });
 
-    $('#showAllData').on('click', '.item-edit', function() {
+    $('#showAllData').on('click', '.item-edit', function () {
         iddata = $(this).attr('data');
         ivalue = $(this).attr('value');
 
@@ -307,14 +454,39 @@ $(document).ready(function() {
         iurl = '../Admin_semester/Edit_Data_ctl';
     });
 
-    $('#btnSave').click(function(e) {
+    $('#btnSave').click(function (e) {
         e.preventDefault();
+        dataYear = $.trim($('#semester_Year').val());
+        if(dataYear != ''){
+            if (dataYear < yearNow) {
+                // alert(dataYear + '<' + yearNow);
+                    $('#ConfirmModalTxt').text('ปีที่บันทึกน้อยกว่าปีบัจจุบัน ต้องการบันทึกข้อมูลหรือไม่');
+                    $('#modalConfirm').modal('show');
+            } else {
+                AddSemester();
+            }
+        }else{
+            AddSemester();
+        }
+        
+        // AddSemester();
+    });
+
+    $('#btnConfirm').click(function (e) {
+        e.preventDefault();
+        $('#modalConfirm').modal('hide');
+        AddSemester();
+    });
+
+    function AddSemester() {
         var result = '';
         var check = '';
         for (i = 0; i < $(formData).length; i++) {
             if ($(formData[i]).val() == '') {
                 $(popData[i]).show();
 
+            } else if ($.isNumeric($(formData[1]).val()) == false) {
+                $(popData[1]).show();
             } else {
                 $(popData[i]).hide();
                 result += i;
@@ -324,7 +496,7 @@ $(document).ready(function() {
         console.log(check, result);
         if ('12' == result) {
 
-            dataYear = $('#semester_Year').val();
+            dataYear = $.trim($('#semester_Year').val());
             dataPart = $("#selectAdd :selected").val();
             dataID = dataYear + dataPart;
             dataName = dataYear + '/' + dataPart;
@@ -344,7 +516,7 @@ $(document).ready(function() {
                 type: "POST",
                 url: iurl,
                 data: data + '&org_semester_id=' + iddata,
-                success: function() {
+                success: function () {
                     if (iurl == '../Admin_semester/Edit_Data_ctl') {
                         $('#Modal').modal('hide');
                     }
@@ -360,7 +532,7 @@ $(document).ready(function() {
                         text: txtsnack
                     });
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     Snackbar.show({
                         actionText: 'close',
                         pos: 'top-center',
@@ -372,9 +544,9 @@ $(document).ready(function() {
                 }
             });
         }
-    });
+    }
 
-    $('#btnDel').click(function(e) {
+    $('#btnDel').click(function (e) {
         e.preventDefault();
         $data = selectchb();
         if ($data.length > 0) {
@@ -384,7 +556,7 @@ $(document).ready(function() {
                 data: {
                     $data
                 },
-                success: function(datatable) {
+                success: function (datatable) {
                     show_data();
                     $('#modaldel').modal('hide');
                     Snackbar.show({
@@ -413,16 +585,50 @@ $(document).ready(function() {
 
 
 
-    $('#selectall').change(function() {
+    $('#selectall').change(function () {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
     function selectchb() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function() {
+        $('input[name^=checkitem]:checked').each(function () {
             item.push($(this).val());
         });
         return item;
     }
+
+    $(".dropdown-menu.sort a ").click(function () {
+        data = $(this).attr('data-1');
+        sort = $(this).attr('data-2');
+
+        $.ajax({
+            type: 'POST',
+            url: "../Admin_semester/Show_Sort_ctl",
+            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit,
+            dataType: "json",
+            success: function (datatableear) {
+                datatable = datatableear;
+                var html = '';
+                var i;
+                if (datatableear != null) {
+                    for (i = 0; i < datatableear.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox" >' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + datatableear[i].semester_id + '" id="' + datatableear[i].semester_id + '">' +
+                            '<label class="custom-control-label" for="' + datatableear[i].semester_id + '"> ' + datatableear[i].semester_year + ' </label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td id="">' + datatableear[i].semester_part + '</td>' +
+                            '<td id="">' + datatableear[i].semester_name + '</td>' +
+                            '<td><a data="' + datatableear[i].semester_id + '" value="' + i + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
     //--------------------------------------------END_BASIC_TOOLS--------------------------------------------//
 });

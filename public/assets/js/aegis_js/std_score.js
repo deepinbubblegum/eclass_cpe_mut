@@ -1,4 +1,30 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['side_Anc', 'side_score', 'side_uploads', "side_downloads", "side_media", "side_quiz", "side_vote"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-info");
+    }
+
+    var Navbar_highlight = ['Anc', 'score', 'uploads', "downloads", "media", "quiz", "vote"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-info");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("score");
+    element.classList.add("bg-info");
+    var element = document.getElementById("side_score");
+    element.classList.add("bg-info");
+    /******************************************************************** */
+
+    year = semester.substr(0, 4);
+    part = semester.substr(4, 1);
+    $('#header').text('คะแนน : ' + subject_id + ' - ' + year + '/' + part);
+
     var url = $(location).attr('href').split("/");
     var getMenu = [];
     var getField = [];
@@ -8,7 +34,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Std_score/showMenuPoint/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 getMenu = response;
                 console.log(response);
                 var html = '';
@@ -26,7 +52,7 @@ $(document).ready(function() {
                             '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
                             '<div class="expansion-panel-body">' +
                             /* --------BTN-------- */
-                            '<span style="font-size: 1.7em;"><a href="/select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].point_id + '" id="showInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
+                            '<span style="font-size: 1.7em;"><a href="/select/scoreTable/' + subject_id + '-' + semester + '-' + response[i].point_id + '" target="_blank" id="showInMenu-' + response[i].point_id + '" href="#" class="f34r-txt-black"><i class="fas fa-star"></a></i></span>&nbsp;' +
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].point_discription +
@@ -49,7 +75,7 @@ $(document).ready(function() {
                     }
                 }
                 $('.showMenuScore').html(html);
-                $.each(getMenu, function(i, p) {
+                $.each(getMenu, function (i, p) {
                     showUnit(getMenu[i].point_id);
                 });
             }
@@ -60,7 +86,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Std_score/showPointField/' + subject_id + '-' + semester + '-' + popUp,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = "";
                 if (!getField[popUp]) getField[popUp] = []
                 getField[popUp] = response;
@@ -79,15 +105,15 @@ $(document).ready(function() {
                 }
                 $('#genIn-' + popUp).html(html);
                 console.log(getField[popUp])
-                $.each(getField[popUp], function(i, p) {
-                    $('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function(e) {
+                $.each(getField[popUp], function (i, p) {
+                    $('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id).click(function (e) {
                         console.log('#viewPoint-' + popUp + '-' + getField[popUp][i].setpoint_setpoint_id);
                         showPoint(getField[popUp][i].setpoint_setpoint_id, popUp);
                         $('#showPoint').modal('show');
                     });
                 });
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
@@ -101,7 +127,7 @@ $(document).ready(function() {
             url: takeThisUrl,
             data: '&semester=' + semester + '&subject_id=' + subject_id + '&setIdChild=' + childId + '&setIdParent=' + parentId,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 //console.log(response + '<- This is showPoint response');
                 html = '';
                 if (response.length != undefined) {

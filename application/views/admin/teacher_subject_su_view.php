@@ -22,7 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <span style="font-size: 1.2em;">
                     <i class="fas fa-tachometer-alt"></i></span>
                 <span style="font-size: 0.8em;">
-                &nbsp;<span class="title-name" id="titleNameTxt">TITLE_NAME</span>
+                    &nbsp;<span class="title-name" id="titleNameTxt">TITLE_NAME</span>
                 </span>
             </div>
             <div class="form-inline">
@@ -31,7 +31,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </span>
                 <select class="custom-select mr-sm-2" id="select_search">
                     <!-- dropSearch(); -->
-                    <option >SELECT_SEARCH_TEXT</option>
+                    <option>SELECT_SEARCH_TEXT</option>
                 </select>
                 <input class="form-control mr-sm-2" id="SearchName" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn btn-secondary my-2 my-sm-0" id="btnSearch">
@@ -49,7 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="saveModalTxt">SAVE_MODAL_TITLE</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" id="IconClose" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <form id="formAdd">
                         <!--EDIT_FORM_ADD -->
@@ -59,10 +59,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <!-- inModelGen(); -->
                                 </div>
                             </form>
+                            <div class="form-group">
+                                <label for="List_Subject">อาจารย์ประจำวิชา</label>
+                                <select multiple class="form-control" id="List_Subject">
+
+                                </select>
+                            </div>
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">ปิด</button>
                         <button type="button" id="btnSave" class="btn btn-primary">Save</button>
                     </div>
                 </div>
@@ -79,8 +85,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" id="btnDel" class="btn btn-primary">Delete</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                        <button type="button" id="btnDel" class="btn btn-primary">ลบ</button>
                     </div>
                 </div>
             </div>
@@ -94,11 +100,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <h5 class="card-title mb-0"><span id="tableTitleTxt">TABLE_TITLE</span></h5>
                     <div class="card-actions ml-auto py-0">
                         <div class="dropdown">
+                            <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardTableDrop1" type="button"><i class="material-icons">filter_list</i></button>
+                            <div aria-labelledby="cardTableDrop1" id="TableSort" class="dropdown-menu sort dropdown-menu-right menu">
+                                <!-- <a class="dropdown-item" href="#">Filter 1</a>
+                                <a class="dropdown-item" href="#">Filter 2</a>
+                                <a class="dropdown-item" href="#">Filter 3</a> -->
+                            </div>
+                        </div>
+                        <div class="dropdown">
                             <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardTableDrop2" type="button"><i class="material-icons">more_vert</i></button>
                             <div aria-labelledby="cardTableDrop2" class="dropdown-menu dropdown-menu-right menu">
-                                <a class="dropdown-item" id="btnAdd">Add</a>
+                                <a class="dropdown-item" id="btnAdd">เพิ่มข้อมูล</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" data-toggle="modal" data-target="#modaldel">Delete</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#modaldel">ลบข้อมูล</a>
                             </div>
                         </div>
                     </div>

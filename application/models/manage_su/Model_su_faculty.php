@@ -13,6 +13,7 @@ class Model_su_faculty extends CI_Model
     {
         $this->db->select('faculty_id, faculty_name');
         $this->db->from('faculty');
+        $this->db->order_by("faculty_name", "asc");
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -29,6 +30,7 @@ class Model_su_faculty extends CI_Model
             $this->db->like('faculty_id', $keyword);
             $this->db->or_like('faculty_name', $keyword);
         }
+        $this->db->order_by("faculty_name", "asc");
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -37,18 +39,49 @@ class Model_su_faculty extends CI_Model
 
     public function Add_Data_model($data)
     {
-        $this->db->insert('faculty', $data);
+        $this->db->db_debug = false;
+        if (!$this->db->insert('faculty', $data))
+        {
+            $error = $this->db->error();
+            return $error;
+        }else{
+            return true;
+        }
     }
 
     public function Edit_Data_model($org_id, $data)
     {
+        $this->db->db_debug = false;
         $this->db->where('faculty_id', $org_id);
-        $this->db->update('faculty', $data);
+        if (!$this->db->update('faculty', $data))
+        {
+            $error = $this->db->error();
+            return $error;
+        }else{
+            return true;
+        }
     }
 
     public function Delete_Data_model($data)
     {
+        $this->db->db_debug = false;
         $this->db->where_in('faculty_id', $data);
-        $this->db->delete('faculty');
+        if (!$this->db->delete('faculty')){
+            $error = $this->db->error();
+            return $error;
+        }else{
+            return true;
+        }
+    }
+
+    public function Show_Sort_model($data, $sort)
+    {
+        $this->db->select('faculty_id, faculty_name');
+        $this->db->from('faculty');
+        $this->db->order_by($data, $sort);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
     }
 }

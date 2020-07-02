@@ -1,4 +1,27 @@
 $(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['admin_side_Anc', 'admin_side_Anc_course', 'admin_side_Anc_services', 'admin_side_Anc_personnel', 'admin_side_Anc_about_us', 'admin_side_Anc_course', 'admin_side_Anc_services', 'admin_side_Anc_personnel', 'admin_side_Anc_about_us', 'admin_side_faculty', 'admin_side_major', "admin_side_semester", "admin_side_subject", "admin_side_subsem", "admin_side_student", "admin_side_teacher", "admin_side_admin", "admin_side_teamaj", "admin_side_teasub", "admin_side_degree"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    var Navbar_highlight = ['admin_Anc', 'admin_Anc_course', 'admin_Anc_services', 'admin_Anc_personnel', 'admin_Anc_about_us', 'admin_Anc_course', 'admin_Anc_services', 'admin_Anc_personnel', 'admin_Anc_about_us', 'admin_faculty', 'admin_major', "admin_semester", "admin_subject", "admin_subsem", "admin_student", "admin_teacher", "admin_admin", "admin_teamaj", "admin_teasub", "admin_degree"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("admin_side_student");
+    element.classList.add("bg-danger");
+    var element = document.getElementById("admin_student");
+    element.classList.add("bg-danger");
+    /******************************************************************** */
+
+
     var iddata;
     var iurl;
     var datatable;
@@ -9,6 +32,7 @@ $(document).ready(function () {
     var start = 0;
     var currentPage = 1;
 
+    var csv_upload;
     // 1.showAllData
     // 2.formAdd
     // 3.modaldel
@@ -32,12 +56,12 @@ $(document).ready(function () {
         ['std_Tname', 'ชื่อ ภาษาไทย'],
         ['std_Ename', 'ชื่อ ภาษาอังกฤษ'],
         ['std_email', 'อีเมล'],
-        ['faculty_name', 'คณะ'],
-        ['std_major', 'สาขา']
+        ['faculty_name', 'ชื่อคณะ'],
+        ['std_major', 'ชื่อสาขา']
     ];
 
     //head of table
-    var theadGenValue = ['รหัส', 'ชื่อ (ไทย)', 'ชื่อ (อังกฤษ)', 'อีเมล', 'คณะ', 'สาขา', 'option'];
+    var theadGenValue = ['รหัส', 'ชื่อ (TH)', 'ชื่อ (EN)', 'อีเมล', 'คณะ', 'สาขา', 'ตัวเลือก'];
 
     var formData = ["#std_code_id", "#std_Tname", "#std_Ename", "#std_email"];
 
@@ -57,6 +81,19 @@ $(document).ready(function () {
         ['popupTname', 'กรุณาระบุชื่อ'],
         ['popupEname', 'กรุณาระบุไอดี'],
         ['popupEmail', 'กรุณาระบุชื่อสาขา']
+    ];
+
+    var Sort = [
+        ['std_code_id', 'ASC', 'รหัสนักศึกษา มาก > น้อย'],
+        ['std_code_id', 'DESC', 'รหัสนักศึกษา น้อย > มาก'],
+        ['std_Tname', 'ASC', 'ชื่อ(TH) ก > ฮ'],
+        ['std_Tname', 'DESC', 'ชื่อ(TH) ฮ > ก'],
+        ['std_Ename', 'ASC', 'ชื่อ(EN) A > Z'],
+        ['std_Ename', 'DESC', 'ชื่อ(EN) Z > A'],
+        ['faculty_name', 'ASC', 'คณะ A > Z'],
+        ['faculty_name', 'DESC', 'คณะ Z > A'],
+        ['major_name', 'ASC', 'สาขา A > Z'],
+        ['major_name', 'DESC', 'สาขา Z > A'],
     ];
 
     function formDataValClr() {
@@ -160,19 +197,38 @@ $(document).ready(function () {
         return fileSizeReturn;
     }
 
+    function ShowSort() {
+        var html = '';
+        for (i = 0; i < Sort.length; i++) {
+            html += ' <a class="dropdown-item" id="sortDrop" href="#" data-1="' + Sort[i][0] + '" data-2="' + Sort[i][1] + '">' + Sort[i][2] + '</a>';
+        }
+        $('#TableSort').html(html);
+    }
+
     //---------------------------------------------END_FUNCTION_GEN---------------------------------------------//
 
     inModelGen();
+
+    getFaculty();
 
     dropPag();
     dropSearch();
     theadGen();
     show_data();
+    ShowSort();
 
     popGen();
     hideAllPop();
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
+
+    $('#facultySelectAdd').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#majorSelectAdd').select2({
+        theme: 'bootstrap4',
+    });
 
     $('.row_set').click(function () {
         limit = $(this).attr('value');
@@ -183,21 +239,36 @@ $(document).ready(function () {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        show_data();
+        // show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
     });
 
     $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
-        show_data();
+        // show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
     });
 
     $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
-        show_data();
+        // show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
     });
 
     function disableArrow(start, pageMax) {
@@ -262,15 +333,134 @@ $(document).ready(function () {
                             '<td>' + response[i].std_email + '</td>' +
                             '<td>' + response[i].faculty_name + '</td>' +
                             '<td>' + response[i].major_name + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
                 $('#showAllData').html(html);
             }
         });
-        getFaculty();
     }
+
+    $('#btnSearch').click(function (e) {
+        e.preventDefault();
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_student_data/Show_Max_Search_Data_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                console.log(start, limit);
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_student_data/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].std_code_id + '" id="' + response[i].std_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].std_code_id + i + '">' + response[i].std_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].std_Tname + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
+                            '<td>' + response[i].std_email + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
+                            '<td>' + response[i].major_name + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
+
+    function LimitSearch() {
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_student_data/Show_Max_Search_Data_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                console.log(start, limit);
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_student_data/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].std_code_id + '" id="' + response[i].std_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].std_code_id + i + '">' + response[i].std_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].std_Tname + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
+                            '<td>' + response[i].std_email + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
+                            '<td>' + response[i].major_name + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    }
+
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
 
     //--------------------------------------------START_BASIC_TOOLS--------------------------------------------//
@@ -303,6 +493,7 @@ $(document).ready(function () {
 
     $('#btnUpload').click(function (e) {
         e.preventDefault();
+        csv_upload = '';
         var snacktxt = '';
         var form_data = new FormData();
         form_data.append('file', _files[0]);
@@ -320,6 +511,10 @@ $(document).ready(function () {
                             html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%">Complete</div>';
                             setTimeout(function () {
                                 $('#Modalcsv').modal('hide');
+                                // console.log(csv_upload.length);
+                                if (csv_upload != '') {
+                                    csv_log_error();
+                                }
                             }, 1200);
                         }
                         $('#progressupload').html(html);
@@ -334,7 +529,9 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             processData: false,
+            dataType: 'json',
             success: function (response) {
+                csv_upload = response;
                 console.log(response);
                 if (response == '<p>upload_invalid_filetype</p>') {
                     snacktxt = 'ไม่สามารถอ่านไฟล์ได้ ' + response;
@@ -344,6 +541,7 @@ $(document).ready(function () {
                 } else {
                     snacktxt = 'อับโหลดข้อมูลจากไฟล์สำเร็จ';
                 }
+
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -373,6 +571,24 @@ $(document).ready(function () {
         getMajor();
     });
 
+    function csv_log_error() {
+        html_log = '';
+        for (let index = 0; index < csv_upload.length; index++) {
+            html_log += '<tr>' +
+                '<td>' + csv_upload[index]['line_error'] + '</td>' +
+                '<td>' + csv_upload[index]['std_code_id'] + '</td>' +
+                '<td>' + csv_upload[index]['std_Tname'] + '</td>' +
+                '<td>' + csv_upload[index]['std_Ename'] + '</td>' +
+                '<td>' + csv_upload[index]['std_email'] + '</td>' +
+                '<td>' + csv_upload[index]['std_major'] + '</td>' +
+                '<td>' + csv_upload[index]['log_error'].message + '</td>' +
+                '</tr>'
+        }
+        $('#log_error_tr').html(html_log);
+        $('#log_csv_error').modal('show');
+    }
+
+
     function getFaculty() {
         $.ajax({
             url: "../Admin_student_data/Show_Data_faculty",
@@ -386,13 +602,14 @@ $(document).ready(function () {
                     }
                 }
                 $('#facultySelectAdd').html(html);
+                getMajor();
                 //$('#facultySelectAdd').val(datatable[ivalue].faculty_id);
             }
         });
     }
 
     function getMajor() {
-        //facultySelect = $('#facultySelectAdd :selected').val();
+        facultySelect = $('#facultySelectAdd :selected').val();
         $.ajax({
             type: "POST",
             url: "../Admin_student_data/Show_Data_Major",
@@ -407,6 +624,45 @@ $(document).ready(function () {
                     }
                 }
                 $('#majorSelectAdd').html(html);
+            }
+        });
+    }
+
+    function getFacultyEdit(Fa_id) {
+        $.ajax({
+            url: "../Admin_student_data/Show_Data_faculty",
+            dataType: "json",
+            success: function (response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].faculty_id + '">' + response[i].faculty_name + '</option>';
+                    }
+                }
+                $('#facultySelectAdd').html(html);
+                $('#facultySelectAdd').val(Fa_id);
+            }
+        });
+    }
+
+    function getMajorEdit(major_id) {
+        facultySelect = $('#facultySelectAdd :selected').val();
+        $.ajax({
+            type: "POST",
+            url: "../Admin_student_data/Show_Data_Major",
+            data: '&facultySelect=' + $('#facultySelectAdd :selected').val(),
+            dataType: "json",
+            success: function (response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                    }
+                }
+                $('#majorSelectAdd').html(html);
+                $('#majorSelectAdd').val(major_id);
             }
         });
     }
@@ -428,6 +684,7 @@ $(document).ready(function () {
         e.preventDefault();
         var result = '';
         var check = '';
+        var FormData = '';
 
         for (i = 0; i < $(formData).length; i++) {
             if ($(formData[i]).val() == '') {
@@ -447,8 +704,15 @@ $(document).ready(function () {
                 txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
             }
-            data = $('#formAdd').serialize();
-            data2 = $("#majorSelectAdd :selected").val();
+
+            FormData = $('#formAdd').find('input:text').each(function () {
+                $(this).val($.trim($(this).val()));
+            });
+
+            data = FormData.serialize();
+            data2Encode = $("#majorSelectAdd :selected").val();
+            data2 = encodeURIComponent(data2Encode);
+
             $.ajax({
                 type: "POST",
                 url: iurl,
@@ -503,9 +767,11 @@ $(document).ready(function () {
         $('#std_Tname').val(datatable[ivalue].std_Tname);
         $('#std_Ename').val(datatable[ivalue].std_Ename);
         $('#std_email').val(datatable[ivalue].std_email);
-        console.log(datatable[ivalue].major_id, datatable[ivalue].major_name);
+        console.log(datatable[ivalue].faculty_id, datatable[ivalue].major_id);
         $('#facultySelectAdd').val(datatable[ivalue].faculty_id);
-        getMajor();
+        getFacultyEdit(datatable[ivalue].faculty_id);
+        // $('#facultySelectAdd').find('option[value="'+datatable[ivalue].faculty_id+'"]').attr('selected','selected');
+        getMajorEdit(datatable[ivalue].major_id);
         $('#majorSelectAdd').val(datatable[ivalue].major_id);
         $('#Modal').modal('show');
         $('#Modal').find('.modal-title').text('แก้ไขข้อมูลผู้ใช้งาน');
@@ -515,46 +781,20 @@ $(document).ready(function () {
 
     $('#btnClose').click(function (e) {
         formDataValClr();
-        document.getElementById('majorSelectAdd').value = datatable[0].major_id;
+        //document.getElementById('majorSelectAdd').value = datatable[0].major_id;
         hideAllPop();
+        getFaculty();
     });
 
-    $('#btnSearch').click(function (e) {
-        e.preventDefault();
-        data = $('#SearchName').val();
-        data2 = $('#select_search').val();
-        $.ajax({
-            type: "POST",
-            url: "../Admin_student_data/Search_Show_Data_ctl",
-            data: "&data=" + data + "&search=" + data2,
-            dataType: "json",
-            success: function (response) {
-                datatable = response;
-                var html = '';
-                var i;
-                if (response != null) {
-                    for (i = 0; i < response.length; i++) {
-                        html +=
-                            '<tr>' +
-                            '<th>' +
-                            '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].std_code_id + '" id="' + response[i].std_code_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].std_code_id + i + '">' + response[i].std_code_id + '</label>' +
-                            '</div>' +
-                            '</th>' +
-                            '<td>' + response[i].std_Tname + '</td>' +
-                            '<td>' + response[i].std_Ename + '</td>' +
-                            '<td>' + response[i].std_email + '</td>' +
-                            '<td>' + response[i].faculty_name + '</td>' +
-                            '<td>' + response[i].major_name + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">Edit</a></td>' +
-                            '</tr>';
-                    }
-                }
-                $('#showAllData').html(html);
-            }
-        });
+    $(document).on('keyup', function (e) {
+        if (e.keyCode == 27) {
+            formDataValClr();
+            //document.getElementById('majorSelectAdd').value = datatable[0].major_id;
+            hideAllPop();
+            getFaculty();
+        }
     });
+
 
     $('#btnDel').click(function (e) {
         e.preventDefault();
@@ -596,6 +836,12 @@ $(document).ready(function () {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
+    function uncheck() {
+        $('input[name^=checkitem]:checked').each(function () {
+            $(this).prop("checked", false)
+        });
+    }
+
     function selectchb() {
         var item = [];
         $('input[name^=checkitem]:checked').each(function () {
@@ -603,5 +849,88 @@ $(document).ready(function () {
         });
         return item;
     }
+
+    $('#resetPasswd').click(function (e) {
+        e.preventDefault();
+        $data = selectchb();
+        if ($data.length > 0) {
+            // $('#datauserlist').text('ID:' + $data);
+            $('#modelreset').modal('show');
+        } else {
+            Snackbar.show({
+                actionText: 'ปิด',
+                pos: 'top-center',
+                actionTextColor: '#4CAF50',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'กรุณาเลือกข้อมูลต้องการจะคืนค่ารหัสผ่านเริ่มต้น'
+            });
+        }
+        // uncheck();
+    });
+
+    $('#btnReset').click(function (e) {
+        e.preventDefault();
+        $data = selectchb();
+        $.ajax({
+            type: "POST",
+            url: "../Admin_student_data/Passwdre_Data_ctl",
+            data: {
+                $data
+            },
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                Snackbar.show({
+                    actionText: 'ปิด',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: 'คืนค่ารหัสผ่านเริ่มต้นแล้ว'
+                });
+            }
+        });
+        uncheck();
+        $('#modelreset').modal('hide');
+    });
+
+
+    $(".dropdown-menu.sort a ").click(function () {
+        data = $(this).attr('data-1');
+        sort = $(this).attr('data-2');
+        // alert(limit);
+        $.ajax({
+            type: 'POST',
+            url: "../Admin_student_data/Show_Sort_ctl",
+            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].std_code_id + '" id="' + response[i].std_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].std_code_id + i + '">' + response[i].std_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].std_Tname + '</td>' +
+                            '<td>' + response[i].std_Ename + '</td>' +
+                            '<td>' + response[i].std_email + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
+                            '<td>' + response[i].major_name + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].std_code_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
     //--------------------------------------------END_BASIC_TOOLS--------------------------------------------//
 });

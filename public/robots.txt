@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /th/admin
+Disallow: /en/admin
+Disallow: /admin
+Disallow: /th/teacher
+Disallow: /en/teacher

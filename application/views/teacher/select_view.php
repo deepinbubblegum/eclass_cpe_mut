@@ -11,6 +11,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <script>
                 subject_id =  '<?php echo $subject_id; ?>';
                 semester =  '<?php echo $semester; ?>';
+                per_bit =  '<?php echo $per_bit; ?>';
         </script>
         <?php echo assets_js('aegis_js/std_select.js'); ?>
 </head>

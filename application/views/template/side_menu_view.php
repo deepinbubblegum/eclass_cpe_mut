@@ -22,16 +22,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-home"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;หน้าแรก
+                                                                        &nbsp;&nbsp;<?= lang('home_page') ?>
                                                                 </span>
                                                         </a>
                                                         <?php
-                                                        if ($this->session->ses_status) {
+                                                        if ($this->session->ses_status == 'student') {
                                                                 echo '<a class="nav-item nav-link" href="' . base_url('subject') . '">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-atlas"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;รายวิชา
+                                                                        &nbsp;&nbsp;' . lang('course') . '
                                                                 </span>
                                                                 </a>';
                                                         }
@@ -42,33 +42,65 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         <span style="font-size: 1.5em;">
                                                                                 <i class="fas fa-tachometer-alt"></i></span>
                                                                         <span style="font-size: 1.2em;">
-                                                                                &nbsp;&nbsp;พิมพ์บาร์โค้ด
+                                                                                &nbsp;&nbsp;' . lang('print_barcode') . '
                                                                         </span>
                                                                         </a>';
                                                         }
                                                         ?>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
-                                                                <span style="font-size: 1.5em;">
-                                                                        <i class="fas fa-stopwatch"></i></span>
-                                                                <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;นาฬิกาจับเวลา
-                                                                </span>
-                                                        </a>
                                                         <?php
                                                         if ($this->session->ses_status == 'student') {
-                                                                echo '<div class="navdrawer-divider"></div>
-                                                                <a class="nav-item nav-link" id="ticket" data-toggle="modal" data-target="#modal_ticket">
+                                                                echo '<a class="nav-item nav-link" id="ticket" data-toggle="modal" data-target="#modal_ticket">
                                                                         <span style="font-size: 1.5em;">
                                                                                 <i class="fas fa-ticket-alt"></i></span>
                                                                         <span style="font-size: 1.2em;">
-                                                                                &nbsp;&nbsp;กรอกรหัสคะแนน
+                                                                                &nbsp;&nbsp;' . lang('enter_the_score_code') . '
                                                                         </span>
                                                                 </a>';
                                                         }
                                                         ?>
+
                                                         <div class="navdrawer-divider"></div>
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('course'); ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-book-open"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;<?= lang('course_ann') ?>
+                                                                </span>
+                                                        </a>
+
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('services'); ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                <i class="fas fa-hand-holding-heart"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;<?= lang('services') ?>
+                                                                </span>
+                                                        </a>
+
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('personnel'); ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-user-tie"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;<?= lang('personnel') ?>
+                                                                </span>
+                                                        </a>
+
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('about_us'); ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-users"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;<?= lang('about_us') ?>
+                                                                </span>
+                                                        </a>
+                                                        <div class="navdrawer-divider"></div>
+                                                        <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-stopwatch"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;<?= lang('stopwatch') ?>
+                                                                </span>
+                                                        </a>
                                                         <a href="">
-                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>
+                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?= lang('web_manual') ?></p>
                                                         </a>
                                                 </nav>
                                         </div>

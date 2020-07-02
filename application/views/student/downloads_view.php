@@ -9,10 +9,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <script>
-                subject_id =  '<?php echo $subject_id; ?>';
-                semester =  '<?php echo $semester; ?>';
+                subject_id = '<?php echo $subject_id; ?>';
+                semester = '<?php echo $semester; ?>';
         </script>
-        <?php 
+        <?php
         echo assets_js('aegis_js/std_download.js');
         ?>
 </head>
@@ -24,7 +24,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span style="font-size: 1.2em;">
                                         <i class="fas fa-chalkboard"></i></span>
                                 <span style="font-size: 0.8em;">
-                                        &nbsp; DOWNLOADS
+                                        <!-- &nbsp; ดาวน์โหลด -->
+                                        &nbsp; <span id="header"></span>
                                 </span>
                         </div>
                         <!-- <form class="form-inline">
@@ -42,71 +43,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <li class="nav-item">
                                         <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">เมนูไฟล์</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                         <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">แสดงเฉพาะไฟล์</a>
-                                </li>
+                                </li> -->
                         </ul>
                         <div class="tab-content" id="justifiedTabContent">
                                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
                                         <div class="list-group mt-3 showMenuDownload" id="accordionOne">
-                                                <div class="expansion-panel list-group-item" >
-                                                        <a aria-controls="collapseOne" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseOne" id="headingOne">
-                                                                Expansion panel item #1
-                                                                <div class="expansion-panel-icon ml-3 text-black-secondary">
-                                                                        <i class="collapsed-show material-icons">keyboard_arrow_down</i>
-                                                                        <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
-                                                                </div>
-                                                        </a>
-                                                        <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionOne" id="collapseOne">
-                                                                <div class="expansion-panel-body">
-                                                                รายละเอียดการบ้าน
-                                                                        <div id="dowloads">
-                                                                                <li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2">
-                                                                                        <span class="mr-2 mb-0" style="font-size: 28px;">
-                                                                                                <i class="fas fa-file-download"></i>
-                                                                                                <span class="mr-2 text-black" style="font-size: 18px;">ทดสอบ</span>
-                                                                                                <div class="mt-0">
-                                                                                                        <small class="mr-2 text-black-50" style="font-size: 12px;">size : 20GB</small>
-                                                                                                        <small class="mr-2 text-black-50" style="font-size: 12px;">type : pdf</small>
-                                                                                                </div>
-                                                                                        </span>
-                                                                                        <span>
-                                                                                                <button class="btn btn-float btn-info my-1"><i class="fas fa-download"></i></button>
-                                                                                        </span>
-                                                                                </li>
-                                                                        </div>
-                                                                </div>
-                                                        </div>
-                                                </div>
-                                                <div class="expansion-panel list-group-item">
-                                                        <a aria-controls="collapseTwo" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseTwo" id="headingTwo">
-                                                                Expansion panel item #2
-                                                                <div class="expansion-panel-icon ml-3 text-black-secondary">
-                                                                        <i class="collapsed-show material-icons">keyboard_arrow_down</i>
-                                                                        <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
-                                                                </div>
-                                                        </a>
-                                                        <div aria-labelledby="headingTwo" class="collapse" data-parent="#accordionOne" id="collapseTwo">
-                                                                <div class="expansion-panel-body">
-                                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                                                </div>
-                                                        </div>
-                                                </div>
-                                                
-                                                <div class="expansion-panel list-group-item">
-                                                        <a aria-controls="collapseThree" aria-expanded="false" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapseThree" id="headingThree">
-                                                                Expansion panel item #3
-                                                                <div class="expansion-panel-icon ml-3 text-black-secondary">
-                                                                        <i class="collapsed-show material-icons">keyboard_arrow_down</i>
-                                                                        <i class="collapsed-hide material-icons">keyboard_arrow_up</i>
-                                                                </div>
-                                                        </a>
-                                                        <div aria-labelledby="headingThree" class="collapse" data-parent="#accordionOne" id="collapseThree">
-                                                                <div class="expansion-panel-body">
-                                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                                                </div>
-                                                        </div>
-                                                </div> 
                                         </div>
                                 </div>
                                 <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">

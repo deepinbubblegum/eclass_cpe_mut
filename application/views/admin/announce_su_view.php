@@ -9,6 +9,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <?php echo assets_js('aegis_js/manage_su/su_announce.js') ?>
+
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.js"></script>
+
 </head>
 
 <body>
@@ -16,7 +20,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <nav class="navbar navbar-light " style="max-height: auto; min-width: 335px; background-color: #dadfe4;">
                         <div class="navbar-brand" href="#">
                                 <span style="font-size: 1.2em;">
-                                        <i class="fas fa-chalkboard"></i></span>
+                                        <i class="fas fa-bullhorn"></i></span>
                                 <span style="font-size: 0.8em;">
                                         &nbsp; ประกาศ
                                 </span>
@@ -70,8 +74,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 </div>
                                                 <div class="card-body">
                                                         <div class="form-group">
-                                                                <div class="input-group">
+                                                                <!-- <div class="input-group">
                                                                         <textarea class="form-control" id="textareacontent" placeholder="รายละเอียดเนื้อหาประกาศ" rows="20"></textarea>
+                                                                </div> -->
+                                                                <div class="input-group" id="summernote">
+                                                                       
                                                                 </div>
                                                         </div>
                                                         <div class="mr-auto text-right">
@@ -141,8 +148,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                         </div>
                                                                 </div>
 
-                                                                <div class="input-group">
+                                                                <!-- <div class="input-group">
                                                                         <textarea class="form-control" id="textareacontent_edit" placeholder="รายละเอียดเนื้อหาประกาศ" rows="20"></textarea>
+                                                                </div> -->
+                                                                <div class="input-group" id="summernoteEdit">
+                                                                       
                                                                 </div>
                                                         </div>
                                                         <div class="modal-footer">

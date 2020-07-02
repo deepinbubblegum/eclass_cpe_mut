@@ -67,4 +67,19 @@ class Teacher_subject extends MY_Controller
         $this->load->view('teacher/subject_menu_point_te_view');
         $this->load->view('teacher/template_te/footer_te_view');
     }
+
+    public function getSubject_Special()
+    {
+        $data = $this->input->post('data');
+        $userID = $this->session->ses_id;
+        $result = $this->Model_te_subject->selectSubject_Special($data,$userID);
+        echo json_encode($result);
+    }
+
+    public function getSubject_Alert()
+    {
+        $semester = $this->input->post('data');
+        $result = $this->Model_te_subject->getSubject_Alert_model($semester);
+        echo json_encode($result);
+    }
 }

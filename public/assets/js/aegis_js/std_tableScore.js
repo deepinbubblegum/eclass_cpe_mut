@@ -27,7 +27,8 @@ $(document).ready(function() {
                     pointData = response;
                     html +=
                         '<tr>' +
-                        '<th scope="col">Student ID</th>';
+                        '<th scope="col">Student ID</th>'+
+                        '<th scope="col">Student Name</th>';
                     for (i = 0; i < response.length; i++) {
                         html += '<th scope="col"><a id="charts-' + i + '" >' + response[i].setpoint_mininame + '</a>';
                         if (response[i].setpoint_option == '1') {
@@ -110,7 +111,7 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             url: takeThisUrl,
-            data: '&semester=' + semester + '&subject_id=' + subject_id,
+            data: '&semester=' + semester + '&subject_id=' + subject_id + '&point_id=' + point_id,
             dataType: "json",
             success: function(response) {
                 console.log('showTableBody');
@@ -121,6 +122,7 @@ $(document).ready(function() {
                     for (i = 0; i < response.length; i++) {
                         html += '<tr>';
                         html += '<th scope="col">' + response[i].substd_stdid + '</th>';
+                        html += '<th scope="col" class="text-nowrap">' + response[i].std_Tname + '</th>';
                         for (j = 0; j < pointData.length; j++) {
                             html += '<th id="point-' + response[i].substd_stdid + '-' + pointData[j].setpoint_setpoint_id + '">0</th>';
                         }
@@ -182,8 +184,13 @@ $(document).ready(function() {
                     }
                 }
 
+                var chartCheck = 0;
                 $.each(getFieldPoint, function(i, p) {
                     $("#charts-" + i).click(function(e) {
+                        chartCheck++;
+                        if (chartCheck > 1) {
+                            char.destroy();
+                        }
                         //console.log(i);
                         $('#exampleModalLabel').text(getFieldPoint[i].setpoint_mininame);
                         $('#exampleModal').modal('show');
@@ -235,7 +242,7 @@ $(document).ready(function() {
 
 
 
-                        new Chart(document.getElementById("score_show"), {
+                        char = new Chart(document.getElementById("score_show"), {
                             "type": "horizontalBar",
                             "data": {
                                 //"labels": ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Grey"],
@@ -264,6 +271,7 @@ $(document).ready(function() {
                                 }
                             }
                         });
+                        
                         console.log(sumData);
                         html = '<table class="table table-striped mt-2"><tbody>';
                         html += '<tr><td>Student</td> <td>' + getData.length + '</td> <td>People</td> </tr>';
@@ -279,6 +287,7 @@ $(document).ready(function() {
                         // console.log(getData);
                         // console.log(Math.max(...getData), 'max');
                         // console.log(Math.min(...getData), 'min');
+                        // -----Array As Parameter, Using Spread(…)-----
                     });
                 });
             },
@@ -286,7 +295,7 @@ $(document).ready(function() {
     }
     dataPoint = [];
 
-    
+
     var ajaxCount = 0;
     keeper = [];
 

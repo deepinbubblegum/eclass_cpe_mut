@@ -22,56 +22,63 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-arrow-left"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เลือกรายวิชา
+                                                                        &nbsp;&nbsp;<?=lang('choose_courses')?>
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('select/annouce/').$subject_id.'-'.$semester; ?>">
+                                                        <a class="nav-item nav-link" id="side_Anc" href="<?php echo base_url('select/annouce/') . $subject_id . '-' . $semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-chalkboard"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ประกาศถึงนักศึกษา
+                                                                        &nbsp;&nbsp;<?=lang('announce_students')?>
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('select/score/').$subject_id.'-'.$semester; ?>">
+                                                        <a class="nav-item nav-link" id="side_score" href="<?php echo base_url('select/score/') . $subject_id . '-' . $semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-star-half-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;คะแนน
+                                                                        &nbsp;&nbsp;<?=lang('score')?>
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('select/downloads/').$subject_id.'-'.$semester; ?>">
+                                                        <a class="nav-item nav-link" id="side_downloads" href="<?php echo base_url('select/downloads/') . $subject_id . '-' . $semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-download"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;ดาวน์โหลด
+                                                                        &nbsp;&nbsp;<?=lang('teaching_files')?>
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('select/uploads/').$subject_id.'-'.$semester; ?>">
+                                                        <a class="nav-item nav-link" id="side_uploads" href="<?php echo base_url('select/uploads/') . $subject_id . '-' . $semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-upload"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;อับโหลด
+                                                                        &nbsp;&nbsp;<?=lang('assignment')?>
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('select/videos/').$subject_id.'-'.$semester; ?>">
+                                                        <a class="nav-item nav-link" id="side_media" href="<?php echo base_url('select/media/') . $subject_id . '-' . $semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-play"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;วิดีโอ
+                                                                        &nbsp;&nbsp;<?=lang('information_media')?>
                                                                 </span>
                                                         </a>
-                                                        <a class="nav-item nav-link" href="<?php echo base_url('select/quiz_vote/').$subject_id.'-'.$semester; ?>">
+                                                        <a class="nav-item nav-link" id="side_quiz" href="<?php echo base_url('select/quiz/') . $subject_id . '-' . $semester; ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-poll"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;แบบทดสอบ & โหวต
+                                                                        &nbsp;&nbsp;<?=lang('quiz')?>
+                                                                </span>
+                                                        </a>
+                                                        <a class="nav-item nav-link" id="side_vote" href="<?php echo base_url('select/vote/') . $subject_id . '-' . $semester; ?>">
+                                                                <span style="font-size: 1.5em;">
+                                                                        <i class="fas fa-poll"></i></span>
+                                                                <span style="font-size: 1.2em;">
+                                                                        &nbsp;&nbsp;<?=lang('vote')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-stopwatch"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;นาฬิกาจับเวลา
+                                                                        &nbsp;&nbsp;<?=lang('stopwatch')?>
                                                                 </span>
                                                         </a>
                                                         <div class="navdrawer-divider"></div>
@@ -79,12 +86,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-ticket-alt"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;กรอกรหัสคะแนน
+                                                                        &nbsp;&nbsp;<?=lang('enter_the_score_code')?>
                                                                 </span>
                                                         </a>
                                                         <div class="navdrawer-divider"></div>
                                                         <a href="">
-                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>
+                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?=lang('web_manual')?></p>
                                                         </a>
                                                 </nav>
                                         </div>

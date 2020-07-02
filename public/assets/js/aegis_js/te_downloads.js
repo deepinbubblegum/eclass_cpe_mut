@@ -1,4 +1,32 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['side_Anc', 'side_score', 'side_uploads', "side_downloads", "side_media", "side_quiz", "side_vote", "side_pointRequest", "side_add_permission", "side_add_teacher_assist", "side_add_student"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-primary-light");
+    }
+
+    var Navbar_highlight = ['Anc', 'score', 'uploads', "downloads", "media", "quiz", "vote", "pointRequest", "add_permission", "add_teacher_assist", "add_student"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-primary-light");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("downloads");
+    element.classList.add("bg-primary-light");
+    var element = document.getElementById("side_downloads");
+    element.classList.add("bg-primary-light");
+    /******************************************************************** */
+
+
+    year = semester.substr(0, 4);
+    part = semester.substr(4, 1);
+    $('#header').text('งานที่มอบหมาย : ' + subject_id + ' - ' + year + '/' + part);
+
+
     var url = $(location).attr('href').split("/");
     console.log('te_download');
     $('input[name^="pickdatelabel"]').pickdate({
@@ -11,6 +39,61 @@ $(document).ready(function() {
         selectYears: true,
     });
     $('.clockpicker').clockpicker();
+
+    $('#summernote').summernote({
+        dialogsInBody: true,
+        codeviewFilter: false,
+        codeviewIframeFilter: true,
+        placeholder: 'รายละเอียดเมนู อัปโหลด',
+        tabsize: 1,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            // ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            // ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+
+    $('#summernote').summernote('code', '');
+
+    var formData = ["#CMenudownload", "#datePick", "#timePick"];
+
+    var popData = ["#popupHead", "#popupDate", "#popupTime"];
+
+    var popValue = [
+        //[POP_ID,POP_TEXT]
+        ['popupHead', 'กรุณาระบุชื่อเมนูอัปโหลด'],
+        ['popupDate', 'กรุณาระบุชื่อวันส่ง'],
+        ['popupTime', 'กรุณาระบุชื่อเวลา']
+    ];
+
+    function popGen() {
+        for (i = 0; i < popValue.length; i++) {
+            $("<div id='" + popValue[i][0] + "' class=\"text-danger\">*" + popValue[i][1] + "</div>").insertAfter(formData[i]);
+        }
+    }
+
+    function hideAllPop() {
+        for (i = 0; i < popData.length; i++) {
+            $(popData[i]).hide();
+        }
+    }
+
+    popGen();
+    hideAllPop();
+
+
+    $('#Modal_Add').click(function (e) {
+        e.preventDefault();
+        $('#summernote').summernote('code', '');
+        $('#CMenudownload').val('');
+        $('#datePick').val('');
+        $('#timePick').val('')
+    });
 
     function file_ico(type) {
         html_ico = '';
@@ -106,7 +189,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Te_download/showMenuDownload/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 getMenu = response;
                 console.log(response);
                 var html = '';
@@ -133,7 +216,7 @@ $(document).ready(function() {
                             /* --------BTN-------- */
                             '<br>' +
                             response[i].menuUpDescripition +
-                            '<div id="menuDowId-' + response[i].menuUpId + '">' +
+                            '<div id="menuUpId-' + response[i].menuUpId + '">' +
                             '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2">' +
                             '<span class="mr-2 mb-0" style="font-size: 28px;">' +
                             '<i class="fas fa-file-download"></i>' +
@@ -149,6 +232,15 @@ $(document).ready(function() {
                             '</li>' +
                             '</div>' +
                             '</div>' +
+
+                            '<div class="navdrawer-divider"></div>' +
+                            '<div class="d-flex text-muted">' +
+                            '<div class="p-2"> <small>ประกาศเมื่อ : ' + response[i].menuUpTimeStart + '</small> </div>' +
+                            '<div class="ml-auto p-2"> <small> กำหนดส่ง : ' + response[i].menuUpTimeEnd + '</small> </div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+
                             '</div>' +
                             '</div>';
                     }
@@ -157,16 +249,16 @@ $(document).ready(function() {
                 for (i = 0; i < getMenu.length; i++) {
                     show_data(i);
                 }
-                $.each(getMenu, function(i, p) {
+                $.each(getMenu, function (i, p) {
                     //$('#showInMenu-' + getMenu[i].menuUpId).click(function(e) {}); use da href
                     // $('#impInMenu-' + getMenu[i].menuUpId).click(function(e) {});
                     // $('#expInMenu-' + getMenu[i].menuUpId).click(function(e) {});
-                    $('#delMenu-' + getMenu[i].menuUpId).click(function(e) {
+                    $('#delMenu-' + getMenu[i].menuUpId).click(function (e) {
                         delPid = getMenu[i].menuUpId;
                         $("#txtDel").text('Menu:' + getMenu[i].menuUpName);
                         $("#ModalDelete").modal('show');
                     });
-                    $('#editMenu-' + getMenu[i].menuUpId).click(function(e) {
+                    $('#editMenu-' + getMenu[i].menuUpId).click(function (e) {
                         console.log('editMenu');
                         e.preventDefault();
                         //console.log(getMenu[i]);
@@ -176,7 +268,8 @@ $(document).ready(function() {
                         $('#datePick').val(splitData[0]);
                         splitTime = splitData[1].split(':');
                         $('#timePick').val(splitTime[0] + ':' + splitTime[1]);
-                        $('#discription_menu').val(getMenu[i].menuUpDescripition);
+                        // $('#discription_menu').val(getMenu[i].menuUpDescripition);
+                        $('#summernote').summernote('code', getMenu[i].menuUpDescripition);
                         $('#btnModalSave').text('ยืนยันการแก้ไข');
                         $('#addMenudownloadLabel').text('แก้ไขเมนู');
                         $('#addMenudownload').modal('show');
@@ -189,12 +282,12 @@ $(document).ready(function() {
     }
 
     var delPid;
-    $('#Delete').click(function(e) {
+    $('#Delete').click(function (e) {
         $.ajax({
             type: "POST",
             url: '/' + url[3] + '/Te_download/delMenu',
             data: '&semester=' + semester + '&subject=' + subject_id + '&menuID=' + delPid,
-            success: function() {
+            success: function () {
                 // console.log('Deleted Successfully');
                 showMenuDownload();
             }
@@ -206,46 +299,80 @@ $(document).ready(function() {
 
     var editMenuId;
     var menuUpdate = 0;
-    $('#btnModalSave').click(function(e) {
+    $('#btnModalSave').click(function (e) {
         e.preventDefault();
         namemenu = $('#CMenudownload').val();
         date = $('#datePick').val();
         time = $('#timePick').val() + ':00';
-        discrip = $('#discription_menu').val();
+        // discrip = $('#discription_menu').val();
+        discrip = $('#summernote').summernote('code');
         if (menuUpdate == 'UPDATE') {
             iurl = "/" + url[3] + "/Te_download/editMenu";
         } else {
             iurl = '/' + url[3] + '/Te_download/create_menu';
         }
-        $.ajax({
-            type: "POST",
-            url: iurl,
-            data: "&namemenu=" + namemenu + "&date=" + date + "&time=" + time + "&discrip=" + discrip + "&subject_id=" + subject_id + "&semester=" + semester + "&editId=" + editMenuId,
-            success: function(response) {
-                showMenuDownload();
-                $('#CMenudownload').val('');
-                $('#datePick').val('');
-                $('#timePick').val('')
-                $('#discription_menu').val('');
-                $('#addMenudownload').modal('hide');
-                $('#addMenudownloadLabel').text('เพิ่มเมนูดาวน์โหลด');
-                menuUpdate = 0;
 
+        var result = '';
+        var check = '';
+
+        for (i = 0; i < $(formData).length; i++) {
+            if ($(formData[i]).val() == '') {
+                $(popData[i]).show();
+            } else {
+                $(popData[i]).hide();
+                result += i;
             }
-        });
+            check += i;
+        }
+
+        if (check == result) {
+
+            var form_data = new FormData();
+            form_data.append('namemenu', namemenu);
+            form_data.append('date', date);
+            form_data.append('time', time);
+            form_data.append('discrip', discrip);
+            form_data.append('subject_id', subject_id);
+            form_data.append('semester', semester);
+            form_data.append('editId', editMenuId);
+
+            $.ajax({
+                type: "POST",
+                url: iurl,
+                // data: "&namemenu=" + namemenu + "&date=" + date + "&time=" + time + "&discrip=" + discrip + "&subject_id=" + subject_id + "&semester=" + semester + "&editId=" + editMenuId,
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (response) {
+                    showMenuDownload();
+                    $('#CMenudownload').val('');
+                    $('#datePick').val('');
+                    $('#timePick').val('')
+                    // $('#discription_menu').val('');
+                    $('#summernote').summernote('code', '');
+                    $('#addMenudownload').modal('hide');
+                    $('#addMenudownloadLabel').text('เพิ่มเมนูอัปโหลด');
+                    for (i = 0; i < $(formData).length; i++) {
+                        $(popData[i]).hide();
+                    }
+                    menuUpdate = 0;
+                }
+            });
+        }
     });
 
     function show_data(popUp) {
         $.ajax({
             url: '/' + url[3] + '/Te_download/showDownloadList/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 getData = response;
                 var html = "";
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
                         html +=
-                            '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
+                            '<li href="#" class="list-group-item d-flex flex-wrap justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
                             '<span class="mr-2 mb-0" style="font-size: 28px;">' + file_ico(response[i].fileType) +
                             '<span class="mr-2 text-black" style="font-size: 18px;"> ' + response[i].fileName + '</span>' +
                             '<div class="mt-0">' +
@@ -259,28 +386,93 @@ $(document).ready(function() {
                             '<button class="btn btn-float btn-success my-1"><i class="fas fa-check"></i></button>' +
                             '<button class="btn btn-float btn-danger my-1"><i class="fas fa-undo-alt"></i></button> -->' +
                             '</span>' +
-                            '<a class="btn btn-success" href="/Te_download/download/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">download</a>' +
-                            '<a class="btn btn-danger" href="/Te_download/delete/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">delete</a>' +
+                            '<span>' +
+                            '<a class="btn btn-success btn-block mr-1 ml-1 mt-1" href="/Te_download/download/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">download</a>' +
+                            //'<a class="btn btn-danger btn-block mr-1 ml-1 mt-1" id="" href="/Te_download/delete/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName + '">delete</a>' +
+                            '<a class="btn btn-block btn-danger mr-1 ml-1 mt-1" id="DelFile-' + getMenu[popUp].menuUpId + '-' + i + '" href="#">delete</a>' +
+                            '</span>' +
                             '</li>';
                     }
                 }
-                $('#menuDowId-' + getMenu[popUp].menuUpId).html(html);
+                $('#menuUpId-' + getMenu[popUp].menuUpId).html(html);
+
+                $.each(response, function (i, v) {
+                    $('#DelFile-' + getMenu[popUp].menuUpId + '-' + i).click(function (e) {
+                        DelUrl = '/' + url[3] + '/Te_download/delete/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId + '-' + response[i].fileName;
+                        thisButton = '#DelFile-' + getMenu[popUp].menuUpId + '-' + i;
+                        $('#txtDelFile').text(response[i].fileName);
+                        $("#ModalDeleteFile").modal('show');
+                    });
+                });
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
     }
 
-    $('#btnModalClose').click(function(e) {
+    thisButton = '';
+    $('#DeleteFile').click(function () {
+        delFile(DelUrl);
+    });
+    returnTxt = 'ลบสำเร็จ';
+
+    function delFile(DelUrl) {
+        $.ajax({
+            url: DelUrl,
+            dataType: "json",
+            success: function (response) {
+                console.log(DelUrl);
+                var RemoveFile = DelUrl.split('-')[3];
+                console.log(RemoveFile)
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: returnTxt
+                });
+                $(thisButton).parent().parent().remove();
+            },
+            error: function (response) {
+                Snackbar.show({
+                    actionText: 'close',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: returnTxt
+                });
+                $(thisButton).parent().parent().remove();
+            },
+        });
+        $("#ModalDeleteFile").modal('hide');
+    }
+
+    $('#btnModalClose').click(function (e) {
         $('#CMenudownload').val('');
         $('#datePick').val('');
         $('#timePick').val('')
         $('#discription_menu').val('');
-        $('#addMenudownloadLabel').text('เพิ่มเมนูดาวน์โหลด');
+        $('#addMenudownloadLabel').text('เพิ่มเมนูอัปโหลด');
+        for (i = 0; i < $(formData).length; i++) {
+            $(popData[i]).hide();
+        }
         menuUpdate = 0;
     });
 
+    $('#IconClose').click(function (e) {
+        $('#CMenudownload').val('');
+        $('#datePick').val('');
+        $('#timePick').val('')
+        $('#discription_menu').val('');
+        $('#addMenudownloadLabel').text('เพิ่มเมนูอัปโหลด');
+        for (i = 0; i < $(formData).length; i++) {
+            $(popData[i]).hide();
+        }
+        menuUpdate = 0;
+    });
 
 
 });

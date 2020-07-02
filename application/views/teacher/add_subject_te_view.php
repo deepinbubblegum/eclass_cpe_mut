@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
         <!-- Modal -->
-        <div class="modal fade text-left" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
+        <div class="modal fade text-left" id="Modal_Add_subject" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -78,7 +78,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
         </div>
         <!-- End Modal -->
-
 
         <div class="container-fluid mt-3" style="max-height: auto; min-width: 335px;">
             <div class="row">

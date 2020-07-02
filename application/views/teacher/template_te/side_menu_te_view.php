@@ -11,6 +11,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </head>
 
 <body>
+        
         <div class="container-fluid">
                 <div class="row">
                         <div class="col su-sidebar">
@@ -21,26 +22,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="far fa-address-card"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;เพิ่มวิชาสอนประจำเทอม      
+                                                                        &nbsp;&nbsp;<?=lang('add_courses_for_term')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('teacher'); ?>">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="far fa-address-book"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;รายวิชาสอน
+                                                                        &nbsp;&nbsp;<?=lang('teaching_course')?>
                                                                 </span>
                                                         </a>
                                                         <a class="nav-item nav-link" href="<?php echo base_url('countdown'); ?>" target="_blank">
                                                                 <span style="font-size: 1.5em;">
                                                                         <i class="fas fa-stopwatch"></i></span>
                                                                 <span style="font-size: 1.2em;">
-                                                                        &nbsp;&nbsp;นาฬิกาจับเวลา
+                                                                        &nbsp;&nbsp;<?=lang('stopwatch')?>
                                                                 </span>
                                                         </a>
+
                                                         <div class="navdrawer-divider"></div>
                                                         <a href="">
-                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;คู่มือใช้งานเว็บไซต์</p>
+                                                                <p class="navdrawer-subheader"><i class="fas fa-exclamation-circle"></i>&nbsp;<?=lang('web_manual')?></p>
                                                         </a>
                                                         <div class="navdrawer-divider"></div>
                                                         <span id="side_menu_subject">
@@ -50,7 +52,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </div>
                                 </div>
                         </div>
-
 </body>
 
 </html>

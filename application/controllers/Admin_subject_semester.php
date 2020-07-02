@@ -58,11 +58,9 @@ class Admin_subject_semester extends MY_Controller
         );
         $this->Model_su_subject_semester->Edit_data_model($org_id, $org_sub, $data);
         
-        $dir = '../uploads/file/'.$this->input->post('org_id').$this->input->post('org_sub');
-        $ndir = '../uploads/file/'.$this->input->post('semester_id').$this->input->post('subject_id');
+        $dir = '/Eclass/uploads/file/'.$this->input->post('org_id').$this->input->post('org_sub');
+        $ndir = '/Eclass/uploads/file/'.$this->input->post('semester_id').$this->input->post('subject_id');
         if (is_dir($dir)) {
-            //mkdir('../uploads/file/' . $this->input->post('semester_id').$this->input->post('subject_id'), 0777);
-            //rename($oldname, $newname);
             rename($dir, $ndir); 
         }
     } 
@@ -75,7 +73,7 @@ class Admin_subject_semester extends MY_Controller
         $this->Model_su_subject_semester->Delete_Data_model($data_semester, $data_subject);
 
         for($i = 0 ; $i < count($data_semester) ; $i++){
-            $dir = '../uploads/file/'.$data_semester[$i].$data_subject[$i]; 
+            $dir = '/Eclass/uploads/file/'.$data_semester[$i].$data_subject[$i]; 
             rrmdir($dir);
         }
          
@@ -101,11 +99,21 @@ class Admin_subject_semester extends MY_Controller
         echo json_encode($result);
     }
 
+    public function Show_Max_Data_Search_ctl()
+    {
+        $keyword = $this->input->post('data');
+        $type = $this->input->post('search');
+        $result = $this->Model_su_subject_semester->Show_Max_Search_Data_model($keyword,$type);
+        echo json_encode($result);
+    }
+
     public function Search_Show_Data_ctl()
     {
         $keyword = $this->input->post('data');
         $type = $this->input->post('search');
-        $result = $this->Model_su_subject_semester->Search_data_model($keyword,$type);
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_subject_semester->Search_data_model($keyword,$type,$limit,$start);
         echo json_encode($result);
     }
 
@@ -113,5 +121,21 @@ class Admin_subject_semester extends MY_Controller
     {
         $selectAddSemester = $this->input->post('selectAddSemester');
         $this->Model_su_subject_semester->get_sub_teacher($selectAddSemester);
+    }
+
+    public function Show_Subjoin_ctl()
+    {
+        $result = $this->Model_su_subject_semester->Show_SubJoin_model();
+        echo json_encode($result);
+    }
+
+    public function Show_Sort_ctl()
+    {
+        $data = $this->input->post('data');
+        $sort = $this->input->post('sort');
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_subject_semester->Show_Sort_model($data, $sort, $start, $limit);
+        echo json_encode($result);
     }
 }

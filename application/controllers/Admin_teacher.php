@@ -33,12 +33,14 @@ class Admin_teacher extends MY_Controller
                 'teacher_Ename' => $this->input->post('teacher_Ename'),
                 'teacher_email' => $this->input->post('teacher_email'),
                 'teacher_username' => $this->input->post('teacher_username'),
-                'teacher_password' => $this->encryption_pass($this->input->post('teacher_username'))
+                'teacher_password' => $this->encryption_pass($this->input->post('teacher_username')),
+                'teacher_admin' => '0',
+                'teacher_degree' => $this->input->post('degree'),
                 //'teacher_major' => $this->input->post('major_id'),
             );
             $this->Model_su_teacher->Add_data_model($data);
             $this->Add_Data_TeacherMajor();
-        }else{
+        } else {
             show_error('Duplicate', 409, 'An Error Was Encountered Value is Duplicate');
         }
     }
@@ -60,7 +62,8 @@ class Admin_teacher extends MY_Controller
             'teacher_Tname' => $this->input->post('teacher_Tname'),
             'teacher_Ename' => $this->input->post('teacher_Ename'),
             'teacher_email' => $this->input->post('teacher_email'),
-            'teacher_username' => $this->input->post('teacher_username')
+            'teacher_username' => $this->input->post('teacher_username'),
+            'teacher_degree' => $this->input->post('degree'),
         );
         $this->Model_su_teacher->Edit_data_model($org_id, $data);
     }
@@ -71,11 +74,31 @@ class Admin_teacher extends MY_Controller
         $this->Model_su_teacher->Delete_Data_model($data);
     }
 
+    public function Show_Max_Search_Data_ctl()
+    {
+        $data = $this->input->post('data');
+        $keyword = $this->input->post('search');
+        $result = $this->Model_su_teacher->Show_Max_Search_Data_model($data, $keyword);
+        echo json_encode($result);
+    }
+
     public function Search_Show_Data_ctl()
     {
         $data = $this->input->post('data');
         $keyword = $this->input->post('search');
-        $result = $this->Model_su_teacher->Search_data_model($data, $keyword);
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_teacher->Search_data_model($data, $keyword, $start, $limit);
+        echo json_encode($result);
+    }
+
+    public function Show_Sort_ctl()
+    {
+        $data = $this->input->post('data');
+        $sort = $this->input->post('sort');
+        $start = $this->input->post('start');
+        $limit = $this->input->post('limit');
+        $result = $this->Model_su_teacher->Show_Sort_model($data, $sort, $start, $limit);
         echo json_encode($result);
     }
 }

@@ -37,6 +37,11 @@ class Te_uploaded extends MY_Controller
         $this->load->helper('download');
         $this->load->library('zip');
         $this->load->model('manage_te/Model_te_uploaded');
+
+        $bit = $this->session->ses_status;
+        if ($bit != 'teacher' || $bit != 'admin') {
+            return 0;
+        }
     }
 
     public function showMenuDownload($sid)
@@ -72,7 +77,7 @@ class Te_uploaded extends MY_Controller
             'menuId' => $str_arr[2],
         );
 
-        $dir = '../uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Downloads' . '/' . $data['menuId'] . '/';
+        $dir = '/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Downloads' . '/' . $data['menuId'] . '/';
         //$path = '/path/to/your/directory/';
 
         $this->zip->read_dir($dir, FALSE);
@@ -89,7 +94,8 @@ class Te_uploaded extends MY_Controller
             'menu_id' => $str_arr[2],
             'fileName' => substr($sid, $count),
         );
-        $getFile = file_get_contents('../uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Downloads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
+        @ob_end_clean(); //fix bug mp4 file by cereal
+        $getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Downloads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
         force_download($data['fileName'], $getFile);
     }
 
@@ -103,14 +109,14 @@ class Te_uploaded extends MY_Controller
             'menu_id' => $str_arr[2],
             'fileName' => substr($sid, $count),
         );
-        $filePath = '../uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Downloads' . '/' . $data['menu_id'] . '/' . $data['fileName'];
+        $filePath = '/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Downloads' . '/' . $data['menu_id'] . '/' . $data['fileName'];
         if (unlink($filePath)) {
-            echo 'deleted successfully';
+            echo json_encode('ลบไฟล์สำเร็จ');
             $this->Model_te_uploaded->fileDelete($data['subject_id'], $data['semester'], $data['menu_id'], $data['fileName']);
         } else {
-            echo 'errors occured';
+            echo json_encode('ไม่สามารถลบไฟล์ได้');
         }
-        //$getFile = file_get_contents('../uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
+        //$getFile = file_get_contents('/Eclass/uploads/file/' . $data['semester'] . $data['subject_id'] . '/' . 'Uploads' . '/' . $data['menu_id'] . '/' . $data['fileName']);
         //force_download($data['fileName'], $getFile);
     }
 
@@ -151,7 +157,17 @@ class Te_uploaded extends MY_Controller
         $subject = $this->input->post('subject');
         $menuID = $this->input->post('menuID');
         $this->Model_te_uploaded->deleteMenu($semester, $subject, $menuID);
-        $filePath = '../uploads/file/' . $semester . $subject . '/' . 'Downloads' . '/' . $menuID;
+        $filePath = '/Eclass/uploads/file/' . $semester . $subject . '/' . 'Downloads' . '/' . $menuID;
         rrmdir($filePath);
+    }
+
+    public function SortIndex()
+    {
+        $sortIDArray = $this->input->post('sortIDArray[]');
+        $sortNameArray = $this->input->post('sortNameArray[]');
+        $ArraySemester = $this->input->post('ArraySemester[]');
+        $ArraySubject = $this->input->post('ArraySubject[]');
+        // print_r($sortArray);
+        $this->Model_te_uploaded->IndexFile($sortIDArray, $sortNameArray, $ArraySemester, $ArraySubject);
     }
 }

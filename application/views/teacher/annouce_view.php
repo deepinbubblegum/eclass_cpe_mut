@@ -13,9 +13,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
         semester = '<?php echo $semester; ?>';
     </script>
     <?php echo assets_js('aegis_js/manage_te/te_annouce.js'); ?>
+
 </head>
 
 <body>
+
     <style>
         .picker-day-today {
             color: #2196f3;
@@ -48,7 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" id="iconClose" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -59,8 +61,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
 
                         <div class="form-group">
-                            <label for="Textarea">เนื้อหาประกาศ</label>
-                            <textarea class="form-control" id="Textarea" rows="5"></textarea>
+                            <!-- <label for="Textarea">เนื้อหาประกาศ</label>
+                            <textarea class="form-control" id="Textarea" rows="5"></textarea> -->
+                            <div class="input-group" id="summernote">
+
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -70,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-dark" data-dismiss="modal">ปิด</button>
+                        <button type="button" class="btn btn-dark" id="CloseModal" data-dismiss="modal">ปิด</button>
                         <button type="button" class="btn btn-info" id="save">บันทึกข้อมูล</button>
                     </div>
                 </div>
@@ -128,9 +133,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <li class="nav-item">
                     <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab" role="tab">ประกาศ</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">เพื่อนในชั้นเรียน</a>
-                </li>
+                </li> -->
             </ul>
             <div class="tab-content" id="justifiedTabContent">
                 <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
@@ -138,7 +143,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     </div>
                 </div>
-                <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
+                <!-- <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
                     <div class="jumbotron jumbotron-fluid mt-3">
                         <span class="chip mt-1 mr-1 ml-1 mb-1"><i class="chip-icon">C</i>Chip Label</span>
                         <span class="chip mt-1 mr-1 ml-1 mb-1"><i class="chip-icon">C</i>Chip Label</span>
@@ -189,7 +194,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <span class="chip mt-1 mr-1 ml-1 mb-1"><i class="chip-icon">C</i>Chip Label</span>
                         <span class="chip mt-1 mr-1 ml-1 mb-1"><i class="chip-icon">C</i>Chip Label</span>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 </body>

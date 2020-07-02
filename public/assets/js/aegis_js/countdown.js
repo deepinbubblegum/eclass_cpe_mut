@@ -1,11 +1,24 @@
 var flagtimer = false;
-var Today = 0, Hours = 0,
-Minutes = 0, Seconds = 0;
+var Today = 0,
+	Hours = 0,
+	Minutes = 0,
+	Seconds = 0;
 var Sum_time = 0;
 var start_time = 0;
 var cal_persenttime = 0;
 var hr, min, sec;
 var displayTime, displayToday, displaycount, progressBar;
+
+let song5;
+let songfinish;
+var stateSound5 = 0;
+var stateSoundFi = 0;
+
+function preload() {
+	song5 = loadSound('../sound/5minutes.mp3');
+	songfinish = loadSound('../sound/finish.mp3');
+}
+
 
 function setup() {
 	displaycount = document.getElementById('display_count');
@@ -23,7 +36,7 @@ function setup() {
 		'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
 	);
 	displayToday = document.getElementById('displaytoday');
-	displayToday.innerText = "วัน" + thday[Today.getDay()] + "ที่ " + Today.getDate() + " " + thmonth[Today.getMonth()] + " พ.ศ." + (0 + Today.getFullYear() + 543);
+	displayToday.innerText = "วัน" + thday[Today.getDay()] + "ที่ " + Today.getDate() + " " + thmonth[Today.getMonth()] + " พ.ศ. " + (0 + Today.getFullYear() + 543);
 
 	cal_persenttime = (Sum_time / start_time) * 100;
 	if (flagtimer) {
@@ -40,16 +53,46 @@ function setup() {
 				sec--;
 			}
 			Sum_time--;
+
+			if (stateSound5 == 0) {
+				if (min == 4) {
+					// song.setVolume(0.1);
+					playSound5();
+				}
+			}
+			if (stateSoundFi == 0) {
+				if (hr == 0 && min == 0 && sec <= 0) {
+					// playSoundFI();
+					TimeFinish = setInterval(playSoundFI, 1000);
+				}
+			}
+
 		} else {
 			flagtimer = false;
 			document.getElementById('Start').hidden = true;
 			document.getElementById('Stop').hidden = true;
+			//Timeout
+
 		}
 	}
 }
 setInterval(setup, 1000);
 
+
+function playSound5() {
+	stateSound5 = 1;
+	song5.play();
+}
+
+function playSoundFI() {
+	clearTimeout(TimeFinish);
+	stateSoundFi = 1;
+	songfinish.play();
+}
+
 function timerstart() {
+	stateSound5 = 0;
+	stateSoundFi = 0;
 	flagtimer = true;
 	document.getElementById('Start').hidden = true;
 	document.getElementById('Stop').hidden = false;
@@ -62,12 +105,17 @@ function timerstop() {
 }
 
 function timerset() {
-	hr = parseInt(document.getElementById('Hoursset').value);if (!hr)hr = 0;
-	min = parseInt(document.getElementById('Minutesset').value);if (!min)min = 0;
-	sec = parseInt(document.getElementById('Secondsset').value);if (!sec)sec = 0;
+	stateSound5 = 0;
+	stateSoundFi = 0;
+	hr = parseInt(document.getElementById('Hoursset').value);
+	if (!hr) hr = 0;
+	min = parseInt(document.getElementById('Minutesset').value);
+	if (!min) min = 0;
+	sec = parseInt(document.getElementById('Secondsset').value);
+	if (!sec) sec = 0;
 	var displaytimer = document.getElementById('display_count');
-	
-	if ((hr > 0) || ( min > 0 && min <= 60 ) || ( sec > 0 && sec <= 60)) {
+
+	if ((hr > 0) || (min > 0 && min <= 60) || (sec > 0 && sec <= 60)) {
 		if (document.getElementById('Stop').hidden == true) {
 			document.getElementById('Start').hidden = false;
 		}

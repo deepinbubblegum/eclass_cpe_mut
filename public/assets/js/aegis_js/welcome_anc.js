@@ -7,9 +7,12 @@ $(document).ready(function () {
                         html = '';
                         console.log(response);
                         if (response == 0) {
-                                html = '<center><h2>ไม่มีพบประกาศ</h2></center>';
+                                html = '<center><h2>ไม่มีประกาศ</h2></center>';
                         } else {
                                 for (i = 0; i < response.length; i++) {
+                                        if(response[i].e_time == "0000-00-00 00:00:00"){
+                                                response[i].e_time = "ประกาศตลอด";
+                                        }
                                         if (i == 0) {
                                                 html += '<div class="expansion-panel list-group-item show">';
                                         } else {

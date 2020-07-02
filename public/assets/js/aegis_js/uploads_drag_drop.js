@@ -1,4 +1,30 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['side_Anc', 'side_score', 'side_uploads', "side_downloads", "side_media", "side_quiz", "side_vote"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-info");
+    }
+
+    var Navbar_highlight = ['Anc', 'score', 'uploads', "downloads", "media", "quiz", "vote"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-info");
+    }
+
+    // $('#score').classList.add(".bg-info");
+    var element = document.getElementById("uploads");
+    element.classList.add("bg-info");
+    var element = document.getElementById("side_uploads");
+    element.classList.add("bg-info");
+    /******************************************************************** */
+
+    year = semester.substr(0, 4);
+    part = semester.substr(4, 1);
+    $('#header').text('งานที่มอบหมาย : ' + subject_id + ' - ' + year + '/' + part);
+
     //$('#btnUpload').hide();
     //$('#btnClearAll').hide();
     var getFile = [];
@@ -72,19 +98,23 @@ $(document).ready(function() {
         $.ajax({
             url: '/' + url[3] + '/Std_upload/showMenuUpload/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 getMenu = response;
                 console.log(response);
                 var html = '';
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+                        var txtTimeEnd = response[i].menuUpName;
+                        if (response[i].menuUpTimeEnd < response[i].dateNow) {
+                            txtTimeEnd = '<span class="mr-1" style="color:black;"> ' + response[i].menuUpName + '<span class="ml-1" style="color:red;">  (เลยเวลากำหนดส่งแล้ว) </span></span>';
+                        }
                         if (i == 0) {
                             html += '<div class="expansion-panel list-group-item show" >';
                         } else {
                             html += '<div class="expansion-panel list-group-item" >';
                         }
                         html += '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
-                            response[i].menuUpName +
+                            txtTimeEnd +
                             '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
                             '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
                             '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
@@ -105,10 +135,19 @@ $(document).ready(function() {
                             '</div>' +
                             '</div>' +
                             '<button class="btn btn-success my-1" id="btnUpload' + i + '">Upload</button>' +
-                            '<button class="btn btn-success my-1" id="btnClearAll' + i + '">Clear All</button>' +
+                            '<button class="btn btn-danger my-1" id="btnClearAll' + i + '">Clear All</button>' +
                             '<div id="uploadeds_files' + i + '">' +
                             '</div>' +
                             '</div>' +
+
+                            '<div class="navdrawer-divider"></div>' +
+                            '<div class="d-flex text-muted">' +
+                            '<div class="p-2"> <small>ประกาศเมื่อ : ' + response[i].menuUpTimeStart + '</small> </div>' +
+                            '<div class="ml-auto p-2"> <small> กำหนดส่ง : ' + response[i].menuUpTimeEnd + '</small> </div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+
                             '</div>' +
                             '</div>' +
                             '</div>';
@@ -116,17 +155,35 @@ $(document).ready(function() {
                 }
                 $('.showMenuUpload').html(html);
 
-                $.each(response, function(i, v) {
+                $.each(response, function (i, v) {
                     gen(document.getElementById('dropzone' + i), document.getElementById('FileInput' + i + '[]'), 'FileInput' + i + '[]', i);
-                    $('#btnClearAll' + i).click(function(e) {
-                        //upload(0,pos);
+                    $('#btnClearAll' + i).click(function (e) {
+                        // upload(0,pos);
+                        upload(0, i);
                         //$('#btnUpload').hide();
                         //$('#btnClearAll').hide();
                     });
 
-                    $('#btnUpload' + i).click(function(e) {
+                    $('#btnUpload' + i).click(function (e) {
                         e.preventDefault();
-                        uploadBtn(i)
+                        // uploadBtn(i)
+                        var chkTxt = '';
+                        $("#uploadeds_files" + i).each(function (index) {
+                            chkTxt += $(this).text();
+                        });
+                        
+                        if(chkTxt !== ''){
+                            uploadBtn(i);
+                        }else{
+                            Snackbar.show({
+                                actionText: 'close',
+                                pos: 'top-center',
+                                actionTextColor: '#f44336',
+                                backgroundColor: '#323232',
+                                width: 'auto',
+                                text: 'กรุณาเลือกไฟล์ที่ต้องการอัปโหลด'
+                            });
+                        }
                     });
                 });
                 // for (i = 0; i < getMenu.length; i++) {
@@ -139,7 +196,7 @@ $(document).ready(function() {
 
     function gen(dropzone, dropzone_click, fileInput, pos) {
 
-        dropzone_click.onchange = function(e) {
+        dropzone_click.onchange = function (e) {
             console.log($(this)[0].files.length);
             if ($(this)[0].files.length > 0) {
                 console.log('a');
@@ -150,32 +207,32 @@ $(document).ready(function() {
             }
         }
 
-        dropzone.onclick = function() {
+        dropzone.onclick = function () {
             document.getElementById(fileInput).click();
         }
 
-        dropzone.onmouseover = function() {
+        dropzone.onmouseover = function () {
             this.className = 'dropzone dragover';
             return false;
         }
 
-        dropzone.onmouseleave = function() {
+        dropzone.onmouseleave = function () {
             this.className = 'dropzone';
             return false;
         }
 
-        dropzone.ondrop = function(e) {
+        dropzone.ondrop = function (e) {
             e.preventDefault();
             this.className = 'dropzone';
             upload(e.dataTransfer.files, pos)
         }
 
-        dropzone.ondragover = function() {
+        dropzone.ondragover = function () {
             this.className = 'dropzone dragover dropover';
             return false;
         }
 
-        dropzone.ondragleave = function() {
+        dropzone.ondragleave = function () {
             this.className = 'dropzone';
             return false;
         }
@@ -214,7 +271,7 @@ $(document).ready(function() {
         if (_files.length > 0) {
             console.log('if');
             var _fileName = [];
-            $.each(_files, function(k, v) {
+            $.each(_files, function (k, v) {
                 _fileName[k] = v.name;
                 html +=
                     '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + k + pos + '">' +
@@ -240,10 +297,10 @@ $(document).ready(function() {
             //console.log(pos + '<- this is pos in html'); 
             checker[pos] = 0;
             if (!nameCollector[pos]) nameCollector[pos] = []
-            $.each(_files, function(k, v) {
+            $.each(_files, function (k, v) {
                 //console.log(pos + '<- this is pos in rbtn'); 
                 nameCollector[pos][k] = v.name;
-                $('#btnRemove' + k + pos).click(function(e) {
+                $('#btnRemove' + k + pos).click(function (e) {
                     //console.log(pos + '<- this is pos when click rbtn'); 
                     nameCollector[pos][k] = null;
                     console.log(nameCollector);
@@ -273,7 +330,6 @@ $(document).ready(function() {
         }
 
         var form_data = new FormData();
-
         for (i = 0; i < checked.length; i++) {
             ty = getFile[pos][checked[i]].name.split(".");
             var str = new String(getFile[pos][checked[i]].name).replace('.' + ty[ty.length - 1], "");
@@ -289,28 +345,56 @@ $(document).ready(function() {
             }
 
             data = "&data1=" + str /*getFile[checked[i]].name.replace(" ", "-")*/ + "&data2=" + getFile[pos][checked[i]].size + "&data3=../uploads/file/" + subject_id + semester + "&data4=" + type + "&data5=" + getMenu[pos].menuUpId + "&data6=" + subject_id + "&data7=" + semester /*+ "&getFile=" + arr*/ ;
-
             form_data.append('file[]', getFile[pos][checked[i]]);
+            form_data.append('data1',str);
+            form_data.append('data2',getFile[pos][checked[i]].size);
+            form_data.append('data3','../uploads/file/'+ subject_id + semester);
+            form_data.append('data4',type);
+            form_data.append('data5',getMenu[pos].menuUpId);
+            form_data.append('data6',subject_id);
+            form_data.append('data7',semester);
             $.ajax({
                 type: "POST",
                 url: '/' + url[3] + '/Std_upload/Upload',
                 data: data,
                 //data: "&data1=" + getFile,
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     alert("Success!");
                 }
             });
         }
-
+        $('#progress_modal').modal('show');
         $.ajax({
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                html = '';
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        console.log(percentComplete);
+                        html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%"></div>' + percentComplete + '%';
+                        if (percentComplete === 100) {
+                            html = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: ' + percentComplete + '%"></div>Complete';
+                            setTimeout(function () {
+                                $('#progress_modal').modal('hide');
+                                showMenufiles();
+                            }, 1200);
+                        }
+                        $('#progressupload').html(html);
+                    }
+                }, false);
+
+                return xhr;
+            },
             type: "POST",
             url: '/' + url[3] + '/Std_upload/UploadFile/' + subject_id + '-' + semester + '-' + getMenu[pos].menuUpId,
             data: form_data,
             contentType: false,
             cache: false,
             processData: false,
-            success: function(response) {
+            success: function (response) {
                 if (response == '<p>upload_invalid_filetype</p>') {
                     snacktxt = 'ไม่สามารถอ่านไฟล์ได้ ' + response;
                 } else if (response == '<p>upload_invalid_filesize</p>') {
@@ -327,7 +411,7 @@ $(document).ready(function() {
                     text: snacktxt
                 });
             },
-            error: function(response) {
+            error: function (response) {
                 Snackbar.show({
                     actionText: 'close',
                     pos: 'top-center',
@@ -341,8 +425,103 @@ $(document).ready(function() {
 
         nameCollector[pos] = [];
         upload(0, pos);
+        // showMenufiles();
         //$('#btnUpload').hide();
         //$('#btnClearAll').hide();
+    }
+    showMenufiles();
+
+    function showMenufiles() {
+        $.ajax({
+            url: '/' + url[3] + '/std_upload/showMenuUpload_files/' + subject_id + '-' + semester,
+            dataType: "json",
+            success: function (response) {
+                getMenu = response;
+                console.log(response);
+                var htmltxt = '';
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        htmltxt +=
+                            '<div class="expansion-panel list-group-item" >' +
+                            '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
+                            response[i].menuUpName +
+                            '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
+                            '<i class="collapsed-show material-icons">keyboard_arrow_down</i>' +
+                            '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
+                            '</div>' +
+                            '</a>' +
+                            '<div aria-labelledby="heading' + i + '" class="collapse" data-parent="#accordionOne" id="collapse' + i + '">' +
+                            '<div class="expansion-panel-body">' +
+                            response[i].menuUpDescripition +
+                            '<div id="menuDowId-' + response[i].menuUpId + '">' +
+                            '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2">' +
+                            '<span class="mr-2 mb-0" style="font-size: 28px;">' +
+                            '<i class="fas fa-file-download"></i>' +
+                            '<span class="mr-2 text-black" style="font-size: 18px;">ทดสอบ</span>' +
+                            '<div class="mt-0">' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;">size : 20GB</small>' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;">type : pdf</small>' +
+                            '</div>' +
+                            '</span>' +
+                            '<span>' +
+                            '<button class="btn btn-float btn-info my-1"><i class="fas fa-download"></i></button>' +
+                            '</span>' +
+                            '</li>' +
+                            '</div>' +
+                            '</div>' +
+
+                            '<div class="navdrawer-divider"></div>' +
+                            '<div class="d-flex text-muted">' +
+                            '<div class="p-2"> <small>ประกาศเมื่อ : ' + response[i].menuUpTimeStart + '</small> </div>' +
+                            '<div class="ml-auto p-2"> <small> กำหนดส่ง : ' + response[i].menuUpTimeEnd + '</small> </div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+
+                            '</div>' +
+                            '</div>';
+                    }
+                }
+                $('.showfilesupload').html(htmltxt);
+                for (i = 0; i < getMenu.length; i++) {
+                    show_data(i);
+                }
+            }
+        });
+    }
+
+    function show_data(popUp) {
+        $.ajax({
+            url: '/' + url[3] + '/std_upload/showDownloadList/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuUpId,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                getData = response;
+                var html = "";
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        var std_let = '';
+                        if (response[i].fileTimestamp > response[i].menuUpTimeEnd) {
+                            std_let = '<span style="color:red;"> (ส่งช้ากว่ากำหนด) </span>';
+                        }
+                        html +=
+                            '<li href="#" class="list-group-item d-flex flex-wrap justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
+                            '<span class="mr-2 mb-0" style="font-size: 28px;">' + file_ico(response[i].fileType) +
+                            '<span class="mr-2 text-black" style="font-size: 18px;"> ' + response[i].fileName + '</span>' +
+                            '<div class="mt-0">' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;"> Size : ' + fileSizeCal(response[i].fileSize) + '</small>' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;"> Type : ' + response[i].fileType + '</small>' +
+                            '<small class="mr-2 text-black-50" style="font-size: 12px;"> Uploaded on : ' + response[i].fileTimestamp + std_let + '</small>' +
+                            '</div>' +
+                            '</li>';
+                    }
+                }
+                $('#menuDowId-' + getMenu[popUp].menuUpId).html(html);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Status: " + textStatus + "Error: " + errorThrown);
+            }
+        });
     }
 
 });

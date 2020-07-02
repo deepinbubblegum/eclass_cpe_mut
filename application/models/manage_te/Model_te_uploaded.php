@@ -9,7 +9,7 @@ class Model_te_uploaded extends CI_Model
         $this->db->from('menuDownload');
         $this->db->where('menuDowSubjectId', $subjectId);
         $this->db->where('menuDowSemesterId', $semesterId);
-        //$this->db->order_by('menuDowId', 'DESC');
+        $this->db->order_by('CAST(menuDowIndex AS int)', 'ASC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -35,7 +35,7 @@ class Model_te_uploaded extends CI_Model
         $this->db->where('fileSubjectId', $subjectId);
         $this->db->where('fileSemesterId', $semesterId);
         $this->db->where('fileMenuDowId', $menuId);
-        //$this->db->order_by('fileTimestamp', 'DESC');
+        $this->db->order_by('CAST(fileIndex AS int) ', 'ASC ');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -83,6 +83,18 @@ class Model_te_uploaded extends CI_Model
         $this->db->where_in('menuDowSubjectId', $subject); 
         $this->db->where_in('menuDowId', $menuID);
         $this->db->delete('menuDownload');
+    }
+
+    public function IndexFile($sortIDArray, $sortNameArray, $ArraySemester, $ArraySubject)
+    {
+        $num = count($sortIDArray);
+        for ($i = 0; $i < $num; $i++) {
+            $newIndex = $i + 1;
+            $this->db->query('UPDATE fileDownload SET fileIndex = "' . $newIndex . '" WHERE fileSemesterId = "' . $ArraySemester[$i] . '" 
+            AND fileSubjectId = "' . $ArraySubject[$i] . '" AND fileMenuDowId = "' . $sortIDArray[$i] . '" AND fileName = "' . $sortNameArray[$i] . '"');
+            // echo $sortNameArray[$i];
+            // echo "<br>";
+        }
     }
 
 }

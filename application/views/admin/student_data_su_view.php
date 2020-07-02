@@ -11,6 +11,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <?php
     echo assets_js('aegis_js/manage_su/su_student_data.js');
     ?>
+    <style>
+        .modal-dialog {
+            overflow-y: initial !important
+        }
+
+        .modal-body {
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -60,8 +70,43 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">ปิด</button>
                         <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+
+        <!-- Modal log_csv-->
+        <div class="modal fade text-left" id="log_csv_error" tabindex="-1" role="dialog" aria-labelledby="log_csv_error" aria-hidden="true" data-keyboard="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="header_log"><i class="fas fa-exclamation-triangle"></i> แจ้งเตือนข้อมูลผิดพลาด</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table text-nowrap">
+                            <table class="table mb-0" style="overflow-y: scroll; max-height:85%; margin-top: 50px; margin-bottom:50px;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Error Line</th>
+                                        <th scope="col">ST_CODE</th>
+                                        <th scope="col">TNAME</th>
+                                        <th scope="col">ENAME</th>
+                                        <th scope="col">EMAIL</th>
+                                        <th scope="col">CRSE_CODE</th>
+                                        <th scope="col">Log_error</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='log_error_tr'>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
                     </div>
                 </div>
             </div>
@@ -83,7 +128,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <span class="input-group-text">Upload</span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="inputFile" name="inputFile" enctype="multipart/form-data" accept=".csv, text/csv" />
+                                    <input type="file" class="custom-file-input" id="inputFile" name="inputFile" enctype="multipart/form-data" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
                                     <label class="custom-file-label" for="inputFile">Choose file</label>
                                 </div>
                                 <!-- <div class="col-md-4 mb-3">
@@ -101,7 +146,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">ปิด</button>
                         <button type="button" id="btnUpload" class="btn btn-primary">Upload</button>
                     </div>
                 </div>
@@ -118,13 +163,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" id="btnDel" class="btn btn-primary">Delete</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                        <button type="button" id="btnDel" class="btn btn-primary">ลบ</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- End Modal -->
+
+        <!-- Modal reset-->
+                <div class="modal fade text-left" id="modelreset" tabindex="-1" role="dialog" aria-labelledby="modelreset" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="reset">คืนค่ารหัสผ่านเริ่มต้น</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <!-- <div class="modal-body">
+                        <p id="datauserlist"></p>
+                    </div> -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                        <button type="button" id="btnReset" class="btn btn-primary">รีเซ็ตรหัสผ่าน</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+
 
         <div class="container-fluid mt-3" style="max-height: auto; min-width: 335px;">
 
@@ -133,12 +199,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <h5 class="card-title mb-0"><span id="tableTitleTxt">TABLE_TITLE</span></h5>
                     <div class="card-actions ml-auto py-0">
                         <div class="dropdown">
+                            <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardTableDrop1" type="button"><i class="material-icons">filter_list</i></button>
+                            <div aria-labelledby="cardTableDrop1" id="TableSort" class="dropdown-menu sort dropdown-menu-right menu">
+                                <!-- <a class="dropdown-item" href="#">Filter 1</a>
+                                <a class="dropdown-item" href="#">Filter 2</a>
+                                <a class="dropdown-item" href="#">Filter 3</a> -->
+                            </div>
+                        </div>
+                        <div class="dropdown">
                             <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardTableDrop2" type="button"><i class="material-icons">more_vert</i></button>
                             <div aria-labelledby="cardTableDrop2" class="dropdown-menu dropdown-menu-right menu">
-                                <a class="dropdown-item" id="btnAdd">Add</a>
-                                <a class="dropdown-item" id="btnAddcsv">Add (File csv)</a>
+                                <a class="dropdown-item" id="btnAdd">เพิ่มข้อมูล</a>
+                                <a class="dropdown-item" id="btnAddcsv">เพิ่มข้อมูล (File csv)</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" data-toggle="modal" data-target="#modaldel">Delete</a>
+                                <a class="dropdown-item" id="resetPasswd">รีเซ็ตรหัสผ่าน (เริ่มต้น)</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#modaldel">ลบข้อมูล</a>
                             </div>
                         </div>
                     </div>

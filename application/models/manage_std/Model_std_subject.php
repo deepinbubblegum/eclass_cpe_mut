@@ -7,7 +7,7 @@ class Model_std_subject extends CI_Model
     {
         $this->db->select('semester_id, semester_year,  semester_part, semester_name');
         $this->db->from('semester');
-        //$this->db->order_by('semester_id', 'DESC');
+        $this->db->order_by('semester_id', 'DESC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -31,23 +31,27 @@ class Model_std_subject extends CI_Model
 
     public function selectSubject($data,$userID)
     {
-        // $this->db->select('*');
-        // $this->db->from('subject_semester');
-        // $this->db->where('subsem_semester',$data);  
-        // $query = $this->db->get();
-
-        // if ($query->num_rows() > 0) {
-        //     return $query->result();
-        // }
-
-        $query = $this->db->query('SELECT subject_name,subsem_subject, subsem_semester FROM subject_semester 
+        $query = $this->db->query('SELECT DISTINCT subject_name,subsem_subject, subsem_semester FROM subject_semester 
         LEFT JOIN subject ON subsem_subject = subject_id 
-        LEFT JOIN subject_student ON subsem_subject = substd_subject 
-        WHERE substd_stdid = "'.$userID.'" AND substd_semester = "'.$data.'" ');
+        LEFT JOIN subject_student ON subsem_subject = substd_subject AND subsem_semester = substd_semester
+        WHERE subsem_semester = "'.$data.'" AND substd_stdid = "'.$userID.'" ');
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {
             return 0;
         }
     }
+
+    public function selectSubject_special($data)
+    {
+        $query = $this->db->query('SELECT * FROM subject_semester 
+        LEFT JOIN subject ON subject_id = subsem_subject 
+        WHERE subsem_semester = "'.$data.'" AND subject_major = "MUT" ');
+         if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+
 }

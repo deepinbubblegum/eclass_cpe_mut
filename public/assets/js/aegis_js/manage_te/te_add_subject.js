@@ -98,7 +98,7 @@ $(document).ready(function() {
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].subject_id + '" data-2="' + response[i].subject_teacher + '">' + response[i].subject_name + ' </option>';
+                        html += '<option value="' + response[i].subject_id + '" data-2="' + response[i].subject_teacher + '">' + response[i].subject_name + '(' + response[i].subject_id + ') </option>';
                     }
                 }
                 $('#Subject_Form_add_option').html(html);

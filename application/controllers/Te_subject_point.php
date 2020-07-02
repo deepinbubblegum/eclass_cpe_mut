@@ -124,9 +124,22 @@ class Te_subject_point extends MY_Controller
         $semester = $this->input->post('semester');
         $subject = $this->input->post('subject');
         $Header = $this->input->post('header');
-        $Description = $this->input->post('description');
+        $Description = $this->input->post('description',false);
+        $StdView = $this->input->post('StdView');
         //$User = $this->input->post('dataUser');
-        $this->Model_te_subject_point->insertMenu($semester, $subject, $Header, $Description);
+        $this->Model_te_subject_point->insertMenu($semester, $subject, $Header, $Description, $StdView);
+    }
+
+    public function insertMenuScoreSpecial()
+    {
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject');
+        $Header = $this->input->post('header');
+        $Description = $this->input->post('description',false);
+        $StdView = $this->input->post('StdView');
+        //$User = $this->input->post('dataUser');
+        $result = $this->Model_te_subject_point->insertMenuSpecial($semester, $subject, $Header, $Description, $StdView);
+        echo json_encode($result);
     }
 
     public function editMenuScore()
@@ -134,9 +147,10 @@ class Te_subject_point extends MY_Controller
         $semester = $this->input->post('semester');
         $subject = $this->input->post('subject');
         $Header = $this->input->post('header');
-        $Description = $this->input->post('description');
+        $Description = $this->input->post('description',false);
+        $StdView = $this->input->post('StdView');
         $editID = $this->input->post('editID'); 
-        $this->Model_te_subject_point->editMenu($semester, $subject, $Header, $Description,$editID);
+        $this->Model_te_subject_point->editMenu($semester, $subject, $Header, $Description, $editID, $StdView);
     }
 
     public function insertFieldScore(/*$sid*/)
@@ -160,11 +174,12 @@ class Te_subject_point extends MY_Controller
         $miniName = $this->input->post('miniName');
         $maxPoint = $this->input->post('maxPoint');
         $option = $this->input->post('setpoint_option');
+        $pointMulti = $this->input->post('pointMulti');
         
 
         //$User = $this->input->post('dataUser');
         //$this->Model_te_subject_point->insertField($data['semester'], $data['subject_id'], $data['pointId'], $data['ticket'], $data['fullName'], $data['miniName'], $data['maxPoint']);
-        $this->Model_te_subject_point->insertField($semester, $subject_id, $pointId, $ticket, $fullName, $miniName, $maxPoint,$option);
+        $this->Model_te_subject_point->insertField($semester, $subject_id, $pointId, $ticket, $fullName, $miniName, $maxPoint,$option,$pointMulti);
     }
 
     public function updateFieldScore(/*$sid*/)
@@ -178,8 +193,9 @@ class Te_subject_point extends MY_Controller
             $fullName = $this->input->post('fullName');
             $miniName = $this->input->post('miniName');
             $maxPoint = $this->input->post('maxPoint'); 
+            $pointMulti = $this->input->post('pointMulti');
 
-            $this->Model_te_subject_point->updateField($semester, $subject_id, $pointId,$pointIdChild, $ticket, $fullName, $miniName, $maxPoint,$setoption);
+            $this->Model_te_subject_point->updateField($semester, $subject_id, $pointId,$pointIdChild, $ticket, $fullName, $miniName, $maxPoint,$setoption,$pointMulti);
         }
 
     public function insertInFieldPoint()
@@ -193,6 +209,54 @@ class Te_subject_point extends MY_Controller
         $point_std_user_id = $this->input->post('uID');
         //$User = $this->input->post('dataUser');
         $result = $this->Model_te_subject_point->insertPoint($point_std_semester,$point_std_subject,$point_std_id,$point_std_setpoint_id,$point_std_user_id,$point_std_point);
+        echo json_encode($result); 
+    }
+
+    public function SortIndex()
+    {
+        $sortArray = $this->input->post('sortArray[]');
+        $sortIDArray = $this->input->post('sortIDArray[]');
+        $ArraySemester = $this->input->post('ArraySemester[]');
+        $ArraySubject = $this->input->post('ArraySubject[]');
+        // print_r($sortArray);
+        $this->Model_te_subject_point->Index($sortArray, $sortIDArray, $ArraySemester, $ArraySubject);
+    }
+
+    public function SortMenu()
+    {
+        $sortIDArray = $this->input->post('sortIDArray[]');
+        $ArraySemester = $this->input->post('ArraySemester[]');
+        $ArraySubject = $this->input->post('ArraySubject[]');
+        // print_r($sortArray);
+        $this->Model_te_subject_point->IndexMenu($sortIDArray, $ArraySemester, $ArraySubject);
+    }
+
+    public function checkMaxpointSTD()
+    {
+        $point_std_semester = $this->input->post('semester');
+        $point_std_subject = $this->input->post('subject_id');
+        $point_std_id = $this->input->post('setIdChild');
+        $point_std_setpoint_id = $this->input->post('setIdParent');
+        $point_std_user_id = $this->input->post('std');
+        $result = $this->Model_te_subject_point->checkMaxpointSTD_modal($point_std_semester,$point_std_subject,$point_std_id,$point_std_setpoint_id,$point_std_user_id);
+        echo json_encode($result); 
+    }
+
+    public function CheckMaxEditField()
+    {
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject_id');
+        $point_id = $this->input->post('pointId');
+        $point_setpoint_id = $this->input->post('pointIdChild');
+        $result = $this->Model_te_subject_point->CheckMaxEditField_modal($semester, $subject, $point_id, $point_setpoint_id);
+        echo json_encode($result); 
+    }
+
+    public function GetAll_std()
+    {
+        $semester = $this->input->post('semester');
+        $subject = $this->input->post('subject_id');
+        $result = $this->Model_te_subject_point->GetAll_std_modal($semester,$subject);
         echo json_encode($result); 
     }
 }

@@ -7,6 +7,7 @@ class MY_Controller extends CI_Controller
         {
                 parent::__construct();
                 $this->changeLang();
+                $this->lang->load('language');
         }
 
         public function changeLang()
@@ -31,19 +32,23 @@ class MY_Controller extends CI_Controller
 
         public function genDir($semester_id, $subject_id)
         {
-                $dir = '../uploads/file/' . $semester_id . $subject_id;
+                $this->load->helper('path');
+                $dir = '/Eclass/uploads/file/' . $semester_id . $subject_id;
                 if (!is_dir($dir)) {
-                        mkdir($dir, 0777, true);
-                        chmod($dir, 0777);
+                        mkdir($dir, 0700, true);
+                        chmod($dir, 0700);
 
-                        mkdir($dir . '/Downloads', 0777, true);
-                        chmod($dir . '/Downloads', 0777);
+                        mkdir($dir . '/Downloads', 0700, true);
+                        chmod($dir . '/Downloads', 0700);
 
-                        mkdir($dir . '/Uploads', 0777, true);
-                        chmod($dir . '/Uploads', 0777);
+                        mkdir($dir . '/Uploads', 0700, true);
+                        chmod($dir . '/Uploads', 0700);
 
-                        mkdir($dir . '/CSV', 0777, true);
-                        chmod($dir . '/CSV', 0777);
+                        mkdir($dir . '/Img', 0700, true);
+                        chmod($dir . '/Img', 0700);
+
+                        mkdir($dir . '/CSV', 0700, true);
+                        chmod($dir . '/CSV', 0700);
                 }
         }
 
@@ -57,5 +62,17 @@ class MY_Controller extends CI_Controller
         {
                 $this->load->model('sign_in/Model_user_uses');
                 return $this->Model_user_uses->check_duplicate_model($data_check);
+        }
+
+        public function sys_log($u_id = null, $log_head = null, $log_txt = null)
+        {
+                $this->load->model('log/Model_log');
+                $data = array(
+                        'log_userid' => $u_id,
+                        'log_header' => $log_head,
+                        'log_txt' => $log_txt,
+                        'log_time' => date("Y-m-d H:i:s")
+                );
+                $this->Model_log->log_s($data);
         }
 }

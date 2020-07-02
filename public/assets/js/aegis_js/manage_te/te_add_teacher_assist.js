@@ -15,6 +15,27 @@ $(document).ready(function() {
     // 2.formAdd
     // 3.modaldel
 
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['side_Anc', 'side_score', 'side_uploads', "side_downloads", "side_media", "side_quiz", "side_vote", "side_pointRequest", "side_add_permission", "side_add_teacher_assist", "side_add_student"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-primary-light");
+    }
+
+    var Navbar_highlight = ['Anc', 'score', 'uploads', "downloads", "media", "quiz", "vote", "pointRequest", "add_permission", "add_teacher_assist", "add_student"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-primary-light");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("add_teacher_assist");
+    element.classList.add("bg-primary-light");
+    var element = document.getElementById("side_add_teacher_assist");
+    element.classList.add("bg-primary-light");
+    /******************************************************************** */
+
+
     $('#titleNameTxt').text("จัดการข้อมูลอาจารย์ผู้ช่วย");
     $('#findByTxt').text("ค้นหาด้วย");
     $('#btnFindTxt').text("ค้นหา");
@@ -30,17 +51,17 @@ $(document).ready(function() {
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['teacher_code_id', 'ID'],
-        ['teacher_Tname', 'TNAME'],
-        ['teacher_Ename', 'ENAME'],
-        ['per_name', 'PERMISSION']
+        ['teacher_code_id', 'รหัสอาจารย์'],
+        ['teacher_Tname', 'ชื่ออาจารย์(TH)'],
+        ['teacher_Ename', 'ชื่ออาจารย์(EN)'],
+        ['per_name', 'ชื่อระดับสิทธิ์']
         // ['user_email', 'EMAIL'],
         // ['user_major', 'MAJOR'],
         // ['user_permission', 'PERMISSION']
     ];
 
     //head of table
-    var theadGenValue = ['Teacher_code_id', 'user_Tname', 'user_Ename', 'per_name', 'per_bit', 'Option'];
+    var theadGenValue = ['รหัสอาจารย์ผู้ช่วย', 'ชื่อ-สกุล (TH)', 'ชื่อ-สกุล (EN)', 'ชื่อระดับสิทธิ์', 'Option'];
 
     var formData = ["#Teacher_code_id", "#per_name"];
 
@@ -103,12 +124,12 @@ $(document).ready(function() {
         var html = '';
         html += '<div class="form-row" >';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Permission</label>' +
+            '<label>ระดับสิทธิ์</label>' +
             '<select id="selectAddPermission" class="form-control">' +
             '</select>' +
             '</div>';
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Teacher</label>' +
+            '<label>อาจารย์</label>' +
             '<select id="selectAddTeacher" class="form-control">' +
             '</select>' +
             '</div>';
@@ -138,11 +159,12 @@ $(document).ready(function() {
             url: "/" + url[3] + "/Te_teacher_assist/Teacher_Data_Add",
             dataType: "json",
             success: function(response) {
+                console.log(response);
                 var html = '';
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].teacher_code_id + '">' + response[i].teacher_Tname + '</option>';
+                        html += '<option value="' + response[i].teacher_code_id + '">'+ response[i].de_Tname + " " +  response[i].teacher_Tname + '</option>';
                     }
                 }
                 $('#selectAddTeacher').html(html);
@@ -189,6 +211,15 @@ $(document).ready(function() {
     gen_permission();
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
+
+    $('#selectAddTeacher').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#selectAddPermission').select2({
+        theme: 'bootstrap4',
+    });
+
 
     $('.row_set').click(function() {
         limit = $(this).attr('value');
@@ -275,10 +306,10 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].per_name + '</td>' +
-                            '<td>' + response[i].per_bit + '</td>' +
+                            // '<td>' + response[i].per_bit + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }
@@ -312,10 +343,10 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
                             '<td>' + response[i].per_name + '</td>' +
-                            '<td>' + response[i].per_bit + '</td>' +
+                            // '<td>' + response[i].per_bit + '</td>' +
                             '<td><a value="' + i + '" data="' + response[i].per_id + '" data2="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
                             '</tr>';
                     }

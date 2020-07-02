@@ -1,4 +1,27 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['admin_side_Anc', 'admin_side_Anc_course', 'admin_side_Anc_services', 'admin_side_Anc_personnel', 'admin_side_Anc_about_us', 'admin_side_faculty', 'admin_side_major', "admin_side_semester", "admin_side_subject", "admin_side_subsem", "admin_side_student", "admin_side_teacher", "admin_side_admin", "admin_side_teamaj", "admin_side_teasub", "admin_side_degree"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    var Navbar_highlight = ['admin_Anc', 'admin_Anc_course', 'admin_Anc_services', 'admin_Anc_personnel', 'admin_Anc_about_us', 'admin_faculty', 'admin_major', "admin_semester", "admin_subject", "admin_subsem", "admin_student", "admin_teacher", "admin_admin", "admin_teamaj", "admin_teasub", "admin_degree"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("admin_side_teacher");
+    element.classList.add("bg-danger");
+    var element = document.getElementById("admin_teacher");
+    element.classList.add("bg-danger");
+    /******************************************************************** */
+
+
     var iddata;
     var iurl;
     var datatable;
@@ -21,7 +44,7 @@ $(document).ready(function() {
     var pagingSize = [10, 25, 50, 100];
     dropGen();
 
-    var theadGenValue = ['teacher_code_id', 'teacher_Ename', 'teacher_Tname', 'teacher_email', 'teacher_username', 'option'];
+    var theadGenValue = ['รหัสอาจารย์', 'ชื่ออาจารย์(EN)', 'ชื่ออาจารย์(TH)', 'E-mail', 'Username', 'ตัวเลือก'];
 
     var formData = ["#teacher_code_id", "#teacher_Tname", "#teacher_Ename", "#teacher_email", "#teacher_username"];
 
@@ -38,20 +61,29 @@ $(document).ready(function() {
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['teacher_code_id', 'teacher_code_id', 'teacher_code_id', 'teacher_code_id'],
-        ['teacher_Ename', 'teacher_Ename', 'teacher_Ename', 'teacher_Ename'],
-        ['teacher_Tname', 'teacher_Tname', 'teacher_Tname', 'teacher_Tname'],
-        ['teacher_email', 'teacher_email', 'teacher_email', 'teacher_email'],
-        ['teacher_username', 'teacher_username', 'teacher_username', 'teacher_username']
+        ['รหัสอาจารย์', 'teacher_code_id', 'teacher_code_id', 'รหัสอาจารย์'],
+        ['ชื่ออาจารย์(EN)', 'teacher_Ename', 'teacher_Ename', 'ชื่ออาจารย์(EN)'],
+        ['ชื่ออาจารย์(TH)', 'teacher_Tname', 'teacher_Tname', 'ชื่ออาจารย์(TH)'],
+        ['Email', 'teacher_email', 'teacher_email', 'Email'],
+        ['Username', 'teacher_username', 'teacher_username', 'Username']
     ];
 
     var dropSearchValue = [
         //[VALUE,TEXT]
-        ['teacher_code_id', 'ID'],
-        ['teacher_Tname', 'TNAME'],
-        ['teacher_Ename', 'ENAME'],
+        ['teacher_code_id', 'รหัสอาจารย์'],
+        ['teacher_Tname', 'ชื่ออาจารย์(TH)'],
+        ['teacher_Ename', 'ชื่ออาจารย์(EN)'],
         ['teacher_email', 'EMAIL'],
         ['teacher_username', 'USERNAME'],
+    ];
+
+    var Sort = [
+        ['teacher_code_id', 'ASC', 'รหัสอาจาย์ น้อย > มาก'],
+        ['teacher_code_id', 'DESC', 'รหัสอาจาย์ มาก > น้อย'],
+        ['teacher_Tname', 'ASC', 'ชื่ออาจารย์(TH) ก > ฮ'],
+        ['teacher_Tname', 'DESC', 'ชื่ออาจารย์(TH) ฮ > ก'],
+        ['teacher_Ename', 'ASC', 'ชื่ออาจารย์(EN) A > Z'],
+        ['teacher_Ename', 'DESC', 'ชื่ออาจารย์(EN) Z > A']
     ];
 
     function theadGen() {
@@ -78,12 +110,16 @@ $(document).ready(function() {
                 '<input type="text" type="text" id="' + inModelValue[i][1] + '" name="' + inModelValue[i][2] + '" class="form-control" placeholder="' + inModelValue[i][3] + '">' +
                 '</div>';
         }
+        html += '<div class="col-md-4 mb-3" id="degreeSelect">' +
+            '<label>ระดับอาจารย์</label>' +
+            '<select id="degreeSelectAdd" class="form-control"></select>' +
+            '</div>';
         html += '<div class="col-md-4 mb-3" id="facultySelect">' +
-            '<label>Faculty</label>' +
+            '<label>คณะ</label>' +
             '<select id="facultySelectAdd" class="form-control"></select>' +
             '</div>';
-        html += '<div class="col-md-4 mb-3" id="majorSelect">' +
-            '<label>Major</label>' +
+        html += '<div class="col-md-8 mb-3" id="majorSelect">' +
+            '<label>สาขา</label>' +
             '<select id="majorSelectAdd" class="form-control"></select>' +
             '</div>';
         // html += '<div class="col-md-4 mb-3" >' +
@@ -115,6 +151,14 @@ $(document).ready(function() {
         $('#select_search').html(html);
     }
 
+    function ShowSort() {
+        var html = '';
+        for (i = 0; i < Sort.length; i++) {
+            html += ' <a class="dropdown-item" id="sortDrop" href="#" data-1="' + Sort[i][0] + '" data-2="' + Sort[i][1] + '">' + Sort[i][2] + '</a>';
+        }
+        $('#TableSort').html(html);
+    }
+
     //---------------------------------------------END_FUNCTION_GEN---------------------------------------------//
 
     inModelGen();
@@ -122,13 +166,26 @@ $(document).ready(function() {
     dropSearch();
     theadGen();
     show_data();
+    ShowSort();
 
     popGen();
     hideAllPop();
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
-    $('.row_set').click(function() {
+    $('#facultySelectAdd').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#majorSelectAdd').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('#degreeSelectAdd').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('.row_set').click(function () {
         limit = $(this).attr('value');
         showBtnTxt = limit;
         if (limit == 0) {
@@ -137,21 +194,36 @@ $(document).ready(function() {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        show_data();
+        // show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
     });
 
-    $('#chevron_right').click(function() {
+    $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
-        show_data();
+        // show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
     });
 
-    $('#chevron_left').click(function() {
+    $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
-        show_data();
+        // show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
     });
 
     function dropGen() {
@@ -183,7 +255,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_teacher/Show_Max_Data_ctl",
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -205,7 +277,7 @@ $(document).ready(function() {
             url: "../Admin_teacher/Show_Data_ctl",
             data: "&start=" + start + "&limit=" + limit,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 datatable = response;
                 console.log(response);
                 var html = '';
@@ -220,11 +292,11 @@ $(document).ready(function() {
                             '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
                             '</div>' +
                             '</th>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
                             '<td>' + response[i].teacher_email + '</td>' +
                             '<td>' + response[i].teacher_username + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
+                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -233,8 +305,127 @@ $(document).ready(function() {
         });
     }
 
+    $('#btnSearch').click(function (e) {
+        e.preventDefault();
+        data1 = $('#select_search').val();
+        data2 = $('#SearchName').val();
 
-    $('#btnAdd').click(function(e) {
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher/Show_Max_Search_Data_ctl",
+            data: "&data=" + data1 + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher/Search_Show_Data_ctl",
+            data: "&data=" + data1 + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].teacher_email + '</td>' +
+                            '<td>' + response[i].teacher_username + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
+
+    function LimitSearch() {
+        data1 = $('#select_search').val();
+        data2 = $('#SearchName').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher/Show_Max_Search_Data_ctl",
+            data: "&data=" + data1 + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher/Search_Show_Data_ctl",
+            data: "&data=" + data1 + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                console.log(response);
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].teacher_email + '</td>' +
+                            '<td>' + response[i].teacher_username + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    }
+
+    /*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+
+    $('#btnAdd').click(function (e) {
         e.preventDefault();
         iurl = '../Admin_teacher/Add_Data_ctl';
         $('#majorSelect').show();
@@ -245,7 +436,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_faculty/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -257,32 +448,46 @@ $(document).ready(function() {
                 select_major_add();
             }
         });
-        // $.ajax({
-        //     url: "../Admin_major/Show_Data_ctl",
-        //     dataType: "json",
-        //     success: function(response) {
-        //         var html = '';
-        //         var i;
-        //         if (response != null) {
-        //             for (i = 0; i < response.length; i++) {
-        //                 html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
-        //             }
-        //         }
-        //         $('#majorSelectAdd').html(html);
-        //     }
-        // });
+
+        $.ajax({
+            url: "../Admin_degree/Show_Data_ctl",
+            dataType: "json",
+            success: function (response) {
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html += '<option value="' + response[i].de_id + '">' + response[i].de_Tname + '</option>';
+                    }
+                }
+                $('#degreeSelectAdd').html(html);
+            }
+        });
     });
 
-    $('#btnClose').click(function(e) {
+    $('#btnClose').click(function (e) {
         e.preventDefault();
         document.getElementById('teacher_code_id').value = "";
         document.getElementById('teacher_Tname').value = "";
         document.getElementById('teacher_Ename').value = "";
         document.getElementById('teacher_email').value = "";
         document.getElementById('teacher_username').value = "";
+        for (i = 0; i < $(formData).length; i++) {
+            $(popData[i]).hide();
+        }
     });
 
-    $('#facultySelectAdd').change(function() {
+    $(document).on('keyup', function (e) {
+        if (e.keyCode == 27) {
+            document.getElementById('teacher_code_id').value = "";
+            document.getElementById('teacher_Tname').value = "";
+            document.getElementById('teacher_Ename').value = "";
+            document.getElementById('teacher_email').value = "";
+            document.getElementById('teacher_username').value = "";
+        }
+    });
+
+    $('#facultySelectAdd').change(function () {
         //alert($('#facultySelectAdd').val());
         select_major_add();
     });
@@ -294,13 +499,13 @@ $(document).ready(function() {
             url: "../Admin_major/Select_major",
             data: '&datamajor=' + $data,
             dataType: "json",
-            success: function(response) {
-                console.log(response.length);
+            success: function (response) {
+                // console.log(response.length);
                 var html = '';
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html += '<option value="' + response[i].major_id + '">' + response[i].major_name + '</option>';
+                        html += '<option value="' + response[i].major_id + '">(' + response[i].major_id + ') ' + response[i].major_name + '</option>';
                     }
                 }
                 $('#majorSelectAdd').html(html);
@@ -309,11 +514,11 @@ $(document).ready(function() {
     }
 
 
-
-    $('#btnSave').click(function(e) {
+    $('#btnSave').click(function (e) {
         e.preventDefault();
         var result = '';
         var check = '';
+        var FormData = '';
 
         for (i = 0; i < $(formData).length; i++) {
             if ($(formData[i]).val() == '') {
@@ -333,13 +538,20 @@ $(document).ready(function() {
                 txtsnack = 'แก้ไขข้อมูล ( Success: แก้ไขข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถแก้ไขข้อมูลได้ ( Error: ';
             }
-            data = $('#formAdd').serialize();
+
+            FormData = $('#formAdd').find('input:text').each(function () {
+                $(this).val($.trim($(this).val()));
+            });
+
+            data = FormData.serialize();
             data2 = $("#majorSelectAdd :selected").val();
+            data3 = $("#degreeSelectAdd :selected").val();
+
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: data + '&major_id=' + data2 + '&org_id=' + iddata,
-                success: function(response) {
+                data: data + '&major_id=' + data2 + '&degree=' + data3 + '&org_id=' + iddata,
+                success: function (response) {
                     document.getElementById('teacher_code_id').value = "";
                     document.getElementById('teacher_Tname').value = "";
                     document.getElementById('teacher_Ename').value = "";
@@ -359,7 +571,7 @@ $(document).ready(function() {
                         text: txtsnack
                     });
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     if (XMLHttpRequest.statusText == 'Conflict') {
                         txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ข้อมูลซ้ำ ';
                         Snackbar.show({
@@ -386,7 +598,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#showAllData').on('click', '.item-edit', function() {
+    $('#showAllData').on('click', '.item-edit', function () {
         iddata = $(this).attr('data');
         ivalue = $(this).attr('value');
         org = datatable[ivalue].teacher_code_id;
@@ -417,46 +629,25 @@ $(document).ready(function() {
         //         $('#Major_Form_add_option').val(datatable[ivalue].major_id);
         //     }
         // });
-    });
-
-    $('#btnSearch').click(function(e) {
-        e.preventDefault();
-        data1 = $('#select_search').val();
-        data2 = $('#SearchName').val();
         $.ajax({
-            type: "POST",
-            url: "../Admin_teacher/Search_Show_Data_ctl",
-            data: "&data=" + data1 + "&search=" + data2,
+            url: "../Admin_degree/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
-                datatable = response;
-                console.log(response);
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
-                        html +=
-                            '<tr>' +
-                            '<th>' +
-                            '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
-                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
-                            '</div>' +
-                            '</th>' +
-                            '<td>' + response[i].teacher_Ename + '</td>' +
-                            '<td>' + response[i].teacher_Tname + '</td>' +
-                            '<td>' + response[i].teacher_email + '</td>' +
-                            '<td>' + response[i].teacher_username + '</td>' +
-                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">Edit</a></td>' +
-                            '</tr>';
+                        html += '<option value="' + response[i].de_id + '">' + response[i].de_Tname + '</option>';
                     }
                 }
-                $('#showAllData').html(html);
+                $('#degreeSelectAdd').html(html);
+                $('#degreeSelectAdd').val(datatable[ivalue].de_id);
             }
         });
     });
 
-    $('#btnDel').click(function(e) {
+
+    $('#btnDel').click(function (e) {
         e.preventDefault();
         $data = selectchb();
         if ($data.length > 0) {
@@ -466,7 +657,7 @@ $(document).ready(function() {
                 data: {
                     $data
                 },
-                success: function(response) {
+                success: function (response) {
                     $('#modaldel').modal('hide');
                     show_data();
                     Snackbar.show({
@@ -492,15 +683,52 @@ $(document).ready(function() {
         }
     });
 
-    $('#selectall').change(function() {
+    $('#selectall').change(function () {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
     function selectchb() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function() {
+        $('input[name^=checkitem]:checked').each(function () {
             item.push($(this).val());
         });
         return item;
     }
+
+    $(".dropdown-menu.sort a ").click(function () {
+        data = $(this).attr('data-1');
+        sort = $(this).attr('data-2');
+        // alert(limit);
+        $.ajax({
+            type: 'POST',
+            url: "../Admin_teacher/Show_Sort_ctl",
+            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].teacher_code_id + '" id="' + response[i].teacher_code_id + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].teacher_code_id + i + '">' + response[i].teacher_code_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].de_Ename + " " + response[i].teacher_Ename + '</td>' +
+                            '<td>' + response[i].de_Tname + " " + response[i].teacher_Tname + '</td>' +
+                            '<td>' + response[i].teacher_email + '</td>' +
+                            '<td>' + response[i].teacher_username + '</td>' +
+                            '<td><a value="' + i + '" data="' + response[i].teacher_code_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    });
+
 });

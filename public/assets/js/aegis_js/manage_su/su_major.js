@@ -1,4 +1,27 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['admin_side_Anc', 'admin_side_Anc_course', 'admin_side_Anc_services', 'admin_side_Anc_personnel', 'admin_side_Anc_about_us', 'admin_side_Anc_course', 'admin_side_Anc_services', 'admin_side_Anc_personnel', 'admin_side_Anc_about_us', 'admin_side_faculty', 'admin_side_major', "admin_side_semester", "admin_side_subject", "admin_side_subsem", "admin_side_student", "admin_side_teacher", "admin_side_admin", "admin_side_teamaj", "admin_side_teasub", "admin_side_degree"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+        var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    var Navbar_highlight = ['admin_Anc', 'admin_Anc_course', 'admin_Anc_services', 'admin_Anc_personnel', 'admin_Anc_about_us', 'admin_Anc_course', 'admin_Anc_services', 'admin_Anc_personnel', 'admin_Anc_about_us', 'admin_faculty', 'admin_major', "admin_semester", "admin_subject", "admin_subsem", "admin_student", "admin_teacher", "admin_admin", "admin_teamaj", "admin_teasub", "admin_degree"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+        var elementRemove = document.getElementById(Navbar_highlight[y]);
+        elementRemove.classList.remove("bg-danger");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("admin_side_major");
+    element.classList.add("bg-danger");
+    var element = document.getElementById("admin_major");
+    element.classList.add("bg-danger");
+    /******************************************************************** */
+
+
     var iddata;
     var iurl;
     var datatable;
@@ -34,17 +57,15 @@ $(document).ready(function() {
     ];
 
     //head of table
-    var theadGenValue = ['major ID', 'major Name', 'Faculty', 'Option'];
+    var theadGenValue = ['รหัสสาขา', 'ชื่อสาขา', 'คณะ', 'ตัวเลือก'];
 
     var inModelValue = [
         //['TEXT','ID','NAME','HOLDER']
-        ['major ID', 'major_ID', 'major_ID', 'ID'],
-        ['major Name', 'major_Name', 'major_Name', 'NAME']
+        ['รหัสสาขา', 'major_ID', 'major_ID', 'รหัส'],
+        ['ชื่อสาขา', 'major_Name', 'major_Name', 'ชื่อ']
     ];
 
     var formData = ["#major_ID", "#major_Name"];
-
-
 
     var popData = ["#popupID", "#popupName"];
 
@@ -52,6 +73,15 @@ $(document).ready(function() {
         //[POP_ID,POP_TEXT]
         ['popupID', 'กรุณาระบุรหัสสาขา'],
         ['popupName', 'กรุณาระบุชื่อสาขา']
+    ];
+
+    var Sort = [
+        ['major_id', 'ASC', 'รหัสสาขา A > Z'],
+        ['major_id', 'DESC', 'รหัสสาขา Z > A'],
+        ['major_name', 'ASC', 'ชื่อสาขา ก > ฮ'],
+        ['major_name', 'DESC', 'ชื่อสาขา ฮ > ก'],
+        ['faculty_name', 'ASC', 'ชื่อคณะ ก > ฮ'],
+        ['faculty_name', 'DESC', 'ชื่อคณะ ฮ > ก']
     ];
 
     function formDataValClr() {
@@ -101,7 +131,7 @@ $(document).ready(function() {
                 '</div>';
         }
         html += '<div class="col-md-4 mb-3" >' +
-            '<label>Faculty</label>' +
+            '<label>คณะ</label>' +
             '<select id="selectAdd" class="form-control"></select>' +
             '</div>';
         html += '</div>';
@@ -110,7 +140,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_faculty/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 var html = '';
                 var i;
                 if (response != null) {
@@ -139,6 +169,14 @@ $(document).ready(function() {
         $('#tableHead').html(html);
     }
 
+    function ShowSort() {
+        var html = '';
+        for (i = 0; i < Sort.length; i++) {
+            html += ' <a class="dropdown-item" id="sortDrop" href="#" data-1="' + Sort[i][0] + '" data-2="' + Sort[i][1] + '">' + Sort[i][2] + '</a>';
+        }
+        $('#TableSort').html(html);
+    }
+
     //---------------------------------------------END_FUNCTION_GEN---------------------------------------------//
 
     inModelGen();
@@ -147,13 +185,18 @@ $(document).ready(function() {
     dropSearch();
     theadGen();
     show_data();
+    ShowSort();
 
     popGen();
     hideAllPop();
 
     //--------------------------------------------START_PAGINATION_ELEMENT--------------------------------------------//
 
-    $('.row_set').click(function() {
+    $('#selectAdd').select2({
+        theme: 'bootstrap4',
+    });
+
+    $('.row_set').click(function () {
         limit = $(this).attr('value');
         showBtnTxt = limit;
         if (limit == 0) {
@@ -162,21 +205,36 @@ $(document).ready(function() {
         document.getElementById('row_active').innerText = showBtnTxt;
         start = 0;
         currentPage = 1;
-        show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
+
     });
 
-    $('#chevron_right').click(function() {
+    $('#chevron_right').click(function () {
         limit = $('.row_active').text();
         start = start + (limit * 1);
         currentPage++;
-        show_data();
+        // show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
     });
 
-    $('#chevron_left').click(function() {
+    $('#chevron_left').click(function () {
         limit = $('.row_active').text();
         start = start - limit;
         currentPage--;
-        show_data();
+        // show_data();
+        if ($('#SearchName').val() == "") {
+            show_data();
+        } else {
+            LimitSearch();
+        }
     });
 
     function disableArrow(start, pageMax) {
@@ -199,7 +257,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../Admin_major/Show_Max_Data_ctl",
             dataType: "json",
-            success: function(maxdata) {
+            success: function (maxdata) {
                 pageMax = Math.ceil(maxdata / limit);
                 console.log(pageMax);
                 if (currentPage == pageMax) {
@@ -221,7 +279,7 @@ $(document).ready(function() {
             data: "&start=" + start + "&limit=" + limit,
             url: "../Admin_major/Show_Data_ctl",
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 datatable = response;
                 var html = '';
                 var i;
@@ -237,7 +295,7 @@ $(document).ready(function() {
                             '</th>' +
                             '<td>' + response[i].major_name + '</td>' +
                             '<td>' + response[i].faculty_name + '</td>' +
-                            '<td><a data="' + response[i].major_id + '" value="' + i + '" class="item-edit">Edit</a></td>' +
+                            '<td><a data="' + response[i].major_id + '" value="' + i + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -246,16 +304,40 @@ $(document).ready(function() {
         });
     }
 
-    $('#btnSearch').click(function(e) {
+    $('#btnSearch').click(function (e) {
         e.preventDefault();
         data = $('#SearchName').val();
         data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_major/Show_Max_Data_Search_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
         $.ajax({
             type: "POST",
             url: "../Admin_major/Search_Show_Data_ctl",
-            data: "&data=" + data + "&search=" + data2,
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
+                datatable = response;
                 var html = '';
                 var i;
                 if (response != null) {
@@ -270,7 +352,7 @@ $(document).ready(function() {
                             '</th>' +
                             '<td>' + response[i].major_name + '</td>' +
                             '<td>' + response[i].faculty_name + '</td>' +
-                            '<td><a data="' + response[i].major_id + '" class="item-edit">Edit</a></td>' +
+                            '<td><a data="' + response[i].major_id + '" value="' + i + '" class="item-edit">แก้ไข</a></td>' +
                             '</tr>';
                     }
                 }
@@ -279,10 +361,66 @@ $(document).ready(function() {
         });
     });
 
+    function LimitSearch() {
+        data = $('#SearchName').val();
+        data2 = $('#select_search').val();
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_major/Show_Max_Data_Search_ctl",
+            data: "&data=" + data + "&search=" + data2,
+            dataType: "json",
+            success: function (maxdata) {
+                pageMax = Math.ceil(maxdata / limit);
+                console.log(pageMax);
+                if (currentPage == pageMax) {
+                    stop = maxdata;
+                } else if (pageMax == Infinity) {
+                    stop = maxdata;
+                    limit = start = null;
+                } else {
+                    stop = Number(limit) + Number(start);
+                }
+                start_limit = (start + 1) + '-' + (stop) + ' of ' + maxdata;
+                document.getElementById('showstart_limit').innerText = start_limit;
+                disableArrow(currentPage, pageMax);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Admin_major/Search_Show_Data_ctl",
+            data: "&data=" + data + "&search=" + data2 + "&start=" + start + "&limit=" + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].major_id + '" id="' + response[i].faculty_name + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].faculty_name + i + '">' + response[i].major_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].major_name + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
+                            '<td><a data="' + response[i].major_id + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    }
+
     //--------------------------------------------END_CANT_TOUCH_THIS--------------------------------------------//
 
     //--------------------------------------------START_BASIC_TOOLS--------------------------------------------//
-    $(document).keyup(function(e) {
+    $(document).keyup(function (e) {
         if ($('#Modal').is(':visible') == true) {
             if (e.keyCode === 13) $('#btnSave').click(); // enter
             if (e.keyCode === 27) $('#btnClose').click(); // esc
@@ -290,7 +428,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#btnAdd').click(function(e) {
+    $('#btnAdd').click(function (e) {
         e.preventDefault();
         iurl = '../Admin_major/Add_Data_ctl';
 
@@ -299,14 +437,15 @@ $(document).ready(function() {
 
     });
 
-    $('#btnClose').click(function(e) {
+    $('#btnClose').click(function (e) {
         formDataValClr();
         hideAllPop();
         $('#selectAdd').val(datatable[0].faculty_id);
     });
 
-    $('#showAllData').on('click', '.item-edit', function() {
-        iddata = $(this).attr('data');
+    $('#showAllData').on('click', '.item-edit', function () {
+        iddataEncode = $(this).attr('data');
+        iddata = encodeURIComponent(iddataEncode);
         ivalue = $(this).attr('value');
         console.log('1' + iddata);
         $('#major_ID').val(datatable[ivalue].major_id);
@@ -319,7 +458,7 @@ $(document).ready(function() {
         iurl = '../Admin_major/Edit_Data_ctl';
     });
 
-    $('#btnSave').click(function(e) {
+    $('#btnSave').click(function (e) {
         e.preventDefault();
         var result = '';
         var check = '';
@@ -336,9 +475,13 @@ $(document).ready(function() {
         }
         if (check == result) {
 
-            data = $('#formAdd').serialize();
+            // data = $('#formAdd').serialize();
+            major_IDPlus = $.trim($('#major_ID').val());
+            major_ID = encodeURIComponent(major_IDPlus);
+            major_NamePlus = $.trim($('#major_Name').val());
+            major_Name = encodeURIComponent(major_NamePlus);
             data2 = $("#selectAdd :selected").val();
-
+            // alert(major_ID);
             if (iurl == '../Admin_major/Add_Data_ctl') {
                 txtsnack = 'เพิ่มข้อมูล ( Success: เพิ่มข้อมูลเรียบร้อย )';
                 txtsnackerr = 'ไม่สามารถเพิ่มข้อมูลได้ ( Error: ';
@@ -351,8 +494,15 @@ $(document).ready(function() {
             $.ajax({
                 type: "POST",
                 url: iurl,
-                data: data + '&faculty_id=' + data2 + '&org_id=' + iddata,
-                success: function(response) {
+                // data: '&major_ID='+ major_ID + '&major_Name=' + major_Name + '&faculty_id=' + data2 + '&org_id=' + iddata,
+                data: {
+                    major_ID: major_ID,
+                    major_Name: major_Name,
+                    faculty_id: data2,
+                    org_id: iddata
+                },
+                success: function (response) {
+                    console.log(response);
                     formDataValClr();
                     show_data();
                     Snackbar.show({
@@ -364,7 +514,7 @@ $(document).ready(function() {
                         text: txtsnack
                     });
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     Snackbar.show({
                         actionText: 'close',
                         pos: 'top-center',
@@ -378,7 +528,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#btnDel').click(function(e) {
+    $('#btnDel').click(function (e) {
         e.preventDefault();
         $data = selectchb();
         if ($data.length > 0) {
@@ -388,7 +538,7 @@ $(document).ready(function() {
                 data: {
                     $data
                 },
-                success: function(response) {
+                success: function (response) {
                     $('#modaldel').modal('hide');
                     show_data();
                     Snackbar.show({
@@ -414,16 +564,50 @@ $(document).ready(function() {
         }
     });
 
-    $('#selectall').change(function() {
+    $('#selectall').change(function () {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
     function selectchb() {
         var item = [];
-        $('input[name^=checkitem]:checked').each(function() {
+        $('input[name^=checkitem]:checked').each(function () {
             item.push($(this).val());
         });
         return item;
     }
+
+    $(".dropdown-menu.sort a ").click(function () {
+        data = $(this).attr('data-1');
+        sort = $(this).attr('data-2');
+        // alert(limit);
+        $.ajax({
+            type: 'POST',
+            url: "../Admin_major/Show_Sort_ctl",
+            data: '&data=' + data + '&sort=' + sort + '&start=' + start + '&limit=' + limit,
+            dataType: "json",
+            success: function (response) {
+                datatable = response;
+                var html = '';
+                var i;
+                if (response != null) {
+                    for (i = 0; i < response.length; i++) {
+                        html +=
+                            '<tr>' +
+                            '<th>' +
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" name="checkitem" class="custom-control-input" value="' + response[i].major_id + '" id="' + response[i].faculty_name + i + '">' +
+                            '<label class="custom-control-label" for="' + response[i].faculty_name + i + '">' + response[i].major_id + '</label>' +
+                            '</div>' +
+                            '</th>' +
+                            '<td>' + response[i].major_name + '</td>' +
+                            '<td>' + response[i].faculty_name + '</td>' +
+                            '<td><a data="' + response[i].major_id + '" value="' + i + '" class="item-edit">แก้ไข</a></td>' +
+                            '</tr>';
+                    }
+                }
+                $('#showAllData').html(html);
+            }
+        });
+    })
     //--------------------------------------------END_BASIC_TOOLS--------------------------------------------//
 });

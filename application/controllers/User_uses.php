@@ -19,35 +19,64 @@ class User_uses extends MY_Controller
                                         'ses_id' => $sign_status[0]['std_code_id'],
                                         'ses_tname' => $sign_status[0]['std_Tname'],
                                         'ses_ename' => $sign_status[0]['std_Ename'],
+                                        'ses_THdegree' => '',
+                                        'ses_ENdegree' => '',
                                         'ses_mojor_id' => $sign_status[0]['std_major'],
-                                        'ses_status' => 'student'
+                                        'ses_status' => 'student',
+                                        'ses_statustext' => 'นักศึกษา'
                                 );
                                 $this->session->set_userdata($newdata);
-                        } else if ($sign_status[0]['teacher_code_id'] != '') {
+                        } else if ($sign_status[0]['teacher_code_id'] != '' && $sign_status[0]['teacher_admin'] == '0') {
                                 $newdata = array(
                                         'ses_id' => $sign_status[0]['teacher_code_id'],
                                         'ses_tname' => $sign_status[0]['teacher_Tname'],
                                         'ses_ename' => $sign_status[0]['teacher_Ename'],
-                                        'ses_status' => 'teacher'
+                                        'ses_THdegree' => $sign_status[0]['de_Tname'],
+                                        'ses_ENdegree' => $sign_status[0]['de_Ename'],
+                                        'ses_status' => 'teacher',
+                                        'ses_statustext' => 'อาจารย์'
                                 );
                                 $this->session->set_userdata($newdata);
-                        } else if ($sign_status[0]['admin_id'] != '') {
+                        } else if ($sign_status[0]['teacher_code_id'] != '' && $sign_status[0]['teacher_admin'] == '1') {
                                 $newdata = array(
-                                        'ses_id' => $sign_status[0]['admin_id'],
-                                        'ses_tname' => $sign_status[0]['admin_Tname'],
-                                        'ses_ename' => $sign_status[0]['admin_Ename'],
-                                        'ses_status' => 'admin'
+                                        'ses_id' => $sign_status[0]['teacher_code_id'],
+                                        'ses_tname' => $sign_status[0]['teacher_Tname'],
+                                        'ses_ename' => $sign_status[0]['teacher_Ename'],
+                                        'ses_THdegree' => $sign_status[0]['de_Tname'],
+                                        'ses_ENdegree' => $sign_status[0]['de_Ename'],
+                                        'ses_status' => 'admin',
+                                        'ses_statustext' => 'ผู้ดูแลระบบ'
                                 );
                                 $this->session->set_userdata($newdata);
                         }
+
+                        $this->sys_log(
+                                $this->session->ses_id,
+                                'SING_IN',
+                                'UserID :' . $this->session->ses_id . ' , UserStatus' . $this->session->ses_status . ', Activity : Login success'
+                        );
+
                         redirect();
-                }else{
+                } else {
                         show_404();
                 }
         }
 
+        public function password_change()
+        {
+                $old_password = $this->encryption_pass($this->input->post('old_passwd'));
+                $passwd = $this->encryption_pass($this->input->post('passwd'));
+                $res = $this->Model_user_uses->update_password($this->session->ses_status, $this->session->ses_id, $passwd, $old_password);
+                echo $res;
+        }
+
         public function sign_out()
         {
+                $this->sys_log(
+                        $this->session->ses_id,
+                        'SING_OUT',
+                        'UserID :' . $this->session->ses_id . ', UserStatus :' . $this->session->ses_status . ', Activity : Logout success'
+                );
                 $this->session->sess_destroy();
                 redirect();
         }

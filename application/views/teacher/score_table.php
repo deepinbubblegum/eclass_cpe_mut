@@ -8,7 +8,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
 
         <head>
                 <meta charset="UTF-8">
@@ -60,8 +59,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <body>
         <h3 id="overTable">Lecture CPEN1010 25611</h3>
+        <button id="export_table" class="btn btn-outline-primary btn-lg active ml-2" ><i class="far fa-file-excel"></i> ดาวน์โหลดตารางคะแนน</button>
         <div id="tableScoreZone">
-                <table class="table table-hover">
+                <table class="table table-hover" id="table_show">
                         <thead id="theadScoreZone">
                         </thead>
                         <tbody id="tbodyScoreZone">
@@ -87,7 +87,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <br>
                                                 <div id="f34r-here">
                                                         Tables here
-
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
@@ -98,6 +97,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                 </div>
         </div>
+        
         </div>
         <!--  -->
 </body>

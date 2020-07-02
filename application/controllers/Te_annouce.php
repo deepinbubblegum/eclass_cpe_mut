@@ -25,14 +25,22 @@ class Te_annouce extends MY_Controller
             echo json_encode($result);
         }
 
+        public function Get_Permission()
+        {
+            $semester = $this->input->post('semester');
+            $subject = $this->input->post('subject');
+            
+            $this->Model_te_annouce->Permission_Medel($semester,$subject);
+        }
+
         public function Add_Data_ctl()
         {
             $semester = $this->input->post('semester');
             $subject = $this->input->post('subject');
             $Header = $this->input->post('Headtext');
-            $Annouce = $this->input->post('dataAnnouce');
+            $Annouce = $this->input->post('dataAnnouce',false);
             $Sdata = $this->input->post('dataStart');
-            $Edate = $this->input->post('dateEnd');
+            $Edate = $this->input->post('dateEnd') .' '. date("H:i:s");
             $User = $this->session->ses_id;
             $this->Model_te_annouce->Add_Data_Annouce_model($semester,$subject,$Header,$Annouce,$Sdata,$Edate,$User);
         }
@@ -43,9 +51,9 @@ class Te_annouce extends MY_Controller
             $subject = $this->input->post('subject');
             $id = $this->input->post('AnnouceId');
             $Header = $this->input->post('Headtext');
-            $Annouce = $this->input->post('dataAnnouce');
+            $Annouce = $this->input->post('dataAnnouce',false);
             $Sdata = $this->input->post('dataStart');
-            $Edate = $this->input->post('dateEnd');
+            $Edate = $this->input->post('dateEnd') .' '. date("H:i:s");
             $User = $this->session->ses_id;
             $this->Model_te_annouce->Edit_Data_Annouce_model($semester,$subject,$id,$Header,$Annouce,$Sdata,$Edate,$User);
         }

@@ -60,12 +60,12 @@ class Te_video extends MY_Controller
                         //'heading' => 'My Heading',
                         //'message' => 'My Message'
                 );
-                //$config['upload_path'] = '../uploads/file/25611CPEN1010/Uploads/';
+                //$config['upload_path'] = '/Eclass/uploads/file/25611CPEN1010/Uploads/';
                 //echo $data2['semester'].$data2['subject_id'];
-                $dir = '../uploads/file/' . $data2['semester'] . $data2['subject_id'] . '/' . 'Downloads/' . $data2['menuId'];
+                $dir = '/Eclass/uploads/file/' . $data2['semester'] . $data2['subject_id'] . '/' . 'Downloads/' . $data2['menuId'];
                 if (!is_dir($dir)) {
-                        mkdir($dir, 0777, true);
-                        chmod($dir, 0777);
+                        mkdir($dir, 0700, true);
+                        chmod($dir, 0700);
                 }
                 $config['upload_path'] = $dir;
                 $config['allowed_types'] = '*';

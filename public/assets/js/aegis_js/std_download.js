@@ -1,4 +1,29 @@
-$(document).ready(function () {
+$(document).ready(function() {
+
+    /******************************* highlight Navbar ************************************* */
+    var Navbar_Side_highlight = ['side_Anc', 'side_score', 'side_uploads', "side_downloads", "side_media", "side_quiz", "side_vote"];
+    for (z = 0; z < Navbar_Side_highlight.length; z++) {
+            var elementRemove = document.getElementById(Navbar_Side_highlight[z]);
+            elementRemove.classList.remove("bg-info");
+    }
+
+    var Navbar_highlight = ['Anc', 'score', 'uploads', "downloads", "media", "quiz", "vote"];
+    for (y = 0; y < Navbar_highlight.length; y++) {
+            var elementRemove = document.getElementById(Navbar_highlight[y]);
+            elementRemove.classList.remove("bg-info");
+    }
+
+    // $('#score').classList.add(".bg-primary");
+    var element = document.getElementById("downloads");
+    element.classList.add("bg-info");
+    var element = document.getElementById("side_downloads");
+    element.classList.add("bg-info");
+    /******************************************************************** */
+
+    year = semester.substr(0, 4);
+    part = semester.substr(4, 1);
+    $('#header').text('ไฟล์ประกอบการสอน : ' + subject_id + ' - ' + year + '/' + part);
+
     var url = $(location).attr('href').split("/");
 
     function file_ico(type) {
@@ -95,7 +120,7 @@ $(document).ready(function () {
         $.ajax({
             url: '/' + url[3] + '/Std_download/showMenuDownload/' + subject_id + '-' + semester,
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 getMenu = response;
                 console.log(response);
                 var html = '';
@@ -104,7 +129,7 @@ $(document).ready(function () {
                         if (i == 0) {
                             html += '<div class="expansion-panel list-group-item show" >';
                         } else {
-                            html += '<div class="expansion-panel list-group-item" >';
+                            html += '<div class="expansion-panel list-group-item " >';
                         }
                         html += '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="heading' + i + '">' +
                             response[i].menuDowName +
@@ -121,23 +146,7 @@ $(document).ready(function () {
                         html += '<div class="expansion-panel-body">' +
                             response[i].menuDowDescrpition +
                             '<div id="menuDowId-' + response[i].menuDowId + '">' +
-                            '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2">' +
-                            '<span class="mr-2 mb-0" style="font-size: 28px;">' +
-                            '<i class="fas fa-file-download"></i>' +
-                            '<span class="mr-2 text-black" style="font-size: 18px;">ทดสอบ</span>' +
-                            '<div class="mt-0">' +
-                            '<small class="mr-2 text-black-50" style="font-size: 12px;">size : 20GB</small>' +
-                            '<small class="mr-2 text-black-50" style="font-size: 12px;">type : pdf</small>' +
-                            '</div>' +
-                            '</span>' +
-                            '<span>' +
-                            '<button class="btn btn-float btn-info my-1"><i class="fas fa-download"></i></button>' +
-                            '</span>' +
-                            '</li>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
+                            '</div></div></div></div>';
                     }
                 }
                 $('.showMenuDownload').html(html);
@@ -150,18 +159,27 @@ $(document).ready(function () {
     }
 
     function show_data(popUp) {
+        var txt = '';
         $.ajax({
             url: '/' + url[3] + '/Std_download/showDownloadList/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuDowId,
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
                 getData = response;
                 var html = "";
                 if (response != null) {
                     for (i = 0; i < response.length; i++) {
+
+                        if (response[i].fileName.length > 90) {
+                            txt = response[i].fileName.substr(0, 90);
+                            txt += '..';
+                        } else {
+                            txt = response[i].fileName;
+                        }
+
                         html +=
-                            '<li href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
+                            '<li href="#" class="list-group-item d-flex flex-wrap justify-content-between align-items-center list-group-item-action mb-2 mt-2" id="UploadedFile' + i + '">' +
                             '<span class="mr-2 mb-0" style="font-size: 28px;">' + file_ico(response[i].fileType) +
-                            '<span class="mr-2 text-black" style="font-size: 18px;"> ' + response[i].fileName + '</span>' +
+                            '<span class="mr-2 text-black" style="font-size: 18px;">' + txt + '</span>' +
                             '<div class="mt-0">' +
                             '<small class="mr-2 text-black-50" style="font-size: 12px;"> Size : ' + fileSizeCal(response[i].fileSize) + '</small>' +
                             '<small class="mr-2 text-black-50" style="font-size: 12px;"> Type : ' + response[i].fileType + '</small>' +
@@ -172,14 +190,14 @@ $(document).ready(function () {
                             '<!-- <button class="btn btn-float btn-danger my-1"><i class="far fa-trash-alt"></i></button>' +
                             '<button class="btn btn-float btn-success my-1"><i class="fas fa-check"></i></button>' +
                             '<button class="btn btn-float btn-danger my-1"><i class="fas fa-undo-alt"></i></button> -->' +
-                            '<a class="btn btn-danger" href="/Std_download/download/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuDowId + '-' + response[i].fileName + '">download</a>' +
+                            '<div><a class="btn btn-block btn-primary" href="/Std_download/download/' + subject_id + '-' + semester + '-' + getMenu[popUp].menuDowId + '-' + response[i].fileName + '"><i class="fas fa-download"></i> Download</a></div>' +
                             '</span>' +
                             '</li>';
                     }
                 }
                 $('#menuDowId-' + getMenu[popUp].menuDowId).html(html);
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Status: " + textStatus + "Error: " + errorThrown);
             }
         });
