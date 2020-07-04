@@ -74,6 +74,20 @@ class Admin_teacher extends MY_Controller
         $this->Model_su_teacher->Delete_Data_model($data);
     }
 
+    public function Passwdre_Data_ctl()
+    {
+        $this->load->model('sign_in/Model_user_uses');
+        $data = $this->input->post('$data[]');
+        foreach ($data as $value) {
+            $result = $this->Model_user_uses->reset_get_te($value);
+            if($result){
+                $passwd = $this->encryption_pass($result);
+                $this->Model_user_uses->reset_passwd_te($value, $passwd);
+            }
+        }
+        echo json_encode(true);
+    }
+
     public function Show_Max_Search_Data_ctl()
     {
         $data = $this->input->post('data');
