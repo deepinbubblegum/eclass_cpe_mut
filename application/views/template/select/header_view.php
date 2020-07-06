@@ -158,7 +158,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <span style="font-size: 1.5em;">
                                                 <i class="fas fa-play"></i></span>
                                         <span style="font-size: 1.2em;">
-                                                &nbsp;&nbsp;<?lang('information_media')?>
+                                                &nbsp;&nbsp;<?=lang('information_media')?>
                                         </span>
                                 </a>
                                 <a class="nav-item nav-link" id="quiz" href="<?php echo base_url('select/quiz/').$subject_id.'-'.$semester; ?>">
