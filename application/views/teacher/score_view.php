@@ -15,6 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <?php //echo assets_js('jquery_js/jquery-ui.min.js'); 
         ?>
         <?php echo assets_js('aegis_js/manage_te/te_score.js'); ?>
+        <?php echo assets_js('barcode/quagga.min.js'); ?>
         <style>
                 .f34r-bg-n-txt {
                         background-color: rgba(0, 150, 136, 0.7);
@@ -78,6 +79,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 height: 94px;
                                 cursor: move;
                         }
+                }
+
+                #video {
+                        border: 1px solid rgb(14, 168, 234);
+                        width: 100%;
+                        height: 100%;
+                        overflow: hidden;
+                }
+
+                #barcode_canvas {
+                        border: 1px solid rgb(14, 168, 234);
+                        width: 100%;
+                        height: 100%;
                 }
         </style>
 
@@ -265,13 +279,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- END MODAL_GEN_TICKET -->
 
         <!-- MODAL_TICKET -->
-        <div class="modal fade bd-example-modal-lg" id="addTicket" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
+        <div class="modal fade" id="addTicket" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
                         <form id="ticketField">
                                 <div class="modal-content">
                                         <div class="modal-header">
                                                 <h5 class="modal-title" id="addTicketLabel">Modal title</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" id="stopcamera" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                 </button>
                                         </div>
@@ -279,13 +293,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <div class="form-group">
                                                         <label for="Textarea">addTicket_point</label>
                                                         <input class="form-control" id="addTicketP" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true">
+
+                                                        <canvas class="mx-auto" id="barcode_canvas"></canvas>
+                                                        <div id="vid_container">
+                                                                <video id="video" autoplay playsinline></video>
+                                                                <div id="video_overlay"></div>
+                                                        </div>
+
                                                         <label for="Textarea">addTicket_userId</label>
                                                         <input class="form-control" id="addTicketUID" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                                                 </div>
-
                                         </div>
                                         <div class="modal-footer">
-                                                <button type="button" class="btn btn-dark" id="ticketClose" data-dismiss="modal">ปิด</button>
+                                                <!-- <button type="button" class="btn btn-dark" id="ticketClose" data-dismiss="modal">ปิด</button> -->
+                                                <button type="button" class="btn btn-dark" id="barcodeticketSave">สแกนบาร์โค้ด</button>
                                                 <button type="button" class="btn btn-info" id="ticketSave">บันทึกข้อมูล</button>
                                         </div>
                                 </div>
@@ -443,6 +464,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                 </div>
 
+
+        
 </body>
 
 </html>
