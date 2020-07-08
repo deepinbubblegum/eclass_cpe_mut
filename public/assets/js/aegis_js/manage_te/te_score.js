@@ -1419,11 +1419,15 @@ $(document).ready(function () {
                         inputStream: {
                             name: "Live",
                             type: "LiveStream",
-                            target: document.querySelector('#video') // Or '#yourElement' (optional)
+                            target: document.querySelector('#video'), // Or '#yourElement' (optional)
+                            constraints: {
+                                facingMode: "environment",
+                            }
                         },
                         decoder: {
                             readers: ["code_128_reader", 'code_39_reader']
-                        }
+                        },
+                        singleChannel: true, // true: only the red color-channel is read
                     }, function (err) {
                         if (err) {
                             console.log(err);
