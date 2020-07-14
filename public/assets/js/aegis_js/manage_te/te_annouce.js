@@ -141,7 +141,7 @@ $(document).ready(function () {
                         }
 
                         if (i == 0) {
-                            html += '<div class="expansion-panel list-group-item show">' +
+                            html += '<div class="expansion-panel list-group-item ">' +
                                 '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed text-left" data-toggle="collapse" href="#collapse' + i + '" id="' + response[i].annouce_id + '">' +
                                 '<div class="d-flex justify-content-start">' +
                                 '<span style="font-size: 17px; color: blue;"">' +
@@ -157,7 +157,7 @@ $(document).ready(function () {
                                 '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
                                 '</div>' +
                                 '</a>' +
-                                '<div aria-labelledby="' + response[i].annouce_id + '" class="collapse show" data-parent="#accordionOne" id="collapse' + i + '">' +
+                                '<div aria-labelledby="' + response[i].annouce_id + '" class="collapse " data-parent="#accordionOne" id="collapse' + i + '">' +
                                 '<div class="expansion-panel-body text-left">' +
                                 response[i].annouce_discription +
                                 '</div>' +
