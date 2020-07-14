@@ -8,6 +8,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta property="og:title" content="Computer Engineering of MUT" />
+        <meta property="og:description" content="ระบบสนับสนุนการเรียนการสอน ภาควิชาวิศวกรรมคอมพิวเตอร์" />
+        <meta property="og:image" content="../Img_sem/cpemahanakorn.jpg" />
         <title><?php echo lang('title') ?></title>
         <?php
         $multi_assets_css = array(

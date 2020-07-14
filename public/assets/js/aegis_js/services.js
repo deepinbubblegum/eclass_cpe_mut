@@ -14,7 +14,7 @@ $(document).ready(function () {
                                                 response[i].e_time = "ประกาศตลอด";
                                         }
                                         if (i == 0) {
-                                                html += '<div class="expansion-panel list-group-item show">';
+                                                html += '<div class="expansion-panel list-group-item ">';
                                         } else {
                                                 html += '<div class="expansion-panel list-group-item">';
                                         }
@@ -26,7 +26,7 @@ $(document).ready(function () {
                                                 '</div>' +
                                                 '</a>';
                                         if (i == 0) {
-                                                html += '<div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionOne" id="' + response[i]['anc_id'] + '">';
+                                                html += '<div aria-labelledby="headingOne" class="collapse " data-parent="#accordionOne" id="' + response[i]['anc_id'] + '">';
                                         } else {
                                                 html += '<div aria-labelledby="headingOne" class="collapse" data-parent="#accordionOne" id="' + response[i]['anc_id'] + '">';
                                         }
