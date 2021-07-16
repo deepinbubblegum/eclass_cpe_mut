@@ -46,7 +46,7 @@ $(document).ready(function () {
                     } else {
                         for (i = 0; i < response.length; i++) {
                             if (i == 0) {
-                                html += '<div class="expansion-panel list-group-item show">' +
+                                html += '<div class="expansion-panel list-group-item ">' +
                                     '<a aria-controls="collapse' + i + '" aria-expanded="true" class="expansion-panel-toggler collapsed" data-toggle="collapse" href="#collapse' + i + '" id="' + response[i].annouce_id + '">' +
                                     response[i].annouce_name +
                                     '<div class="expansion-panel-icon ml-3 text-black-secondary">' +
@@ -54,7 +54,7 @@ $(document).ready(function () {
                                     '<i class="collapsed-hide material-icons">keyboard_arrow_up</i>' +
                                     '</div>' +
                                     '</a>' +
-                                    '<div aria-labelledby="' + response[i].annouce_id + '" class="collapse show" data-parent="#accordionOne" id="collapse' + i + '">' +
+                                    '<div aria-labelledby="' + response[i].annouce_id + '" class="collapse " data-parent="#accordionOne" id="collapse' + i + '">' +
                                     '<div class="expansion-panel-body text-left">' +
                                     response[i].annouce_discription +
                                     '</div>' +

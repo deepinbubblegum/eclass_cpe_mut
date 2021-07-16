@@ -687,6 +687,12 @@ $(document).ready(function () {
         $('.custom-control-input').prop("checked", $(this).prop("checked"));
     });
 
+    function uncheck() {
+        $('input[name^=checkitem]:checked').each(function () {
+            $(this).prop("checked", false)
+        });
+    }
+
     function selectchb() {
         var item = [];
         $('input[name^=checkitem]:checked').each(function () {
@@ -694,6 +700,53 @@ $(document).ready(function () {
         });
         return item;
     }
+
+    $('#btnResetpwd').click(function (e) {
+        e.preventDefault();
+        $data = selectchb();
+        if ($data.length > 0) {
+            console.log($data);
+            // $('#datauserlist').text('ID:' + $data);
+            $('#modelreset').modal('show');
+        } else {
+            Snackbar.show({
+                actionText: 'ปิด',
+                pos: 'top-center',
+                actionTextColor: '#4CAF50',
+                backgroundColor: '#323232',
+                width: 'auto',
+                text: 'กรุณาเลือกข้อมูลต้องการจะคืนค่ารหัสผ่านเริ่มต้น'
+            });
+        }
+        // uncheck();
+    });
+
+    $('#btnReset').click(function (e) {
+        e.preventDefault();
+        $data = selectchb();
+        $.ajax({
+            type: "POST",
+            url: "../Admin_teacher/Passwdre_Data_ctl",
+            data: {
+                $data
+            },
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                Snackbar.show({
+                    actionText: 'ปิด',
+                    pos: 'top-center',
+                    actionTextColor: '#4CAF50',
+                    backgroundColor: '#323232',
+                    width: 'auto',
+                    text: 'คืนค่ารหัสผ่านเริ่มต้นแล้ว'
+                });
+            }
+        });
+        uncheck();
+        $('#modelreset').modal('hide');
+    });
+
 
     $(".dropdown-menu.sort a ").click(function () {
         data = $(this).attr('data-1');

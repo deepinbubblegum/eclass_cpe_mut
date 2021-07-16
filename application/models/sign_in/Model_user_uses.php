@@ -107,7 +107,6 @@ class Model_user_uses extends CI_Model
                         }
                 }
                 return false;
-
         }
 
 
@@ -154,12 +153,12 @@ class Model_user_uses extends CI_Model
 
         public function update_password($arg, $arg2, $arg3, $old_password)
         {
-                if($this->check_old_password($arg, $arg2, $old_password)){
-                        if($arg == 'student'){
+                if ($this->check_old_password($arg, $arg2, $old_password)) {
+                        if ($arg == 'student') {
                                 $this->db->where('std_code_id', $arg2);
                                 $this->db->update('student', array('std_password' => $arg3));
                                 return true;
-                        }else{
+                        } else {
                                 $this->db->where('teacher_code_id', $arg2);
                                 $this->db->update('teacher', array('teacher_password' => $arg3));
                                 return true;
@@ -168,9 +167,31 @@ class Model_user_uses extends CI_Model
                 return false;
         }
 
-        public function reset_passwd($ID, $IDcyp){
+        public function reset_passwd($ID, $IDcyp)
+        {
                 $this->db->where('std_code_id', $ID);
                 $this->db->update('student', array('std_password' => $IDcyp));
+                return true;
+        }
+
+        public function reset_get_te($ID)
+        {
+                $this->db->select('teacher_username');
+                $this->db->from('teacher');
+                $this->db->where('teacher_code_id', $ID);
+                $query = $this->db->get();
+                if ($query->num_rows() == 1) {
+                        $row = $query->row();
+                        return $row->teacher_username;
+                }else{
+                        return false;
+                }
+        }
+
+        public function reset_passwd_te($ID, $IDcyp)
+        {
+                $this->db->where('teacher_code_id', $ID);
+                $this->db->update('teacher', array('teacher_password' => $IDcyp));
                 return true;
         }
 }

@@ -637,7 +637,7 @@ $(document).ready(function () {
         console.log(ticket, optionSet);
         if (checkField == resultField) {
             // takeField(fullName, miniName, ticket, maxPoint, optionSet, PointMulti);
-            if(fieldSaveUrl == '/' + url[3] + '/Te_subject_point/updateFieldScore'){
+            if (fieldSaveUrl == '/' + url[3] + '/Te_subject_point/updateFieldScore') {
                 $.ajax({
                     type: "POST",
                     url: '/' + url[3] + '/Te_subject_point/CheckMaxEditField',
@@ -648,25 +648,25 @@ $(document).ready(function () {
                         if (response != null) {
                             for (i = 0; i < All_std.length; i++) {
                                 sumpoint = 0;
-                                for(j = 0 ; j < response.length ; j++){
-                                    if(All_std[i].substd_stdid == response[j].point_std_user_id){
+                                for (j = 0; j < response.length; j++) {
+                                    if (All_std[i].substd_stdid == response[j].point_std_user_id) {
                                         sumpoint = parseFloat(sumpoint) + parseFloat(response[j].point_std_point);
                                     }
                                 }
                                 // alert(All_std[i].substd_stdid)
-                                if(sumpoint > maxPoint ){
+                                if (sumpoint > maxPoint) {
                                     stateCK = 1
                                 }
                             }
                         }
-                        if(stateCK == 1){
+                        if (stateCK == 1) {
                             $('#CheckEditFieldModal').modal('show');
-                        }else{
+                        } else {
                             takeField(fullName, miniName, ticket, maxPoint, optionSet, PointMulti);
                         }
                     }
                 });
-            }else{
+            } else {
                 takeField(fullName, miniName, ticket, maxPoint, optionSet, PointMulti);
             }
         }
@@ -850,7 +850,7 @@ $(document).ready(function () {
                         $.ajax({
                             type: "POST",
                             url: '/' + url[3] + '/Te_subject_point/GetAll_std',
-                            data: '&semester=' + semester + '&subject_id=' + subject_id ,
+                            data: '&semester=' + semester + '&subject_id=' + subject_id,
                             dataType: "json",
                             success: function (response) {
                                 All_std = response;
@@ -1266,6 +1266,222 @@ $(document).ready(function () {
     });
 
     $('#ticketSave').click(function (e) {
+        ticketSaveID();
+    });
+
+
+    $('#barcode_canvas').hide();
+    $('#video').hide();
+
+    var video = document.createElement("video");
+    var canvasElement = document.getElementById("barcode_canvas");
+    var canvas = canvasElement.getContext("2d", {
+        desynchronized: true,
+        preserveDrawingBuffer: false
+    });
+    var flag = 0;
+    var use_camera = false;
+    var video;
+    // var switchCameraButton;
+    var amountOfCameras = 0;
+    var currentFacingMode = 'environment';
+
+    function deviceCount() {
+        return new Promise(function (resolve) {
+            var videoInCount = 0;
+
+            navigator.mediaDevices
+                .enumerateDevices()
+                .then(function (devices) {
+                    devices.forEach(function (device) {
+                        if (device.kind === 'video') {
+                            device.kind = 'videoinput';
+                        }
+
+                        if (device.kind === 'videoinput') {
+                            videoInCount++;
+                            console.log('videocam: ' + device.label);
+                        }
+                    });
+                    resolve(videoInCount);
+                })
+                .catch(function (err) {
+                    console.log(err.name + ': ' + err.message);
+                    resolve(0);
+                });
+        });
+    }
+
+    $('#barcodeticketSave').click(function (e) {
+        e.preventDefault();
+        flag++;
+        if (flag == 1) {
+            $('#Ticket').val('');
+            camera_start();
+            console.log('ON');
+            use_camera = true;
+        } else {
+            barcode_reader_stop();
+            // flag = 0;
+            console.log('OFF');
+            use_camera = false;
+        }
+    });
+
+    $('#stopcamera').click(function (e) {
+        e.preventDefault();
+        if (flag == 1) {
+            barcode_reader_stop();
+        }
+    });
+
+    function barcode_reader_stop() {
+        video.pause();
+        stream.getTracks().forEach(function (track) {
+            track.stop();
+        });
+        flag = 0;
+        Quagga.stop();
+        $('#barcode_canvas').hide();
+        $('#video').hide();
+    }
+
+    function initCameraStream() {
+        video = document.getElementById('video');
+        if (window.stream) {
+            window.stream.getTracks().forEach(function (track) {
+                console.log(track);
+                track.stop();
+            });
+        }
+
+        var size = 1280;
+
+        var constraints = {
+            audio: false,
+            video: {
+                width: {
+                    ideal: size
+                },
+                height: {
+                    ideal: size
+                },
+                //width: { min: 1024, ideal: window.innerWidth, max: 1920 },
+                //height: { min: 776, ideal: window.innerHeight, max: 1080 },
+                facingMode: currentFacingMode,
+            },
+        };
+
+        navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(handleSuccess)
+            .catch(handleError);
+
+        function handleSuccess(stream) {
+            window.stream = stream;
+            video.srcObject = stream;
+            // if (amountOfCameras > 1) {
+            //     // $('#switchCameraButton').show(500);
+            // }
+            // if (constraints.video.facingMode) {
+            //     if (constraints.video.facingMode === 'environment') {
+            //         switchCameraButton.setAttribute('aria-pressed', true);
+            //     } else {
+            //         switchCameraButton.setAttribute('aria-pressed', false);
+            //     }
+            // }
+
+            const track = window.stream.getVideoTracks()[0];
+            const settings = track.getSettings();
+            str = JSON.stringify(settings, null, 4);
+            console.log('settings ' + str);
+        }
+
+        function handleError(error) {
+            console.error('getUserMedia() error: ', error);
+        }
+    }
+
+    function camera_start() {
+        $('#video').show(500);
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia && navigator.mediaDevices.enumerateDevices) {
+            navigator.mediaDevices
+                .getUserMedia({
+                    audio: false,
+                    video: true,
+                })
+                .then(function (stream) {
+                    // stream.getTracks().forEach(function (track) {
+                    //     track.stop();
+                    // });
+
+                    Quagga.init({
+                        inputStream: {
+                            name: "Live",
+                            type: "LiveStream",
+                            target: document.querySelector('#video'), // Or '#yourElement' (optional)
+                            constraints: {
+                                facingMode: "environment",
+                            }
+                        },
+                        decoder: {
+                            readers: ["code_128_reader", 'code_39_reader']
+                        },
+                        singleChannel: true, // true: only the red color-channel is read
+                    }, function (err) {
+                        if (err) {
+                            console.log(err);
+                            return
+                        }
+                        console.log("Initialization finished. Ready to start");
+                        Quagga.start();
+                    });
+
+                    deviceCount().then(function (deviceCount) {
+                        amountOfCameras = deviceCount;
+                        initCameraStream();
+                    });
+                })
+                .catch(function (error) {
+                    if (error === 'PermissionDeniedError') {
+                        alert('Permission denied. Please refresh and give permission.');
+                    }
+                    console.error('getUserMedia() error: ', error);
+                });
+        } else {
+            alert('Mobile camera is not supported by browser, or there is no camera detected/connected');
+        }
+    }
+
+    Quagga.onProcessed(function (result) {
+        // console.log(result);
+    });
+
+    function isNumeric(s) {
+        return !isNaN(s - parseFloat(s));
+    }
+
+    var lastResult = '';
+    Quagga.onDetected(function (result) {
+        var code = result.codeResult.code;
+        if (lastResult != code && code.length === 10 && isNumeric(code)) {
+            lastResult = code;
+            // console.log(code);
+            // console.log();
+            // console.log(result);
+            setTimeout(function () {
+                lastResult = '';
+                console.log('clear lastResult');
+            }, 2000);
+            $('#addTicketUID').val(code);
+            setTimeout(function () {
+                ticketSaveID();
+            }, 500);
+        }
+    });
+
+
+    function ticketSaveID() {
         uID = $('#addTicketUID').val();
         tPoint = $('#addTicketP').val();
 
@@ -1323,6 +1539,7 @@ $(document).ready(function () {
                             width: 'auto',
                             text: 'คะแนนเกินคะแนนสูงสุด'
                         });
+                        $('#addTicketUID').val('');
                         return false
                     } else {
                         AddPoint_std(uID, tPoint);
@@ -1336,7 +1553,9 @@ $(document).ready(function () {
 
         //pUrl = '/' + url[3] + '/Te_subject_point/insertFieldScore/' + semester + '-' + subject_id + '-' + pointId + '-' + ticket + '-' + fullName + '-' + miniName + '-' + maxPoint;
 
-    });
+    }
+
+
 
 
     function AddPoint_std(uID, tPoint) {

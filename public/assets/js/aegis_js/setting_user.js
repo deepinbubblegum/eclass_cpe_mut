@@ -18,9 +18,19 @@ $(document).ready(function () {
                         if ($('#Passwd').val().length >= 6) {
                                 return true;
                         } else {
+                                Snackbar.show({
+                                        pos: 'top-center',
+                                        text: '! รหัสผ่านจำเป็นต้องมีความยาวมากกว่าหรือเท่ากับ 6 ตัวขึ้นไป',
+                                        showAction: false,
+                                });
                                 return false;
                         }
                 } else {
+                        Snackbar.show({
+                                pos: 'top-center',
+                                text: '! รหัสผ่านใหม่ไม่ตรงกัน',
+                                showAction: false,
+                        });
                         return false;
                 }
         }
@@ -50,7 +60,7 @@ $(document).ready(function () {
                                         } else {
                                                 Snackbar.show({
                                                         pos: 'top-center',
-                                                        text: '! รหัสผ่านเดิมไม่ถูกต้อง หรือ ไม่เป็นไปตามข้อกำหนด',
+                                                        text: '! รหัสผ่านเดิมไม่ถูกต้อง',
                                                         showAction: false,
                                                 });
                                                 // $("#user_setting").modal('hide');
@@ -60,15 +70,16 @@ $(document).ready(function () {
                                         }
                                 }
                         });
-                } else {
-                        Snackbar.show({
-                                pos: 'top-center',
-                                text: 'รหัสผ่านไม่ตรงกัน หรือ ไม่เป็นไปตามข้อกำหนด',
-                                showAction: false,
-                        });
-                        $('#Passwd').val('');
-                        $('#Passwd_ck').val('');
-                }
+                } 
+                // else {
+                //         Snackbar.show({
+                //                 pos: 'top-center',
+                //                 text: 'รหัสผ่านไม่ตรงกัน หรือ ไม่เป็นไปตามข้อกำหนด',
+                //                 showAction: false,
+                //         });
+                //         $('#Passwd').val('');
+                //         $('#Passwd_ck').val('');
+                // }
         });
 
         function te_major_status() {
