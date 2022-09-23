@@ -3,7 +3,7 @@
 ## เอกสาร
 
 * [เอกสารโครงงานทั้งหมด] (https://drive.google.com/open?id=1sBW4a9so7kQJmf1b4AeiMdNikJ9y9OeT)
-* [เอกสารโครงงานทั้งหมด mirror](https://drive.google.com/open?id=1sBW4a9so7kQJmf1b4AeiMdNikJ9y9OeT)
+* [เอกสารโครงงานทั้งหมด (Mirror)](https://drive.google.com/drive/folders/153aKIZR_79h3saMZd_OA0J6cEFrQ-oo3?usp=sharing)
 
 # Sourcecode และ Framework จากภายนอก
 * [Codeigniter](https://codeigniter.com)
